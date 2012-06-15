@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  CodigoColegio: 1
+  Fecha: 2012-06-11
+  Seccion: MyString
+  CodigoAlumno: 1
+  TipoEvento: 1
+  Detalle: MyText
+  CodigoUsuario: MyString
+  FechaUsuario: 2012-06-11 13:47:33
+
+two:
+  CodigoColegio: 1
+  Fecha: 2012-06-11
+  Seccion: MyString
+  CodigoAlumno: 1
+  TipoEvento: 1
+  Detalle: MyText
+  CodigoUsuario: MyString
+  FechaUsuario: 2012-06-11 13:47:33

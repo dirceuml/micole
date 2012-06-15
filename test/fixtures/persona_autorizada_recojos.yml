@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  CodigoPersonaAutorizada: 1
+  CodigoColegio: 1
+  TipoDocumento: 1
+  NumeroDocumento: MyString
+  Nombres: MyString
+  ApellidoPaterno: MyString
+  ApellidoMaterno: MyString
+  Foto: 
+
+two:
+  CodigoPersonaAutorizada: 1
+  CodigoColegio: 1
+  TipoDocumento: 1
+  NumeroDocumento: MyString
+  Nombres: MyString
+  ApellidoPaterno: MyString
+  ApellidoMaterno: MyString
+  Foto: 

@@ -1,0 +1,38 @@
+<%= form_for(@persona_autorizada_recojo) do |f| %>
+  <% if @persona_autorizada_recojo.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@persona_autorizada_recojo.errors.count, "error") %> prohibited this persona_autorizada_recojo from being saved:</h2>
+
+      <ul>
+      <% @persona_autorizada_recojo.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    Código: <%= f.number_field :CodigoPersonaAutorizada %>
+  </div>
+  <div class="field">
+    N° documento: <%= f.text_field :NumeroDocumento %>
+  </div>
+  <div class="field">
+    Nombres:<%= f.text_field :Nombres %>
+  </div>
+  <div class="field">
+    Apellido paterno: <%= f.text_field :ApellidoPaterno %>
+  </div>
+  <div class="field">
+    Apellido materno: <%= f.text_field :ApellidoMaterno %>
+  </div>
+  <div class="field">
+    Observaciones: <%= f.text_area :Observaciones %>
+  </div>
+  <div class="field">
+    Foto: <%= f.text_field :Foto %>
+  </div>
+  <div class="actions">
+    <%= f.submit "Grabar", "data-inline" => "true", "data-theme" => "a", "data-icon" => "check" %>
+  </div>
+<% end %>

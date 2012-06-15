@@ -1,0 +1,27 @@
+<h1>Cuaderno de control</h1>
+
+<table>
+  <tr>
+    <th>Fecha</th>
+    <th>Sección</th>
+    <th>Estado</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @cuaderno_controls.each do |cuaderno_control| %>
+  <tr>
+    <td><%= cuaderno_control.Fecha %></td>
+    <td><%= cuaderno_control.Seccion %></td>
+    <td><%= cuaderno_control.Estado %></td>
+    <td><%= link_to 'Ver', cuaderno_control %></td>
+    <td><%= link_to 'Editar', edit_cuaderno_control_path(cuaderno_control) %></td>
+    <td><%= link_to 'Eliminar', cuaderno_control, confirm: '¿Está seguro que desea eliminar el registro?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'Agregar', new_cuaderno_control_path %>

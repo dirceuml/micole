@@ -1,0 +1,10 @@
+<div data-role="header">
+  <h1>Editar autorizadao a recoger niños</h1>
+  <%= link_to 'Ver', @persona_autorizada_recojo, "data-icon" => "gear", "class" => "ui-btn-right" %>
+  <%= link_to 'Regresar', persona_autorizada_recojos_path, "data-icon" => "back", "class" => "ui-btn-left" %>
+</div>
+
+<div data-role="content" data-inset="true">
+  <%= render 'form' %>
+</div>
+

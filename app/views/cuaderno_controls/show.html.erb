@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Codigocolegio:</b>
+  <%= @cuaderno_control.CodigoColegio %>
+</p>
+
+<p>
+  <b>Fecha:</b>
+  <%= @cuaderno_control.Fecha %>
+</p>
+
+<p>
+  <b>Seccion:</b>
+  <%= @cuaderno_control.Seccion %>
+</p>
+
+<p>
+  <b>Estado:</b>
+  <%= @cuaderno_control.Estado %>
+</p>
+
+<p>
+  <b>Codigousuario:</b>
+  <%= @cuaderno_control.CodigoUsuario %>
+</p>
+
+<p>
+  <b>Fechausuario:</b>
+  <%= @cuaderno_control.FechaUsuario %>
+</p>
+
+
+<%= link_to 'Edit', edit_cuaderno_control_path(@cuaderno_control) %> |
+<%= link_to 'Back', cuaderno_controls_path %>

@@ -1,0 +1,37 @@
+<h1>Listing cuaderno_control_revisions</h1>
+
+<table>
+  <tr>
+    <th>Codigocolegio</th>
+    <th>Fecha</th>
+    <th>Seccion</th>
+    <th>Codigoalumno</th>
+    <th>Revisado</th>
+    <th>Observaciones</th>
+    <th>Codigousuario</th>
+    <th>Fechausuario</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @cuaderno_control_revisions.each do |cuaderno_control_revision| %>
+  <tr>
+    <td><%= cuaderno_control_revision.CodigoColegio %></td>
+    <td><%= cuaderno_control_revision.Fecha %></td>
+    <td><%= cuaderno_control_revision.Seccion %></td>
+    <td><%= cuaderno_control_revision.CodigoAlumno %></td>
+    <td><%= cuaderno_control_revision.Revisado %></td>
+    <td><%= cuaderno_control_revision.Observaciones %></td>
+    <td><%= cuaderno_control_revision.CodigoUsuario %></td>
+    <td><%= cuaderno_control_revision.FechaUsuario %></td>
+    <td><%= link_to 'Show', cuaderno_control_revision %></td>
+    <td><%= link_to 'Edit', edit_cuaderno_control_revision_path(cuaderno_control_revision) %></td>
+    <td><%= link_to 'Destroy', cuaderno_control_revision, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Cuaderno control revision', new_cuaderno_control_revision_path %>

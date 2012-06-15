@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  CodigoColegio: 1
+  Fecha: 
+  Seccion: 
+  Estado: 
+  CodigoUsuario: MyString
+  FechaUsuario: 
+
+two:
+  CodigoColegio: 1
+  Fecha: 
+  Seccion: 
+  Estado: 
+  CodigoUsuario: MyString
+  FechaUsuario: 
