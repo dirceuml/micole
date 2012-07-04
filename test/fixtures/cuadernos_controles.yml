@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  seccion_id: 1
+  fecha: 2012-07-02
+  estado: 1
+  usuario: MyString
+
+two:
+  seccion_id: 1
+  fecha: 2012-07-02
+  estado: 1
+  usuario: MyString

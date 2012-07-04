@@ -1,0 +1,33 @@
+<%= form_for(@cuaderno_control) do |f| %>
+  <% if @cuaderno_control.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@cuaderno_control.errors.count, "error") %> prohibited this cuaderno_control from being saved:</h2>
+
+      <ul>
+      <% @cuaderno_control.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :seccion_id %><br />
+    <%= f.number_field :seccion_id %>
+  </div>
+  <div class="field">
+    <%= f.label :fecha %><br />
+    <%= f.date_select :fecha %>
+  </div>
+  <div class="field">
+    <%= f.label :estado %><br />
+    <%= f.number_field :estado %>
+  </div>
+  <div class="field">
+    <%= f.label :usuario %><br />
+    <%= f.text_field :usuario %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

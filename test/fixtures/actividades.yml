@@ -1,0 +1,31 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  anio_escolar_id: 1
+  tipo_evento_id: 1
+  fecha_hora_inicio: 2012-07-02 23:06:45
+  fecha_hora_fin: 2012-07-02 23:06:45
+  tipo_actividad: 1
+  nombre: MyString
+  detalle: MyText
+  requiere_autorizacion: 
+  limite_autorizacion: 2012-07-02
+  inicio_notificacion: 2012-07-02
+  fin_notificacion: 2012-07-02
+  frecuencia_dias_notificacion: 1
+  usuario: MyString
+
+two:
+  anio_escolar_id: 1
+  tipo_evento_id: 1
+  fecha_hora_inicio: 2012-07-02 23:06:45
+  fecha_hora_fin: 2012-07-02 23:06:45
+  tipo_actividad: 1
+  nombre: MyString
+  detalle: MyText
+  requiere_autorizacion: 
+  limite_autorizacion: 2012-07-02
+  inicio_notificacion: 2012-07-02
+  fin_notificacion: 2012-07-02
+  frecuencia_dias_notificacion: 1
+  usuario: MyString

@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  cuaderno_control_id: 1
+  alumno_id: 1
+  persona_vinculada_id: 1
+  revisado: 
+  fecha_hora_revision: 2012-07-02 22:12:29
+  observaciones: MyText
+  usuario: MyString
+
+two:
+  cuaderno_control_id: 1
+  alumno_id: 1
+  persona_vinculada_id: 1
+  revisado: 
+  fecha_hora_revision: 2012-07-02 22:12:29
+  observaciones: MyText
+  usuario: MyString

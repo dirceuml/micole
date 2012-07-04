@@ -1,0 +1,37 @@
+<%= form_for(@cuaderno_control_evento) do |f| %>
+  <% if @cuaderno_control_evento.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@cuaderno_control_evento.errors.count, "error") %> prohibited this cuaderno_control_evento from being saved:</h2>
+
+      <ul>
+      <% @cuaderno_control_evento.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :cuaderno_control_id %><br />
+    <%= f.number_field :cuaderno_control_id %>
+  </div>
+  <div class="field">
+    <%= f.label :tipo_evento_id %><br />
+    <%= f.number_field :tipo_evento_id %>
+  </div>
+  <div class="field">
+    <%= f.label :alumno_id %><br />
+    <%= f.number_field :alumno_id %>
+  </div>
+  <div class="field">
+    <%= f.label :descripcion %><br />
+    <%= f.text_area :descripcion %>
+  </div>
+  <div class="field">
+    <%= f.label :usuario %><br />
+    <%= f.text_field :usuario %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

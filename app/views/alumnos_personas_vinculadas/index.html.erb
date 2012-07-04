@@ -1,0 +1,41 @@
+<h1>Listing alumnos_personas_vinculadas</h1>
+
+<table>
+  <tr>
+    <th>Persona vinculada</th>
+    <th>Alumno</th>
+    <th>Tipo vinculo</th>
+    <th>Vigencia vinculo</th>
+    <th>Apoderado</th>
+    <th>Autoriza actividad</th>
+    <th>Revisa control</th>
+    <th>Inicio vigencia</th>
+    <th>Fin vigencia</th>
+    <th>Usuario</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @alumnos_personas_vinculadas.each do |alumno_persona_vinculada| %>
+  <tr>
+    <td><%= alumno_persona_vinculada.persona_vinculada_id %></td>
+    <td><%= alumno_persona_vinculada.alumno_id %></td>
+    <td><%= alumno_persona_vinculada.tipo_vinculo %></td>
+    <td><%= alumno_persona_vinculada.vigencia_vinculo %></td>
+    <td><%= alumno_persona_vinculada.apoderado %></td>
+    <td><%= alumno_persona_vinculada.autoriza_actividad %></td>
+    <td><%= alumno_persona_vinculada.revisa_control %></td>
+    <td><%= alumno_persona_vinculada.inicio_vigencia %></td>
+    <td><%= alumno_persona_vinculada.fin_vigencia %></td>
+    <td><%= alumno_persona_vinculada.usuario %></td>
+    <td><%= link_to 'Show', alumno_persona_vinculada %></td>
+    <td><%= link_to 'Edit', edit_alumno_persona_vinculada_path(alumno_persona_vinculada) %></td>
+    <td><%= link_to 'Destroy', alumno_persona_vinculada, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Alumno persona vinculada', new_alumno_persona_vinculada_path %>

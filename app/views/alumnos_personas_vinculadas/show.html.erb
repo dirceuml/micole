@@ -1,0 +1,55 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Persona vinculada:</b>
+  <%= @alumno_persona_vinculada.persona_vinculada_id %>
+</p>
+
+<p>
+  <b>Alumno:</b>
+  <%= @alumno_persona_vinculada.alumno_id %>
+</p>
+
+<p>
+  <b>Tipo vinculo:</b>
+  <%= @alumno_persona_vinculada.tipo_vinculo %>
+</p>
+
+<p>
+  <b>Vigencia vinculo:</b>
+  <%= @alumno_persona_vinculada.vigencia_vinculo %>
+</p>
+
+<p>
+  <b>Apoderado:</b>
+  <%= @alumno_persona_vinculada.apoderado %>
+</p>
+
+<p>
+  <b>Autoriza actividad:</b>
+  <%= @alumno_persona_vinculada.autoriza_actividad %>
+</p>
+
+<p>
+  <b>Revisa control:</b>
+  <%= @alumno_persona_vinculada.revisa_control %>
+</p>
+
+<p>
+  <b>Inicio vigencia:</b>
+  <%= @alumno_persona_vinculada.inicio_vigencia %>
+</p>
+
+<p>
+  <b>Fin vigencia:</b>
+  <%= @alumno_persona_vinculada.fin_vigencia %>
+</p>
+
+<p>
+  <b>Usuario:</b>
+  <%= @alumno_persona_vinculada.usuario %>
+</p>
+
+
+<%= link_to 'Edit', edit_alumno_persona_vinculada_path(@alumno_persona_vinculada) %> |
+<%= link_to 'Back', alumnos_personas_vinculadas_path %>

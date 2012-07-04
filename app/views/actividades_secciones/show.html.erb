@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Actividad:</b>
+  <%= @actividad_seccione.actividad_id %>
+</p>
+
+<p>
+  <b>Seccion:</b>
+  <%= @actividad_seccione.seccion_id %>
+</p>
+
+<p>
+  <b>Usuario:</b>
+  <%= @actividad_seccione.usuario %>
+</p>
+
+
+<%= link_to 'Edit', edit_actividad_seccione_path(@actividad_seccione) %> |
+<%= link_to 'Back', actividades_secciones_path %>

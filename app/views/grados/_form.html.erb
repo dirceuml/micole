@@ -1,0 +1,29 @@
+<%= form_for(@grado) do |f| %>
+  <% if @grado.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@grado.errors.count, "error") %> prohibited this grado from being saved:</h2>
+
+      <ul>
+      <% @grado.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :anio_escolar_id %><br />
+    <%= f.number_field :anio_escolar_id %>
+  </div>
+  <div class="field">
+    <%= f.label :grado %><br />
+    <%= f.number_field :grado %>
+  </div>
+  <div class="field">
+    <%= f.label :usuario %><br />
+    <%= f.text_field :usuario %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

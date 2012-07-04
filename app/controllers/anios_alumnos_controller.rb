@@ -1,0 +1,83 @@
+class AniosAlumnosController < ApplicationController
+  # GET /anios_alumnos
+  # GET /anios_alumnos.json
+  def index
+    @anios_alumnos = AnioAlumno.all
+
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: @anios_alumnos }
+    end
+  end
+
+  # GET /anios_alumnos/1
+  # GET /anios_alumnos/1.json
+  def show
+    @anio_alumno = AnioAlumno.find(params[:id])
+
+    respond_to do |format|
+      format.html # show.html.erb
+      format.json { render json: @anio_alumno }
+    end
+  end
+
+  # GET /anios_alumnos/new
+  # GET /anios_alumnos/new.json
+  def new
+    @anio_alumno = AnioAlumno.new
+
+    respond_to do |format|
+      format.html # new.html.erb
+      format.json { render json: @anio_alumno }
+    end
+  end
+
+  # GET /anios_alumnos/1/edit
+  def edit
+    @anio_alumno = AnioAlumno.find(params[:id])
+  end
+
+  # POST /anios_alumnos
+  # POST /anios_alumnos.json
+  def create
+    @anio_alumno = AnioAlumno.new(params[:anio_alumno])
+
+    respond_to do |format|
+      if @anio_alumno.save
+        format.html { redirect_to @anio_alumno, notice: 'Anio alumno was successfully created.' }
+        format.json { render json: @anio_alumno, status: :created, location: @anio_alumno }
+      else
+        format.html { render action: "new" }
+        format.json { render json: @anio_alumno.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  # PUT /anios_alumnos/1
+  # PUT /anios_alumnos/1.json
+  def update
+    @anio_alumno = AnioAlumno.find(params[:id])
+
+    respond_to do |format|
+      if @anio_alumno.update_attributes(params[:anio_alumno])
+        format.html { redirect_to @anio_alumno, notice: 'Anio alumno was successfully updated.' }
+        format.json { head :no_content }
+      else
+        format.html { render action: "edit" }
+        format.json { render json: @anio_alumno.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  # DELETE /anios_alumnos/1
+  # DELETE /anios_alumnos/1.json
+  def destroy
+    @anio_alumno = AnioAlumno.find(params[:id])
+    @anio_alumno.destroy
+
+    respond_to do |format|
+      format.html { redirect_to anios_alumnos_url }
+      format.json { head :no_content }
+    end
+  end
+end

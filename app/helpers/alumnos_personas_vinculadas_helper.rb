@@ -1,0 +1,2 @@
+module AlumnosPersonasVinculadasHelper
+end

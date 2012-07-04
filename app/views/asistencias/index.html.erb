@@ -1,0 +1,29 @@
+<h1>Listing asistencias</h1>
+
+<table>
+  <tr>
+    <th>Anio alumno</th>
+    <th>Persona vinculada</th>
+    <th>Fecha hora</th>
+    <th>Usuario</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @asistencias.each do |asistencia| %>
+  <tr>
+    <td><%= asistencia.anio_alumno_id %></td>
+    <td><%= asistencia.persona_vinculada_id %></td>
+    <td><%= asistencia.fecha_hora %></td>
+    <td><%= asistencia.usuario %></td>
+    <td><%= link_to 'Show', asistencia %></td>
+    <td><%= link_to 'Edit', edit_asistencia_path(asistencia) %></td>
+    <td><%= link_to 'Destroy', asistencia, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Asistencia', new_asistencia_path %>

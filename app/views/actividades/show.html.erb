@@ -1,0 +1,70 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Anio escolar:</b>
+  <%= @actividad.anio_escolar_id %>
+</p>
+
+<p>
+  <b>Tipo evento:</b>
+  <%= @actividad.tipo_evento_id %>
+</p>
+
+<p>
+  <b>Fecha hora inicio:</b>
+  <%= @actividad.fecha_hora_inicio %>
+</p>
+
+<p>
+  <b>Fecha hora fin:</b>
+  <%= @actividad.fecha_hora_fin %>
+</p>
+
+<p>
+  <b>Tipo actividad:</b>
+  <%= @actividad.tipo_actividad %>
+</p>
+
+<p>
+  <b>Nombre:</b>
+  <%= @actividad.nombre %>
+</p>
+
+<p>
+  <b>Detalle:</b>
+  <%= @actividad.detalle %>
+</p>
+
+<p>
+  <b>Requiere autorizacion:</b>
+  <%= @actividad.requiere_autorizacion %>
+</p>
+
+<p>
+  <b>Limite autorizacion:</b>
+  <%= @actividad.limite_autorizacion %>
+</p>
+
+<p>
+  <b>Inicio notificacion:</b>
+  <%= @actividad.inicio_notificacion %>
+</p>
+
+<p>
+  <b>Fin notificacion:</b>
+  <%= @actividad.fin_notificacion %>
+</p>
+
+<p>
+  <b>Frecuencia dias notificacion:</b>
+  <%= @actividad.frecuencia_dias_notificacion %>
+</p>
+
+<p>
+  <b>Usuario:</b>
+  <%= @actividad.usuario %>
+</p>
+
+
+<%= link_to 'Edit', edit_actividad_path(@actividad) %> |
+<%= link_to 'Back', actividades_path %>

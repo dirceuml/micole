@@ -1,13 +1,61 @@
 Micole::Application.routes.draw do
+  resources :curriculos
+
+  resources :alumnos_personas_vinculadas
+
+  resources :personas_vinculadas
+
+  resources :asistencias
+
+  resources :actividades_secciones
+
+  resources :actividades
+
+  resources :cursos
+
+  resources :autorizaciones
+
+  resources :notas
+
+  resources :menus
+
+  resources :perfiles_transacciones
+
+  resources :transacciones
+
+  resources :listas_valores
+
+  resources :perfiles
+
+  resources :usuarios
+
+  resources :tipos_notas
+
+  resources :tipos_eventos
+
+  resources :alumnos
+
+  resources :cuaderno_controles_revisiones
+
+  resources :cuaderno_controles_eventos
+
+  resources :cuadernos_controles
+
+  resources :anios_alumnos
+
+  resources :secciones
+
+  resources :grados
+
+  resources :anios_escolares
+
+  resources :colegios
+
+  resources :alumno_padres
+
+  resources :colegio_anio_escolars
+
   resources :persona_autorizada_recojos
-
-  resources :cuaderno_control_revisions
-
-  resources :cuaderno_control_alumnos
-
-  resources :cuaderno_control_seccions
-
-  resources :cuaderno_controls
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

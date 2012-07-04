@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Anio escolar:</b>
+  <%= @tipo_nota.anio_escolar_id %>
+</p>
+
+<p>
+  <b>Descripcion:</b>
+  <%= @tipo_nota.descripcion %>
+</p>
+
+<p>
+  <b>Usuario:</b>
+  <%= @tipo_nota.usuario %>
+</p>
+
+
+<%= link_to 'Edit', edit_tipo_nota_path(@tipo_nota) %> |
+<%= link_to 'Back', tipos_notas_path %>

@@ -1,0 +1,27 @@
+<h1>Listing tipos_notas</h1>
+
+<table>
+  <tr>
+    <th>Anio escolar</th>
+    <th>Descripcion</th>
+    <th>Usuario</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @tipos_notas.each do |tipo_nota| %>
+  <tr>
+    <td><%= tipo_nota.anio_escolar_id %></td>
+    <td><%= tipo_nota.descripcion %></td>
+    <td><%= tipo_nota.usuario %></td>
+    <td><%= link_to 'Show', tipo_nota %></td>
+    <td><%= link_to 'Edit', edit_tipo_nota_path(tipo_nota) %></td>
+    <td><%= link_to 'Destroy', tipo_nota, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Tipo nota', new_tipo_nota_path %>

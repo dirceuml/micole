@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  actividad_id: 1
+  seccion_id: 1
+  usuario: MyString
+
+two:
+  actividad_id: 1
+  seccion_id: 1
+  usuario: MyString

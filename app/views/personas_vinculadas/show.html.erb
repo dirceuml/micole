@@ -1,0 +1,55 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Tipo documento:</b>
+  <%= @persona_vinculada.tipo_documento %>
+</p>
+
+<p>
+  <b>Numero documento:</b>
+  <%= @persona_vinculada.numero_documento %>
+</p>
+
+<p>
+  <b>Nombres:</b>
+  <%= @persona_vinculada.nombres %>
+</p>
+
+<p>
+  <b>Apellido paterno:</b>
+  <%= @persona_vinculada.apellido_paterno %>
+</p>
+
+<p>
+  <b>Apellido materno:</b>
+  <%= @persona_vinculada.apellido_materno %>
+</p>
+
+<p>
+  <b>Telefono fijo:</b>
+  <%= @persona_vinculada.telefono_fijo %>
+</p>
+
+<p>
+  <b>Telefono movil:</b>
+  <%= @persona_vinculada.telefono_movil %>
+</p>
+
+<p>
+  <b>Correo:</b>
+  <%= @persona_vinculada.correo %>
+</p>
+
+<p>
+  <b>Foto:</b>
+  <%= @persona_vinculada.foto %>
+</p>
+
+<p>
+  <b>Usuario:</b>
+  <%= @persona_vinculada.usuario %>
+</p>
+
+
+<%= link_to 'Edit', edit_persona_vinculada_path(@persona_vinculada) %> |
+<%= link_to 'Back', personas_vinculadas_path %>

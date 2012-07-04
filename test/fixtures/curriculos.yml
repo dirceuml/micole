@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  grado_id: 1
+  curso_id: 1
+
+two:
+  grado_id: 1
+  curso_id: 1

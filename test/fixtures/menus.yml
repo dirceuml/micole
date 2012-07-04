@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  menu_id: 1
+  transaccion_id: 1
+  orden: 1
+
+two:
+  menu_id: 1
+  transaccion_id: 1
+  orden: 1

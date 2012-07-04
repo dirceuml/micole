@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Anio escolar:</b>
+  <%= @grado.anio_escolar_id %>
+</p>
+
+<p>
+  <b>Grado:</b>
+  <%= @grado.grado %>
+</p>
+
+<p>
+  <b>Usuario:</b>
+  <%= @grado.usuario %>
+</p>
+
+
+<%= link_to 'Edit', edit_grado_path(@grado) %> |
+<%= link_to 'Back', grados_path %>

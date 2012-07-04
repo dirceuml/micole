@@ -1,0 +1,31 @@
+<h1>Listing cuaderno_controles_eventos</h1>
+
+<table>
+  <tr>
+    <th>Cuaderno control</th>
+    <th>Tipo evento</th>
+    <th>Alumno</th>
+    <th>Descripcion</th>
+    <th>Usuario</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @cuaderno_controles_eventos.each do |cuaderno_control_evento| %>
+  <tr>
+    <td><%= cuaderno_control_evento.cuaderno_control_id %></td>
+    <td><%= cuaderno_control_evento.tipo_evento_id %></td>
+    <td><%= cuaderno_control_evento.alumno_id %></td>
+    <td><%= cuaderno_control_evento.descripcion %></td>
+    <td><%= cuaderno_control_evento.usuario %></td>
+    <td><%= link_to 'Show', cuaderno_control_evento %></td>
+    <td><%= link_to 'Edit', edit_cuaderno_control_evento_path(cuaderno_control_evento) %></td>
+    <td><%= link_to 'Destroy', cuaderno_control_evento, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Cuaderno control evento', new_cuaderno_control_evento_path %>

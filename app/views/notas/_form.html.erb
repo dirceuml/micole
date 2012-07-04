@@ -1,0 +1,41 @@
+<%= form_for(@nota) do |f| %>
+  <% if @nota.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@nota.errors.count, "error") %> prohibited this nota from being saved:</h2>
+
+      <ul>
+      <% @nota.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :anio_alumno_id %><br />
+    <%= f.number_field :anio_alumno_id %>
+  </div>
+  <div class="field">
+    <%= f.label :curso_id %><br />
+    <%= f.number_field :curso_id %>
+  </div>
+  <div class="field">
+    <%= f.label :tipo_nota_id %><br />
+    <%= f.number_field :tipo_nota_id %>
+  </div>
+  <div class="field">
+    <%= f.label :nota %><br />
+    <%= f.text_field :nota %>
+  </div>
+  <div class="field">
+    <%= f.label :observaciones %><br />
+    <%= f.text_area :observaciones %>
+  </div>
+  <div class="field">
+    <%= f.label :usuario %><br />
+    <%= f.text_field :usuario %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

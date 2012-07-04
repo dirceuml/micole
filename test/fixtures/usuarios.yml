@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  perfil_id: 1
+  persona_vinculada_id: 1
+  usuario: MyString
+  nombre: MyString
+  clave: MyString
+
+two:
+  perfil_id: 1
+  persona_vinculada_id: 1
+  usuario: MyString
+  nombre: MyString
+  clave: MyString

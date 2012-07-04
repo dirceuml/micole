@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  colegio_id: 1
+  descripcion: MyString
+  notificacion_inmediata: 
+  alcance: 1
+  cuaderno_control: 
+  usuario: MyString
+
+two:
+  colegio_id: 1
+  descripcion: MyString
+  notificacion_inmediata: 
+  alcance: 1
+  cuaderno_control: 
+  usuario: MyString

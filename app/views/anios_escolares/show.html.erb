@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Colegio:</b>
+  <%= @anio_escolar.colegio_id %>
+</p>
+
+<p>
+  <b>Anio:</b>
+  <%= @anio_escolar.anio %>
+</p>
+
+<p>
+  <b>Inicio clases:</b>
+  <%= @anio_escolar.inicio_clases %>
+</p>
+
+<p>
+  <b>Fin clases:</b>
+  <%= @anio_escolar.fin_clases %>
+</p>
+
+<p>
+  <b>Usuario:</b>
+  <%= @anio_escolar.usuario %>
+</p>
+
+
+<%= link_to 'Edit', edit_anio_escolar_path(@anio_escolar) %> |
+<%= link_to 'Back', anios_escolares_path %>

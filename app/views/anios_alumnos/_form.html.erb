@@ -1,0 +1,29 @@
+<%= form_for(@anio_alumno) do |f| %>
+  <% if @anio_alumno.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@anio_alumno.errors.count, "error") %> prohibited this anio_alumno from being saved:</h2>
+
+      <ul>
+      <% @anio_alumno.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :anio_escolar_id %><br />
+    <%= f.number_field :anio_escolar_id %>
+  </div>
+  <div class="field">
+    <%= f.label :alumno_id %><br />
+    <%= f.number_field :alumno_id %>
+  </div>
+  <div class="field">
+    <%= f.label :usuario %><br />
+    <%= f.text_field :usuario %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

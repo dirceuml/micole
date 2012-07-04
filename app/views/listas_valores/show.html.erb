@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Tabla:</b>
+  <%= @lista_valor.tabla %>
+</p>
+
+<p>
+  <b>Item:</b>
+  <%= @lista_valor.item %>
+</p>
+
+<p>
+  <b>Descripcion:</b>
+  <%= @lista_valor.descripcion %>
+</p>
+
+<p>
+  <b>Abreviatura:</b>
+  <%= @lista_valor.abreviatura %>
+</p>
+
+
+<%= link_to 'Edit', edit_lista_valor_path(@lista_valor) %> |
+<%= link_to 'Back', listas_valores_path %>

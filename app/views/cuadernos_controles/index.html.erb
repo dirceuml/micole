@@ -1,0 +1,29 @@
+<h1>Listing cuadernos_controles</h1>
+
+<table>
+  <tr>
+    <th>Seccion</th>
+    <th>Fecha</th>
+    <th>Estado</th>
+    <th>Usuario</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @cuadernos_controles.each do |cuaderno_control| %>
+  <tr>
+    <td><%= cuaderno_control.seccion_id %></td>
+    <td><%= cuaderno_control.fecha %></td>
+    <td><%= cuaderno_control.estado %></td>
+    <td><%= cuaderno_control.usuario %></td>
+    <td><%= link_to 'Show', cuaderno_control %></td>
+    <td><%= link_to 'Edit', edit_cuaderno_control_path(cuaderno_control) %></td>
+    <td><%= link_to 'Destroy', cuaderno_control, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Cuaderno control', new_cuaderno_control_path %>

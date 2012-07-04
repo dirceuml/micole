@@ -1,0 +1,27 @@
+<h1>Listing actividades_secciones</h1>
+
+<table>
+  <tr>
+    <th>Actividad</th>
+    <th>Seccion</th>
+    <th>Usuario</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @actividades_secciones.each do |actividad_seccione| %>
+  <tr>
+    <td><%= actividad_seccione.actividad_id %></td>
+    <td><%= actividad_seccione.seccion_id %></td>
+    <td><%= actividad_seccione.usuario %></td>
+    <td><%= link_to 'Show', actividad_seccione %></td>
+    <td><%= link_to 'Edit', edit_actividad_seccione_path(actividad_seccione) %></td>
+    <td><%= link_to 'Destroy', actividad_seccione, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Actividad seccion', new_actividad_seccione_path %>

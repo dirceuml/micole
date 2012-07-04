@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Actividad:</b>
+  <%= @autorizacion.actividad_id %>
+</p>
+
+<p>
+  <b>Alumno:</b>
+  <%= @autorizacion.alumno_id %>
+</p>
+
+<p>
+  <b>Persona vinculada:</b>
+  <%= @autorizacion.persona_vinculada_id %>
+</p>
+
+<p>
+  <b>Fecha hora autorizacion:</b>
+  <%= @autorizacion.fecha_hora_autorizacion %>
+</p>
+
+<p>
+  <b>Usuario:</b>
+  <%= @autorizacion.usuario %>
+</p>
+
+
+<%= link_to 'Edit', edit_autorizacion_path(@autorizacion) %> |
+<%= link_to 'Back', autorizaciones_path %>

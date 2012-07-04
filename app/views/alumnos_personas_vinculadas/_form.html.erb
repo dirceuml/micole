@@ -1,0 +1,57 @@
+<%= form_for(@alumno_persona_vinculada) do |f| %>
+  <% if @alumno_persona_vinculada.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@alumno_persona_vinculada.errors.count, "error") %> prohibited this alumno_persona_vinculada from being saved:</h2>
+
+      <ul>
+      <% @alumno_persona_vinculada.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :persona_vinculada_id %><br />
+    <%= f.number_field :persona_vinculada_id %>
+  </div>
+  <div class="field">
+    <%= f.label :alumno_id %><br />
+    <%= f.number_field :alumno_id %>
+  </div>
+  <div class="field">
+    <%= f.label :tipo_vinculo %><br />
+    <%= f.number_field :tipo_vinculo %>
+  </div>
+  <div class="field">
+    <%= f.label :vigencia_vinculo %><br />
+    <%= f.number_field :vigencia_vinculo %>
+  </div>
+  <div class="field">
+    <%= f.label :apoderado %><br />
+    <%= f.text_field :apoderado %>
+  </div>
+  <div class="field">
+    <%= f.label :autoriza_actividad %><br />
+    <%= f.text_field :autoriza_actividad %>
+  </div>
+  <div class="field">
+    <%= f.label :revisa_control %><br />
+    <%= f.text_field :revisa_control %>
+  </div>
+  <div class="field">
+    <%= f.label :inicio_vigencia %><br />
+    <%= f.date_select :inicio_vigencia %>
+  </div>
+  <div class="field">
+    <%= f.label :fin_vigencia %><br />
+    <%= f.date_select :fin_vigencia %>
+  </div>
+  <div class="field">
+    <%= f.label :usuario %><br />
+    <%= f.text_field :usuario %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

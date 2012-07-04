@@ -1,0 +1,27 @@
+<h1>Listing transacciones</h1>
+
+<table>
+  <tr>
+    <th>Descripcion</th>
+    <th>Tipo</th>
+    <th>Ruta</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @transacciones.each do |transaccion| %>
+  <tr>
+    <td><%= transaccion.descripcion %></td>
+    <td><%= transaccion.tipo %></td>
+    <td><%= transaccion.ruta %></td>
+    <td><%= link_to 'Show', transaccion %></td>
+    <td><%= link_to 'Edit', edit_transaccion_path(transaccion) %></td>
+    <td><%= link_to 'Destroy', transaccion, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Transaccion', new_transaccion_path %>

@@ -1,0 +1,25 @@
+<h1>Listing perfiles_transacciones</h1>
+
+<table>
+  <tr>
+    <th>Perfil</th>
+    <th>Transaccion</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @perfiles_transacciones.each do |perfil_transaccione| %>
+  <tr>
+    <td><%= perfil_transaccione.perfil_id %></td>
+    <td><%= perfil_transaccione.transaccion_id %></td>
+    <td><%= link_to 'Show', perfil_transaccione %></td>
+    <td><%= link_to 'Edit', edit_perfil_transaccione_path(perfil_transaccione) %></td>
+    <td><%= link_to 'Destroy', perfil_transaccione, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Perfil transaccion', new_perfil_transaccione_path %>

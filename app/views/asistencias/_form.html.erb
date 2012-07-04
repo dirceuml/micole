@@ -1,0 +1,33 @@
+<%= form_for(@asistencia) do |f| %>
+  <% if @asistencia.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@asistencia.errors.count, "error") %> prohibited this asistencia from being saved:</h2>
+
+      <ul>
+      <% @asistencia.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :anio_alumno_id %><br />
+    <%= f.number_field :anio_alumno_id %>
+  </div>
+  <div class="field">
+    <%= f.label :persona_vinculada_id %><br />
+    <%= f.number_field :persona_vinculada_id %>
+  </div>
+  <div class="field">
+    <%= f.label :fecha_hora %><br />
+    <%= f.datetime_select :fecha_hora %>
+  </div>
+  <div class="field">
+    <%= f.label :usuario %><br />
+    <%= f.text_field :usuario %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

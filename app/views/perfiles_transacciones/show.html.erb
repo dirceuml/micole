@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Perfil:</b>
+  <%= @perfil_transaccione.perfil_id %>
+</p>
+
+<p>
+  <b>Transaccion:</b>
+  <%= @perfil_transaccione.transaccion_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_perfil_transaccione_path(@perfil_transaccione) %> |
+<%= link_to 'Back', perfiles_transacciones_path %>

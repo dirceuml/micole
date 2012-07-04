@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Colegio:</b>
+  <%= @tipo_evento.colegio_id %>
+</p>
+
+<p>
+  <b>Descripcion:</b>
+  <%= @tipo_evento.descripcion %>
+</p>
+
+<p>
+  <b>Notificacion inmediata:</b>
+  <%= @tipo_evento.notificacion_inmediata %>
+</p>
+
+<p>
+  <b>Alcance:</b>
+  <%= @tipo_evento.alcance %>
+</p>
+
+<p>
+  <b>Cuaderno control:</b>
+  <%= @tipo_evento.cuaderno_control %>
+</p>
+
+<p>
+  <b>Usuario:</b>
+  <%= @tipo_evento.usuario %>
+</p>
+
+
+<%= link_to 'Edit', edit_tipo_evento_path(@tipo_evento) %> |
+<%= link_to 'Back', tipos_eventos_path %>

@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Anio alumno:</b>
+  <%= @nota.anio_alumno_id %>
+</p>
+
+<p>
+  <b>Curso:</b>
+  <%= @nota.curso_id %>
+</p>
+
+<p>
+  <b>Tipo nota:</b>
+  <%= @nota.tipo_nota_id %>
+</p>
+
+<p>
+  <b>Nota:</b>
+  <%= @nota.nota %>
+</p>
+
+<p>
+  <b>Observaciones:</b>
+  <%= @nota.observaciones %>
+</p>
+
+<p>
+  <b>Usuario:</b>
+  <%= @nota.usuario %>
+</p>
+
+
+<%= link_to 'Edit', edit_nota_path(@nota) %> |
+<%= link_to 'Back', notas_path %>

@@ -1,0 +1,2 @@
+module PersonasVinculadasHelper
+end

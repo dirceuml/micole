@@ -1,0 +1,31 @@
+<h1>Listing autorizaciones</h1>
+
+<table>
+  <tr>
+    <th>Actividad</th>
+    <th>Alumno</th>
+    <th>Persona vinculada</th>
+    <th>Fecha hora autorizacion</th>
+    <th>Usuario</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @autorizaciones.each do |autorizacion| %>
+  <tr>
+    <td><%= autorizacion.actividad_id %></td>
+    <td><%= autorizacion.alumno_id %></td>
+    <td><%= autorizacion.persona_vinculada_id %></td>
+    <td><%= autorizacion.fecha_hora_autorizacion %></td>
+    <td><%= autorizacion.usuario %></td>
+    <td><%= link_to 'Show', autorizacion %></td>
+    <td><%= link_to 'Edit', edit_autorizacion_path(autorizacion) %></td>
+    <td><%= link_to 'Destroy', autorizacion, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Autorizacion', new_autorizacion_path %>

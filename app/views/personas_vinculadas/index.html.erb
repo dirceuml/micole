@@ -1,0 +1,41 @@
+<h1>Listing personas_vinculadas</h1>
+
+<table>
+  <tr>
+    <th>Tipo documento</th>
+    <th>Numero documento</th>
+    <th>Nombres</th>
+    <th>Apellido paterno</th>
+    <th>Apellido materno</th>
+    <th>Telefono fijo</th>
+    <th>Telefono movil</th>
+    <th>Correo</th>
+    <th>Foto</th>
+    <th>Usuario</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @personas_vinculadas.each do |persona_vinculada| %>
+  <tr>
+    <td><%= persona_vinculada.tipo_documento %></td>
+    <td><%= persona_vinculada.numero_documento %></td>
+    <td><%= persona_vinculada.nombres %></td>
+    <td><%= persona_vinculada.apellido_paterno %></td>
+    <td><%= persona_vinculada.apellido_materno %></td>
+    <td><%= persona_vinculada.telefono_fijo %></td>
+    <td><%= persona_vinculada.telefono_movil %></td>
+    <td><%= persona_vinculada.correo %></td>
+    <td><%= persona_vinculada.foto %></td>
+    <td><%= persona_vinculada.usuario %></td>
+    <td><%= link_to 'Show', persona_vinculada %></td>
+    <td><%= link_to 'Edit', edit_persona_vinculada_path(persona_vinculada) %></td>
+    <td><%= link_to 'Destroy', persona_vinculada, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Persona vinculada', new_persona_vinculada_path %>

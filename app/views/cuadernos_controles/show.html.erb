@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Seccion:</b>
+  <%= @cuaderno_control.seccion_id %>
+</p>
+
+<p>
+  <b>Fecha:</b>
+  <%= @cuaderno_control.fecha %>
+</p>
+
+<p>
+  <b>Estado:</b>
+  <%= @cuaderno_control.estado %>
+</p>
+
+<p>
+  <b>Usuario:</b>
+  <%= @cuaderno_control.usuario %>
+</p>
+
+
+<%= link_to 'Edit', edit_cuaderno_control_path(@cuaderno_control) %> |
+<%= link_to 'Back', cuadernos_controles_path %>

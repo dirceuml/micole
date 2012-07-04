@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  anio_alumno_id: 1
+  persona_vinculada_id: 1
+  fecha_hora: 2012-07-02 23:10:10
+  usuario: MyString
+
+two:
+  anio_alumno_id: 1
+  persona_vinculada_id: 1
+  fecha_hora: 2012-07-02 23:10:10
+  usuario: MyString

@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  anio_escolar_id: 1
+  grado: 1
+  usuario: MyString
+
+two:
+  anio_escolar_id: 1
+  grado: 1
+  usuario: MyString

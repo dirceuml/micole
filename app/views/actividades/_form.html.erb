@@ -1,0 +1,69 @@
+<%= form_for(@actividad) do |f| %>
+  <% if @actividad.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@actividad.errors.count, "error") %> prohibited this actividad from being saved:</h2>
+
+      <ul>
+      <% @actividad.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :anio_escolar_id %><br />
+    <%= f.number_field :anio_escolar_id %>
+  </div>
+  <div class="field">
+    <%= f.label :tipo_evento_id %><br />
+    <%= f.number_field :tipo_evento_id %>
+  </div>
+  <div class="field">
+    <%= f.label :fecha_hora_inicio %><br />
+    <%= f.datetime_select :fecha_hora_inicio %>
+  </div>
+  <div class="field">
+    <%= f.label :fecha_hora_fin %><br />
+    <%= f.datetime_select :fecha_hora_fin %>
+  </div>
+  <div class="field">
+    <%= f.label :tipo_actividad %><br />
+    <%= f.number_field :tipo_actividad %>
+  </div>
+  <div class="field">
+    <%= f.label :nombre %><br />
+    <%= f.text_field :nombre %>
+  </div>
+  <div class="field">
+    <%= f.label :detalle %><br />
+    <%= f.text_area :detalle %>
+  </div>
+  <div class="field">
+    <%= f.label :requiere_autorizacion %><br />
+    <%= f.text_field :requiere_autorizacion %>
+  </div>
+  <div class="field">
+    <%= f.label :limite_autorizacion %><br />
+    <%= f.date_select :limite_autorizacion %>
+  </div>
+  <div class="field">
+    <%= f.label :inicio_notificacion %><br />
+    <%= f.date_select :inicio_notificacion %>
+  </div>
+  <div class="field">
+    <%= f.label :fin_notificacion %><br />
+    <%= f.date_select :fin_notificacion %>
+  </div>
+  <div class="field">
+    <%= f.label :frecuencia_dias_notificacion %><br />
+    <%= f.number_field :frecuencia_dias_notificacion %>
+  </div>
+  <div class="field">
+    <%= f.label :usuario %><br />
+    <%= f.text_field :usuario %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

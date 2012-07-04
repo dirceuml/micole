@@ -1,0 +1,37 @@
+<%= form_for(@anio_escolar) do |f| %>
+  <% if @anio_escolar.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@anio_escolar.errors.count, "error") %> prohibited this anio_escolar from being saved:</h2>
+
+      <ul>
+      <% @anio_escolar.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :colegio_id %><br />
+    <%= f.number_field :colegio_id %>
+  </div>
+  <div class="field">
+    <%= f.label :anio %><br />
+    <%= f.number_field :anio %>
+  </div>
+  <div class="field">
+    <%= f.label :inicio_clases %><br />
+    <%= f.date_select :inicio_clases %>
+  </div>
+  <div class="field">
+    <%= f.label :fin_clases %><br />
+    <%= f.date_select :fin_clases %>
+  </div>
+  <div class="field">
+    <%= f.label :usuario %><br />
+    <%= f.text_field :usuario %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

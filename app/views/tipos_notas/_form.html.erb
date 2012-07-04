@@ -1,0 +1,29 @@
+<%= form_for(@tipo_nota) do |f| %>
+  <% if @tipo_nota.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@tipo_nota.errors.count, "error") %> prohibited this tipo_nota from being saved:</h2>
+
+      <ul>
+      <% @tipo_nota.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :anio_escolar_id %><br />
+    <%= f.number_field :anio_escolar_id %>
+  </div>
+  <div class="field">
+    <%= f.label :descripcion %><br />
+    <%= f.text_field :descripcion %>
+  </div>
+  <div class="field">
+    <%= f.label :usuario %><br />
+    <%= f.text_field :usuario %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

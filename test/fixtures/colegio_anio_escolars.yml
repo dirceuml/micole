@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  CodigoColegio: 1
+  Anio: 1
+  InicioClases: 2012-06-29
+  FinClases: 2012-06-29
+  Usuario: MyString
+
+two:
+  CodigoColegio: 1
+  Anio: 1
+  InicioClases: 2012-06-29
+  FinClases: 2012-06-29
+  Usuario: MyString

@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  colegio_id: 1
+  anio: 1
+  inicio_clases: 2012-07-02
+  fin_clases: 2012-07-02
+  usuario: MyString
+
+two:
+  colegio_id: 1
+  anio: 1
+  inicio_clases: 2012-07-02
+  fin_clases: 2012-07-02
+  usuario: MyString

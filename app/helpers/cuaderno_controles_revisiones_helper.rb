@@ -1,0 +1,2 @@
+module CuadernoControlesRevisionesHelper
+end

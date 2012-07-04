@@ -1,0 +1,29 @@
+<h1>Listing listas_valores</h1>
+
+<table>
+  <tr>
+    <th>Tabla</th>
+    <th>Item</th>
+    <th>Descripcion</th>
+    <th>Abreviatura</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @listas_valores.each do |lista_valor| %>
+  <tr>
+    <td><%= lista_valor.tabla %></td>
+    <td><%= lista_valor.item %></td>
+    <td><%= lista_valor.descripcion %></td>
+    <td><%= lista_valor.abreviatura %></td>
+    <td><%= link_to 'Show', lista_valor %></td>
+    <td><%= link_to 'Edit', edit_lista_valor_path(lista_valor) %></td>
+    <td><%= link_to 'Destroy', lista_valor, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Lista valor', new_lista_valor_path %>

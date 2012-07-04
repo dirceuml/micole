@@ -1,0 +1,25 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  persona_vinculada_id: 1
+  alumno_id: 1
+  tipo_vinculo: 1
+  vigencia_vinculo: 1
+  apoderado: 
+  autoriza_actividad: 
+  revisa_control: 
+  inicio_vigencia: 2012-07-02
+  fin_vigencia: 2012-07-02
+  usuario: MyString
+
+two:
+  persona_vinculada_id: 1
+  alumno_id: 1
+  tipo_vinculo: 1
+  vigencia_vinculo: 1
+  apoderado: 
+  autoriza_actividad: 
+  revisa_control: 
+  inicio_vigencia: 2012-07-02
+  fin_vigencia: 2012-07-02
+  usuario: MyString

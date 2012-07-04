@@ -1,0 +1,41 @@
+<%= form_for(@tipo_evento) do |f| %>
+  <% if @tipo_evento.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@tipo_evento.errors.count, "error") %> prohibited this tipo_evento from being saved:</h2>
+
+      <ul>
+      <% @tipo_evento.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :colegio_id %><br />
+    <%= f.number_field :colegio_id %>
+  </div>
+  <div class="field">
+    <%= f.label :descripcion %><br />
+    <%= f.text_field :descripcion %>
+  </div>
+  <div class="field">
+    <%= f.label :notificacion_inmediata %><br />
+    <%= f.text_field :notificacion_inmediata %>
+  </div>
+  <div class="field">
+    <%= f.label :alcance %><br />
+    <%= f.number_field :alcance %>
+  </div>
+  <div class="field">
+    <%= f.label :cuaderno_control %><br />
+    <%= f.text_field :cuaderno_control %>
+  </div>
+  <div class="field">
+    <%= f.label :usuario %><br />
+    <%= f.text_field :usuario %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

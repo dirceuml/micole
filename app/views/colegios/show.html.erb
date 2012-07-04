@@ -1,0 +1,45 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Nombre:</b>
+  <%= @colegio.nombre %>
+</p>
+
+<p>
+  <b>Ruc:</b>
+  <%= @colegio.ruc %>
+</p>
+
+<p>
+  <b>Direccion:</b>
+  <%= @colegio.direccion %>
+</p>
+
+<p>
+  <b>Telefono:</b>
+  <%= @colegio.telefono %>
+</p>
+
+<p>
+  <b>Correo:</b>
+  <%= @colegio.correo %>
+</p>
+
+<p>
+  <b>Logo:</b>
+  <%= @colegio.logo %>
+</p>
+
+<p>
+  <b>Director:</b>
+  <%= @colegio.director %>
+</p>
+
+<p>
+  <b>Usuario:</b>
+  <%= @colegio.usuario %>
+</p>
+
+
+<%= link_to 'Edit', edit_colegio_path(@colegio) %> |
+<%= link_to 'Back', colegios_path %>

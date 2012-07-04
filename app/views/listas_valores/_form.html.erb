@@ -1,0 +1,33 @@
+<%= form_for(@lista_valor) do |f| %>
+  <% if @lista_valor.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@lista_valor.errors.count, "error") %> prohibited this lista_valor from being saved:</h2>
+
+      <ul>
+      <% @lista_valor.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :tabla %><br />
+    <%= f.number_field :tabla %>
+  </div>
+  <div class="field">
+    <%= f.label :item %><br />
+    <%= f.number_field :item %>
+  </div>
+  <div class="field">
+    <%= f.label :descripcion %><br />
+    <%= f.text_field :descripcion %>
+  </div>
+  <div class="field">
+    <%= f.label :abreviatura %><br />
+    <%= f.text_field :abreviatura %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

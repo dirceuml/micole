@@ -1,0 +1,25 @@
+<%= form_for(@perfil_transaccione) do |f| %>
+  <% if @perfil_transaccione.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@perfil_transaccione.errors.count, "error") %> prohibited this perfil_transaccione from being saved:</h2>
+
+      <ul>
+      <% @perfil_transaccione.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :perfil_id %><br />
+    <%= f.number_field :perfil_id %>
+  </div>
+  <div class="field">
+    <%= f.label :transaccion_id %><br />
+    <%= f.number_field :transaccion_id %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

@@ -11,56 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120615035738) do
-
-  create_table "cuaderno_control_alumnos", :force => true do |t|
-    t.integer  "CodigoColegio"
-    t.date     "Fecha"
-    t.string   "Seccion"
-    t.integer  "CodigoAlumno"
-    t.integer  "TipoEvento"
-    t.text     "Detalle"
-    t.string   "CodigoUsuario"
-    t.datetime "FechaUsuario"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
-  end
-
-  create_table "cuaderno_control_revisions", :force => true do |t|
-    t.integer  "CodigoColegio"
-    t.date     "Fecha"
-    t.string   "Seccion"
-    t.integer  "CodigoAlumno"
-    t.integer  "Revisado"
-    t.text     "Observaciones"
-    t.string   "CodigoUsuario"
-    t.datetime "FechaUsuario"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
-  end
-
-  create_table "cuaderno_control_seccions", :force => true do |t|
-    t.integer  "CodigoColegio"
-    t.date     "Fecha"
-    t.string   "Seccion"
-    t.integer  "TipoEvento"
-    t.text     "Detalle"
-    t.string   "CodigoUsuario"
-    t.datetime "FechaUsuario"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
-  end
-
-  create_table "cuaderno_controls", :force => true do |t|
-    t.integer  "CodigoColegio"
-    t.date     "Fecha"
-    t.string   "Seccion"
-    t.integer  "Estado"
-    t.string   "CodigoUsuario"
-    t.datetime "FechaUsuario"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
-  end
+ActiveRecord::Schema.define(:version => 20120701043145) do
 
   create_table "persona_autorizada_recojos", :force => true do |t|
     t.integer  "CodigoPersonaAutorizada"

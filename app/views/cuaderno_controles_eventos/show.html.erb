@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Cuaderno control:</b>
+  <%= @cuaderno_control_evento.cuaderno_control_id %>
+</p>
+
+<p>
+  <b>Tipo evento:</b>
+  <%= @cuaderno_control_evento.tipo_evento_id %>
+</p>
+
+<p>
+  <b>Alumno:</b>
+  <%= @cuaderno_control_evento.alumno_id %>
+</p>
+
+<p>
+  <b>Descripcion:</b>
+  <%= @cuaderno_control_evento.descripcion %>
+</p>
+
+<p>
+  <b>Usuario:</b>
+  <%= @cuaderno_control_evento.usuario %>
+</p>
+
+
+<%= link_to 'Edit', edit_cuaderno_control_evento_path(@cuaderno_control_evento) %> |
+<%= link_to 'Back', cuaderno_controles_eventos_path %>

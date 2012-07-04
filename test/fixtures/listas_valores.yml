@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  tabla: 1
+  item: 1
+  descripcion: MyString
+  abreviatura: MyString
+
+two:
+  tabla: 1
+  item: 1
+  descripcion: MyString
+  abreviatura: MyString

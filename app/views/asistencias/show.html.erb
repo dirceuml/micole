@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Anio alumno:</b>
+  <%= @asistencia.anio_alumno_id %>
+</p>
+
+<p>
+  <b>Persona vinculada:</b>
+  <%= @asistencia.persona_vinculada_id %>
+</p>
+
+<p>
+  <b>Fecha hora:</b>
+  <%= @asistencia.fecha_hora %>
+</p>
+
+<p>
+  <b>Usuario:</b>
+  <%= @asistencia.usuario %>
+</p>
+
+
+<%= link_to 'Edit', edit_asistencia_path(@asistencia) %> |
+<%= link_to 'Back', asistencias_path %>

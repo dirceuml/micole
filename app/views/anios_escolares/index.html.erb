@@ -1,0 +1,31 @@
+<h1>Listing anios_escolares</h1>
+
+<table>
+  <tr>
+    <th>Colegio</th>
+    <th>Anio</th>
+    <th>Inicio clases</th>
+    <th>Fin clases</th>
+    <th>Usuario</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @anios_escolares.each do |anio_escolar| %>
+  <tr>
+    <td><%= anio_escolar.colegio_id %></td>
+    <td><%= anio_escolar.anio %></td>
+    <td><%= anio_escolar.inicio_clases %></td>
+    <td><%= anio_escolar.fin_clases %></td>
+    <td><%= anio_escolar.usuario %></td>
+    <td><%= link_to 'Show', anio_escolar %></td>
+    <td><%= link_to 'Edit', edit_anio_escolar_path(anio_escolar) %></td>
+    <td><%= link_to 'Destroy', anio_escolar, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Anio escolar', new_anio_escolar_path %>
