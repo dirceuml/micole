@@ -1,8 +1,8 @@
 class CreateAlumnos < ActiveRecord::Migration
   def change
     create_table :alumnos do |t|
-      t.string :nombres
-      t.string :apellido_paterno
+      t.string :nombres, :null => false
+      t.string :apellido_paterno, :null => false
       t.string :apellido_materno
       t.date :fecha_nacimiento
       t.string :telefono_fijo
@@ -10,7 +10,7 @@ class CreateAlumnos < ActiveRecord::Migration
       t.text :direccion
       t.string :correo
       t.string :foto
-      t.string :usuario
+      t.string :usuario, :null => false
 
       t.timestamps
     end

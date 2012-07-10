@@ -1,9 +1,9 @@
 class CreateGrados < ActiveRecord::Migration
   def change
     create_table :grados do |t|
-      t.integer :anio_escolar_id
-      t.integer :grado
-      t.string :usuario
+      t.integer :anio_escolar_id, :null => false
+      t.integer :grado, :null => false
+      t.string :usuario, :null => false
 
       t.timestamps
     end

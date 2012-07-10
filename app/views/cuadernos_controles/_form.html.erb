@@ -12,22 +12,23 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :seccion_id %><br />
-    <%= f.number_field :seccion_id %>
+    <% fecha_actual = Date.current %>
+    <%= f.text_field :fecha, :readonly => true, :value => fecha_actual,  "data-mini" => "true", "style" => "width:80px" %>
+    
   </div>
   <div class="field">
-    <%= f.label :fecha %><br />
-    <%= f.date_select :fecha %>
+    <%= f.label :seccion_id %>
+    <%= collection_select(:cuaderno_control, :seccion_id, Seccion.all, :id, :grado_seccion, {}, {"data-mini" => "true"}) %>
   </div>
   <div class="field">
-    <%= f.label :estado %><br />
-    <%= f.number_field :estado %>
+    <!--%= f.label :estado %-->
+    <%= f.hidden_field :estado, :value => 1 %>
+    <!--%= collection_select(:cuaderno_control, :estado, ListaValor.where("tabla = 5"), :item, :descripcion, {}, {"data-mini" => "true"}) %-->
   </div>
   <div class="field">
-    <%= f.label :usuario %><br />
-    <%= f.text_field :usuario %>
+    <%= f.hidden_field :usuario, :value => "dirceu" %>
   </div>
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit "Grabar", "data-inline" => "true", "data-theme" => "a", "data-icon" => "check" %>
   </div>
 <% end %>
