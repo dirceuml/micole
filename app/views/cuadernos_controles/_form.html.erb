@@ -11,14 +11,13 @@
     </div>
   <% end %>
 
-  <div class="field">
+  <div class="field" style="float:right">
     <% fecha_actual = Date.current %>
     <%= f.text_field :fecha, :readonly => true, :value => fecha_actual,  "data-mini" => "true", "style" => "width:80px" %>
     
   </div>
-  <div class="field">
-    <%= f.label :seccion_id %>
-    <%= collection_select(:cuaderno_control, :seccion_id, Seccion.all, :id, :grado_seccion, {}, {"data-mini" => "true"}) %>
+  <div class="field" style="width:30%; float:left">
+    Sección: <%= collection_select(:cuaderno_control, :seccion_id, Seccion.all, :id, :grado_seccion, {}, {"data-mini" => "true"}) %>
   </div>
   <div class="field">
     <!--%= f.label :estado %-->
@@ -29,6 +28,6 @@
     <%= f.hidden_field :usuario, :value => "dirceu" %>
   </div>
   <div class="actions">
-    <%= f.submit "Grabar", "data-inline" => "true", "data-theme" => "a", "data-icon" => "check" %>
+    <%= f.submit "Grabar", "data-inline" => "true", "data-theme" => "a", "data-icon" => "check", "data-mini" => "true" %>
   </div>
 <% end %>

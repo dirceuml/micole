@@ -10,6 +10,14 @@
   <script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
   <script src="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.js"></script>
   
+  <script>
+
+  $('div[data-role=page]').live('pagecreate',function(){
+    $('.ui-select').css({'width':'300px'});
+  });
+
+  </script>
+  
   <%= csrf_meta_tag %>  
 
 </head>
