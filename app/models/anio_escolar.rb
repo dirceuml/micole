@@ -8,5 +8,5 @@ class AnioEscolar < ActiveRecord::Base
   belongs_to :colegio
   
   validates :colegio_id, :anio, :usuario, :presence => true
-  validates :anio, :uniqueness => {:scope => :colegio_id, :message => "Solamente se puede configurar un año por colegio"}
+  validates :anio, :uniqueness => {:scope => :colegio_id, :message => "Solamente se puede configurar un periodo por colegio"}
 end
