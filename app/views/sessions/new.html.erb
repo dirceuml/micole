@@ -1,0 +1,16 @@
+<div data-role="content" style="width:30%">
+  <div data-role="header"><h1>Iniciar sessión</h1></div>
+
+
+  <%= form_tag sessions_path :action => "create" do %>
+    <p>
+      <%= label_tag :usuario %><br />
+      <%= text_field_tag :usuario, params[:usuario] %>
+    </p>
+    <p>
+      <%= label_tag :clave %><br />
+      <%= password_field_tag :clave %>
+    </p>
+    <p class="button"><%= submit_tag "Iniciar sesión", "data-inline" => "true", "data-theme" => "a", "data-icon" => "check", "data-mini" => "true" %></p>
+  <% end %>
+ </div>

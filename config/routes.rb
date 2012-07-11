@@ -1,4 +1,5 @@
-Micole::Application.routes.draw do
+Micole::Application.routes.draw do 
+
   resources :curriculos
 
   resources :alumnos_personas_vinculadas
@@ -26,8 +27,14 @@ Micole::Application.routes.draw do
   resources :listas_valores
 
   resources :perfiles
+  
+  #get "sessions/new"
+  get "log_out" => "sessions#destroy", :as => "log_out"
+  get "log_in" => "sessions#new", :as => "log_in"
 
   resources :usuarios
+  resources :sessions
+  
 
   resources :tipos_notas
 
