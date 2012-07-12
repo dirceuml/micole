@@ -20,25 +20,23 @@
   
   <%= csrf_meta_tag %>  
 
-</head>
-<div>
-  <image src="logo.jpg"/>
-</div>
-
-  <div id="user_nav">
-    <% if current_user %>
-      Inició sesión como <%= current_user.usuario %>.
-      <%= link_to "Cerrar sesión", log_out_path %>
-    <% else %>
-      <%= link_to "Iniciar sesión", log_in_path %>
-    <% end %>
-  </div>
-
-  <% flash.each do |name, msg| %>
-    <%= content_tag :div, msg, :id => "flash_#{name}" %>
-  <% end %>
+</head> 
 
   <div data-role="page">
+    
+      <image src="/assets/logo_small.jpg"/>    
+    
+      <% if current_user %>
+        Usuario <%= current_user.usuario %>.
+        <%= link_to "Cerrar sesión", log_out_path %>
+      <% else %>
+        <%= link_to "Iniciar sesión", log_in_path %>
+      <% end %> 
+    
+    <% flash.each do |name, msg| %>
+      <%= content_tag :div, msg, :id => "flash_#{name}" %>
+    <% end %>
+    
     <%= yield %>
   </div>
 

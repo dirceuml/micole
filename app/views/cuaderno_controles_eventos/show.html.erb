@@ -1,30 +1,9 @@
-<p id="notice"><%= notice %></p>
+<div id='cuaderno_control_evento' data-role="header">
+  <h2><%= TipoEvento.find(@cuaderno_control_evento.tipo_evento_id).descripcion %></h2>  
+  <%= link_to 'Aceptar', @cuaderno_control %>
+</div>
 
-<p>
-  <b>Cuaderno control:</b>
-  <%= @cuaderno_control_evento.cuaderno_control_id %>
-</p>
-
-<p>
-  <b>Tipo evento:</b>
-  <%= @cuaderno_control_evento.tipo_evento_id %>
-</p>
-
-<p>
-  <b>Alumno:</b>
-  <%= @cuaderno_control_evento.alumno_id %>
-</p>
-
-<p>
-  <b>Descripcion:</b>
-  <%= @cuaderno_control_evento.descripcion %>
-</p>
-
-<p>
-  <b>Usuario:</b>
-  <%= @cuaderno_control_evento.usuario %>
-</p>
-
-
-<%= link_to 'Edit', edit_cuaderno_control_evento_path(@cuaderno_control_evento) %> |
-<%= link_to 'Back', cuaderno_controles_eventos_path %>
+<div data-role="content">
+  <%= simple_format(@cuaderno_control_evento.descripcion) %>
+  <%= simple_format(Alumno.find(@cuaderno_control_evento.alumno_id).apellidos_nombres) %>
+</div>

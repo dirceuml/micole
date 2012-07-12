@@ -40,13 +40,12 @@ Micole::Application.routes.draw do
 
   resources :tipos_eventos
 
-  resources :alumnos
+  resources :alumnos  
 
-  resources :cuaderno_controles_revisiones
-
-  resources :cuaderno_controles_eventos
-
-  resources :cuadernos_controles
+  resources :cuadernos_controles do
+    resources :cuaderno_controles_revisiones
+    resources :cuaderno_controles_eventos
+  end
 
   resources :anios_alumnos
 

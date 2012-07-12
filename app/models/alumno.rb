@@ -8,4 +8,8 @@ class Alumno < ActiveRecord::Base
   has_many :anios_escolares, :through => :anios_alumnos
   
   validates :nombres, :apellido_paterno, :apellido_materno, :usuario, :presence => true
+  
+  def apellidos_nombres
+    apellido_paterno + " " + apellido_materno + " " + nombres
+  end
 end

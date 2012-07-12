@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120710034759) do
+ActiveRecord::Schema.define(:version => 20120712055708) do
 
   create_table "actividades", :force => true do |t|
     t.integer  "anio_escolar_id",              :null => false
@@ -323,14 +323,14 @@ ActiveRecord::Schema.define(:version => 20120710034759) do
   add_index "secciones", ["grado_id"], :name => "fk_secciones_grados"
 
   create_table "tipos_eventos", :force => true do |t|
-    t.integer  "colegio_id",             :null => false
-    t.string   "descripcion",            :null => false
-    t.binary   "notificacion_inmediata", :null => false
-    t.integer  "alcance",                :null => false
-    t.binary   "cuaderno_control",       :null => false
-    t.string   "usuario",                :null => false
-    t.datetime "created_at",             :null => false
-    t.datetime "updated_at",             :null => false
+    t.integer  "colegio_id",                            :null => false
+    t.string   "descripcion",                           :null => false
+    t.integer  "alcance",                               :null => false
+    t.string   "usuario",                               :null => false
+    t.datetime "created_at",                            :null => false
+    t.datetime "updated_at",                            :null => false
+    t.integer  "notificacion_inmediata", :default => 0, :null => false
+    t.integer  "cuaderno_control",       :default => 0, :null => false
   end
 
   add_index "tipos_eventos", ["colegio_id", "descripcion"], :name => "idx_descripcion_tiposevent", :unique => true

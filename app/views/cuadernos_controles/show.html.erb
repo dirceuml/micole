@@ -1,25 +1,19 @@
-<p id="notice"><%= notice %></p>
+<div data-role="header">
+  <h1><%=  "#{@cuaderno_control.fecha} | #{Seccion.find(@cuaderno_control.seccion_id).grado_seccion} | #{ListaValor.find_by_tabla_and_item(5, @cuaderno_control.estado).descripcion}" %></h1>
+  <%= link_to 'Agregar evento', new_cuaderno_control_cuaderno_control_evento_path(@cuaderno_control), "data-icon" => "gear", "class" => "ui-btn-right", "data-mini" => "true" %>
+  <%= link_to 'Regresar', cuadernos_controles_path, "data-icon" => "back", "class" => "ui-btn-left", "data-mini" => "true" %>
+</div>
 
-<p>
-  <b>Seccion:</b>
-  <%= @cuaderno_control.seccion_id %>
-</p>
-
-<p>
-  <b>Fecha:</b>
-  <%= @cuaderno_control.fecha %>
-</p>
-
-<p>
-  <b>Estado:</b>
-  <%= @cuaderno_control.estado %>
-</p>
-
-<p>
-  <b>Usuario:</b>
-  <%= @cuaderno_control.usuario %>
-</p>
-
-
-<%= link_to 'Edit', edit_cuaderno_control_path(@cuaderno_control) %> |
-<%= link_to 'Back', cuadernos_controles_path %>
+<div data-role="content">
+  <ul id='cuaderno_controles_eventos' data-role="listview" data-filter="true" data-inset="true">
+    <% @cuaderno_control.cuaderno_controles_eventos.each do |cuaderno_control_evento| %>
+    <li data-role="list-divider">      
+      <%= "#{TipoEvento.find(cuaderno_control_evento.tipo_evento_id).descripcion} - #{Alumno.find(cuaderno_control_evento.alumno_id).apellidos_nombres}" %>
+    </li>
+    <li>
+      <%= link_to simple_format(cuaderno_control_evento.descripcion), [@cuaderno_control, cuaderno_control_evento] %>
+      <%= link_to 'Eliminar', [@cuaderno_control, cuaderno_control_evento], confirm: '¿Seguro que desea eliminar el registro?', method: :delete, "data-icon" => "delete" %>
+    </li>
+    <% end %>
+  </ul>
+</div>

@@ -1,4 +1,4 @@
-<%= form_for(@cuaderno_control_evento) do |f| %>
+<%= form_for [@cuaderno_control, @cuaderno_control_evento] do |f| %>
   <% if @cuaderno_control_evento.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@cuaderno_control_evento.errors.count, "error") %> prohibited this cuaderno_control_evento from being saved:</h2>
@@ -12,26 +12,22 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :cuaderno_control_id %><br />
-    <%= f.number_field :cuaderno_control_id %>
-  </div>
-  <div class="field">
     <%= f.label :tipo_evento_id %><br />
-    <%= f.number_field :tipo_evento_id %>
+    <%= collection_select(:cuaderno_control_evento, :tipo_evento_id, TipoEvento.where("cuaderno_control = 1"), :id, :descripcion, {}, {"data-mini" => "true"}) %>
   </div>
   <div class="field">
     <%= f.label :alumno_id %><br />
-    <%= f.number_field :alumno_id %>
+    <%= collection_select(:cuaderno_control_evento, :alumno_id, Alumno.all, :id, :apellidos_nombres, {}, {"data-mini" => "true"}) %>
   </div>
   <div class="field">
     <%= f.label :descripcion %><br />
     <%= f.text_area :descripcion %>
   </div>
   <div class="field">
-    <%= f.label :usuario %><br />
-    <%= f.text_field :usuario %>
+    <%= f.hidden_field :usuario, :value => current_user.usuario %>
   </div>
+<br/>
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit "Grabar", "data-inline" => "true", "data-theme" => "a", "data-icon" => "check", "data-mini" => "true" %>
   </div>
 <% end %>
