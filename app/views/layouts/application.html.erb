@@ -27,10 +27,8 @@
       <image src="/assets/logo_small.jpg"/>    
     
       <% if current_user %>
-        Usuario <%= current_user.usuario %>.
+        Usuario: <%= current_user.usuario %>.
         <%= link_to "Cerrar sesión", log_out_path %>
-      <% else %>
-        <%= link_to "Iniciar sesión", log_in_path %>
       <% end %> 
     
     <% flash.each do |name, msg| %>

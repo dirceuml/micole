@@ -5,5 +5,7 @@
 
 <div data-role="content">
   <%= simple_format(@cuaderno_control_evento.descripcion) %>
-  <%= simple_format(Alumno.find(@cuaderno_control_evento.alumno_id).apellidos_nombres) %>
+  <% if Alumno.find_by_id(@cuaderno_control_evento.alumno_id) %>
+  <%= simple_format(Alumno.find_by_id(@cuaderno_control_evento.alumno_id).apellidos_nombres) %>
+  <% end if %>
 </div>

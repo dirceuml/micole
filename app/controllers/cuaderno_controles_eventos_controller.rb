@@ -9,6 +9,10 @@ class CuadernoControlesEventosController < ApplicationController
   # GET /cuaderno_controles_eventos
   # GET /cuaderno_controles_eventos.json
   def index
+    if current_user.nil?
+      redirect_to(log_in_path) and return
+    end
+
     @cuaderno_controles_eventos = CuadernoControlEvento.all
 
     respond_to do |format|
@@ -20,7 +24,11 @@ class CuadernoControlesEventosController < ApplicationController
   # GET /cuaderno_controles_eventos/1
   # GET /cuaderno_controles_eventos/1.json
   def show
-#    @cuaderno_control_evento = CuadernoControlEvento.find(params[:id])
+    if current_user.nil?
+      redirect_to(log_in_path) and return
+    end
+
+    #    @cuaderno_control_evento = CuadernoControlEvento.find(params[:id])
 #
 #    respond_to do |format|
 #      format.html # show.html.erb
@@ -28,9 +36,58 @@ class CuadernoControlesEventosController < ApplicationController
 #    end
   end
 
+  # GET /cuaderno_controles_eventos/1/edit
+  def edit
+    if current_user.nil?
+      redirect_to(log_in_path) and return
+    end
+
+    #@cuaderno_control_evento = CuadernoControlEvento.find(params[:id])
+  end
+  
+ 
+  # PUT /cuaderno_controles_eventos/1
+  # PUT /cuaderno_controles_eventos/1.json
+  def update
+    if current_user.nil?
+      redirect_to(log_in_path) and return
+    end
+
+    if @cuaderno_control_evento.update_attributes(params[:cuaderno_control_evento])
+      flash[:notice] = "Evento actualizado."
+      redirect_to [@cuaderno_control, @cuaderno_control_evento]
+    else
+      flash[:alert] = "Evento no fue actualizado."
+      render :action => "edit"
+    end
+  end
+  
+
+  # DELETE /cuaderno_controles_eventos/1
+  # DELETE /cuaderno_controles_eventos/1.json
+  def destroy
+    if current_user.nil?
+      redirect_to(log_in_path) and return
+    end
+
+    #@cuaderno_control_evento = CuadernoControlEvento.find(params[:id])
+    @cuaderno_control_evento.destroy
+    
+    redirect_to @cuaderno_control
+
+#    respond_to do |format|
+#      format.html { redirect_to @cuaderno_control }
+#      format.json { head :no_content }
+#    end
+  end
+
   # GET /cuaderno_controles_eventos/new
   # GET /cuaderno_controles_eventos/new.json
   def new
+    if current_user.nil?
+      redirect_to(log_in_path) and return
+    end
+
     #@cuaderno_control_evento = CuadernoControlEvento.new
     @cuaderno_control_evento = @cuaderno_control.cuaderno_controles_eventos.build
 
@@ -43,6 +100,10 @@ class CuadernoControlesEventosController < ApplicationController
   # POST /cuaderno_controles_eventos
   # POST /cuaderno_controles_eventos.json
   def create
+    if current_user.nil?
+      redirect_to(log_in_path) and return
+    end
+
     #@cuaderno_control_evento = CuadernoControlEvento.new(params[:cuaderno_control_evento])
     @cuaderno_control_evento = @cuaderno_control.cuaderno_controles_eventos.build(params[:cuaderno_control_evento])
     
@@ -73,37 +134,4 @@ class CuadernoControlesEventosController < ApplicationController
     def find_cuaderno_control_evento
       @cuaderno_control_evento = @cuaderno_control.cuaderno_controles_eventos.find(params[:id])
     end 
-
-  # GET /cuaderno_controles_eventos/1/edit
-  def edit
-    @cuaderno_control_evento = CuadernoControlEvento.find(params[:id])
-  end
-  
- 
-  # PUT /cuaderno_controles_eventos/1
-  # PUT /cuaderno_controles_eventos/1.json
-  def update
-    if @cuaderno_control_evento.update_attributes(params[:cuaderno_control_evento])
-      flash[:notice] = "Evento actualizado."
-      redirect_to [@cuaderno_control, @cuaderno_control_evento]
-    else
-      flash[:alert] = "Evento no fue actualizado."
-      render :action => "edit"
-    end
-  end
-  
-
-  # DELETE /cuaderno_controles_eventos/1
-  # DELETE /cuaderno_controles_eventos/1.json
-  def destroy
-    #@cuaderno_control_evento = CuadernoControlEvento.find(params[:id])
-    @cuaderno_control_evento.destroy
-    
-    redirect_to @cuaderno_control
-
-#    respond_to do |format|
-#      format.html { redirect_to @cuaderno_control }
-#      format.json { head :no_content }
-#    end
-  end
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120712055708) do
+ActiveRecord::Schema.define(:version => 20120713040317) do
 
   create_table "actividades", :force => true do |t|
     t.integer  "anio_escolar_id",              :null => false
@@ -62,18 +62,18 @@ ActiveRecord::Schema.define(:version => 20120712055708) do
   end
 
   create_table "alumnos_personas_vinculadas", :force => true do |t|
-    t.integer  "persona_vinculada_id", :null => false
-    t.integer  "alumno_id",            :null => false
-    t.integer  "tipo_vinculo",         :null => false
-    t.integer  "vigencia_vinculo",     :null => false
-    t.binary   "apoderado",            :null => false
-    t.binary   "autoriza_actividad",   :null => false
-    t.binary   "revisa_control",       :null => false
-    t.date     "inicio_vigencia",      :null => false
-    t.date     "fin_vigencia",         :null => false
-    t.string   "usuario",              :null => false
-    t.datetime "created_at",           :null => false
-    t.datetime "updated_at",           :null => false
+    t.integer  "persona_vinculada_id",                :null => false
+    t.integer  "alumno_id",                           :null => false
+    t.integer  "tipo_vinculo",                        :null => false
+    t.integer  "vigencia_vinculo",                    :null => false
+    t.date     "inicio_vigencia",                     :null => false
+    t.date     "fin_vigencia",                        :null => false
+    t.string   "usuario",                             :null => false
+    t.datetime "created_at",                          :null => false
+    t.datetime "updated_at",                          :null => false
+    t.integer  "apoderado",            :default => 0, :null => false
+    t.integer  "autoriza_actividad",   :default => 0, :null => false
+    t.integer  "revisa_control",       :default => 0, :null => false
   end
 
   add_index "alumnos_personas_vinculadas", ["alumno_id"], :name => "fk_alumnospersonas_alumnos"
@@ -158,7 +158,7 @@ ActiveRecord::Schema.define(:version => 20120712055708) do
     t.datetime "updated_at",          :null => false
   end
 
-  add_index "cuaderno_controles_eventos", ["cuaderno_control_id", "tipo_evento_id"], :name => "ak_cuaderno_controles_eventos", :unique => true
+  add_index "cuaderno_controles_eventos", ["cuaderno_control_id", "tipo_evento_id"], :name => "idx_cuadcontrolevento_evento"
   add_index "cuaderno_controles_eventos", ["cuaderno_control_id"], :name => "fk_cuacontrolevento_cuacontrol"
   add_index "cuaderno_controles_eventos", ["tipo_evento_id"], :name => "fk_cuacontrolevento_tipoevent"
 

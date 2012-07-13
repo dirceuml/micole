@@ -8,10 +8,13 @@
   <ul id='cuaderno_controles_eventos' data-role="listview" data-filter="true" data-inset="true">
     <% @cuaderno_control.cuaderno_controles_eventos.each do |cuaderno_control_evento| %>
     <li data-role="list-divider">      
-      <%= "#{TipoEvento.find(cuaderno_control_evento.tipo_evento_id).descripcion} - #{Alumno.find(cuaderno_control_evento.alumno_id).apellidos_nombres}" %>
+      <%= TipoEvento.find(cuaderno_control_evento.tipo_evento_id).descripcion %> 
+	<% if Alumno.find_by_id(cuaderno_control_evento.alumno_id) %>
+        <%= " - #{Alumno.find_by_id(cuaderno_control_evento.alumno_id).apellidos_nombres}" %>
+      <% end %>
     </li>
     <li>
-      <%= link_to simple_format(cuaderno_control_evento.descripcion), [@cuaderno_control, cuaderno_control_evento] %>
+      <%= link_to simple_format(cuaderno_control_evento.descripcion), [:edit, @cuaderno_control, cuaderno_control_evento] %>
       <%= link_to 'Eliminar', [@cuaderno_control, cuaderno_control_evento], confirm: '¿Seguro que desea eliminar el registro?', method: :delete, "data-icon" => "delete" %>
     </li>
     <% end %>

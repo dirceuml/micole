@@ -17,7 +17,7 @@
   </div>
   <div class="field">
     <%= f.label :alumno_id %><br />
-    <%= collection_select(:cuaderno_control_evento, :alumno_id, Alumno.all, :id, :apellidos_nombres, {}, {"data-mini" => "true"}) %>
+    <%= collection_select(:cuaderno_control_evento, :alumno_id, Alumno.all, :id, :apellidos_nombres, {:prompt => ':: Seleccione un alumno ::' }, {"data-mini" => "true"}) %>
   </div>
   <div class="field">
     <%= f.label :descripcion %><br />

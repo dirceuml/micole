@@ -2,6 +2,10 @@ class CuadernosControlesController < ApplicationController
   # GET /cuadernos_controles
   # GET /cuadernos_controles.json
   def index
+    if current_user.nil?
+      redirect_to(log_in_path) and return
+    end
+
     @cuadernos_controles = CuadernoControl.all
 
     respond_to do |format|
@@ -13,6 +17,10 @@ class CuadernosControlesController < ApplicationController
   # GET /cuadernos_controles/1
   # GET /cuadernos_controles/1.json
   def show
+    if current_user.nil?
+      redirect_to(log_in_path) and return
+    end
+
     @cuaderno_control = CuadernoControl.find(params[:id])
 
     respond_to do |format|
@@ -24,6 +32,10 @@ class CuadernosControlesController < ApplicationController
   # GET /cuadernos_controles/new
   # GET /cuadernos_controles/new.json
   def new
+    if current_user.nil?
+      redirect_to(log_in_path) and return
+    end
+
     @cuaderno_control = CuadernoControl.new
 
     respond_to do |format|
@@ -34,12 +46,20 @@ class CuadernosControlesController < ApplicationController
 
   # GET /cuadernos_controles/1/edit
   def edit
+    if current_user.nil?
+      redirect_to(log_in_path) and return
+    end
+
     @cuaderno_control = CuadernoControl.find(params[:id])
   end
 
   # POST /cuadernos_controles
   # POST /cuadernos_controles.json
   def create
+    if current_user.nil?
+      redirect_to(log_in_path) and return
+    end
+
     @cuaderno_control = CuadernoControl.new(params[:cuaderno_control])
 
     respond_to do |format|
@@ -56,6 +76,10 @@ class CuadernosControlesController < ApplicationController
   # PUT /cuadernos_controles/1
   # PUT /cuadernos_controles/1.json
   def update
+    if current_user.nil?
+      redirect_to(log_in_path) and return
+    end
+
     @cuaderno_control = CuadernoControl.find(params[:id])
 
     respond_to do |format|
@@ -72,6 +96,10 @@ class CuadernosControlesController < ApplicationController
   # DELETE /cuadernos_controles/1
   # DELETE /cuadernos_controles/1.json
   def destroy
+    if current_user.nil?
+      redirect_to(log_in_path) and return
+    end
+
     @cuaderno_control = CuadernoControl.find(params[:id])
     @cuaderno_control.destroy
 
