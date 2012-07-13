@@ -20,3 +20,9 @@
     <% end %>
   </ul>
 </div>
+
+<% if @cuaderno_control.estado == 1 %>
+<div data-role="header">
+  <%= link_to 'Cerrar', "/cuadernos_controles/#{@cuaderno_control.id}/cerrar", "data-icon" => "back", "class" => "ui-btn-left", "data-inline" => "true", "data-theme" => "a", "data-icon" => "check", "data-mini" => "true" %>
+</div>  
+<% end %>

@@ -53,6 +53,25 @@ class CuadernosControlesController < ApplicationController
     @cuaderno_control = CuadernoControl.find(params[:id])
   end
 
+  # GET /cuadernos_controles/1/cerrar
+  def cerrar
+    if current_user.nil?
+      redirect_to(log_in_path) and return
+    end
+
+    @cuaderno_control = CuadernoControl.find(params[:id])
+
+    respond_to do |format|
+      if @cuaderno_control.update_attributes(:estado => 2)
+        format.html { redirect_to @cuaderno_control, notice: 'Cuaderno de control cerrado satisfactoriamente.' }
+        format.json { head :no_content }
+      else
+        format.html { redirect_to @cuaderno_control, notice: 'Cuaderno de control no fue cerrado.' }
+        format.json { render json: @cuaderno_control.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
   # POST /cuadernos_controles
   # POST /cuadernos_controles.json
   def create

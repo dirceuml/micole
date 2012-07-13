@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120713040317) do
+ActiveRecord::Schema.define(:version => 20120713080011) do
 
   create_table "actividades", :force => true do |t|
     t.integer  "anio_escolar_id",              :null => false
@@ -86,11 +86,13 @@ ActiveRecord::Schema.define(:version => 20120713040317) do
     t.string   "usuario",         :null => false
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
+    t.integer  "seccion_id",      :null => false
   end
 
   add_index "anios_alumnos", ["alumno_id"], :name => "fk_aniosalumnos_alumno"
   add_index "anios_alumnos", ["anio_escolar_id", "alumno_id"], :name => "ak_anios_alumnos", :unique => true
   add_index "anios_alumnos", ["anio_escolar_id"], :name => "fk_aniosalumnos_anioescolar"
+  add_index "anios_alumnos", ["seccion_id"], :name => "fk_aniosalumnos_secciones"
 
   create_table "anios_escolares", :force => true do |t|
     t.integer  "colegio_id",    :null => false
@@ -163,15 +165,15 @@ ActiveRecord::Schema.define(:version => 20120713040317) do
   add_index "cuaderno_controles_eventos", ["tipo_evento_id"], :name => "fk_cuacontrolevento_tipoevent"
 
   create_table "cuaderno_controles_revisiones", :force => true do |t|
-    t.integer  "cuaderno_control_id",  :null => false
-    t.integer  "alumno_id",            :null => false
-    t.integer  "persona_vinculada_id", :null => false
-    t.binary   "revisado",             :null => false
+    t.integer  "cuaderno_control_id",                 :null => false
+    t.integer  "alumno_id",                           :null => false
+    t.integer  "persona_vinculada_id",                :null => false
     t.datetime "fecha_hora_revision"
     t.text     "observaciones"
-    t.string   "usuario",              :null => false
-    t.datetime "created_at",           :null => false
-    t.datetime "updated_at",           :null => false
+    t.string   "usuario",                             :null => false
+    t.datetime "created_at",                          :null => false
+    t.datetime "updated_at",                          :null => false
+    t.integer  "revisado",             :default => 0, :null => false
   end
 
   add_index "cuaderno_controles_revisiones", ["alumno_id"], :name => "fk_cuacontrolrevision_alumno"

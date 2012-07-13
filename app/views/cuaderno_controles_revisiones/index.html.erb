@@ -1,35 +1,21 @@
-<h1>Listing cuaderno_controles_revisiones</h1>
+<div data-role="header">
+  <h1>Revisión de cuaderno de control</h1>
+</div>
 
-<table>
-  <tr>
-    <th>Cuaderno control</th>
-    <th>Alumno</th>
-    <th>Persona vinculada</th>
-    <th>Revisado</th>
-    <th>Fecha hora revision</th>
-    <th>Observaciones</th>
-    <th>Usuario</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
-<% @cuaderno_controles_revisiones.each do |cuaderno_control_revisione| %>
-  <tr>
-    <td><%= cuaderno_control_revisione.cuaderno_control_id %></td>
-    <td><%= cuaderno_control_revisione.alumno_id %></td>
-    <td><%= cuaderno_control_revisione.persona_vinculada_id %></td>
-    <td><%= cuaderno_control_revisione.revisado %></td>
-    <td><%= cuaderno_control_revisione.fecha_hora_revision %></td>
-    <td><%= cuaderno_control_revisione.observaciones %></td>
-    <td><%= cuaderno_control_revisione.usuario %></td>
-    <td><%= link_to 'Show', cuaderno_control_revisione %></td>
-    <td><%= link_to 'Edit', edit_cuaderno_control_revisione_path(cuaderno_control_revisione) %></td>
-    <td><%= link_to 'Destroy', cuaderno_control_revisione, confirm: 'Are you sure?', method: :delete %></td>
-  </tr>
-<% end %>
-</table>
-
-<br />
-
-<%= link_to 'New Cuaderno control revision', new_cuaderno_control_revisione_path %>
+<div data-role="content">
+  <ul data-role="listview" data-filter="true" data-inset="true">
+    <% @cuaderno_controles_revisiones.each do |cuaderno_control_revision| %>
+    <li data-filtertext="<%= "#{cuaderno_control_revision.cuaderno_control.fecha} #{cuaderno_control_revision.alumno.apellidos_nombres}" %>" >
+      <%= link_to cuaderno_control_revision do %>
+        <% if cuaderno_control_revision.revisado == 1 %>
+          <% revisado = "Revisado" %>
+        <% else %>
+          <% revisado = "No revisado" %>
+        <% end %>
+        <%= "#{cuaderno_control_revision.cuaderno_control.fecha} - #{cuaderno_control_revision.alumno.apellidos_nombres} - #{revisado}" %>        
+      <% end %>
+      
+    </li>
+    <% end %>
+  </ul>
+</div>

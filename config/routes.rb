@@ -30,7 +30,7 @@ Micole::Application.routes.draw do
   
   #get "sessions/new"
   get "log_out" => "sessions#destroy", :as => "log_out"
-  get "log_in" => "sessions#new", :as => "log_in"
+  get "log_in" => "sessions#new", :as => "log_in"  
 
   resources :usuarios
   resources :sessions
@@ -40,12 +40,16 @@ Micole::Application.routes.draw do
 
   resources :tipos_eventos
 
-  resources :alumnos  
+  resources :cuaderno_controles_revisiones
+  resources :alumnos do
+    resources :cuaderno_controles_revisiones
+  end
 
   resources :cuadernos_controles do
-    resources :cuaderno_controles_revisiones
     resources :cuaderno_controles_eventos
   end
+  
+  get "cuadernos_controles/:id/cerrar" => "cuadernos_controles#cerrar", :as => "cerrar_cuaderno_control"
 
   resources :anios_alumnos
 
