@@ -1,40 +1,27 @@
-<p id="notice"><%= notice %></p>
+<div data-role="header">
+  <h1>
+    <%= @cuaderno_control_revision.alumno.apellidos_nombres %>
+    <%= @cuaderno_control_revision.cuaderno_control.fecha %>
+  </h1>
+  <%= link_to 'Regresar', cuaderno_controles_revisiones_path, "data-icon" => "back", "class" => "ui-btn-left", "data-mini" => "true" %>
+</div>
 
-<p>
-  <b>Cuaderno control:</b>
-  <%= @cuaderno_control_revisione.cuaderno_control_id %>
-</p>
-
-<p>
-  <b>Alumno:</b>
-  <%= @cuaderno_control_revisione.alumno_id %>
-</p>
-
-<p>
-  <b>Persona vinculada:</b>
-  <%= @cuaderno_control_revisione.persona_vinculada_id %>
-</p>
-
-<p>
-  <b>Revisado:</b>
-  <%= @cuaderno_control_revisione.revisado %>
-</p>
-
-<p>
-  <b>Fecha hora revision:</b>
-  <%= @cuaderno_control_revisione.fecha_hora_revision %>
-</p>
-
-<p>
-  <b>Observaciones:</b>
-  <%= @cuaderno_control_revisione.observaciones %>
-</p>
-
-<p>
-  <b>Usuario:</b>
-  <%= @cuaderno_control_revisione.usuario %>
-</p>
-
-
-<%= link_to 'Edit', edit_cuaderno_control_revisione_path(@cuaderno_control_revisione) %> |
-<%= link_to 'Back', cuaderno_controles_revisiones_path %>
+<div data-role="content">
+  <ul id='cuaderno_controles_revisiones' data-role="listview" data-filter="true" data-inset="true">
+    <% @cuaderno_control_revision.cuaderno_control.cuaderno_controles_eventos.where("alumno_id is null or alumno_id=?", params[@cuaderno_control_revision.alumno.id]).each do |cuaderno_control_evento| %>      
+      <li data-role="list-divider">      
+        <%= TipoEvento.find(cuaderno_control_evento.tipo_evento_id).descripcion %> 
+      </li>
+      <li>
+        <%= simple_format(cuaderno_control_evento.descripcion) %>      
+      </li>             
+    <% end %>
+  </ul>    
+</div>
+<% if @cuaderno_control_revision.revisado == 0 %>
+  <div data-role="footer">
+    <%= link_to 'Revisar', "/cuaderno_controles_revisiones/#{@cuaderno_control_revision.id}/revisar", "class" => "ui-btn-left", "data-inline" => "true", "data-theme" => "a", "data-icon" => "check", "data-mini" => "true" %>
+  </div>  
+<% else %>
+  Revisado
+<% end %>

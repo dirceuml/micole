@@ -12,7 +12,7 @@
         <% else %>
           <% revisado = "No revisado" %>
         <% end %>
-        <%= "#{cuaderno_control_revision.cuaderno_control.fecha} - #{cuaderno_control_revision.alumno.apellidos_nombres} - #{revisado}" %>        
+        <%= simple_format("#{cuaderno_control_revision.cuaderno_control.fecha} - #{cuaderno_control_revision.alumno.apellidos_nombres} - #{revisado}") %>        
       <% end %>
       
     </li>

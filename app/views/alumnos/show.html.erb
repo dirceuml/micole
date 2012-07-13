@@ -1,55 +1,29 @@
-<p id="notice"><%= notice %></p>
+<div data-role="header">
+  <h1>
+    <%= @alumno.apellidos_nombres %>
+    <%= @cuaderno_control.fecha %>
+  </h1>
+  <%= link_to 'Regresar', cuaderno_controles_revisiones_path, "data-icon" => "back", "class" => "ui-btn-left", "data-mini" => "true" %>
+</div>
 
-<p>
-  <b>Nombres:</b>
-  <%= @alumno.nombres %>
-</p>
-
-<p>
-  <b>Apellido paterno:</b>
-  <%= @alumno.apellido_paterno %>
-</p>
-
-<p>
-  <b>Apellido materno:</b>
-  <%= @alumno.apellido_materno %>
-</p>
-
-<p>
-  <b>Fecha nacimiento:</b>
-  <%= @alumno.fecha_nacimiento %>
-</p>
-
-<p>
-  <b>Telefono fijo:</b>
-  <%= @alumno.telefono_fijo %>
-</p>
-
-<p>
-  <b>Telefono movil:</b>
-  <%= @alumno.telefono_movil %>
-</p>
-
-<p>
-  <b>Direccion:</b>
-  <%= @alumno.direccion %>
-</p>
-
-<p>
-  <b>Correo:</b>
-  <%= @alumno.correo %>
-</p>
-
-<p>
-  <b>Foto:</b>
-  <%= @alumno.foto %>
-</p>
-
-<p>
-  <b>Usuario:</b>
-  <%= @alumno.usuario %>
-</p>
-
-
-<%= link_to 'Edit', edit_alumno_path(@alumno) %> |
-<%= link_to 'Back', alumnos_path %>
+<div data-role="content">
+  <ul id='cuaderno_controles_revisiones' data-role="listview" data-filter="true" data-inset="true">
+    <% @cuaderno_control.cuaderno_controles_revisiones.each do |cuaderno_control_revision| %>
+      <% @cuaderno_control.cuaderno_controles_eventos.each do |cuaderno_control_evento| %>
+        <li data-role="list-divider">      
+          <%= TipoEvento.find(cuaderno_control_evento.tipo_evento_id).descripcion %> 
+        </li>
+        <li>
+          <%= simple_format(cuaderno_control_evento.descripcion) %>      
+        </li>
+      <% end %>
+        
+      <% if cuaderno_control_revision.revisado == 0 %>
+        <div data-role="header">
+          <%= check_box_tag "revisado", "Revisado", "no" %>
+          <%= link_to 'Grabar', "#", "class" => "ui-btn-left", "data-inline" => "true", "data-theme" => "a", "data-icon" => "check", "data-mini" => "true" %>
+        </div>  
+      <% end %>
+    <% end %>
+  </ul>
+</div>
