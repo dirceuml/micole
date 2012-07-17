@@ -10,33 +10,25 @@
   <script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
   <script src="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.js"></script>
   
-  <script>
-
-  $('div[data-role=page]').live('pagecreate',function(){
-    $('.ui-select').css({'width':'300px'});
-  });
-
-  </script>
-  
   <%= csrf_meta_tag %>  
 
 </head> 
 
   <div data-role="page">
+    <div data-role="footer" data-theme="b">
+      <image src="/assets/logo_small.gif" style="vertical-align:bottom" />    
     
-      <image src="/assets/logo_small.jpg"/>    
-    
-      | <%= link_to "Menu", "/menu.html" %> |
+      <%= link_to "Menu", "/menu.html" %>
       
       <% if current_user %>
-        Usuario: <%= current_user.usuario %>.
-        <%= link_to "Cerrar sesion", log_out_path %> |
+        Usuario: <%= current_user.usuario %>
+        <%= link_to "Cerrar sesion", log_out_path %>
       <% end %>            
     
     <% flash.each do |name, msg| %>
       <%= content_tag :div, msg, :id => "flash_#{name}" %>
     <% end %>
-    
+   </div> 
     <%= yield %>
   </div>
 
