@@ -12,4 +12,7 @@ class Alumno < ActiveRecord::Base
   def apellidos_nombres
     apellido_paterno + " " + apellido_materno + " " + nombres
   end
+  
+  scope :hijos_de, lambda { |padre| joins(:alumno_persona_vinculada).where("apoderado = 1 and persona_vinculada_id = ?", padre) }
+  scope :se_revisan_por, lambda { |padre| joins(:alumno_persona_vinculada).where("revisa_control = 1 and persona_vinculada_id = ?", padre) }
 end

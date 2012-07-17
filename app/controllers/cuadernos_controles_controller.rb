@@ -81,6 +81,14 @@ class CuadernosControlesController < ApplicationController
         format.html { redirect_to @cuaderno_control, notice: 'Cuaderno de control no fue cerrado.' }
         format.json { render json: @cuaderno_control.errors, status: :unprocessable_entity }
       end
+      
+#      if @cuaderno_control.update_attributes(:estado => 2)        
+#        format.html { redirect_to @cuaderno_control, notice: 'Cuaderno de control cerrado satisfactoriamente.' }
+#        format.json { head :no_content }
+#      else
+#        format.html { redirect_to @cuaderno_control, notice: 'Cuaderno de control fue cerrado.' } #OJO
+#        format.json { render json: @cuaderno_control.errors, status: :unprocessable_entity }
+#      end
     end
   end
 

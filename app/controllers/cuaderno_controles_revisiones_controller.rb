@@ -14,11 +14,11 @@ class CuadernoControlesRevisionesController < ApplicationController
         And p.persona_vinculada_id = u.persona_vinculada_id
         And r.cuaderno_control_id = c.id
         And r.alumno_id = p.alumno_id"
+    #@cuaderno_controles_revisiones = CuadernoControlRevision.find_by_sql(sql)
     
-    #@cuaderno_controles_revisiones = CuadernoControlRevision.all :joins => :cuaderno_control, :conditions => { :cuadernos_controles => {:estado => 2}}
-    
-    @cuaderno_controles_revisiones = CuadernoControlRevision.find_by_sql(sql)
-    
+    @cuaderno_controles_revisiones = 
+      CuadernoControlRevision.cerrado.se_revisan_por(PersonaVinculada.logueado(current_user.usuario).pluck("personas_vinculadas.id"))
+        
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @cuaderno_controles_revisiones }

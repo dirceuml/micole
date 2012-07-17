@@ -4,4 +4,7 @@ class CuadernoControl < ActiveRecord::Base
   belongs_to :seccion
   
   validates :seccion_id, :fecha, :estado, :usuario, :presence => true
+  
+  scope :cerrado, where(:estado => 2)
+  scope :abierto, where(:estado => 1)
 end
