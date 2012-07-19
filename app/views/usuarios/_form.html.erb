@@ -12,6 +12,10 @@
   <% end %>
 
   <div class="field">
+    <%= f.label :colegio_id %><br />
+    <%= f.number_field :colegio_id %>
+  </div>
+  <div class="field">
     <%= f.label :perfil_id %><br />
     <%= f.number_field :perfil_id %>
   </div>
@@ -30,6 +34,10 @@
   <div class="field">
     <%= f.label :clave %><br />
     <%= f.text_field :clave %>
+  </div>
+  <div class="field">
+    <%= f.label :correo %><br />
+    <%= f.text_field :correo %>
   </div>
   <div class="actions">
     <%= f.submit %>
