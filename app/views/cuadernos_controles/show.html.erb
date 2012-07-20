@@ -1,6 +1,8 @@
 <div data-role="header">
   <h1><%=  "#{@cuaderno_control.fecha} | #{Seccion.find(@cuaderno_control.seccion_id).grado_seccion} | #{ListaValor.find_by_tabla_and_item(5, @cuaderno_control.estado).descripcion}" %></h1>
-  <%= link_to 'Agregar evento', new_cuaderno_control_cuaderno_control_evento_path(@cuaderno_control), "data-icon" => "gear", "class" => "ui-btn-right", "data-mini" => "true" %>
+  <% if @cuaderno_control.estado == 1 %>
+    <%= link_to 'Agregar evento', new_cuaderno_control_cuaderno_control_evento_path(@cuaderno_control), "data-icon" => "gear", "class" => "ui-btn-right", "data-mini" => "true" %>
+  <% end %>
   <%= link_to 'Regresar', cuadernos_controles_path, "data-icon" => "back", "class" => "ui-btn-left", "data-mini" => "true" %>
 </div>
 
