@@ -3,7 +3,7 @@
 </div>
 
 <div data-role="content">
-  <ul data-role="listview" data-filter="true" data-inset="true">
+  <ul data-role="listview" data-filter="true">
     <% @cuaderno_controles_revisiones.each do |cuaderno_control_revision| %>
     <li data-filtertext="<%= "#{cuaderno_control_revision.cuaderno_control.fecha} #{cuaderno_control_revision.alumno.apellidos_nombres}" %>" >
       <%= link_to cuaderno_control_revision do %>

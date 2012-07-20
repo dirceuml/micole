@@ -1,4 +1,4 @@
-<%= form_for(@cuaderno_control) do |f| %>
+<%= form_for(@cuaderno_control, :html => { :class => "ui-body ui-body-c" }) do |f| %>
   <% if @cuaderno_control.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@cuaderno_control.errors.count, "error") %> prohibited this cuaderno_control from being saved:</h2>
@@ -10,7 +10,7 @@
       </ul>
     </div>
   <% end %>
-
+<div data-role="fieldcontain">
   <div class="field">
     <% fecha_actual = Date.current %>
     Fecha: <%= f.text_field :fecha, :readonly => true, :value => fecha_actual,  "data-mini" => "true", "style" => "width:80px" %>
@@ -31,4 +31,5 @@
   <div class="actions">
     <%= f.submit "Grabar", "data-inline" => "true", "data-theme" => "a", "data-icon" => "check", "data-mini" => "true" %>
   </div>
+</div>
 <% end %>

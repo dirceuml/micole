@@ -3,12 +3,12 @@
   <%= link_to 'Agregar', new_cuaderno_control_path, "data-icon" => "plus", "class" => "ui-btn-right" %>
 </div>
 
-<div data-role="content">
-  <ul data-role="listview" data-filter="true" data-inset="true">
+<div data-role="content" class="content-primary">
+  <ul data-role="listview" data-filter="true">
     <% @cuadernos_controles.each do |cuaderno_control| %>
     <li data-filtertext="<%= "#{cuaderno_control.fecha} #{Seccion.find(cuaderno_control.seccion_id).grado_seccion}" %>" >
       <%= link_to cuaderno_control do %>
-        <%= "#{cuaderno_control.fecha} | #{Seccion.find(cuaderno_control.seccion_id).grado_seccion} | #{ListaValor.find_by_tabla_and_item(5, cuaderno_control.estado).descripcion}" %> 
+        <%= simple_format("#{cuaderno_control.fecha} | #{Seccion.find(cuaderno_control.seccion_id).grado_seccion} | #{ListaValor.find_by_tabla_and_item(5, cuaderno_control.estado).descripcion}") %> 
         
       <% end %>
       <%= link_to 'Eliminar', cuaderno_control, confirm: '¿Seguro que desea eliminar el registro?', method: :delete, "data-icon" => "delete" %>      

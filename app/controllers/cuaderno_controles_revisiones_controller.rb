@@ -7,15 +7,6 @@ class CuadernoControlesRevisionesController < ApplicationController
       redirect_to(log_in_path) and return
     end
 
-    sql = "Select r.*
-      From cuaderno_controles_revisiones r, cuadernos_controles c, alumnos_personas_vinculadas p, usuarios u
-      Where c.estado = 2
-        And u.usuario = '" + current_user.usuario + "'
-        And p.persona_vinculada_id = u.persona_vinculada_id
-        And r.cuaderno_control_id = c.id
-        And r.alumno_id = p.alumno_id"
-    #@cuaderno_controles_revisiones = CuadernoControlRevision.find_by_sql(sql)
-    
     @cuaderno_controles_revisiones = 
       CuadernoControlRevision.cerrado.se_revisan_por(PersonaVinculada.logueado(current_user.usuario).pluck("personas_vinculadas.id"))
         

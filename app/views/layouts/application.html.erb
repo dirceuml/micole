@@ -14,14 +14,14 @@
 
 </head> 
 
-  <div data-role="page">
+  <div data-role="page" class="type-interior">
     <div data-role="footer" data-theme="b">
       <image src="/assets/logo_small.gif" style="vertical-align:bottom" />    
     
       <%= link_to "Menu", "/menu.html" %>
       
       <% if current_user %>
-        Usuario: <%= current_user.usuario %>
+        <%= current_user.usuario %>
         <%= link_to "Cerrar sesion", log_out_path %>
       <% end %>            
     
