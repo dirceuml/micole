@@ -1,8 +1,9 @@
-<div data-role="content" align="center">
+<!--div data-role="content" align="center"-->
   <div data-role="header"><h1>Iniciar sessión</h1></div>
 
 
-  <%= form_tag sessions_path :action => "create" do %>
+  <%= form_tag sessions_path :action => "create", :html => { :class => "ui-body ui-body-c" } do %>
+  <div data-role="fieldcontain" align="center">
     <p>
       <%= label_tag :usuario %><br />
       <%= text_field_tag :usuario, params[:usuario], "data-mini" => "true", "style" => "width:250px" %>
@@ -12,5 +13,6 @@
       <%= password_field_tag :clave, "",  "data-mini" => "true", "style" => "width:250px" %>
     </p>
     <p class="button"><%= submit_tag "Iniciar sesión", "data-inline" => "true", "data-theme" => "a", "data-icon" => "check", "data-mini" => "true" %></p>
-  <% end %>
- </div>
+  </div>  
+<% end %>
+ <!--/div-->
