@@ -22,7 +22,7 @@
       
       <% if current_user %>
         <%= current_user.usuario %>
-        <%= link_to "Cerrar sesion", log_out_path %>
+        <%= link_to "Salir", log_out_path %>
       <% end %>            
     
     <% flash.each do |name, msg| %>
