@@ -7,7 +7,7 @@
 </div>
 
 <div data-role="content">
-  <ul id='cuaderno_controles_revisiones' data-role="listview" data-filter="true" data-inset="true">
+  <ul id='cuaderno_controles_revisiones' data-role="listview" data-filter="true">
     <% @cuaderno_control_revision.cuaderno_control.cuaderno_controles_eventos.where("alumno_id is null or alumno_id=?", params[@cuaderno_control_revision.alumno.id]).each do |cuaderno_control_evento| %>      
       <li data-role="list-divider">      
         <%= TipoEvento.find(cuaderno_control_evento.tipo_evento_id).descripcion %> 
@@ -16,12 +16,27 @@
         <%= simple_format(cuaderno_control_evento.descripcion) %>      
       </li>             
     <% end %>
-  </ul>    
+  </ul>      
 </div>
-<% if @cuaderno_control_revision.revisado == 0 %>
-  <div data-role="footer">
-    <%= link_to 'Revisar', "/cuaderno_controles_revisiones/#{@cuaderno_control_revision.id}/revisar", "class" => "ui-btn-left", "data-inline" => "true", "data-theme" => "a", "data-icon" => "check", "data-mini" => "true" %>
-  </div>  
-<% else %>
-  Revisado
+
+
+
+<%= form_for(@cuaderno_control_revision, :url => {:action => "revisar"}, :html => { :class => "ui-body ui-body-c" }) do |f| %>
+  <% if @cuaderno_control_revision.revisado == 0 %>
+    <!--div data-role="footer"> para GET
+      <!--%= link_to 'Revisar', "/cuaderno_controles_revisiones/#{@cuaderno_control_revision.id}/revisar", "class" => "ui-btn-left", "data-inline" => "true", "data-theme" => "a", "data-icon" => "check", "data-mini" => "true" %>
+    </div-->   
+    <div class="field">
+      Observaciones<br />
+      <%= f.text_area :observaciones %>
+    </div>
+    <div class="actions">
+      <%= f.submit "Revisar", "data-inline" => "true", "data-theme" => "a", "data-icon" => "check", "data-mini" => "true" %>
+    </div>
+  <% else %>
+    <div class="field">
+      <%= f.text_area :observaciones, :readonly => true %>
+    </div>
+    <br />Revisado
+  <% end %>
 <% end %>

@@ -5,7 +5,7 @@
 </div>
 
 <div data-role="content">
-  <ul id='cuaderno_controles_eventos' data-role="listview" data-filter="true" data-inset="true">
+  <ul id='cuaderno_controles_eventos' data-role="listview" data-filter="true">
     <% @cuaderno_control.cuaderno_controles_eventos.each do |cuaderno_control_evento| %>
     <li data-role="list-divider">      
       <%= TipoEvento.find(cuaderno_control_evento.tipo_evento_id).descripcion %> 
