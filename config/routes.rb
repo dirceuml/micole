@@ -41,9 +41,8 @@ Micole::Application.routes.draw do
   resources :tipos_eventos
 
   resources :cuaderno_controles_revisiones
-  resources :alumnos do
-    resources :cuaderno_controles_revisiones
-  end
+  
+  resources :alumnos  
 
   resources :cuadernos_controles do
     resources :cuaderno_controles_eventos
@@ -53,6 +52,9 @@ Micole::Application.routes.draw do
 
   put "cuaderno_controles_revisiones/:id/revisar" => "cuaderno_controles_revisiones#revisar", :as => "revisar_cuaderno_control_revision"
 
+  #post "cuaderno_controles_revisiones/verificar" => "cuaderno_controles_revisiones#verificar", :as => "verificar_cuaderno_control"
+  get "cuaderno_controles_revisiones/:seccion_id/:fecha/verificar" => "cuaderno_controles_revisiones#verificar", :as => "verificar_cuaderno_control"
+  
   resources :anios_alumnos
 
   resources :secciones

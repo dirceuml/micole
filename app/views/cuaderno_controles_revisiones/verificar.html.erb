@@ -1,0 +1,27 @@
+<div data-role="header">
+  <h1>Verificar cuaderno de control</h1>
+</div>
+
+<div data-role="content">
+  <%= form_tag(verificar_cuaderno_control_path 1,201200713, :method => "get") do %>
+    <div data-role="fieldcontain">
+      <div class="field">
+        <%= label_tag(:seccion_id, "Sección:") %>
+        <%= text_field_tag(:seccion_id) %>
+      </div>
+      <%= label_tag(:fecha, "Fecha:") %>
+      <%= text_field_tag(:fecha) %>
+      <%= submit_tag "Buscar", "data-inline" => "true", "data-theme" => "a", "data-icon" => "search", "data-mini" => "true" %>
+    </div>
+  <% end %>
+  
+  <ul data-role="listview" data-filter="true">
+    <% @cuaderno_controles_revisiones.each do |cuaderno_control_revision| %>
+    <li data-filtertext="<%= "#{cuaderno_control_revision.alumno.apellidos_nombres}" %>" <% if cuaderno_control_revision.revisado == 1 %>data-icon="check"<% else %>data-icon="false"<% end %>  >
+      <%= link_to cuaderno_control_revision do %>
+        <%= simple_format("#{cuaderno_control_revision.alumno.apellidos_nombres} -- #{cuaderno_control_revision.observaciones}") %>        
+      <% end %>      
+    </li>
+    <% end %>
+  </ul>
+</div>

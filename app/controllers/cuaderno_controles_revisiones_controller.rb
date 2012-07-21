@@ -16,6 +16,28 @@ class CuadernoControlesRevisionesController < ApplicationController
     end
   end
 
+  # GET /cuaderno_controles_eventos/1/20120131/verificar
+  # GET /cuaderno_controles_eventos.json
+  def verificar
+    if current_user.nil?
+      redirect_to(log_in_path) and return
+    end
+    
+    seccion = params[:seccion_id]
+    if params[:seccion_id] == "0"
+      fecha = Date.current
+    else
+      fecha = params[:fecha].to_date
+    end    
+
+    @cuaderno_controles_revisiones = CuadernoControlRevision.verificar(seccion, fecha)
+        
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: @cuaderno_controles_revisiones }
+    end
+  end
+
   # GET /cuaderno_controles_eventos/1
   # GET /cuaderno_controles_eventos/1.json
   def show
