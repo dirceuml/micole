@@ -2,20 +2,29 @@
   <h1>Verificar cuaderno de control</h1>
 </div>
 
+<% if params[:seccion_id] == "0" %>
+  <% seccion = "" %>
+  <% fecha = "" %>
+  <% titulo = "" %>
+<% else %>
+  <% seccion = params[:seccion_id] %>
+  <% fecha = params[:fecha] %>
+  <% titulo = "| Fecha: " + fecha + " | Sección: " + seccion + " |" %>
+<% end %>
+
 <div data-role="content">
   <%= form_tag(consultar_cuaderno_control_path) do %>
     <div data-role="fieldcontain">
-      <div class="field">
-        <%= label_tag(:seccion_id, "Sección:") %>
-        <%= text_field_tag(:seccion_id) %>
-      </div>
-      <%= label_tag(:fecha, "Fecha:") %>
-      <%= text_field_tag(:fecha) %>
+      Fecha: <%= text_field_tag(:fecha, fecha, "data-mini" => "true", "data-role" => "datebox", "type" => "date", "style" => "width:100px") %>
+      Sección: <%= collection_select(:seccion, :id, Seccion.all, :id, :grado_seccion, {:selected => seccion}, {"data-mini" => "true", :name => "seccion_id"}) %>
       <%= submit_tag "Buscar", "data-inline" => "true", "data-theme" => "a", "data-icon" => "search", "data-mini" => "true" %>
     </div>
   <% end %>
   
   <ul data-role="listview" data-filter="true">
+    <div data-role="content" style="color: #06c">
+      <%= simple_format(titulo) %>
+    </div>
     <% @cuaderno_controles_revisiones.each do |cuaderno_control_revision| %>
     <li data-filtertext="<%= "#{cuaderno_control_revision.alumno.apellidos_nombres}" %>" <% if cuaderno_control_revision.revisado == 1 %>data-icon="check"<% else %>data-icon="false"<% end %>  >
       <%= link_to cuaderno_control_revision do %>
