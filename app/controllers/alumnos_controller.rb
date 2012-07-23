@@ -24,7 +24,7 @@ class AlumnosController < ApplicationController
   # GET /alumnos/new
   # GET /alumnos/new.json
   def new
-    @alumno = Alumno.new
+    @alumno = Alumno.new    
 
     respond_to do |format|
       format.html # new.html.erb

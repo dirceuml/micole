@@ -1,57 +1,55 @@
-<%= form_for(@alumno_persona_vinculada) do |f| %>
-  <% if @alumno_persona_vinculada.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@alumno_persona_vinculada.errors.count, "error") %> prohibited this alumno_persona_vinculada from being saved:</h2>
+<%= form_for([@alumno, @alumno.alumnos_personas_vinculadas.build], :html => { :class => "ui-body ui-body-c" }) do |f| %>
+  <% if !@alumno_persona_vinculada.nil? %>
+    <% if @alumno_persona_vinculada.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@alumno_persona_vinculada.errors.count, "error") %> impidieron la grabación:</h2>
 
-      <ul>
-      <% @alumno_persona_vinculada.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
+        <ul>
+        <% @alumno_persona_vinculada.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
   <% end %>
-
+<div data-role="fieldcontain">
   <div class="field">
-    <%= f.label :persona_vinculada_id %><br />
-    <%= f.number_field :persona_vinculada_id %>
+    Persona: <%= collection_select(:alumno_persona_vinculada, :persona_vinculada_id, PersonaVinculada.all, :id, :apellidos_nombres, {:prompt => ':: Seleccione ::' }, {"data-mini" => "true"}) %>
   </div>
   <div class="field">
-    <%= f.label :alumno_id %><br />
-    <%= f.number_field :alumno_id %>
+    <%= f.hidden_field :alumno_id %>
   </div>
   <div class="field">
-    <%= f.label :tipo_vinculo %><br />
-    <%= f.number_field :tipo_vinculo %>
+    Tipo vínculo: <%= collection_select(:alumno_persona_vinculada, :tipo_vinculo, ListaValor.where("tabla = 3"), :item, :descripcion, {:prompt => ':: Seleccione ::' }, {"data-mini" => "true"}) %>
   </div>
   <div class="field">
-    <%= f.label :vigencia_vinculo %><br />
-    <%= f.number_field :vigencia_vinculo %>
+    Vigencia: <%= collection_select(:alumno_persona_vinculada, :vigencia_vinculo, ListaValor.where("tabla = 4"), :item, :descripcion, {:prompt => ':: Seleccione ::' }, {"data-mini" => "true"}) %>
   </div>
   <div class="field">
-    <%= f.label :apoderado %><br />
-    <%= f.text_field :apoderado %>
+    Inicio: <%= f.text_field :inicio_vigencia, "data-mini" => "true", "data-role" => "datebox", "type" => "date", "style" => "width:100px" %>    
   </div>
   <div class="field">
-    <%= f.label :autoriza_actividad %><br />
-    <%= f.text_field :autoriza_actividad %>
+    Fin: <%= f.text_field :fin_vigencia, "data-mini" => "true", "data-role" => "datebox", "type" => "date", "style" => "width:100px" %>
   </div>
+  <fieldset data-role="controlgroup">
+    <div class="field">
+      <%= f.label :apoderado %> 
+      <%= f.check_box :apoderado, "class" => "custom", "data-mini" => "true" %>
+    </div>
+    <div class="field">
+      <%= f.label :autoriza_actividad, "Autoriza actividades" %> 
+      <%= f.check_box :autoriza_actividad, "class" => "custom", "data-mini" => "true" %>
+    </div>
+    <div class="field">
+      <%= f.label :revisa_control, "Revisa cuaderno de control" %> 
+      <%= f.check_box :revisa_control, "class" => "custom", "data-mini" => "true" %>
+    </div>
+  </fieldset>
   <div class="field">
-    <%= f.label :revisa_control %><br />
-    <%= f.text_field :revisa_control %>
-  </div>
-  <div class="field">
-    <%= f.label :inicio_vigencia %><br />
-    <%= f.date_select :inicio_vigencia %>
-  </div>
-  <div class="field">
-    <%= f.label :fin_vigencia %><br />
-    <%= f.date_select :fin_vigencia %>
-  </div>
-  <div class="field">
-    <%= f.label :usuario %><br />
-    <%= f.text_field :usuario %>
+    <%= f.hidden_field :usuario, :value => current_user.usuario %>
   </div>
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit "Grabar", "data-inline" => "true", "data-theme" => "a", "data-icon" => "check", "data-mini" => "true" %>
   </div>
+</div>
 <% end %>

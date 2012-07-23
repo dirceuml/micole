@@ -40,17 +40,31 @@ class AlumnosPersonasVinculadasController < ApplicationController
   # POST /alumnos_personas_vinculadas
   # POST /alumnos_personas_vinculadas.json
   def create
-    @alumno_persona_vinculada = AlumnoPersonaVinculada.new(params[:alumno_persona_vinculada])
-
+    @alumno = Alumno.find(params[:alumno_id])
+    @alumno_persona_vinculada = @alumno.alumnos_personas_vinculadas.create(params[:alumno_persona_vinculada])
+#    redirect_to alumno_path(@alumno)
     respond_to do |format|
       if @alumno_persona_vinculada.save
-        format.html { redirect_to @alumno_persona_vinculada, notice: 'Alumno persona vinculada was successfully created.' }
+        format.html { redirect_to @alumno }
         format.json { render json: @alumno_persona_vinculada, status: :created, location: @alumno_persona_vinculada }
       else
-        format.html { render action: "new" }
+        format.html { redirect_to @alumno }
         format.json { render json: @alumno_persona_vinculada.errors, status: :unprocessable_entity }
       end
     end
+    
+    
+#    @alumno_persona_vinculada = AlumnoPersonaVinculada.new(params[:alumno_persona_vinculada])
+
+#    respond_to do |format|
+#      if @alumno_persona_vinculada.save
+#        format.html { redirect_to @alumno_persona_vinculada, notice: 'Alumno persona vinculada was successfully created.' }
+#        format.json { render json: @alumno_persona_vinculada, status: :created, location: @alumno_persona_vinculada }
+#      else
+#        format.html { render action: "new" }
+#        format.json { render json: @alumno_persona_vinculada.errors, status: :unprocessable_entity }
+#      end
+#    end
   end
 
   # PUT /alumnos_personas_vinculadas/1
@@ -72,12 +86,10 @@ class AlumnosPersonasVinculadasController < ApplicationController
   # DELETE /alumnos_personas_vinculadas/1
   # DELETE /alumnos_personas_vinculadas/1.json
   def destroy
-    @alumno_persona_vinculada = AlumnoPersonaVinculada.find(params[:id])
+    @alumno = Alumno.find(params[:alumno_id])
+    @alumno_persona_vinculada = @alumno.alumnos_personas_vinculadas.find(params[:id])
     @alumno_persona_vinculada.destroy
-
-    respond_to do |format|
-      format.html { redirect_to alumnos_personas_vinculadas_url }
-      format.json { head :no_content }
-    end
+    
+    redirect_to alumno_path(@alumno)
   end
 end

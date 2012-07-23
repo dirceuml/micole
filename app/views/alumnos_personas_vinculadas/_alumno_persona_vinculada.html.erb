@@ -1,0 +1,10 @@
+<div data-role="content">
+  <ul id='alumnos_personas_vinculadas' data-role="listview">
+    <% @alumno.alumnos_personas_vinculadas.each do |alumno_persona_vinculada| %>
+    <li>
+      <%= link_to simple_format(alumno_persona_vinculada.apellidos_nombres), [:edit, @alumno, alumno_persona_vinculada] %>
+      <%= link_to 'Eliminar vínculo', [alumno_persona_vinculada.alumno, alumno_persona_vinculada], confirm: '¿Seguro que desea eliminar el registro?', method: :delete, "data-icon" => "delete" %>
+    </li>
+    <% end %>
+  </ul>
+</div>
