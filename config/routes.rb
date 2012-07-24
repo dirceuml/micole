@@ -49,7 +49,8 @@ Micole::Application.routes.draw do
     resources :alumnos_personas_vinculadas
   end
   
-  post "alumnos/buscar" => "alumnos#buscar", :as => "buscar_alumno"
+  get "alumnos/:seccion_id/listar_seccion" => "alumnos#listar_seccion", :as => "listar_seccion_alumnos"
+  post "alumnos/buscar" => "alumnos#buscar", :as => "buscar_alumnos"
   
   resources :cuadernos_controles do
     resources :cuaderno_controles_eventos

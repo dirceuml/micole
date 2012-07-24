@@ -10,16 +10,25 @@ class AlumnosController < ApplicationController
     end
   end
 
-  # GET /alumnos
-  # GET /alumnos.json
-  def buscar
+  # GET /alumnos/1/listar_seccion
+  # GET /alumnos/1/listar_seccion.json
+  def listar_seccion
     seccion = params[:seccion_id]
+    
     @alumnos = Alumno.pertenecen_a_seccion(seccion)
 
     respond_to do |format|
-      format.html { redirect_to alumnos_path }
-      format.json { render json: @alumnos, status: :created, location: @alumnos }
+      format.html # index.html.erb
+      format.json { render json: @alumnos }
     end
+  end
+
+  # PUT /alumnos
+  def buscar
+    seccion = params[:seccion_id]
+    @alumnos = Alumno.pertenecen_a_seccion(seccion)
+        
+    redirect_to(listar_seccion_alumnos_path(seccion))
   end
 
   # GET /alumnos/1
