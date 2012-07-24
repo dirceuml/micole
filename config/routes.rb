@@ -48,7 +48,9 @@ Micole::Application.routes.draw do
   resources :alumnos do
     resources :alumnos_personas_vinculadas
   end
-
+  
+  post "alumnos/buscar" => "alumnos#buscar", :as => "buscar_alumno"
+  
   resources :cuadernos_controles do
     resources :cuaderno_controles_eventos
   end
