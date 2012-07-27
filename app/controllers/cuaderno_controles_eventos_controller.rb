@@ -108,8 +108,9 @@ class CuadernoControlesEventosController < ApplicationController
     @cuaderno_control_evento = @cuaderno_control.cuaderno_controles_eventos.build(params[:cuaderno_control_evento])
     
     if @cuaderno_control_evento.save
-      flash[:notice] = "Evento agregado."
-      redirect_to [@cuaderno_control, @cuaderno_control_evento]
+      #flash[:notice] = "Evento agregado."
+      #redirect_to [@cuaderno_control, @cuaderno_control_evento] # cuadernos_controles_revisiones#show
+      redirect_to @cuaderno_control # cuadernos_controles#show
     else
       flash[:alert] = "Evento no fue agregado."
       render :action => "new"

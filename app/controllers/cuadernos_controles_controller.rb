@@ -6,7 +6,7 @@ class CuadernosControlesController < ApplicationController
       redirect_to(log_in_path) and return
     end
 
-    @cuadernos_controles = CuadernoControl.all
+    @cuadernos_controles = CuadernoControl.order("estado, fecha desc, seccion_id")
 
     respond_to do |format|
       format.html # index.html.erb

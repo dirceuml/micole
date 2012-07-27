@@ -1,7 +1,7 @@
 <div data-role="header">
-  <h1><%=  "#{@cuaderno_control.fecha} | #{Seccion.find(@cuaderno_control.seccion_id).grado_seccion} | #{ListaValor.find_by_tabla_and_item(5, @cuaderno_control.estado).descripcion}" %></h1>
+  <h1><%=  "#{@cuaderno_control.fecha.to_formatted_s(:long)} | #{Seccion.find(@cuaderno_control.seccion_id).grado_seccion}" %></h1>
   <% if @cuaderno_control.estado == 1 %>
-    <%= link_to 'Agregar evento', new_cuaderno_control_cuaderno_control_evento_path(@cuaderno_control), "data-icon" => "gear", "class" => "ui-btn-right", "data-mini" => "true" %>
+    <%= link_to 'Agregar evento', new_cuaderno_control_cuaderno_control_evento_path(@cuaderno_control), "data-icon" => "plus", "class" => "ui-btn-right", "data-mini" => "true" %>
   <% end %>
   <%= link_to 'Regresar', cuadernos_controles_path, "data-icon" => "back", "class" => "ui-btn-left", "data-mini" => "true" %>
 </div>
@@ -16,15 +16,21 @@
       <% end %>
     </li>
     <li>
-      <%= link_to simple_format(cuaderno_control_evento.descripcion), [:edit, @cuaderno_control, cuaderno_control_evento] %>
-      <%= link_to 'Eliminar', [@cuaderno_control, cuaderno_control_evento], confirm: '¿Seguro que desea eliminar el registro?', method: :delete, "data-icon" => "delete" %>
+      <% if @cuaderno_control.estado == 1 %>
+        <%= link_to simple_format(cuaderno_control_evento.descripcion), [:edit, @cuaderno_control, cuaderno_control_evento] %>
+        <%= link_to 'Eliminar', [@cuaderno_control, cuaderno_control_evento], confirm: '¿Seguro que desea eliminar el registro?', method: :delete, "data-icon" => "delete" %>
+      <% else %>
+        <%= simple_format(cuaderno_control_evento.descripcion) %>
+      <% end %>
     </li>
     <% end %>
   </ul>
 </div>
 
-<% if @cuaderno_control.estado == 1 %>
 <div data-role="footer">
-  <%= link_to 'Cerrar', "/cuadernos_controles/#{@cuaderno_control.id}/cerrar", "class" => "ui-btn-left", "data-inline" => "true", "data-theme" => "a", "data-icon" => "check", "data-mini" => "true" %>
-</div>  
-<% end %>
+  <% if @cuaderno_control.estado == 1 %>
+    <%= link_to 'Cerrar', "/cuadernos_controles/#{@cuaderno_control.id}/cerrar", "class" => "ui-btn-left", "data-inline" => "true", "data-theme" => "a", "data-icon" => "check", "data-mini" => "true" %>
+  <% else %>
+    <%= ListaValor.find_by_tabla_and_item(5, @cuaderno_control.estado).descripcion %>
+  <% end %>
+</div>

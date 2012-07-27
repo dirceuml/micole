@@ -1,7 +1,7 @@
 <%= form_for(@cuaderno_control, :html => { :class => "ui-body ui-body-c" }) do |f| %>
   <% if @cuaderno_control.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@cuaderno_control.errors.count, "error") %> prohibited this cuaderno_control from being saved:</h2>
+      <h2><%= pluralize(@cuaderno_control.errors.count, "error") %> impidieron que el registro se grabe:</h2>
 
       <ul>
       <% @cuaderno_control.errors.full_messages.each do |msg| %>
@@ -29,7 +29,7 @@
   </div>
 <br/>
   <div class="actions">
-    <%= f.submit "Grabar", "data-inline" => "true", "data-theme" => "a", "data-icon" => "check", "data-mini" => "true" %>
+    <%= f.submit "Registrar", "data-inline" => "true", "data-theme" => "a", "data-icon" => "check", "data-mini" => "true" %>
   </div>
 </div>
 <% end %>
