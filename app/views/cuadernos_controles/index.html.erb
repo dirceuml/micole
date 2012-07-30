@@ -13,7 +13,7 @@
           <li data-filtertext="<%= "#{cuaderno_control.fecha} #{Seccion.find(cuaderno_control.seccion_id).grado_seccion} #{ListaValor.find_by_tabla_and_item(5, cuaderno_control.estado).descripcion}" %>" >
             <%= link_to cuaderno_control do %>
               <!--%= image_tag("open_icon.jpg", :class => "ui-li-icon", :alt => "Abierto") %-->
-              <%= "#{cuaderno_control.fecha.to_formatted_s(:rfc822)} - #{Seccion.find(cuaderno_control.seccion_id).grado_seccion}" %> 
+              <%= "#{cuaderno_control.fecha.strftime('%d/%m/%Y')} - #{Seccion.find(cuaderno_control.seccion_id).grado_seccion}" %> 
 
             <% end %>
             <%= link_to 'Eliminar', cuaderno_control, confirm: '¿Seguro que desea eliminar el registro?', method: :delete, "data-icon" => "delete" %>      
@@ -29,7 +29,7 @@
           <li data-filtertext="<%= "#{cuaderno_control.fecha} #{Seccion.find(cuaderno_control.seccion_id).grado_seccion} #{ListaValor.find_by_tabla_and_item(5, cuaderno_control.estado).descripcion}" %>" >
             <%= link_to cuaderno_control do %>
               <!--%= image_tag("close_icon.jpg", :class => "ui-li-icon", :alt => "Cerrado") %-->
-              <%= "#{cuaderno_control.fecha.to_formatted_s(:rfc822)} - #{Seccion.find(cuaderno_control.seccion_id).grado_seccion}" %> 
+              <%= "#{cuaderno_control.fecha.strftime('%d/%m/%Y')} - #{Seccion.find(cuaderno_control.seccion_id).grado_seccion}" %> 
 
             <% end %>
           </li>

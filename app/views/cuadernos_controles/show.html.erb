@@ -1,5 +1,5 @@
 <div data-role="header">
-  <h1><%=  "#{@cuaderno_control.fecha.to_formatted_s(:long)} | #{Seccion.find(@cuaderno_control.seccion_id).grado_seccion}" %></h1>
+  <h1><%=  "#{@cuaderno_control.fecha.strftime('%d/%m/%Y')} | #{Seccion.find(@cuaderno_control.seccion_id).grado_seccion}" %></h1>
   <% if @cuaderno_control.estado == 1 %>
     <%= link_to 'Agregar evento', new_cuaderno_control_cuaderno_control_evento_path(@cuaderno_control), "data-icon" => "plus", "class" => "ui-btn-right", "data-mini" => "true" %>
   <% end %>

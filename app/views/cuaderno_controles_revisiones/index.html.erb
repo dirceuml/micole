@@ -1,5 +1,5 @@
 <div data-role="header">
-  <h1>Revisión de cuaderno de control</h1>
+  <h1>Revisar cuaderno de control</h1>
 </div>
 <div data-role="content" class="ui-content" role="main">
   <div data-role="collapsible-set" data-theme="b" data-content-theme="d" data-inset="false">
@@ -9,7 +9,7 @@
         <% @cuaderno_controles_revisiones.no_revisado.each do |cuaderno_control_revision| %>
         <li data-filtertext="<%= "#{cuaderno_control_revision.cuaderno_control.fecha} #{cuaderno_control_revision.alumno.apellidos_nombres}" %>" >
           <%= link_to cuaderno_control_revision do %>
-            <%= "#{cuaderno_control_revision.cuaderno_control.fecha} - #{cuaderno_control_revision.alumno.apellidos_nombres}" %>        
+            <%= "#{cuaderno_control_revision.cuaderno_control.fecha.strftime('%d/%m/%Y')} - #{cuaderno_control_revision.alumno.apellidos_nombres}" %>        
           <% end %>
 
         </li>
@@ -23,7 +23,7 @@
         <% @cuaderno_controles_revisiones.revisado.each do |cuaderno_control_revision| %>
         <li data-filtertext="<%= "#{cuaderno_control_revision.cuaderno_control.fecha} #{cuaderno_control_revision.alumno.apellidos_nombres}" %>" >
           <%= link_to cuaderno_control_revision do %>
-            <%= "#{cuaderno_control_revision.cuaderno_control.fecha} - #{cuaderno_control_revision.alumno.apellidos_nombres}" %>        
+            <%= "#{cuaderno_control_revision.cuaderno_control.fecha.strftime('%d/%m/%Y')} - #{cuaderno_control_revision.alumno.apellidos_nombres}" %>        
           <% end %>
 
         </li>

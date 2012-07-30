@@ -1,55 +1,17 @@
-<p id="notice"><%= notice %></p>
+<div id='persona_vinculada' data-role="header">
+  <h1>Detalles</h1>
+  <%= link_to 'Aceptar', personas_vinculadas_path, "data-icon" => "check", "data-mini" => "true"  %>
+</div>
 
-<p>
-  <b>Tipo documento:</b>
-  <%= @persona_vinculada.tipo_documento %>
-</p>
+<div data-role="content">
+  <div class="field"><b>Documento:</b> <%= "#{ListaValor.find_by_tabla_and_item(2, @persona_vinculada.tipo_documento).abreviatura} #{@persona_vinculada.numero_documento}" %><p></div>
+  <div class="field"><b>Apellidos y nombres:</b> <%= @persona_vinculada.apellidos_nombres %><p></div>
+  <div class="field"><b>Telefono fijo:</b> <%= @persona_vinculada.telefono_fijo %><p></div>
+  <div class="field"><b>Telefono móvil:</b> <%= @persona_vinculada.telefono_movil %><p></div>
+  <div class="field"><b>Correo:</b> <%= @persona_vinculada.correo %><p></div>
+  <div class="field"><b>Foto:</b> <%= @persona_vinculada.foto %><p></div>
+</div>
 
-<p>
-  <b>Numero documento:</b>
-  <%= @persona_vinculada.numero_documento %>
-</p>
-
-<p>
-  <b>Nombres:</b>
-  <%= @persona_vinculada.nombres %>
-</p>
-
-<p>
-  <b>Apellido paterno:</b>
-  <%= @persona_vinculada.apellido_paterno %>
-</p>
-
-<p>
-  <b>Apellido materno:</b>
-  <%= @persona_vinculada.apellido_materno %>
-</p>
-
-<p>
-  <b>Telefono fijo:</b>
-  <%= @persona_vinculada.telefono_fijo %>
-</p>
-
-<p>
-  <b>Telefono movil:</b>
-  <%= @persona_vinculada.telefono_movil %>
-</p>
-
-<p>
-  <b>Correo:</b>
-  <%= @persona_vinculada.correo %>
-</p>
-
-<p>
-  <b>Foto:</b>
-  <%= @persona_vinculada.foto %>
-</p>
-
-<p>
-  <b>Usuario:</b>
-  <%= @persona_vinculada.usuario %>
-</p>
-
-
-<%= link_to 'Edit', edit_persona_vinculada_path(@persona_vinculada) %> |
-<%= link_to 'Back', personas_vinculadas_path %>
+<div data-role="footer">
+  <%= link_to 'Editar', edit_persona_vinculada_path(@persona_vinculada), "class" => "ui-btn-left", "data-inline" => "true", "data-theme" => "a", "data-icon" => "gear", "data-mini" => "true" %>
+</div>

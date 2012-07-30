@@ -2,6 +2,10 @@ class PersonasVinculadasController < ApplicationController
   # GET /personas_vinculadas
   # GET /personas_vinculadas.json
   def index
+    if current_user.nil?
+      redirect_to(log_in_path) and return
+    end
+
     @personas_vinculadas = PersonaVinculada.all
 
     respond_to do |format|
@@ -13,6 +17,10 @@ class PersonasVinculadasController < ApplicationController
   # GET /personas_vinculadas/1
   # GET /personas_vinculadas/1.json
   def show
+    if current_user.nil?
+      redirect_to(log_in_path) and return
+    end
+
     @persona_vinculada = PersonaVinculada.find(params[:id])
 
     respond_to do |format|
@@ -24,6 +32,10 @@ class PersonasVinculadasController < ApplicationController
   # GET /personas_vinculadas/new
   # GET /personas_vinculadas/new.json
   def new
+    if current_user.nil?
+      redirect_to(log_in_path) and return
+    end
+
     @persona_vinculada = PersonaVinculada.new
 
     respond_to do |format|
@@ -34,12 +46,20 @@ class PersonasVinculadasController < ApplicationController
 
   # GET /personas_vinculadas/1/edit
   def edit
+    if current_user.nil?
+      redirect_to(log_in_path) and return
+    end
+
     @persona_vinculada = PersonaVinculada.find(params[:id])
   end
 
   # POST /personas_vinculadas
   # POST /personas_vinculadas.json
   def create
+    if current_user.nil?
+      redirect_to(log_in_path) and return
+    end
+
     @persona_vinculada = PersonaVinculada.new(params[:persona_vinculada])
 
     respond_to do |format|
@@ -56,6 +76,10 @@ class PersonasVinculadasController < ApplicationController
   # PUT /personas_vinculadas/1
   # PUT /personas_vinculadas/1.json
   def update
+    if current_user.nil?
+      redirect_to(log_in_path) and return
+    end
+
     @persona_vinculada = PersonaVinculada.find(params[:id])
 
     respond_to do |format|
@@ -72,6 +96,10 @@ class PersonasVinculadasController < ApplicationController
   # DELETE /personas_vinculadas/1
   # DELETE /personas_vinculadas/1.json
   def destroy
+    if current_user.nil?
+      redirect_to(log_in_path) and return
+    end
+
     @persona_vinculada = PersonaVinculada.find(params[:id])
     @persona_vinculada.destroy
 

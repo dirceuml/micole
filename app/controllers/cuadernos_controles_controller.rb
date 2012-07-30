@@ -103,7 +103,8 @@ class CuadernosControlesController < ApplicationController
 
     respond_to do |format|
       if @cuaderno_control.save
-        format.html { redirect_to @cuaderno_control, notice: 'Cuaderno control was successfully created.' }
+        #format.html { redirect_to @cuaderno_control }
+        format.html { redirect_to new_cuaderno_control_cuaderno_control_evento_path(@cuaderno_control) }
         format.json { render json: @cuaderno_control, status: :created, location: @cuaderno_control }
       else
         format.html { render action: "new" }

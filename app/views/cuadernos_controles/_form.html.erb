@@ -1,8 +1,7 @@
 <%= form_for(@cuaderno_control, :html => { :class => "ui-body ui-body-c" }) do |f| %>
   <% if @cuaderno_control.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@cuaderno_control.errors.count, "error") %> impidieron que el registro se grabe:</h2>
-
+    <div data-role="header" data-theme="e" id="error_explanation">
+      <%= pluralize(@cuaderno_control.errors.count, "error") %> impidieron que se grabe el registro:
       <ul>
       <% @cuaderno_control.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>
@@ -10,14 +9,17 @@
       </ul>
     </div>
   <% end %>
+
 <div data-role="fieldcontain">
   <div class="field">
     <% fecha_actual = Date.current %>
-    Fecha: <%= f.text_field :fecha, :readonly => true, :value => fecha_actual,  "data-mini" => "true", "style" => "width:80px" %>
+    Fecha: <br/>
+    <%= f.text_field :fecha, :readonly => true, :value => fecha_actual,  "data-mini" => "true", "style" => "width:120px" %>
     
   </div>
   <div class="field">
-    Sección: <%= collection_select(:cuaderno_control, :seccion_id, Seccion.all, :id, :grado_seccion, {}, {"data-mini" => "true"}) %>
+    Sección: <br/>
+    <%= collection_select(:cuaderno_control, :seccion_id, Seccion.all, :id, :grado_seccion, {}, {"data-mini" => "true"}) %>
   </div>
   <div class="field">
     <!--%= f.label :estado %-->
