@@ -1,21 +1,34 @@
 <div data-role="header">
   <h1>Revisión de cuaderno de control</h1>
 </div>
+<div data-role="content" class="ui-content" role="main">
+  <div data-role="collapsible-set" data-theme="b" data-content-theme="d" data-inset="false">
+    <div data-role="collapsible" data-collapsed="false">
+      <h2>Sin revisar</h2>
+      <ul data-role="listview" data-filter="true">
+        <% @cuaderno_controles_revisiones.no_revisado.each do |cuaderno_control_revision| %>
+        <li data-filtertext="<%= "#{cuaderno_control_revision.cuaderno_control.fecha} #{cuaderno_control_revision.alumno.apellidos_nombres}" %>" >
+          <%= link_to cuaderno_control_revision do %>
+            <%= "#{cuaderno_control_revision.cuaderno_control.fecha} - #{cuaderno_control_revision.alumno.apellidos_nombres}" %>        
+          <% end %>
 
-<div data-role="content">
-  <ul data-role="listview" data-filter="true">
-    <% @cuaderno_controles_revisiones.each do |cuaderno_control_revision| %>
-    <li data-filtertext="<%= "#{cuaderno_control_revision.cuaderno_control.fecha} #{cuaderno_control_revision.alumno.apellidos_nombres}" %>" >
-      <%= link_to cuaderno_control_revision do %>
-        <% if cuaderno_control_revision.revisado == 1 %>
-          <% revisado = "Revisado" %>
-        <% else %>
-          <% revisado = "No revisado" %>
+        </li>
         <% end %>
-        <%= simple_format("#{cuaderno_control_revision.cuaderno_control.fecha} - #{cuaderno_control_revision.alumno.apellidos_nombres} - #{revisado}") %>        
-      <% end %>
-      
-    </li>
-    <% end %>
-  </ul>
+      </ul>
+    </div>
+    
+    <div data-role="collapsible">
+      <h2>Revisados</h2>
+      <ul data-role="listview" data-filter="true">
+        <% @cuaderno_controles_revisiones.revisado.each do |cuaderno_control_revision| %>
+        <li data-filtertext="<%= "#{cuaderno_control_revision.cuaderno_control.fecha} #{cuaderno_control_revision.alumno.apellidos_nombres}" %>" >
+          <%= link_to cuaderno_control_revision do %>
+            <%= "#{cuaderno_control_revision.cuaderno_control.fecha} - #{cuaderno_control_revision.alumno.apellidos_nombres}" %>        
+          <% end %>
+
+        </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
 </div>
