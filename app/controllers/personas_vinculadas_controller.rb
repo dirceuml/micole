@@ -64,7 +64,8 @@ class PersonasVinculadasController < ApplicationController
 
     respond_to do |format|
       if @persona_vinculada.save
-        format.html { redirect_to @persona_vinculada, notice: 'Persona vinculada was successfully created.' }
+        post = PersonaVinculada.cargar(params[:upload])
+        format.html { redirect_to @persona_vinculada, notice: 'Persona vinculada fue creada satisfactoriamente.' }
         format.json { render json: @persona_vinculada, status: :created, location: @persona_vinculada }
       else
         format.html { render action: "new" }
@@ -84,7 +85,7 @@ class PersonasVinculadasController < ApplicationController
 
     respond_to do |format|
       if @persona_vinculada.update_attributes(params[:persona_vinculada])
-        format.html { redirect_to @persona_vinculada, notice: 'Persona vinculada was successfully updated.' }
+        format.html { redirect_to @persona_vinculada, notice: 'Persona vinculada fue actualizada satisfactoriamente.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

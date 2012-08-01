@@ -13,3 +13,18 @@
 //= require jquery
 //= require jquery_ujs
 //= require_tree .
+
+function toggleSelect(selectOrigen, selectDestino)
+{
+    //if (alcance == 3)
+    if (selectOrigen.value != 1)
+    {
+        //document.getElementById("cuaderno_control_evento_alumno_id").disabled = false;
+        selectDestino.disabled = false;
+    }
+    else
+    {
+        selectDestino.value = null;
+        selectDestino.disabled = true;
+    }
+}

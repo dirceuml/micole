@@ -6,16 +6,15 @@
   
   <%= javascript_include_tag "application" %>
   
-  <link rel="stylesheet" href="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.css" />
+  <!--link rel="stylesheet" href="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.css" />
   <link rel="stylesheet"  href="http://jquerymobile.com/test/css/themes/default/jquery.mobile.css" />
   <script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
-  <script src="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.js"></script>
+  <script src="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.js"></script-->
   
   <%= csrf_meta_tag %>  
 
-</head> 
-
-  <div data-role="page" class="type-interior">
+</head>   
+  <div data-role="page" class="type-interior" data-url="<%= request.path %>">
     <div data-role="footer" data-theme="b">
       <image src="/assets/logo_small.gif" style="vertical-align:bottom" />            
       

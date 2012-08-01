@@ -3,13 +3,13 @@
   <%= link_to 'Aceptar', personas_vinculadas_path, "data-icon" => "check", "data-mini" => "true"  %>
 </div>
 
-<div data-role="content">
-  <div class="field"><b>Documento:</b> <%= "#{ListaValor.find_by_tabla_and_item(2, @persona_vinculada.tipo_documento).abreviatura} #{@persona_vinculada.numero_documento}" %><p></div>
-  <div class="field"><b>Apellidos y nombres:</b> <%= @persona_vinculada.apellidos_nombres %><p></div>
-  <div class="field"><b>Telefono fijo:</b> <%= @persona_vinculada.telefono_fijo %><p></div>
-  <div class="field"><b>Telefono móvil:</b> <%= @persona_vinculada.telefono_movil %><p></div>
-  <div class="field"><b>Correo:</b> <%= @persona_vinculada.correo %><p></div>
-  <div class="field"><b>Foto:</b> <%= @persona_vinculada.foto %><p></div>
+<div data-role="content" style="clear: left">
+    <%= image_tag(@persona_vinculada.foto) %><p>
+    <b>Documento:</b> <%= "#{ListaValor.find_by_tabla_and_item(2, @persona_vinculada.tipo_documento).abreviatura} #{@persona_vinculada.numero_documento}" %><p>
+    <b>Apellidos y nombres:</b> <%= @persona_vinculada.apellidos_nombres %><p>
+    <b>Telefono fijo:</b> <%= @persona_vinculada.telefono_fijo %><p>
+    <b>Telefono móvil:</b> <%= @persona_vinculada.telefono_movil %><p>
+    <b>Correo:</b> <%= @persona_vinculada.correo %><p>
 </div>
 
 <div data-role="footer">
