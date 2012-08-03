@@ -101,7 +101,7 @@ class PersonasVinculadasController < ApplicationController
     archivo = params[:persona_vinculada][:foto]
     name = params[:persona_vinculada][:tipo_documento].to_s.rjust(3, "0") + params[:persona_vinculada][:numero_documento].rjust(10, "0") + archivo.original_filename[-4, 4]
     #directory = "/Sites/micole/app/assets/images"
-    directory = "../../../public"
+    directory = "public"
     path = File.join(directory, name) 
     
     params[:persona_vinculada][:foto] = name
