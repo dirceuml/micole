@@ -16,11 +16,4 @@ class PersonaVinculada < ActiveRecord::Base
   scope :logueado, lambda { |usuario| joins(:usuario).where("usuarios.usuario = ?", usuario) }
   scope :revisores_de, lambda { |alumno| joins(:alumnos_personas_vinculadas).where("revisa_control = 1 and alumno_id = ?", alumno)}
   scope :padres_de, lambda { |alumno| joins(:alumnos_personas_vinculadas).where("apoderado = 1 and alumno_id = ?", alumno)}
-
-  def self.cargar(upload)
-       directory = "public/images/"
-    path = File.join(directory, "prueba")
-    File.open(path, "wb") { |f| f.write(upload['datafile'].read)}
-    render :text => "Fichero cargado con exito"
-  end
 end

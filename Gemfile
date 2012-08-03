@@ -40,3 +40,7 @@ gem 'jquery-rails'
 
 # To use debugger
 # gem 'ruby-debug19', :require => 'ruby-debug'
+
+#gem 'rmagick'
+#gem 'therubyracer', :platform => :ruby # no funciona
+#gem 'libv8', '3.11.8.0' # funciona para windows
