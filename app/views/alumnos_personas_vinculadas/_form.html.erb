@@ -26,10 +26,10 @@
     Vigencia: <%= collection_select(:alumno_persona_vinculada, :vigencia_vinculo, ListaValor.where("tabla = 4"), :item, :descripcion, {:prompt => ':: Seleccione ::' }, {"data-mini" => "true"}) %>
   </div>
   <div class="field">
-    Inicio: <%= f.text_field :inicio_vigencia, "data-mini" => "true", "data-role" => "datebox", "type" => "date", "style" => "width:100px" %>    
+    Inicio: <%= f.text_field :inicio_vigencia, "data-mini" => "true", "data-role" => "datebox", "type" => "date", "style" => "width:120px" %>    
   </div>
   <div class="field">
-    Fin: <%= f.text_field :fin_vigencia, "data-mini" => "true", "data-role" => "datebox", "type" => "date", "style" => "width:100px" %>
+    Fin: <%= f.text_field :fin_vigencia, "data-mini" => "true", "data-role" => "datebox", "type" => "date", "style" => "width:120px" %>
   </div>
   <fieldset data-role="controlgroup">
     <div class="field">

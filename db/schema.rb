@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120713080011) do
+ActiveRecord::Schema.define(:version => 20120806190333) do
 
   create_table "actividades", :force => true do |t|
     t.integer  "anio_escolar_id",              :null => false
@@ -67,13 +67,13 @@ ActiveRecord::Schema.define(:version => 20120713080011) do
     t.integer  "tipo_vinculo",                        :null => false
     t.integer  "vigencia_vinculo",                    :null => false
     t.date     "inicio_vigencia",                     :null => false
-    t.date     "fin_vigencia",                        :null => false
     t.string   "usuario",                             :null => false
     t.datetime "created_at",                          :null => false
     t.datetime "updated_at",                          :null => false
     t.integer  "apoderado",            :default => 0, :null => false
     t.integer  "autoriza_actividad",   :default => 0, :null => false
     t.integer  "revisa_control",       :default => 0, :null => false
+    t.date     "fin_vigencia"
   end
 
   add_index "alumnos_personas_vinculadas", ["alumno_id"], :name => "fk_alumnospersonas_alumnos"
@@ -167,7 +167,7 @@ ActiveRecord::Schema.define(:version => 20120713080011) do
   create_table "cuaderno_controles_revisiones", :force => true do |t|
     t.integer  "cuaderno_control_id",                 :null => false
     t.integer  "alumno_id",                           :null => false
-    t.integer  "persona_vinculada_id",                :null => false
+    t.integer  "persona_vinculada_id"
     t.datetime "fecha_hora_revision"
     t.text     "observaciones"
     t.string   "usuario",                             :null => false
@@ -281,6 +281,20 @@ ActiveRecord::Schema.define(:version => 20120713080011) do
   add_index "perfiles_transacciones", ["perfil_id", "transaccion_id"], :name => "ak_perfiles_transacciones", :unique => true
   add_index "perfiles_transacciones", ["perfil_id"], :name => "fk_perfiltransaccion_perfil"
   add_index "perfiles_transacciones", ["transaccion_id"], :name => "fk_perfiltransaccion_transac"
+
+  create_table "persona_autorizada_recojos", :force => true do |t|
+    t.integer  "CodigoPersonaAutorizada"
+    t.integer  "CodigoColegio"
+    t.integer  "TipoDocumento"
+    t.string   "NumeroDocumento"
+    t.string   "Nombres"
+    t.string   "ApellidoPaterno"
+    t.string   "ApellidoMaterno"
+    t.string   "Foto"
+    t.datetime "created_at",              :null => false
+    t.datetime "updated_at",              :null => false
+    t.text     "Observaciones"
+  end
 
   create_table "personas_vinculadas", :force => true do |t|
     t.integer  "tipo_documento",   :null => false

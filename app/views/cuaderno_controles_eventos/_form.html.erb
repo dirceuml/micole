@@ -13,7 +13,7 @@
 <div data-role="fieldcontain">
   <div class="field">
     Tipo de evento:<br />
-    <% funcion = "toggleSelect(this, document.getElementById('cuaderno_control_evento_alumno_id'))" %>
+    <% funcion = "toggleElement(this, document.getElementById('cuaderno_control_evento_alumno_id'), 1)" %>
     <%= collection_select(:cuaderno_control_evento, :tipo_evento_id, TipoEvento.where("cuaderno_control = 1"), :id, :descripcion, {}, {"data-mini" => "true", :onchange => funcion}) %>
     
   </div>
