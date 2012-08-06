@@ -8,6 +8,8 @@ class AlumnoPersonaVinculada < ActiveRecord::Base
   def apellidos_nombres
     self.persona_vinculada.apellidos_nombres
   end
+  
+  scope :por_documento, lambda { |tipo_documento, numero_documento| joins(:persona_vinculada).where("tipo_documento = ? and numero_documento = ?", tipo_documento, numero_documento)}  
 end
 
 

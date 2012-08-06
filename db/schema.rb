@@ -282,20 +282,6 @@ ActiveRecord::Schema.define(:version => 20120713080011) do
   add_index "perfiles_transacciones", ["perfil_id"], :name => "fk_perfiltransaccion_perfil"
   add_index "perfiles_transacciones", ["transaccion_id"], :name => "fk_perfiltransaccion_transac"
 
-  create_table "persona_autorizada_recojos", :force => true do |t|
-    t.integer  "CodigoPersonaAutorizada"
-    t.integer  "CodigoColegio"
-    t.integer  "TipoDocumento"
-    t.string   "NumeroDocumento"
-    t.string   "Nombres"
-    t.string   "ApellidoPaterno"
-    t.string   "ApellidoMaterno"
-    t.string   "Foto"
-    t.datetime "created_at",              :null => false
-    t.datetime "updated_at",              :null => false
-    t.text     "Observaciones"
-  end
-
   create_table "personas_vinculadas", :force => true do |t|
     t.integer  "tipo_documento",   :null => false
     t.string   "numero_documento", :null => false

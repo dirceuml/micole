@@ -6,7 +6,7 @@ class CuadernoControlesRevisionesController < ApplicationController
     if current_user.nil?
       redirect_to(log_in_path) and return
     end
-
+    
     @cuaderno_controles_revisiones = 
       CuadernoControlRevision.cerrado.se_revisan_por(PersonaVinculada.logueado(current_user.usuario).pluck("personas_vinculadas.id"))
         

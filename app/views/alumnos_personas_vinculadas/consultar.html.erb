@@ -1,0 +1,56 @@
+<div data-role="header">
+  <h1>Buscar persona vinculada</h1>
+</div>
+
+<% if params[:tipo_documento] == "0" %>
+  <% tipo = "" %>
+  <% numero = "" %>
+<% else %>
+  <% tipo = params[:tipo_documento] %>
+  <% numero = params[:numero_documento] %>  
+<% end %>
+
+<div data-role="content">
+  <%= form_tag(buscar_alumnos_personas_vinculadas_path) do %>
+    <div data-role="fieldcontain">      
+      <div class="ui-grid-d" style="text-align: center">        
+        <div class="ui-block-a">
+          Documento:
+        </div>
+        <div class="ui-block-b">
+          <%= collection_select(:persona_vinculada, :tipo_documento, ListaValor.where("tabla=2"), :item, :descripcion, {}, {"data-mini" => "true"}) %>
+        </div>
+        <div class="ui-block-c">
+          <%= text_field_tag(:numero_documento, numero, "data-mini" => "true", "style" => "width:120px") %>
+        </div>
+        <div class="ui-block-d">
+          <%= submit_tag "Buscar", "data-inline" => "true", "data-theme" => "a", "data-icon" => "search", "data-mini" => "true" %>
+        </div>
+      </div>      
+    </div>
+  <% end %>
+  
+  <div class="ui-grid-a" style="border-style: solid; border-width: 1px; border-color: #06c; ">
+    <div class="ui-block-a">
+       <% if tipo != "" %>
+        <div data-role="content" style="color: #06c; text-align: center">
+          <% persona = PersonaVinculada.find_by_tipo_documento_and_numero_documento(tipo,numero) %>
+          <%= image_tag(persona.foto) %> <br/>
+          <%= ListaValor.find_by_tabla_and_item(2, tipo).descripcion + " " + numero %>  <br/>
+          <%= persona.apellidos_nombres %>
+        </div>
+      <% end %>
+    </div>
+    <div class="ui-block-b" style="border-style: solid; border-width: 1px; border-color: #06c;">
+      <div data-role="content" style="color: #06c; text-align: center">           
+        <% @alumnos_personas_vinculadas.each do |alumno_persona_vinculada| %>
+        <p>
+          <%= image_tag(alumno_persona_vinculada.alumno.foto) %> <br/>
+          <%= alumno_persona_vinculada.alumno.apellidos_nombres %>     
+        </p>
+        <% end  %>               
+      </div>
+    </div>
+  </div><!-- /grid-a --> 
+  
+</div>

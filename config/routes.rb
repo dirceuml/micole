@@ -3,9 +3,12 @@ Micole::Application.routes.draw do
   resources :curriculos
 
   resources :alumnos_personas_vinculadas
-
-  resources :personas_vinculadas
-
+  
+  get "alumnos_personas_vinculadas/:tipo_documento/:numero_documento/consultar" => "alumnos_personas_vinculadas#consultar", :as => "consultar_alumnos_personas_vinculadas"
+  post "alumnos_personas_vinculadas/buscar" => "alumnos_personas_vinculadas#buscar", :as => "buscar_alumnos_personas_vinculadas"
+  
+  resources :personas_vinculadas  
+  
   resources :asistencias
 
   resources :actividades_secciones
@@ -73,8 +76,6 @@ Micole::Application.routes.draw do
   resources :alumno_padres
 
   resources :colegio_anio_escolars
-
-  resources :persona_autorizada_recojos
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

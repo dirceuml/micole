@@ -9,6 +9,29 @@ class AlumnosPersonasVinculadasController < ApplicationController
       format.json { render json: @alumnos_personas_vinculadas }
     end
   end
+  
+  # GET /alumnos_personas_vinculadas/1/consultar
+  # GET /alumnos_personas_vinculadas/1/consultar.json
+  def consultar
+    tipo = params[:tipo_documento]
+    numero = params[:numero_documento]
+    
+    @alumnos_personas_vinculadas = AlumnoPersonaVinculada.por_documento(tipo,numero)
+
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: @alumnos }
+    end
+  end
+
+  # PUT /alumnos_personas_vinculadas/buscar
+  def buscar
+    tipo = params[:persona_vinculada][:tipo_documento]
+    numero = params[:numero_documento]
+    
+    redirect_to(consultar_alumnos_personas_vinculadas_path(tipo,numero))
+    #redirect to("/alumnos_personas_vinculadas/" + tipo + "/" + numero + "/consultar")
+  end
 
   # GET /alumnos_personas_vinculadas/1
   # GET /alumnos_personas_vinculadas/1.json

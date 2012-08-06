@@ -7,8 +7,10 @@
 <div data-role="content">
   <ul data-role="listview" data-filter="true">
     <% @personas_vinculadas.each do |persona_vinculada| %>
-    <li data-role="list-divider">      
-      <%= "#{persona_vinculada.apellidos_nombres} - #{ListaValor.find_by_tabla_and_item(2, persona_vinculada.tipo_documento).descripcion} #{persona_vinculada.numero_documento}" %>
+    <li data-role="list-divider" data-theme="b" data-icon="false" data-mini="true">  
+      <%= link_to persona_vinculada do %>
+        <%= "#{persona_vinculada.apellidos_nombres} - #{ListaValor.find_by_tabla_and_item(2, persona_vinculada.tipo_documento).descripcion} #{persona_vinculada.numero_documento}" %>
+      <% end %>
     </li>
     <li data-filtertext="<%= "#{persona_vinculada.apellidos_nombres} #{persona_vinculada.numero_documento} #{persona_vinculada.correo} #{persona_vinculada.telefono_fijo} #{persona_vinculada.telefono_movil}" %>" >
       <%= link_to edit_persona_vinculada_path(persona_vinculada) do %>
