@@ -1,5 +1,5 @@
 <div data-role="header">
-  <h1>Buscar persona vinculada</h1>
+  <h1>Salida de alumnos</h1>
 </div>
 
 <% if params[:tipo_documento] == "0" %>
@@ -10,28 +10,32 @@
   <% numero = params[:numero_documento] %>  
 <% end %>
 
-<div data-role="content">
-  <%= form_tag(buscar_alumnos_personas_vinculadas_path) do %>
-    <div data-role="fieldcontain">      
-      <div class="ui-grid-d" style="text-align: center">        
-        <div class="ui-block-a">
-          Documento:
-        </div>
-        <div class="ui-block-b">
-          <%= collection_select(:persona_vinculada, :tipo_documento, ListaValor.where("tabla=2"), :item, :descripcion, {}, {"data-mini" => "true"}) %>
-        </div>
-        <div class="ui-block-c">
-          <%= text_field_tag(:numero_documento, numero, "data-mini" => "true", "style" => "width:120px") %>
-        </div>
-        <div class="ui-block-d">
-          <%= submit_tag "Buscar", "data-inline" => "true", "data-theme" => "a", "data-icon" => "search", "data-mini" => "true" %>
-        </div>
-      </div>      
+<div data-role="content">    
+  <div class="ui-grid-b">
+    <div class="ui-block-a" style="text-align: center;">
+      <b>Persona que recoge:</b>
+       <hr>
+       <%= form_tag(buscar_alumnos_personas_vinculadas_path) do %>            
+         <div data-role="fieldcontain">
+            <div style="text-align: left;">
+              Tipo documento:<br/>
+              <%= collection_select(:persona_vinculada, :tipo_documento, ListaValor.where("tabla=2"), :item, :descripcion, {}, {"data-mini" => "true"}) %>
+            </div>
+<br/>
+            <div style="text-align: left;">
+              N° documento:<br/>
+              <%= text_field_tag(:numero_documento, numero, "data-mini" => "true") %>
+            </div>
+<br/>
+            <div>
+              <%= submit_tag "Buscar", "data-inline" => "true", "data-theme" => "a", "data-icon" => "search", "data-mini" => "true" %>
+            </div>
+          </div>         
+      <% end %>
+      <hr>
     </div>
-  <% end %>
-  
-  <div class="ui-grid-a">
-    <div class="ui-block-a">
+
+    <div class="ui-block-b" style="text-align: center;">
        <% if tipo != "" %>
         <div data-role="content" style="color: #06c; text-align: center">
           <% persona = PersonaVinculada.find_by_tipo_documento_and_numero_documento(tipo,numero) %>
@@ -41,13 +45,15 @@
         </div>
       <% end %>
     </div>
-    <div class="ui-block-b" style="border-style: solid; border-width: 1px; border-color: #06c;">
+    <div class="ui-block-c">
       <div data-role="content" style="color: #06c; text-align: center">           
         <% @alumnos_personas_vinculadas.each do |alumno_persona_vinculada| %>
         <p>
           <%= image_tag(alumno_persona_vinculada.alumno.foto) %> <br/>
-          <%= alumno_persona_vinculada.alumno.apellidos_nombres %>     
+          <%= alumno_persona_vinculada.alumno.apellidos_nombres %>   
+          <%= check_box_tag "alumno_persona_vinculada_id[]",alumno_persona_vinculada.id%>
         </p>
+        <hr>
         <% end  %>               
       </div>
     </div>
