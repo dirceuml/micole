@@ -65,14 +65,16 @@ class AlumnosPersonasVinculadasController < ApplicationController
   def create
     @alumno = Alumno.find(params[:alumno_id])
     @alumno_persona_vinculada = @alumno.alumnos_personas_vinculadas.create(params[:alumno_persona_vinculada])
+     
 #    redirect_to alumno_path(@alumno)
     respond_to do |format|
       if @alumno_persona_vinculada.save
         format.html { redirect_to @alumno }
-        format.json { render json: @alumno_persona_vinculada, status: :created, location: @alumno_persona_vinculada }
+        format.json { render json: @alumno, status: :created, location: @alumno }
       else
-        format.html { redirect_to @alumno }
-        format.json { render json: @alumno_persona_vinculada.errors, status: :unprocessable_entity }
+        format.html { render 'alumnos/show' } 
+#        format.html { redirect_to @alumno }
+        format.json { render json: @alumno.errors, status: :unprocessable_entity }
       end
     end
     

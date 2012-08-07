@@ -6,7 +6,7 @@ class PersonaVinculada < ActiveRecord::Base
   has_many :autorizaciones
   has_one :usuario
   
-  validates :tipo_documento, :numero_documento, :nombres, :apellido_paterno, :usuario, :presence => true
+  validates :tipo_documento, :numero_documento, :nombres, :apellido_paterno, :user, :presence => true  
   validates :numero_documento, :uniqueness => { :scope => :tipo_documento, :message => "El documento ya esta registrado" }
   
   def apellidos_nombres

@@ -1,8 +1,8 @@
 <%= form_for([@alumno, @alumno.alumnos_personas_vinculadas.build], :html => { :class => "ui-body ui-body-c" }) do |f| %>
   <% if !@alumno_persona_vinculada.nil? %>
     <% if @alumno_persona_vinculada.errors.any? %>
-      <div id="error_explanation">
-        <h2><%= pluralize(@alumno_persona_vinculada.errors.count, "error") %> impidieron la grabación:</h2>
+      <div id="error_explanation" data-role="header" data-theme="e">
+        <h2><%= pluralize(@alumno_persona_vinculada.errors.count, "error") %> impidieron la grabacion:</h2>
 
         <ul>
         <% @alumno_persona_vinculada.errors.full_messages.each do |msg| %>
@@ -12,24 +12,25 @@
       </div>
     <% end %>
   <% end %>
+
 <div data-role="fieldcontain">
   <div class="field">
-    Persona: <%= collection_select(:alumno_persona_vinculada, :persona_vinculada_id, PersonaVinculada.all, :id, :apellidos_nombres, {:prompt => ':: Seleccione ::' }, {"data-mini" => "true"}) %>
+    Persona:<br/><%= collection_select(:alumno_persona_vinculada, :persona_vinculada_id, PersonaVinculada.all, :id, :apellidos_nombres, {:prompt => ':: Seleccione ::' }, {"data-mini" => "true"}) %>
   </div>
   <div class="field">
     <%= f.hidden_field :alumno_id %>
   </div>
   <div class="field">
-    Tipo vínculo: <%= collection_select(:alumno_persona_vinculada, :tipo_vinculo, ListaValor.where("tabla = 3"), :item, :descripcion, {:prompt => ':: Seleccione ::' }, {"data-mini" => "true"}) %>
+    Tipo vínculo:<br/><%= collection_select(:alumno_persona_vinculada, :tipo_vinculo, ListaValor.where("tabla = 3"), :item, :descripcion, {:prompt => ':: Seleccione ::' }, {"data-mini" => "true"}) %>
   </div>
   <div class="field">
-    Vigencia: <%= collection_select(:alumno_persona_vinculada, :vigencia_vinculo, ListaValor.where("tabla = 4"), :item, :descripcion, {:prompt => ':: Seleccione ::' }, {"data-mini" => "true"}) %>
+    Vigencia:<br/><%= collection_select(:alumno_persona_vinculada, :vigencia_vinculo, ListaValor.where("tabla = 4"), :item, :descripcion, {:prompt => ':: Seleccione ::' }, {"data-mini" => "true"}) %>
   </div>
   <div class="field">
-    Inicio: <%= f.text_field :inicio_vigencia, "data-mini" => "true", "data-role" => "datebox", "type" => "date", "style" => "width:120px" %>    
+    Inicio:<br/><%= f.text_field :inicio_vigencia, "data-mini" => "true", "data-role" => "datebox", "type" => "date", "style" => "width:120px" %>    
   </div>
   <div class="field">
-    Fin: <%= f.text_field :fin_vigencia, "data-mini" => "true", "data-role" => "datebox", "type" => "date", "style" => "width:120px" %>
+    Fin:<br/><%= f.text_field :fin_vigencia, "data-mini" => "true", "data-role" => "datebox", "type" => "date", "style" => "width:120px" %>
   </div>
   <fieldset data-role="controlgroup">
     <div class="field">

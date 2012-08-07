@@ -35,7 +35,7 @@ class AlumnosController < ApplicationController
   # GET /alumnos/1.json
   def show
     @alumno = Alumno.find(params[:id])
-
+    
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @alumno }
@@ -61,11 +61,11 @@ class AlumnosController < ApplicationController
   # POST /alumnos
   # POST /alumnos.json
   def create
-    @alumno = Alumno.new(params[:alumno])
-
+    @alumno = Alumno.new(params[:alumno])    
+    
     respond_to do |format|
       if @alumno.save
-        format.html { redirect_to @alumno, notice: 'Alumno was successfully created.' }
+        format.html { redirect_to @alumno, notice: 'Alumno creado satisfactoriamente.' }
         format.json { render json: @alumno, status: :created, location: @alumno }
       else
         format.html { render action: "new" }

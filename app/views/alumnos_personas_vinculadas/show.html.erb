@@ -1,55 +1,64 @@
-<p id="notice"><%= notice %></p>
+<div data-role="header">
+  <h1>Vínculos con alumnos</h1>
+  <%= link_to 'Regresar', @alumno_persona_vinculada.alumno, "data-icon" => "back", "class" => "ui-btn-left", "data-mini" => "true" %>
+</div>
 
-<p>
-  <b>Persona vinculada:</b>
-  <%= @alumno_persona_vinculada.persona_vinculada_id %>
-</p>
+<div data-role="content" class="content-primary">
+  
+  <ul data-role="listview">
+    <li>
+      Persona vinculada:
+      <%= @alumno_persona_vinculada.persona_vinculada.apellidos_nombres %>
+    </li>
+    <li>
+      Alumno:
+      <%= @alumno_persona_vinculada.alumno.apellidos_nombres %>
+    </li>
+    <li>
+      Tipo vinculo:
+      <%= ListaValor.find_by_tabla_and_item(3, @alumno_persona_vinculada.tipo_vinculo).descripcion %>
+    </li>
+    <li>
+      Vigencia vinculo:
+      <%= ListaValor.find_by_tabla_and_item(4, @alumno_persona_vinculada.vigencia_vinculo).descripcion %>
+    </li>
+    <li>
+      Inicio vigencia:
+      <% if @alumno_persona_vinculada.inicio_vigencia %>
+        <%= @alumno_persona_vinculada.inicio_vigencia.strftime('%d/%m/%Y') %>
+      <% end %>
+    </li>
+    <li>
+      Fin vigencia:
+      <% if @alumno_persona_vinculada.fin_vigencia %>
+        <%= @alumno_persona_vinculada.fin_vigencia.strftime('%d/%m/%Y') %>
+      <% end %>
+    </li>
+    <li>
+      Apoderado:
+      <% if @alumno_persona_vinculada.apoderado == 1 %>
+        Si
+      <% else %>
+        No
+      <% end %>
+    </li>
+    <li>
+      Autoriza actividad:
+      <% if @alumno_persona_vinculada.autoriza_actividad == 1 %>
+        Si
+      <% else %>
+        No
+      <% end %>
+    </li>
+    <li>
+      Revisa control:
+      <% if @alumno_persona_vinculada.revisa_control == 1 %>
+        Si
+      <% else %>
+        No
+      <% end %>
+    </li>
+  </ul>
+</div>
 
-<p>
-  <b>Alumno:</b>
-  <%= @alumno_persona_vinculada.alumno_id %>
-</p>
 
-<p>
-  <b>Tipo vinculo:</b>
-  <%= @alumno_persona_vinculada.tipo_vinculo %>
-</p>
-
-<p>
-  <b>Vigencia vinculo:</b>
-  <%= @alumno_persona_vinculada.vigencia_vinculo %>
-</p>
-
-<p>
-  <b>Apoderado:</b>
-  <%= @alumno_persona_vinculada.apoderado %>
-</p>
-
-<p>
-  <b>Autoriza actividad:</b>
-  <%= @alumno_persona_vinculada.autoriza_actividad %>
-</p>
-
-<p>
-  <b>Revisa control:</b>
-  <%= @alumno_persona_vinculada.revisa_control %>
-</p>
-
-<p>
-  <b>Inicio vigencia:</b>
-  <%= @alumno_persona_vinculada.inicio_vigencia %>
-</p>
-
-<p>
-  <b>Fin vigencia:</b>
-  <%= @alumno_persona_vinculada.fin_vigencia %>
-</p>
-
-<p>
-  <b>Usuario:</b>
-  <%= @alumno_persona_vinculada.usuario %>
-</p>
-
-
-<%= link_to 'Edit', edit_alumno_persona_vinculada_path(@alumno_persona_vinculada) %> |
-<%= link_to 'Back', alumnos_personas_vinculadas_path %>
