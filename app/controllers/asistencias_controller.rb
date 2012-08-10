@@ -53,6 +53,31 @@ class AsistenciasController < ApplicationController
     end
   end
 
+  # POST /guardar_salida
+  # POST /guardar_salida.json
+  def crear_en_bloque
+    if current_user.nil?
+      redirect_to(log_in_path) and return
+    end
+
+    params[:alumno_id].each do |alumno|      
+      @asistencia_alumno_persona_vinculada = Asistencia.new(
+        :anio_alumno_id => AnioAlumno.find_by_anio_escolar_id_and_alumno_id(1, alumno),
+        :fecha_hora => Time.now,
+        :persona_vinculada_id => params[:persona_vinculada_id],
+        :usuario => current_user.usuario
+      )
+      
+      if !@asistencia_alumno_persona_vinculada.save
+        format.html { render action: "consultar" }
+      end
+    end
+
+    tipo = PersonaVinculada.find(params[:persona_vinculada_id]).tipo_documento
+    numero = PersonaVinculada.find(params[:persona_vinculada_id]).numero_documento
+    redirect_to(consultar_alumnos_personas_vinculadas_path(tipo, numero))
+  end
+
   # PUT /asistencias/1
   # PUT /asistencias/1.json
   def update

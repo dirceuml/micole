@@ -2,6 +2,10 @@ class AlumnosPersonasVinculadasController < ApplicationController
   # GET /alumnos_personas_vinculadas
   # GET /alumnos_personas_vinculadas.json
   def index
+    if current_user.nil?
+      redirect_to(log_in_path) and return
+    end
+
     @alumnos_personas_vinculadas = AlumnoPersonaVinculada.all
 
     respond_to do |format|
@@ -13,6 +17,10 @@ class AlumnosPersonasVinculadasController < ApplicationController
   # GET /alumnos_personas_vinculadas/1/consultar
   # GET /alumnos_personas_vinculadas/1/consultar.json
   def consultar
+    if current_user.nil?
+      redirect_to(log_in_path) and return
+    end
+
     tipo = params[:tipo_documento]
     numero = params[:numero_documento]
     
@@ -26,6 +34,10 @@ class AlumnosPersonasVinculadasController < ApplicationController
 
   # PUT /alumnos_personas_vinculadas/buscar
   def buscar
+    if current_user.nil?
+      redirect_to(log_in_path) and return
+    end
+
     tipo = params[:persona_vinculada][:tipo_documento]
     numero = params[:numero_documento]
     
@@ -36,6 +48,10 @@ class AlumnosPersonasVinculadasController < ApplicationController
   # GET /alumnos_personas_vinculadas/1
   # GET /alumnos_personas_vinculadas/1.json
   def show
+    if current_user.nil?
+      redirect_to(log_in_path) and return
+    end
+
     @alumno_persona_vinculada = AlumnoPersonaVinculada.find(params[:id])
 
     respond_to do |format|
@@ -47,6 +63,10 @@ class AlumnosPersonasVinculadasController < ApplicationController
   # GET /alumnos_personas_vinculadas/new
   # GET /alumnos_personas_vinculadas/new.json
   def new
+    if current_user.nil?
+      redirect_to(log_in_path) and return
+    end
+
     @alumno_persona_vinculada = AlumnoPersonaVinculada.new
 
     respond_to do |format|
@@ -57,12 +77,20 @@ class AlumnosPersonasVinculadasController < ApplicationController
 
   # GET /alumnos_personas_vinculadas/1/edit
   def edit
+    if current_user.nil?
+      redirect_to(log_in_path) and return
+    end
+
     @alumno_persona_vinculada = AlumnoPersonaVinculada.find(params[:id])
   end
 
   # POST /alumnos_personas_vinculadas
   # POST /alumnos_personas_vinculadas.json
   def create
+    if current_user.nil?
+      redirect_to(log_in_path) and return
+    end
+
     @alumno = Alumno.find(params[:alumno_id])
     @alumno_persona_vinculada = @alumno.alumnos_personas_vinculadas.create(params[:alumno_persona_vinculada])
      
@@ -95,6 +123,10 @@ class AlumnosPersonasVinculadasController < ApplicationController
   # PUT /alumnos_personas_vinculadas/1
   # PUT /alumnos_personas_vinculadas/1.json
   def update
+    if current_user.nil?
+      redirect_to(log_in_path) and return
+    end
+
     @alumno_persona_vinculada = AlumnoPersonaVinculada.find(params[:id])
 
     respond_to do |format|
@@ -111,6 +143,10 @@ class AlumnosPersonasVinculadasController < ApplicationController
   # DELETE /alumnos_personas_vinculadas/1
   # DELETE /alumnos_personas_vinculadas/1.json
   def destroy
+    if current_user.nil?
+      redirect_to(log_in_path) and return
+    end
+
     @alumno = Alumno.find(params[:alumno_id])
     @alumno_persona_vinculada = @alumno.alumnos_personas_vinculadas.find(params[:id])
     @alumno_persona_vinculada.destroy

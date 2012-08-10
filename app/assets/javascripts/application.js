@@ -28,3 +28,31 @@ function toggleElement(origen, destino, valorDeshabilita)
         destino.disabled = true;
     }
 }
+
+function verificarCantidadCheckBoxes(checkBox, cantidadMinima, cantidadMaxima, entidad)
+{
+    count = 0;
+    
+    for(x=0; x < document.salida.elements["alumno_id[]"].length; x++)
+    {
+        if(document.salida.elements["alumno_id[]"][x].checked == true)
+        {
+            count++;
+        }
+    }    
+ 
+    if(count < cantidadMinima && cantidadMinima > -1)
+    {
+        alert("Debe seleccionar por lo menos " + cantidadMinima.toString() + " " + entidad);
+        return false;
+    }
+    else if(count > cantidadMaxima && cantidadMaxima > -1)
+    {
+        alert("Puede seleccionar como máximo " + cantidadMaxima.toString() + " " + entidad);
+        return false;
+    }
+    else 
+    {
+        return true;
+    }
+}

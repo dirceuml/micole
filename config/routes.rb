@@ -10,7 +10,8 @@ Micole::Application.routes.draw do
   resources :personas_vinculadas  
   
   resources :asistencias
-
+  post "asistencias/crear_en_bloque" => "asistencias#crear_en_bloque", :as => "crear_en_bloque_asistencias"
+  
   resources :actividades_secciones
 
   resources :actividades
