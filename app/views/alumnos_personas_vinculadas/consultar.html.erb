@@ -47,15 +47,22 @@
       <% end %>
     </div>
     
-    <div class="ui-block-c">
-      <div data-role="content" style="color: #06c; text-align: center"> 
+    <div class="ui-block-c">      
+      <div data-role="content" style="text-align: center"> 
         <%= form_tag(crear_en_bloque_asistencias_path, {"onSubmit" => "return verificarCantidadCheckBoxes('alumno_id[]', 1, -1, 'alumno');", "data-ajax" => "false", "name" => "salida"}) do %>
           <div data-role="fieldcontain">
             <% @alumnos_personas_vinculadas.each do |alumno_persona_vinculada| %>
               <p>
                 <%= image_tag(alumno_persona_vinculada.alumno.foto) %> <br/>
-                <%= alumno_persona_vinculada.alumno.apellidos_nombres %>
-                <%= check_box_tag 'alumno_id[]',alumno_persona_vinculada.alumno.id %>                             
+                <%= alumno_persona_vinculada.alumno.apellidos_nombres %> <br/>
+                <% if alumno_persona_vinculada.alumno.salida_registrada(alumno_persona_vinculada.alumno.id, Date.current) == 0 %>
+                  <%= check_box_tag 'alumno_id[]',alumno_persona_vinculada.alumno.id %>                             
+                <% else %>
+                <div style="color: #00f; font-size: 11px;">
+                  Recogido por <%= alumno_persona_vinculada.alumno.find_asistencia_by_alumno_id_and_fecha(alumno_persona_vinculada.alumno.id, Date.current.strftime('%d/%m/%Y')).persona_vinculada.apellidos_nombres %><br/>
+                  <%= alumno_persona_vinculada.alumno.find_asistencia_by_alumno_id_and_fecha(alumno_persona_vinculada.alumno.id, Date.current.strftime('%d/%m/%Y')).fecha_hora.strftime('%d/%m/%Y %H:%M') %>
+                </div>
+                <% end %>
               </p>
               <hr>
             <% end %> 

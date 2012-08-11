@@ -53,23 +53,32 @@ class AsistenciasController < ApplicationController
     end
   end
 
-  # POST /guardar_salida
-  # POST /guardar_salida.json
+  # POST /crear_en_bloque
+  # POST /crear_en_bloque.json
   def crear_en_bloque
     if current_user.nil?
       redirect_to(log_in_path) and return
     end
 
-    params[:alumno_id].each do |alumno|      
-      @asistencia_alumno_persona_vinculada = Asistencia.new(
-        :anio_alumno_id => AnioAlumno.find_by_anio_escolar_id_and_alumno_id(1, alumno),
-        :fecha_hora => Time.now,
-        :persona_vinculada_id => params[:persona_vinculada_id],
-        :usuario => current_user.usuario
-      )
-      
-      if !@asistencia_alumno_persona_vinculada.save
-        format.html { render action: "consultar" }
+    ActiveRecord::Base.transaction do
+      params[:alumno_id].each do |alumno|   
+        @asistencia_alumno_persona_vinculada = Asistencia.new(
+          :anio_alumno_id => AnioAlumno.find_by_anio_escolar_id_and_alumno_id(1, alumno).id,
+          :fecha_hora => Time.now,
+          :persona_vinculada_id => params[:persona_vinculada_id],
+          :usuario => current_user.usuario
+        )
+
+        if !@asistencia_alumno_persona_vinculada.save
+          flash[:notice] = 'Ocurrio un error al registrar la salida'
+          format.html { render action: "consultar" }
+        else
+          if @guardados.nil?
+            @guardados = [@asistencia_alumno_persona_vinculada.id]
+          else
+            @guardados.push(@asistencia_alumno_persona_vinculada)
+          end
+        end
       end
     end
 
