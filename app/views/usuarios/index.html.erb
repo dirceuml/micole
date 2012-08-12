@@ -1,31 +1,17 @@
-<h1>Listing usuarios</h1>
+<div data-role="header">
+  <h1>Usuarios</h1>
+  <%= link_to 'Agregar', new_usuario_path, "data-icon" => "plus", "class" => "ui-btn-right" %>
+</div>
 
-<table>
-  <tr>
-    <th>Perfil</th>
-    <th>Persona vinculada</th>
-    <th>Usuario</th>
-    <th>Nombre</th>
-    <th>Clave</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
-<% @usuarios.each do |usuario| %>
-  <tr>
-    <td><%= usuario.perfil_id %></td>
-    <td><%= usuario.persona_vinculada_id %></td>
-    <td><%= usuario.usuario %></td>
-    <td><%= usuario.nombre %></td>
-    <td><%= usuario.clave %></td>
-    <td><%= link_to 'Show', usuario %></td>
-    <td><%= link_to 'Edit', edit_usuario_path(usuario) %></td>
-    <td><%= link_to 'Destroy', usuario, confirm: 'Are you sure?', method: :delete %></td>
-  </tr>
-<% end %>
-</table>
-
-<br />
-
-<%= link_to 'New Usuario', new_usuario_path %>
+<div data-role="content">
+  <ul data-role="listview" data-filter="true">
+    <% @usuarios.each do |usuario| %>
+    <li data-filtertext="<%= "#{usuario.usuario} #{usuario.nombre} #{Perfil.find(usuario.perfil_id)}" %>" >
+      <%= link_to edit_usuario_path(usuario) do %>
+        <%= simple_format("#{usuario.nombre} (#{usuario.usuario} - #{Perfil.find(usuario.perfil_id).descripcion})") %>
+      <% end %>
+      <%= link_to 'Eliminar', usuario, confirm: '¿Seguro que desea eliminar el registro?', method: :delete, "data-icon" => "delete" %>      
+    </li>
+    <% end  %>
+  </ul>
+</div>

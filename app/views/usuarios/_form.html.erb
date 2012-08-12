@@ -1,6 +1,6 @@
 <%= form_for(@usuario) do |f| %>
   <% if @usuario.errors.any? %>
-    <div id="error_explanation">
+    <div id="error_explanation" data-role="header" data-theme="e">
       <h2><%= pluralize(@usuario.errors.count, "error") %> prohibited this usuario from being saved:</h2>
 
       <ul>
@@ -11,17 +11,9 @@
     </div>
   <% end %>
 
+<div data-role="fieldcontain">
   <div class="field">
-    <%= f.label :colegio_id %><br />
-    <%= f.number_field :colegio_id %>
-  </div>
-  <div class="field">
-    <%= f.label :perfil_id %><br />
-    <%= f.number_field :perfil_id %>
-  </div>
-  <div class="field">
-    <%= f.label :persona_vinculada_id %><br />
-    <%= f.number_field :persona_vinculada_id %>
+    <%= f.hidden_field :colegio_id, :value => "1" %>
   </div>
   <div class="field">
     <%= f.label :usuario %><br />
@@ -33,13 +25,26 @@
   </div>
   <div class="field">
     <%= f.label :clave %><br />
-    <%= f.text_field :clave %>
+    <%= f.password_field :clave %>
+  </div>
+  <div class="field">
+    <%= f.label :clave_confirmation %><br />
+    <%= f.password_field :clave_confirmation %>
+  </div>
+  <div class="field">
+    <%= f.label :perfil_id %><br />
+    <%= collection_select(:usuario, :perfil_id, Perfil.all, :id, :descripcion, { :prompt => ':: Seleccione un perfil ::'}, {"data-mini" => "true"}) %>
+  </div>
+  <div class="field">
+    <%= f.label :persona_vinculada_id %><br />
+    <%= collection_select(:usuario, :persona_vinculada_id, PersonaVinculada.all, :id, :apellidos_nombres, { :prompt => ''}, {"data-mini" => "true"}) %>
   </div>
   <div class="field">
     <%= f.label :correo %><br />
-    <%= f.text_field :correo %>
+    <%= f.email_field :correo, :placeholder => "dirceu@example.com" %>
   </div>
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit "Grabar", "data-inline" => "true", "data-theme" => "a", "data-icon" => "check", "data-mini" => "true" %>
   </div>
+</div>
 <% end %>

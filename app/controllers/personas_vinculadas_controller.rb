@@ -65,7 +65,9 @@ class PersonasVinculadasController < ApplicationController
     if !@persona_vinculada.foto.nil?
       archivo = @persona_vinculada.foto
       name = @persona_vinculada.tipo_documento.to_s.rjust(3, "0") + @persona_vinculada.numero_documento.rjust(10, "0") + archivo.original_filename[-4, 4]
-      directory = "/Sites/micole/app/assets/images"    
+#      directory = "/Sites/micole/app/assets/images"    
+      #directory = "app/assets/images"
+      directory = "public"
       path = File.join(directory, name) 
 
       @persona_vinculada.foto = name

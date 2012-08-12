@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120807060833) do
+ActiveRecord::Schema.define(:version => 20120812044951) do
 
   create_table "actividades", :force => true do |t|
     t.integer  "anio_escolar_id",              :null => false
@@ -346,15 +346,16 @@ ActiveRecord::Schema.define(:version => 20120807060833) do
   add_index "transacciones", ["descripcion"], :name => "ak_transacciones_descripcion", :unique => true
 
   create_table "usuarios", :force => true do |t|
-    t.integer  "colegio_id",           :null => false
-    t.string   "usuario",              :null => false
-    t.string   "nombre",               :null => false
-    t.string   "clave",                :null => false
-    t.integer  "perfil_id",            :null => false
+    t.integer  "colegio_id",                                :null => false
+    t.string   "usuario",                                   :null => false
+    t.string   "nombre",                                    :null => false
+    t.string   "clave_hash",                                :null => false
+    t.integer  "perfil_id",                                 :null => false
     t.integer  "persona_vinculada_id"
     t.string   "correo"
-    t.datetime "created_at",           :null => false
-    t.datetime "updated_at",           :null => false
+    t.datetime "created_at",                                :null => false
+    t.datetime "updated_at",                                :null => false
+    t.string   "clave_salt",           :default => "clave", :null => false
   end
 
   add_index "usuarios", ["colegio_id", "usuario"], :name => "ak_usuarios", :unique => true
