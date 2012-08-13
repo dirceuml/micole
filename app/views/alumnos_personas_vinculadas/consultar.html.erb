@@ -40,7 +40,7 @@
        <% if tipo != "" %>
         <div data-role="content" style="color: #06c; text-align: center">
           <% persona = PersonaVinculada.find_by_tipo_documento_and_numero_documento(tipo,numero) %>
-          <%= image_tag(persona.foto) %> <br/>
+          <%= image_tag(persona.foto_url.to_s) %> <br/>
           <%= ListaValor.find_by_tabla_and_item(2, tipo).descripcion + " " + numero %>  <br/>
           <%= persona.apellidos_nombres %>
         </div>
