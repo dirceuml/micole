@@ -62,22 +62,20 @@ class PersonasVinculadasController < ApplicationController
 
     @persona_vinculada = PersonaVinculada.new(params[:persona_vinculada])
                 
-    if !@persona_vinculada.foto.nil?
-      archivo = @persona_vinculada.foto
-      name = @persona_vinculada.tipo_documento.to_s.rjust(3, "0") + @persona_vinculada.numero_documento.rjust(10, "0") + archivo.original_filename[-4, 4]
-#      directory = "/Sites/micole/app/assets/images"    
-      #directory = "app/assets/images"
-      directory = "public"
-      path = File.join(directory, name) 
-
-      @persona_vinculada.foto = name
-    end
+#    if !@persona_vinculada.foto.nil?
+#      archivo = @persona_vinculada.foto
+#      name = @persona_vinculada.tipo_documento.to_s.rjust(3, "0") + @persona_vinculada.numero_documento.rjust(10, "0") + archivo.original_filename[-4, 4]
+#      directory = "app/assets/images"
+#      path = File.join(directory, name) 
+#
+#      @persona_vinculada.foto = name
+#    end
     
     respond_to do |format|
       if @persona_vinculada.save
-        if (archivo)
-          File.open(path, "wb") { |f| f.write(archivo.read) }
-        end
+#        if (archivo)
+#          File.open(path, "wb") { |f| f.write(archivo.read) }
+#        end
         format.html { redirect_to @persona_vinculada, notice: 'Persona vinculada creada satisfactoriamente.' }
         format.json { render json: @persona_vinculada, status: :created, location: @persona_vinculada }
       else
@@ -104,22 +102,20 @@ class PersonasVinculadasController < ApplicationController
 #        newimg.write("newfilename.jpg")
 #    }
        
-    if !params[:persona_vinculada][:foto].nil?
-      archivo = params[:persona_vinculada][:foto]
-      name = params[:persona_vinculada][:tipo_documento].to_s.rjust(3, "0") + params[:persona_vinculada][:numero_documento].rjust(10, "0") + archivo.original_filename[-4, 4]
-      #directory = "/Sites/micole/app/assets/images"
-      #directory = "app/assets/images"
-      directory = "public"
-      path = File.join(directory, name) 
-
-      params[:persona_vinculada][:foto] = name
-    end
+#    if !params[:persona_vinculada][:foto].nil?
+#      archivo = params[:persona_vinculada][:foto]
+#      name = params[:persona_vinculada][:tipo_documento].to_s.rjust(3, "0") + params[:persona_vinculada][:numero_documento].rjust(10, "0") + archivo.original_filename[-4, 4]
+#      directory = "app/assets/images"
+#      path = File.join(directory, name) 
+#
+#      params[:persona_vinculada][:foto] = name
+#    end
 
     respond_to do |format|
       if @persona_vinculada.update_attributes(params[:persona_vinculada])
-        if !archivo.nil?
-          File.open(path, "wb") { |f| f.write(archivo.read) }
-        end
+#        if !archivo.nil?
+#          File.open(path, "wb") { |f| f.write(archivo.read) }
+#        end
         format.html { redirect_to @persona_vinculada, notice: 'Persona vinculada fue actualizada satisfactoriamente.' }
         format.json { head :no_content }
       else

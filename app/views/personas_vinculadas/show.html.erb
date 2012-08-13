@@ -4,7 +4,8 @@
 </div>
 
 <div data-role="content" style="clear: left">
-    <%= image_tag(@persona_vinculada.foto) %><p>
+    <!--%= image_tag(@persona_vinculada.foto) %-->
+    <%= image_tag(@persona_vinculada.foto_url.to_s) %> <p>
     <b>Documento:</b> <%= "#{ListaValor.find_by_tabla_and_item(2, @persona_vinculada.tipo_documento).abreviatura} #{@persona_vinculada.numero_documento}" %><p>
     <b>Apellidos y nombres:</b> <%= @persona_vinculada.apellidos_nombres %><p>
     <b>Telefono fijo:</b> <%= @persona_vinculada.telefono_fijo %><p>
