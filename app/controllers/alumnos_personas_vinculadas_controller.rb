@@ -100,6 +100,7 @@ class AlumnosPersonasVinculadasController < ApplicationController
         format.html { redirect_to @alumno }
         format.json { render json: @alumno, status: :created, location: @alumno }
       else
+        @alumno_persona_vinculada.persona_vinculada_id = ""
         format.html { render 'alumnos/show' } 
 #        format.html { redirect_to @alumno }
         format.json { render json: @alumno.errors, status: :unprocessable_entity }

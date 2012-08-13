@@ -3,7 +3,7 @@ class CuadernoControlRevision < ActiveRecord::Base
   belongs_to :persona_vinculada
   belongs_to :alumno
   
-  validates :cuaderno_control_id, :alumno_id, :persona_vinculada_id, :revisado, :usuario, :presence => true  
+  validates :cuaderno_control_id, :alumno_id, :persona_vinculada_id, :revisado, :usuario, :presence => { :message => ": El campo no puede estar vacio" } 
   
   scope :revisado, where(:revisado => 1)
   scope :no_revisado, where(:revisado => 0)

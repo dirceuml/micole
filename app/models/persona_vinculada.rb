@@ -8,7 +8,7 @@ class PersonaVinculada < ActiveRecord::Base
   
   mount_uploader :foto, FotoUploader
   
-  validates :tipo_documento, :numero_documento, :nombres, :apellido_paterno, :user, :presence => true  
+  validates :tipo_documento, :numero_documento, :nombres, :apellido_paterno, :user, :foto, :presence => { :message => ": El campo no puede estar vacio" }
   validates :numero_documento, :uniqueness => { :scope => :tipo_documento, :message => "El documento ya esta registrado" }
   
   def apellidos_nombres

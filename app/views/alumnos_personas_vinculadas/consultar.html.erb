@@ -15,7 +15,7 @@
     <div class="ui-block-a" style="text-align: center;">
       <b>Persona que recoge:</b>
        <hr>
-       <%= form_tag(buscar_alumnos_personas_vinculadas_path) do %>            
+       <%= form_tag(buscar_alumnos_personas_vinculadas_path, {"onSubmit" => "return validarBusquedaXDocumento();", "data-ajax" => "false", "name" => "buscar"}) do %>            
          <div data-role="fieldcontain">
             <div style="text-align: left;">
               Tipo documento:<br/>
@@ -40,14 +40,17 @@
        <% if tipo != "" %>
         <div data-role="content" style="color: #06c; text-align: center">
           <% persona = PersonaVinculada.find_by_tipo_documento_and_numero_documento(tipo,numero) %>
-          <%= image_tag(persona.foto_url.to_s) %> <br/>
-          <%= ListaValor.find_by_tabla_and_item(2, tipo).descripcion + " " + numero %>  <br/>
-          <%= persona.apellidos_nombres %>
+          <% if !persona.nil? %>
+            <%= image_tag(persona.foto_url.to_s) %> <br/>
+            <%= ListaValor.find_by_tabla_and_item(2, tipo).descripcion + " " + numero %>  <br/>
+            <%= persona.apellidos_nombres %>
+          <% end %>
         </div>
       <% end %>
     </div>
     
-    <div class="ui-block-c">      
+    <div class="ui-block-c">     
+      <% if !persona.nil? %>
       <div data-role="content" style="text-align: center"> 
         <%= form_tag(crear_en_bloque_asistencias_path, {"onSubmit" => "return verificarCantidadCheckBoxes('alumno_id[]', 1, -1, 'alumno');", "data-ajax" => "false", "name" => "salida"}) do %>
           <div data-role="fieldcontain">
@@ -66,13 +69,16 @@
               </p>
               <hr>
             <% end %> 
+            
             <%= hidden_field_tag 'persona_vinculada_id', persona.id %>
+            
             <div>
               <%= submit_tag "Registrar salida", "data-inline" => "true", "data-theme" => "a", "data-icon" => "check", "data-mini" => "true" %>
             </div>
           </div>
         <% end %>
       </div>
+      <% end %>
     </div>
     <% end %>
     
