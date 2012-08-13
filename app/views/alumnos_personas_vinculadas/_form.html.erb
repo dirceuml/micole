@@ -1,4 +1,4 @@
-<%= form_for([@alumno, @alumno.alumnos_personas_vinculadas.build], :html => { :class => "ui-body ui-body-c" }) do |f| %>
+<%= form_for([@alumno, @alumno.alumnos_personas_vinculadas.build], :html => { :class => "ui-body ui-body-c", "data-ajax" => "false" }) do |f| %>
   <% if !@alumno_persona_vinculada.nil? %>
     <% if @alumno_persona_vinculada.errors.any? %>
       <div id="error_explanation" data-role="header" data-theme="e">
@@ -32,18 +32,19 @@
   <div class="field">
     Fin:<br/><%= f.text_field :fin_vigencia, "data-mini" => "true", "data-role" => "datebox", "type" => "date", "style" => "width:120px" %>
   </div>
+<br/>
   <fieldset data-role="controlgroup">
     <div class="field">
-      <%= f.label :apoderado %> 
       <%= f.check_box :apoderado, "class" => "custom", "data-mini" => "true" %>
+      <%= f.label :apoderado %> 
     </div>
     <div class="field">
-      <%= f.label :autoriza_actividad, "Autoriza actividades" %> 
       <%= f.check_box :autoriza_actividad, "class" => "custom", "data-mini" => "true" %>
+      <%= f.label :autoriza_actividad, "Autoriza actividades" %> 
     </div>
     <div class="field">
-      <%= f.label :revisa_control, "Revisa cuaderno de control" %> 
       <%= f.check_box :revisa_control, "class" => "custom", "data-mini" => "true" %>
+      <%= f.label :revisa_control, "Revisa cuaderno de control" %> 
     </div>
   </fieldset>
   <div class="field">

@@ -59,7 +59,7 @@
                 <%= image_tag(alumno_persona_vinculada.alumno.foto) %> <br/>
                 <%= alumno_persona_vinculada.alumno.apellidos_nombres %> <br/>
                 <% if alumno_persona_vinculada.alumno.salida_registrada(alumno_persona_vinculada.alumno.id, Date.current) == 0 %>
-                  <%= check_box_tag 'alumno_id[]',alumno_persona_vinculada.alumno.id %>                             
+                  <%= check_box_tag 'alumno_id[]',alumno_persona_vinculada.alumno.id %> 
                 <% else %>
                 <div style="color: #00f; font-size: 11px;">
                   Recogido por <%= alumno_persona_vinculada.alumno.find_asistencia_by_alumno_id_and_fecha(alumno_persona_vinculada.alumno.id, Date.current.strftime('%d/%m/%Y')).persona_vinculada.apellidos_nombres %><br/>
