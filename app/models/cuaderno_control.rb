@@ -4,7 +4,7 @@ class CuadernoControl < ActiveRecord::Base
   belongs_to :seccion
   
   validates :seccion_id, :fecha, :estado, :usuario, :presence => { :message => ": El campo no puede estar vacio" }
-  validates :fecha, :uniqueness => {:scope => :seccion_id, :message => "Solamente se puede haber un registro por fecha y seccion"} 
+  validates :fecha, :uniqueness => {:scope => :seccion_id, :message => ": Solamente puede haber un registro por fecha y seccion"} 
   
   scope :cerrado, where(:estado => 2)
   scope :abierto, where(:estado => 1)

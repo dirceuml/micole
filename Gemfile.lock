@@ -116,7 +116,6 @@ DEPENDENCIES
   bcrypt-ruby
   carrierwave
   coffee-rails (~> 3.2.1)
-  eventmachine (= 1.0.0.beta.4.1)
   jquery-rails
   pg
   rails (= 3.2.1)

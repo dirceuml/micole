@@ -1,7 +1,7 @@
 <%= form_for [@cuaderno_control, @cuaderno_control_evento], :html => { :class => "ui-body ui-body-c" } do |f| %>
   <% if @cuaderno_control_evento.errors.any? %>
     <div id="error_explanation" data-role="header" data-theme="e">
-      <%= pluralize(@cuaderno_control_evento.errors.count, "error") %> impiedieron que el registro se grabe:
+      <%= pluralize(@cuaderno_control_evento.errors.count, "error") %> impidieron que el registro se grabe:
 
       <ul>
       <% @cuaderno_control_evento.errors.full_messages.each do |msg| %>

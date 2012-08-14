@@ -7,7 +7,7 @@
       <h2>Sin revisar</h2>
       <ul data-role="listview" data-filter="true">
         <% @cuaderno_controles_revisiones.no_revisado.each do |cuaderno_control_revision| %>
-        <li data-filtertext="<%= "#{cuaderno_control_revision.cuaderno_control.fecha} #{cuaderno_control_revision.alumno.apellidos_nombres}" %>" >
+        <li data-filtertext="<%= "#{cuaderno_control_revision.cuaderno_control.fecha.strftime('%d/%m/%Y')} #{cuaderno_control_revision.alumno.apellidos_nombres}" %>" >
           <%= link_to cuaderno_control_revision do %>
             <%= "#{cuaderno_control_revision.cuaderno_control.fecha.strftime('%d/%m/%Y')} - #{cuaderno_control_revision.alumno.apellidos_nombres}" %>        
           <% end %>
@@ -21,7 +21,7 @@
       <h2>Revisados</h2>
       <ul data-role="listview" data-filter="true">
         <% @cuaderno_controles_revisiones.revisado.each do |cuaderno_control_revision| %>
-        <li data-filtertext="<%= "#{cuaderno_control_revision.cuaderno_control.fecha} #{cuaderno_control_revision.alumno.apellidos_nombres}" %>" >
+        <li data-filtertext="<%= "#{cuaderno_control_revision.cuaderno_control.fecha.strftime('%d/%m/%Y')} #{cuaderno_control_revision.alumno.apellidos_nombres}" %>" >
           <%= link_to cuaderno_control_revision do %>
             <%= "#{cuaderno_control_revision.cuaderno_control.fecha.strftime('%d/%m/%Y')} - #{cuaderno_control_revision.alumno.apellidos_nombres}" %>        
           <% end %>
