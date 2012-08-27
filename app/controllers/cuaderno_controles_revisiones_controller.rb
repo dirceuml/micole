@@ -7,24 +7,8 @@ class CuadernoControlesRevisionesController < ApplicationController
       redirect_to(log_in_path) and return
     end
     
-    @cuaderno_controles_revisiones = 
-      CuadernoControlRevision.cerrado.se_revisan_por(PersonaVinculada.logueado(current_user.usuario).pluck("personas_vinculadas.id"))
-        
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @cuaderno_controles_revisiones }
-    end
-  end
-
-  # GET /cuaderno_controles_revisiones/1/20120131/verificar
-  # GET /cuaderno_controles_revisiones.json
-  def verificar
-    if current_user.nil?
-      redirect_to(log_in_path) and return
-    end
-
     seccion = params[:seccion_id]
-    if params[:seccion_id] == "0"
+    if params[:seccion_id].nil?
       fecha = Date.current
     else
       fecha = params[:fecha].to_date
@@ -33,27 +17,27 @@ class CuadernoControlesRevisionesController < ApplicationController
     @cuaderno_controles_revisiones = CuadernoControlRevision.verificar(seccion, fecha)
      
     respond_to do |format|
-      format.html # verificar.html.erb
+      format.html # index.html.erb
       format.json { render json: @cuaderno_controles_revisiones }
     end
+    
+    
   end
 
-  # PUT /cuaderno_controles_revisiones/consultar
-  def consultar
+  # GET /cuaderno_controles_revisiones/1/20120131/verificar
+  # GET /cuaderno_controles_revisiones.json
+  def revision
     if current_user.nil?
       redirect_to(log_in_path) and return
     end
-    
-    seccion = params[:seccion_id]
-    if params[:seccion_id] == "0"
-      fecha = Date.current
-    else
-      fecha = params[:fecha].to_date
-    end    
 
-    @cuaderno_controles_revisiones = CuadernoControlRevision.verificar(seccion, fecha)
+    #@cuaderno_controles_revisiones = CuadernoControlRevision.cerrado.se_revisan_por(PersonaVinculada.logueado(current_user.usuario).pluck("personas_vinculadas.id"))
+    @cuaderno_controles_revisiones = CuadernoControlRevision.cerrado.se_revisan_por(PersonaVinculada.logueado(params[:usuario]).pluck("personas_vinculadas.id"))
         
-    redirect_to(verificar_cuaderno_control_path(seccion, fecha))
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: @cuaderno_controles_revisiones }
+    end
   end
 
   # GET /cuaderno_controles_eventos/1

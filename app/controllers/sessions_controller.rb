@@ -6,7 +6,7 @@ class SessionsController < ApplicationController
     user = Usuario.authenticate(params[:usuario], params[:clave])
     if user
       session[:usuario_id] = user.id
-      redirect_to "/menu.html" #, :notice => "Logueado!"
+      redirect_to "/menu" #, :notice => "Logueado!"
     else
       flash.now.alert = "Usuario o clave invalidos"
       render "new"

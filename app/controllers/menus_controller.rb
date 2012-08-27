@@ -10,6 +10,17 @@ class MenusController < ApplicationController
     end
   end
 
+  def main
+    if current_user.nil?
+      redirect_to(log_in_path) and return
+    end
+    
+    respond_to do |format|
+      format.html # main.html.erb
+      format.json { render json: @menus }
+    end
+  end
+
   # GET /menus/1
   # GET /menus/1.json
   def show

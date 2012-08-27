@@ -23,6 +23,8 @@ Micole::Application.routes.draw do
   resources :notas
 
   resources :menus
+  
+  get "menu" => "menus#main", :as => "menu"
 
   resources :perfiles_transacciones
 
@@ -47,8 +49,7 @@ Micole::Application.routes.draw do
 
   resources :cuaderno_controles_revisiones
   
-  get "cuaderno_controles_revisiones/:seccion_id/:fecha/verificar" => "cuaderno_controles_revisiones#verificar", :as => "verificar_cuaderno_control"
-  post "cuaderno_controles_revisiones/consultar" => "cuaderno_controles_revisiones#consultar", :as => "consultar_cuaderno_control"
+  get "cuaderno_controles_revisiones/:usuario/revision" => "cuaderno_controles_revisiones#revision", :as => "revision_cuaderno_control"
   
   resources :alumnos do
     resources :alumnos_personas_vinculadas
