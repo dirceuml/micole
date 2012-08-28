@@ -49,7 +49,7 @@ Micole::Application.routes.draw do
 
   resources :cuaderno_controles_revisiones
   
-  get "cuaderno_controles_revisiones/:usuario/revision" => "cuaderno_controles_revisiones#revision", :as => "revision_cuaderno_control"
+  get "revision_cuaderno_control/:usuario" => "cuaderno_controles_revisiones#revision", :as => "revision_cuaderno_control"
   
   resources :alumnos do
     resources :alumnos_personas_vinculadas
