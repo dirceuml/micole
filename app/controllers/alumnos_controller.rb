@@ -23,14 +23,6 @@ class AlumnosController < ApplicationController
     end
   end
 
-  # PUT /alumnos
-  def buscar
-    seccion = params[:seccion_id]
-    @alumnos = Alumno.pertenecen_a_seccion(seccion)
-        
-    redirect_to(listar_seccion_alumnos_path(seccion))
-  end
-
   # GET /alumnos/1
   # GET /alumnos/1.json
   def show

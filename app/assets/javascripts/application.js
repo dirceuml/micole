@@ -53,29 +53,45 @@ function validarBusquedaXFecha()
 
 function verificarCantidadCheckBoxes(checkBox, cantidadMinima, cantidadMaxima, entidad)
 {
-    count = 0;
-    
-    for(x=0; x < document.salida.elements[checkBox].length; x++)
+    try
     {
-        if(document.salida.elements[checkBox][x].checked == true)
+        count = 0;
+        
+        if(typeof document.salida.elements[checkBox].length === 'undefined')
         {
-            count++;
+            if(document.salida.elements[checkBox].checked == true)
+            {
+                count++;
+            }
+        }else{
+            for(x=0; x < document.salida.elements[checkBox].length; x++)
+            {
+                if(document.salida.elements[checkBox][x].checked == true)
+                {
+                    count++;
+                }
+            }
+        }            
+        
+        if(count < cantidadMinima && cantidadMinima > -1)
+        {
+            alert("Debe seleccionar por lo menos " + cantidadMinima.toString() + " " + entidad);
+            return false;
         }
-    }    
- 
-    if(count < cantidadMinima && cantidadMinima > -1)
-    {
-        alert("Debe seleccionar por lo menos " + cantidadMinima.toString() + " " + entidad);
-        return false;
+        else if(count > cantidadMaxima && cantidadMaxima > -1)
+        {
+            alert("Puede seleccionar como máximo " + cantidadMaxima.toString() + " " + entidad);
+            return false;
+        }
+        else 
+        {
+            return true;
+        }
     }
-    else if(count > cantidadMaxima && cantidadMaxima > -1)
+    catch(exception)
     {
-        alert("Puede seleccionar como máximo " + cantidadMaxima.toString() + " " + entidad);
+        alert("Error: " + exception);
         return false;
-    }
-    else 
-    {
-        return true;
     }
 }
 

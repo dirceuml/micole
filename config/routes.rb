@@ -4,13 +4,12 @@ Micole::Application.routes.draw do
 
   resources :alumnos_personas_vinculadas
   
-  get "alumnos_personas_vinculadas/:tipo_documento/:numero_documento/consultar" => "alumnos_personas_vinculadas#consultar", :as => "consultar_alumnos_personas_vinculadas"
-  post "alumnos_personas_vinculadas/buscar" => "alumnos_personas_vinculadas#buscar", :as => "buscar_alumnos_personas_vinculadas"
+  get "salida" => "alumnos_personas_vinculadas#consultar", :as => "salida"
   
   resources :personas_vinculadas  
   
   resources :asistencias
-  post "asistencias/crear_en_bloque" => "asistencias#crear_en_bloque", :as => "crear_en_bloque_asistencias"
+  post "salidas" => "asistencias#crear_en_bloque", :as => "salidas"
   
   resources :actividades_secciones
 
@@ -55,16 +54,15 @@ Micole::Application.routes.draw do
     resources :alumnos_personas_vinculadas
   end
   
-  get "alumnos/:seccion_id/listar_seccion" => "alumnos#listar_seccion", :as => "listar_seccion_alumnos"
-  post "alumnos/buscar" => "alumnos#buscar", :as => "buscar_alumnos"
+  get "alumnos_secciones" => "alumnos#listar_seccion", :as => "alumnos_secciones"
   
   resources :cuadernos_controles do
     resources :cuaderno_controles_eventos
   end
   
-  get "cuadernos_controles/:id/cerrar" => "cuadernos_controles#cerrar", :as => "cerrar_cuaderno_control"
+  get "cerrar_cuadernos_controles/:id" => "cuadernos_controles#cerrar", :as => "cerrar_cuaderno_control"
 
-  put "cuaderno_controles_revisiones/:id/revisar" => "cuaderno_controles_revisiones#revisar", :as => "revisar_cuaderno_control_revision"
+  put "revisar_cuaderno_controles_revisiones/:id" => "cuaderno_controles_revisiones#revisar", :as => "revisar_cuaderno_control_revision"
 
   resources :anios_alumnos
 
