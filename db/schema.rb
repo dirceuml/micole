@@ -11,24 +11,24 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120812044951) do
+ActiveRecord::Schema.define(:version => 20120907032144) do
 
   create_table "actividades", :force => true do |t|
-    t.integer  "anio_escolar_id",              :null => false
-    t.integer  "tipo_evento_id",               :null => false
-    t.datetime "fecha_hora_inicio",            :null => false
-    t.datetime "fecha_hora_fin",               :null => false
-    t.integer  "tipo_actividad",               :null => false
-    t.string   "nombre",                       :null => false
-    t.text     "detalle",                      :null => false
-    t.binary   "requiere_autorizacion",        :null => false
-    t.date     "limite_autorizacion",          :null => false
+    t.integer  "anio_escolar_id",                             :null => false
+    t.integer  "tipo_evento_id",                              :null => false
+    t.datetime "fecha_hora_inicio",                           :null => false
+    t.datetime "fecha_hora_fin",                              :null => false
+    t.integer  "tipo_actividad",                              :null => false
+    t.string   "nombre",                                      :null => false
+    t.text     "detalle",                                     :null => false
+    t.date     "limite_autorizacion",                         :null => false
     t.date     "inicio_notificacion"
     t.date     "fin_notificacion"
     t.integer  "frecuencia_dias_notificacion"
-    t.string   "usuario",                      :null => false
-    t.datetime "created_at",                   :null => false
-    t.datetime "updated_at",                   :null => false
+    t.string   "usuario",                                     :null => false
+    t.datetime "created_at",                                  :null => false
+    t.datetime "updated_at",                                  :null => false
+    t.integer  "requiere_autorizacion",        :default => 0, :null => false
   end
 
   add_index "actividades", ["anio_escolar_id"], :name => "fk_actividades_aniosescolares"
@@ -108,12 +108,13 @@ ActiveRecord::Schema.define(:version => 20120812044951) do
   add_index "anios_escolares", ["colegio_id"], :name => "fk_aniosescolares_colegios"
 
   create_table "asistencias", :force => true do |t|
-    t.integer  "anio_alumno_id",       :null => false
-    t.datetime "fecha_hora",           :null => false
+    t.integer  "anio_alumno_id",                      :null => false
+    t.datetime "fecha_hora",                          :null => false
     t.integer  "persona_vinculada_id"
-    t.string   "usuario",              :null => false
-    t.datetime "created_at",           :null => false
-    t.datetime "updated_at",           :null => false
+    t.string   "usuario",                             :null => false
+    t.datetime "created_at",                          :null => false
+    t.datetime "updated_at",                          :null => false
+    t.integer  "tipo_movimiento",      :default => 2, :null => false
   end
 
   add_index "asistencias", ["anio_alumno_id", "fecha_hora"], :name => "ak_asistencias", :unique => true

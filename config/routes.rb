@@ -60,9 +60,9 @@ Micole::Application.routes.draw do
     resources :cuaderno_controles_eventos
   end
   
-  get "cerrar_cuadernos_controles/:id" => "cuadernos_controles#cerrar", :as => "cerrar_cuaderno_control"
+  get "cierre_cuadernos_controles/:id" => "cuadernos_controles#cerrar", :as => "cerrar_cuaderno_control"
 
-  put "revisar_cuaderno_controles_revisiones/:id" => "cuaderno_controles_revisiones#revisar", :as => "revisar_cuaderno_control_revision"
+  put "revision_cuaderno_controles_revisiones/:id" => "cuaderno_controles_revisiones#revisar", :as => "revisar_cuaderno_control_revision"
 
   resources :anios_alumnos
 
