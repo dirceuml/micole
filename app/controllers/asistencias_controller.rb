@@ -2,14 +2,22 @@ class AsistenciasController < ApplicationController
   # GET /asistencias
   # GET /asistencias.json
   def index
-    @asistencias = Asistencia.all
+#    @asistencias = Asistencia.all
+    seccion = params[:seccion_id]
+    if params[:seccion_id].nil?
+      fecha = Date.current
+    else
+      fecha = params[:fecha].to_date
+    end
+    
+    @asistencias = Asistencia.por_seccion_fecha(seccion, fecha)
 
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @asistencias }
     end
   end
-
+  
   # GET /asistencias/1
   # GET /asistencias/1.json
   def show

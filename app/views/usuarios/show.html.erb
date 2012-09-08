@@ -1,30 +1,20 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <b>Perfil:</b>
-  <%= @usuario.perfil_id %>
-</p>
-
-<p>
-  <b>Persona vinculada:</b>
-  <%= @usuario.persona_vinculada_id %>
-</p>
-
-<p>
-  <b>Usuario:</b>
-  <%= @usuario.usuario %>
-</p>
-
-<p>
-  <b>Nombre:</b>
-  <%= @usuario.nombre %>
-</p>
-
-<p>
-  <b>Clave:</b>
-  <%= @usuario.clave %>
-</p>
+<div id='Usuario' data-role="header">
+  <h1>Detalles</h1>
+  <%= link_to 'Aceptar', usuarios_path, "data-icon" => "check", "data-mini" => "true"  %>
+</div>
 
 
-<%= link_to 'Edit', edit_usuario_path(@usuario) %> |
-<%= link_to 'Back', usuarios_path %>
+<div data-role="content" style="clear: left">
+  <b>Nombre:</b> <%= @usuario.nombre %> <p>
+  <b>Usuario:</b> <%= @usuario.usuario %> <p>
+  <b>Clave:</b> <%= @usuario.clave %> <p>
+  <b>Perfil:</b> <%= Perfil.find(@usuario.perfil_id).descripcion %> <p>
+  <% if not @usuario.persona_vinculada_id.nil? %>
+     <b>Persona vinculada:</b> <%=  PersonaVinculada.find(@usuario.persona_vinculada_id).apellidos_nombres %> <p>
+  <% end %>
+</div>
+
+
+<div data-role="footer">
+  <%= link_to 'Editar', edit_usuario_path(@usuario), "class" => "ui-btn-left", "data-inline" => "true", "data-theme" => "a", "data-icon" => "gear", "data-mini" => "true" %>
+</div>

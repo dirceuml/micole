@@ -21,6 +21,7 @@ class Alumno < ActiveRecord::Base
   
   def find_asistencia_by_alumno_id_and_fecha (alumno_id, fecha)
     Asistencia.find(:all, :conditions => ["to_char(fecha_hora, 'dd/mm/yyyy') = '#{fecha}' and anio_alumno_id = #{alumno_id}"]).first
+    # creo que se debe revisar la parte de la condicion: anio_alumno_id = #{alumno_id
   end
   
   scope :hijos_de, lambda { |padre| joins(:alumno_persona_vinculada).where("apoderado = 1 and persona_vinculada_id = ?", padre) }

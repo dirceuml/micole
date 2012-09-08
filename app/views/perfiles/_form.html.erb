@@ -1,7 +1,7 @@
 <%= form_for(@perfil) do |f| %>
   <% if @perfil.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@perfil.errors.count, "error") %> prohibited this perfil from being saved:</h2>
+    <div id="error_explanation" data-role="header" data-theme="e">
+      <h2><%= pluralize(@perfil.errors.count, "error") %> impidieron que se grabe el registro:</h2>
 
       <ul>
       <% @perfil.errors.full_messages.each do |msg| %>
@@ -11,11 +11,13 @@
     </div>
   <% end %>
 
+<div data-role="fieldcontain">
   <div class="field">
     <%= f.label :descripcion %><br />
     <%= f.text_field :descripcion %>
   </div>
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit "Grabar", "data-inline" => "true", "data-theme" => "a", "data-icon" => "check", "data-mini" => "true" %>
   </div>
+</div>
 <% end %>
