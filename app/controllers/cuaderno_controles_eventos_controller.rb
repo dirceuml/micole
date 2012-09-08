@@ -110,6 +110,12 @@ class CuadernoControlesEventosController < ApplicationController
     if @cuaderno_control_evento.save
       #flash[:notice] = "Evento agregado."
       #redirect_to [@cuaderno_control, @cuaderno_control_evento] # cuadernos_controles_revisiones#show
+      if !@cuaderno_control_evento.alumno_id.nil?
+        if TipoEvento.find(@cuaderno_control_evento.tipo_evento_id).notificacion_inmediata == 1
+          EventoMailer.notificacion_evento(@cuaderno_control_evento).deliver
+        end
+      end
+      
       redirect_to @cuaderno_control # cuadernos_controles#show
     else
       flash[:alert] = "Evento no fue agregado."

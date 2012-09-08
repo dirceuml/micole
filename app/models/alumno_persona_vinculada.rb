@@ -1,6 +1,7 @@
 class AlumnoPersonaVinculada < ActiveRecord::Base
   belongs_to :persona_vinculada
   belongs_to :alumno 
+  has_many :cuaderno_controles_eventos, :through => :alumno
   
   validates :persona_vinculada_id, :alumno_id, :tipo_vinculo, :vigencia_vinculo, :apoderado, 
     :autoriza_actividad, :revisa_control, :inicio_vigencia, :usuario, :presence => { :message => ": El campo no puede estar vacio" }

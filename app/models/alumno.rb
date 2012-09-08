@@ -1,5 +1,5 @@
 class Alumno < ActiveRecord::Base
-  has_many :cuadernos_controles_eventos
+  has_many :cuaderno_controles_eventos
   has_many :cuadernos_controles_revisiones
   has_many :autorizaciones
   has_many :alumnos_personas_vinculadas
