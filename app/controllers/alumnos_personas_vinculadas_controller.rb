@@ -32,19 +32,6 @@ class AlumnosPersonasVinculadasController < ApplicationController
     end
   end
 
-  # PUT /alumnos_personas_vinculadas/buscar
-  def buscar
-    if current_user.nil?
-      redirect_to(log_in_path) and return
-    end
-
-    tipo = params[:persona_vinculada][:tipo_documento]
-    numero = params[:numero_documento]
-    
-    redirect_to(consultar_alumnos_personas_vinculadas_path(tipo,numero))
-    #redirect to("/alumnos_personas_vinculadas/" + tipo + "/" + numero + "/consultar")
-  end
-
   # GET /alumnos_personas_vinculadas/1
   # GET /alumnos_personas_vinculadas/1.json
   def show

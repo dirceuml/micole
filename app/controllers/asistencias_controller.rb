@@ -92,7 +92,8 @@ class AsistenciasController < ApplicationController
 
     tipo = PersonaVinculada.find(params[:persona_vinculada_id]).tipo_documento
     numero = PersonaVinculada.find(params[:persona_vinculada_id]).numero_documento
-    redirect_to(consultar_alumnos_personas_vinculadas_path(tipo, numero))
+    redirect_to :controller => 'alumnos_personas_vinculadas', :action => 'consultar',
+      :tipo_documento => tipo, :numero_documento => numero
   end
 
   # PUT /asistencias/1
