@@ -1,0 +1,44 @@
+<% width = "13%" %>
+<% height = "25px" %>
+<% font_size = "9px" %>
+
+<div style="overflow: hidden;">
+  <!-- titulos -->
+  <div style="margin: 0; padding: 0; border: 0; float: left; min-height:1px; width: 9%; clear: left;">
+    <div class="ui-bar ui-bar-c" style="height: <%= height %>; font-weight:normal; font-size: <%= font_size %>;">Sem</div>    
+  </div>
+  
+  <% for i in 0..6 do %>
+    <div style="margin: 0; padding: 0; border: 0; float: left; min-height:1px; width: <%= width %>;">
+      <div class="ui-bar ui-bar-c" style="height: <%= height %>; font-weight:normal; font-size: <%= font_size %> ;">
+        <%= DIAS_SEMANA_ABR_1[i] %>
+      </div>    
+    </div>
+  <% end %>
+  
+  <!-- fechas -->
+  <div style="margin: 0; padding: 0; border: 0; float: left; min-height:1px; width: 9%; clear: left;">
+    <div class="ui-bar ui-bar-c" style="height: 25px; font-weight:normal; font-size: 9px;">1</div>    
+  </div>
+  <div style="margin: 0; padding: 0; border: 0; float: left; min-height:1px; width: 13%;">
+    <div class="ui-bar ui-bar-c" style="height: 25px; font-weight:normal; font-size: 9px;">L</div>    
+  </div>
+  <div style="margin: 0; padding: 0; border: 0; float: left; min-height:1px; width: 13%;">
+    <div class="ui-bar ui-bar-c" style="height: 25px; font-weight:normal; font-size: 9px;">M</div>    
+  </div>
+  <div style="margin: 0; padding: 0; border: 0; float: left; min-height:1px; width: 13%;">
+    <div class="ui-bar ui-bar-c" style="height: 25px; font-weight:normal; font-size: 9px;">M</div>    
+  </div>
+  <div style="margin: 0; padding: 0; border: 0; float: left; min-height:1px; width: 13%;">
+    <div class="ui-bar ui-bar-c" style="height: 25px; font-weight:normal; font-size: 9px;">J</div>    
+  </div>
+  <div style="margin: 0; padding: 0; border: 0; float: left; min-height:1px; width: 13%;">
+    <div class="ui-bar ui-bar-c" style="height: 25px; font-weight:normal; font-size: 9px;">V</div>    
+  </div>
+  <div style="margin: 0; padding: 0; border: 0; float: left; min-height:1px; width: 13%;">
+    <div class="ui-bar ui-bar-c" style="height: 25px; font-weight:normal; font-size: 9px;">S</div>    
+  </div>
+  <div style="margin: 0; padding: 0; border: 0; float: left; min-height:1px; width: 13%;">
+    <div class="ui-bar ui-bar-c" style="height: 25px; font-weight:normal; font-size: 9px;">D</div>    
+  </div>
+</div>
