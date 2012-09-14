@@ -1,44 +1,61 @@
 <% width = "13%" %>
 <% height = "25px" %>
 <% font_size = "9px" %>
+<% anio = params[:anio].to_i %>
+<% mes = params[:mes].to_i %>
+<% dia = params[:dia] %>
+<% dia1 = Date.strptime("1 #{mes} #{anio}", "%d %m %Y") %>
+<% semana_inicial = dia1.strftime('%W').to_i %>
+<% semana_final = semana_inicial + 5 %>
+
+<div data-role="header" style="text-align: center">  
+  <%= "#{MESES[mes.to_i]} #{anio}" %>
+</div>
+
+<div data-role="header" style="text-align: center" data-theme="b">
+  <%= "#{dia}/#{mes}/#{anio}" %>
+</div>
 
 <div style="overflow: hidden;">
   <!-- titulos -->
   <div style="margin: 0; padding: 0; border: 0; float: left; min-height:1px; width: 9%; clear: left;">
-    <div class="ui-bar ui-bar-c" style="height: <%= height %>; font-weight:normal; font-size: <%= font_size %>;">Sem</div>    
+    <div class="ui-bar ui-bar-a" style="height: <%= height %>; font-weight:normal; font-size: <%= font_size %>;">Sem</div>    
   </div>
   
-  <% for i in 0..6 do %>
+  <% for i in 1..7 do %>
     <div style="margin: 0; padding: 0; border: 0; float: left; min-height:1px; width: <%= width %>;">
-      <div class="ui-bar ui-bar-c" style="height: <%= height %>; font-weight:normal; font-size: <%= font_size %> ;">
+      <div class="ui-bar ui-bar-a" style="height: <%= height %>; font-weight:normal; font-size: <%= font_size %> ;">
         <%= DIAS_SEMANA_ABR_1[i] %>
       </div>    
     </div>
   <% end %>
   
   <!-- fechas -->
-  <div style="margin: 0; padding: 0; border: 0; float: left; min-height:1px; width: 9%; clear: left;">
-    <div class="ui-bar ui-bar-c" style="height: 25px; font-weight:normal; font-size: 9px;">1</div>    
-  </div>
-  <div style="margin: 0; padding: 0; border: 0; float: left; min-height:1px; width: 13%;">
-    <div class="ui-bar ui-bar-c" style="height: 25px; font-weight:normal; font-size: 9px;">L</div>    
-  </div>
-  <div style="margin: 0; padding: 0; border: 0; float: left; min-height:1px; width: 13%;">
-    <div class="ui-bar ui-bar-c" style="height: 25px; font-weight:normal; font-size: 9px;">M</div>    
-  </div>
-  <div style="margin: 0; padding: 0; border: 0; float: left; min-height:1px; width: 13%;">
-    <div class="ui-bar ui-bar-c" style="height: 25px; font-weight:normal; font-size: 9px;">M</div>    
-  </div>
-  <div style="margin: 0; padding: 0; border: 0; float: left; min-height:1px; width: 13%;">
-    <div class="ui-bar ui-bar-c" style="height: 25px; font-weight:normal; font-size: 9px;">J</div>    
-  </div>
-  <div style="margin: 0; padding: 0; border: 0; float: left; min-height:1px; width: 13%;">
-    <div class="ui-bar ui-bar-c" style="height: 25px; font-weight:normal; font-size: 9px;">V</div>    
-  </div>
-  <div style="margin: 0; padding: 0; border: 0; float: left; min-height:1px; width: 13%;">
-    <div class="ui-bar ui-bar-c" style="height: 25px; font-weight:normal; font-size: 9px;">S</div>    
-  </div>
-  <div style="margin: 0; padding: 0; border: 0; float: left; min-height:1px; width: 13%;">
-    <div class="ui-bar ui-bar-c" style="height: 25px; font-weight:normal; font-size: 9px;">D</div>    
-  </div>
+  <% for s in semana_inicial..semana_final do %>
+    <div style="margin: 0; padding: 0; border: 0; float: left; min-height:1px; width: 9%; clear: left;">
+      <div class="ui-bar ui-bar-a" style="height: 25px; font-weight:normal; font-size: 9px;">
+        <%= s %>
+      </div>    
+    </div>
+  
+    <% for i in 1..7 do %>
+  
+      <% fecha = Date.commercial( anio, s, i ) %>
+      <% ds = fecha.strftime("%d") %>
+  
+      <% if fecha == Date.strptime("#{dia} #{mes} #{anio}", "%d %m %Y") %>
+        <% theme = "e" %>
+      <% elsif fecha.month == mes %>
+        <% theme = "d" %>
+      <% else %>
+        <% theme = "c" %>
+      <% end %>
+  
+  <div style="margin: 0; padding: 0; border: 0; float: left; min-height:1px; width: <%= width %>; cursor:pointer" onClick="location.href='/calendario_actividades/<%= fecha.strftime("%Y/%m/%d") %>'">
+        <div class="ui-bar ui-bar-<%= theme %> " style="height: <%= height %>; font-weight:normal; font-size: <%= font_size %> ;">          
+          <%= ds %>
+        </div>    
+      </div>  
+    <% end %>
+  <% end %>
 </div>
