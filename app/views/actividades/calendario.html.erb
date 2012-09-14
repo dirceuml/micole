@@ -4,12 +4,18 @@
 <% anio = params[:anio].to_i %>
 <% mes = params[:mes].to_i %>
 <% dia = params[:dia] %>
-<% dia1 = Date.strptime("1 #{mes} #{anio}", "%d %m %Y") %>
-<% semana_inicial = dia1.strftime('%W').to_i %>
+<% dia1anio = Date.strptime("1 1 #{anio}", "%d %m %Y") %>
+<% dia1mes = Date.strptime("1 #{mes} #{anio}", "%d %m %Y") %>
+<% semana_inicial = dia1mes.strftime('%W').to_i %>
 <% semana_final = semana_inicial + 5 %>
 
 <div data-role="header" style="text-align: center">  
-  <%= "#{MESES[mes.to_i]} #{anio}" %>
+  <h1><%= "#{MESES[mes.to_i]} #{anio}" %></h1>
+  <% mes_actual = Date.strptime("#{dia} #{mes} #{anio}", "%d %m %Y") %>
+  <% mes_siguiente = mes_actual >> 1 %>
+  <% mes_anterior = mes_actual << 1 %>
+  <%= link_to '', calendario_actividades_path(mes_anterior.year, mes_anterior.month, mes_anterior.strftime("%d")), "data-icon" => "arrow-l", "class" => "ui-btn-left", "data-mini" => "true", "data-iconpos" => "notext" %>
+  <%= link_to '', calendario_actividades_path(mes_siguiente.year, mes_siguiente.month, mes_siguiente.strftime("%d")), "data-icon" => "arrow-r", "class" => "ui-btn-right", "data-mini" => "true", "data-iconpos" => "notext" %>
 </div>
 
 <div data-role="header" style="text-align: center" data-theme="b">
@@ -39,8 +45,16 @@
     </div>
   
     <% for i in 1..7 do %>
-  
-      <% fecha = Date.commercial( anio, s, i ) %>
+      <% begin %>
+        <% fecha = Date.commercial( anio, s, i ) %>
+      <% rescue Exception => exc %>
+        <% if s < 10 %>
+          <% fecha = Date.commercial( anio - 1, 1, i ) %>
+        <% else %>
+          <% fecha = Date.commercial( anio + 1, 1, i ) %>
+        <% end %>
+      <% end %>
+      
       <% ds = fecha.strftime("%d") %>
   
       <% if fecha == Date.strptime("#{dia} #{mes} #{anio}", "%d %m %Y") %>
