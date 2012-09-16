@@ -2,7 +2,10 @@ class ActividadesController < ApplicationController
   # GET /actividades
   # GET /actividades.json
   def index
-    @actividades = Actividad.all
+    if current_user.nil?
+      redirect_to(log_in_path) and return
+    end
+    @actividades = Actividad.order("fecha_hora_inicio")
 
     respond_to do |format|
       format.html # index.html.erb
@@ -44,7 +47,7 @@ class ActividadesController < ApplicationController
 
     respond_to do |format|
       if @actividad.save
-        format.html { redirect_to @actividad, notice: 'Actividad was successfully created.' }
+        format.html { redirect_to @actividad, notice: 'Actividad fue creado satisfactoriamente.' }
         format.json { render json: @actividad, status: :created, location: @actividad }
       else
         format.html { render action: "new" }
@@ -60,7 +63,7 @@ class ActividadesController < ApplicationController
 
     respond_to do |format|
       if @actividad.update_attributes(params[:actividad])
-        format.html { redirect_to @actividad, notice: 'Actividad was successfully updated.' }
+        format.html { redirect_to @actividad, notice: 'Actividad fue actualizado satisfactoriamente.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
