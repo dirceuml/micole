@@ -5,7 +5,12 @@ class ActividadesController < ApplicationController
     if current_user.nil?
       redirect_to(log_in_path) and return
     end
-    @actividades = Actividad.order("fecha_hora_inicio")
+    
+    if params[:fecha].nil?
+      @actividades = Actividad.order("fecha_hora_inicio")
+    else
+      @actividades = Actividad.por_fecha_inicio(Date.strptime(params[:fecha], '%d/%m/%Y'))
+    end
 
     respond_to do |format|
       format.html # index.html.erb

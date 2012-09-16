@@ -12,6 +12,9 @@ class Actividad < ActiveRecord::Base
   scope :realizada, lambda { |fecha| where("to_char(fecha_hora_fin, 'yyyymmdd') < ?", fecha.strftime('%Y%m%d'))}
   #  DateTime.current fecha_hora_fin < DateTime.current
   
+  scope :por_fecha_inicio, lambda { |fecha| where("to_char(fecha_hora_inicio, 'dd/mm/yyyy') = ?", fecha.strftime('%d/%m/%Y'))}
+  
+  
 #  attr_accessible :anio_escolar_id, :tipo_evento_id, :fecha_hora_inicio, :fecha_hora_fin, :tipo_actividad
 #  attr_accessible :nombre, :detalle, :requiere_autorizacion, :limite_autorizacion, :inicio_notificacion, :fin_notificacion
 #  attr_accessible :frecuencia_dias_notificacion, :fecha_inicio, :hora_inicio 

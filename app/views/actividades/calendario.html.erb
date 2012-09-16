@@ -1,12 +1,20 @@
 <% width = "13%" %>
 <% height = "25px" %>
 <% font_size = "9px" %>
+<% padding = "2px" %>
 <% anio = params[:anio].to_i %>
 <% mes = params[:mes].to_i %>
 <% dia = params[:dia] %>
 <% dia1anio = Date.strptime("1 1 #{anio}", "%d %m %Y") %>
 <% dia1mes = Date.strptime("1 #{mes} #{anio}", "%d %m %Y") %>
 <% semana_inicial = dia1mes.strftime('%W').to_i %>
+
+<% if dia1anio.strftime('%W').to_i == 0 %>
+  <% if Date.commercial(anio, 1, 1) <= dia1anio %>
+    <% semana_inicial += 1 %>
+  <% end %>
+<% end %>
+
 <% semana_final = semana_inicial + 5 %>
 
 <div data-role="header" style="text-align: center">  
@@ -25,12 +33,12 @@
 <div style="overflow: hidden;">
   <!-- titulos -->
   <div style="margin: 0; padding: 0; border: 0; float: left; min-height:1px; width: 9%; clear: left;">
-    <div class="ui-bar ui-bar-a" style="height: <%= height %>; font-weight:normal; font-size: <%= font_size %>;">Sem</div>    
+    <div class="ui-bar ui-bar-a" style="padding: <%= padding %>; height: <%= height %>; font-weight:normal; font-size: <%= font_size %>;">Sem</div>    
   </div>
   
   <% for i in 1..7 do %>
     <div style="margin: 0; padding: 0; border: 0; float: left; min-height:1px; width: <%= width %>;">
-      <div class="ui-bar ui-bar-a" style="height: <%= height %>; font-weight:normal; font-size: <%= font_size %> ;">
+      <div class="ui-bar ui-bar-a" style="padding: <%= padding %>; height: <%= height %>; font-weight:normal; font-size: <%= font_size %>;">
         <%= DIAS_SEMANA_ABR_1[i] %>
       </div>    
     </div>
@@ -39,7 +47,7 @@
   <!-- fechas -->
   <% for s in semana_inicial..semana_final do %>
     <div style="margin: 0; padding: 0; border: 0; float: left; min-height:1px; width: 9%; clear: left;">
-      <div class="ui-bar ui-bar-a" style="height: 25px; font-weight:normal; font-size: 9px;">
+      <div class="ui-bar ui-bar-a" style="padding: <%= padding %>; height: <%= height %>; font-weight:normal; font-size: <%= font_size %>;">
         <%= s %>
       </div>    
     </div>
@@ -49,7 +57,7 @@
         <% fecha = Date.commercial( anio, s, i ) %>
       <% rescue Exception => exc %>
         <% if s < 10 %>
-          <% fecha = Date.commercial( anio - 1, 1, i ) %>
+          <% fecha = Date.commercial( anio - 1, -1, i ) %>
         <% else %>
           <% fecha = Date.commercial( anio + 1, 1, i ) %>
         <% end %>
@@ -63,11 +71,26 @@
         <% theme = "d" %>
       <% else %>
         <% theme = "c" %>
+      <% end %>  
+      
+      <% actividad = Actividad.por_fecha_inicio(fecha) %>
+      <% if actividad.count > 0 %>
+        <% if actividad.count == 1 %>
+          <% url = "/actividades/#{actividad.first.id}" %>
+        <% else %>
+          <% url = "/actividades?fecha=#{fecha.strftime('%d/%m/%Y')}" %>
+        <% end %>
+      <% else %>
+        <% url = "/calendario_actividades/#{fecha.strftime('%Y/%m/%d')}" %>
       <% end %>
-  
-  <div style="margin: 0; padding: 0; border: 0; float: left; min-height:1px; width: <%= width %>; cursor:pointer" onClick="location.href='/calendario_actividades/<%= fecha.strftime("%Y/%m/%d") %>'">
-        <div class="ui-bar ui-bar-<%= theme %> " style="height: <%= height %>; font-weight:normal; font-size: <%= font_size %> ;">          
+      <div style="margin: 0; padding: 0; border: 0; float: left; min-height:1px; width: <%= width %>; cursor:pointer" onClick="location.href='<%= url %>'">
+        <div class="ui-bar ui-bar-<%= theme %> " style="padding: <%= padding %>; height: <%= height %>; font-weight:normal; font-size: <%= font_size %> ;">          
           <%= ds %>
+          <% if actividad.count > 0 %>
+            <br/>
+            <%= image_tag('blank_small.gif') %>
+            <%= image_tag('star_icon.gif') %>
+          <% end %>
         </div>    
       </div>  
     <% end %>
