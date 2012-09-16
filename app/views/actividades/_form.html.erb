@@ -1,7 +1,7 @@
 <%= form_for(@actividad) do |f| %>
   <% if @actividad.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@actividad.errors.count, "error") %> prohibited this actividad from being saved:</h2>
+    <div id="error_explanation" data-role="header" data-theme="e">
+      <h2><%= pluralize(@actividad.errors.count, "error") %> impidieron que se grabe el registro:</h2>
 
       <ul>
       <% @actividad.errors.full_messages.each do |msg| %>
@@ -10,60 +10,69 @@
       </ul>
     </div>
   <% end %>
+  <div data-role="fieldcontain">
+    <div class="field">
+        <%= f.hidden_field :anio_escolar_id, :value => 1 %>
+    </div>
+    <div class="field">
+        <!--%= f.label :tipo_evento_id %><br /-->
+        Tipo Evento<br /><%= collection_select(:actividad, :tipo_evento_id, TipoEvento.where("cuaderno_control = 0"), :id, :descripcion, { :prompt => ':: Seleccione ::'}, {"data-mini" => "true"}) %>
+    </div>
+    <div class="field">
+        <%= f.label :tipo_actividad, "for" => "name" %><br />
+        <%= collection_select(:actividad, :tipo_actividad, ListaValor.where("tabla=6"), :item, :descripcion, {:prompt => ':: Seleccione ::'}, {"data-mini" => "true"}) %>
+    </div>
+    <div class="field">
+        <%= f.label :nombre, "for" => "name" %><br />
+        <%= f.text_field :nombre, "data-mini" => "false" %>
+    </div>
+    <div class="field">
+        <%= f.label :detalle, "for" => "Textarea" %><br />
+        <%= f.text_area :detalle, "data-mini" => "false" %>
+    </div>
+    
+    <div class="field">
+        <%= f.label :fecha_hora_inicio, "for" => "name" %><br />
+        <%= f.text_field :fecha_inicio, "data-mini" => "true", "data-role" => "datebox", "type" => "date", "style" => "width:120px" %>
+        <%= f.text_field :hora_inicio, :size => 5, :maxlength => 5, "style" => "width:60px" %>
+    </div>
 
-  <div class="field">
-    <%= f.label :anio_escolar_id %><br />
-    <%= f.number_field :anio_escolar_id %>
-  </div>
-  <div class="field">
-    <%= f.label :tipo_evento_id %><br />
-    <%= f.number_field :tipo_evento_id %>
-  </div>
-  <div class="field">
-    <%= f.label :fecha_hora_inicio %><br />
-    <%= f.datetime_select :fecha_hora_inicio %>
-  </div>
-  <div class="field">
-    <%= f.label :fecha_hora_fin %><br />
-    <%= f.datetime_select :fecha_hora_fin %>
-  </div>
-  <div class="field">
-    <%= f.label :tipo_actividad %><br />
-    <%= f.number_field :tipo_actividad %>
-  </div>
-  <div class="field">
-    <%= f.label :nombre %><br />
-    <%= f.text_field :nombre %>
-  </div>
-  <div class="field">
-    <%= f.label :detalle %><br />
-    <%= f.text_area :detalle %>
-  </div>
-  <div class="field">
-    <%= f.label :requiere_autorizacion %><br />
-    <%= f.text_field :requiere_autorizacion %>
-  </div>
-  <div class="field">
-    <%= f.label :limite_autorizacion %><br />
-    <%= f.date_select :limite_autorizacion %>
-  </div>
-  <div class="field">
-    <%= f.label :inicio_notificacion %><br />
-    <%= f.date_select :inicio_notificacion %>
-  </div>
-  <div class="field">
-    <%= f.label :fin_notificacion %><br />
-    <%= f.date_select :fin_notificacion %>
-  </div>
-  <div class="field">
-    <%= f.label :frecuencia_dias_notificacion %><br />
-    <%= f.number_field :frecuencia_dias_notificacion %>
-  </div>
-  <div class="field">
-    <%= f.label :usuario %><br />
-    <%= f.text_field :usuario %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+    <div class="field">
+        <%= f.label :fecha_hora_fin, "for" => "name" %><br />
+        <%= f.text_field :fecha_fin, "data-mini" => "true", "data-role" => "datebox", "type" => "date", "style" => "width:120px" %>
+        <%= f.text_field :hora_fin, :size => 5, :maxlength => 5, "style" => "width:60px" %>
+    </div>
+
+    <!--fieldset data-role="controlgroup" -->
+    <div class="field">
+        <%= f.check_box :requiere_autorizacion, "class" => "custom", "data-mini" => "false" %>
+        <%= f.label :requiere_autorizacion %> 
+    </div>
+    <!--/fieldset-->
+    <div class="field">
+        <%= f.label :limite_autorizacion, "for" => "name" %><br />
+        <%= f.text_field :limite_autorizacion, "data-mini" => "true", "data-role" => "datebox", "type" => "date", "style" => "width:120px" %>
+    </div>
+    <div class="field">
+        <%= f.label :inicio_notificacion, "for" => "name" %><br />
+        <%= f.text_field :inicio_notificacion, "data-mini" => "true", "data-role" => "datebox", "type" => "date", "style" => "width:120px" %>
+    </div>
+    <div class="field">
+        <%= f.label :fin_notificacion, "for" => "name" %><br />
+        <%= f.text_field :fin_notificacion, "data-mini" => "true", "data-role" => "datebox", "type" => "date", "style" => "width:120px" %>
+    </div>
+    <div class="field">
+        <!--%= f.label :frecuencia_dias_notificacion, "for" => "Slider" %><br /-->
+        <!--%= f.number_field :frecuencia_dias_notificacion, "type" => "range", "min" => "1", "max" => "10", "data-highlight" => "true", "data-mini" => "true" %-->
+        Frecuencia de notificacion<br />
+        Cada <%= f.number_field :frecuencia_dias_notificacion, "type" => "number", "min" => "1", "max" => "10", "data-mini" => "true", "style" => "width:60px"  %> dia(s)
+    </div>
+
+    <div class="field">
+        <%= f.hidden_field :usuario, :value => current_user.usuario %>
+    </div>
+    <div class="actions">
+        <%= f.submit "Grabar", "data-inline" => "true", "data-theme" => "a", "data-icon" => "check", "data-mini" => "true" %>
+    </div>
+ </div>
 <% end %>

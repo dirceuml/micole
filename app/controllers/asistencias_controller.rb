@@ -10,7 +10,8 @@ class AsistenciasController < ApplicationController
       fecha = params[:fecha].to_date
     end
     
-    @asistencias = Asistencia.por_seccion_fecha(seccion, fecha)
+#    @asistencias = Asistencia.por_seccion_fecha(seccion, fecha).movimiento(2)
+    @asistencias = Asistencia.por_seccion_fecha(seccion, fecha).salida
 
     respond_to do |format|
       format.html # index.html.erb
@@ -74,7 +75,8 @@ class AsistenciasController < ApplicationController
           :anio_alumno_id => AnioAlumno.find_by_anio_escolar_id_and_alumno_id(1, alumno).id,
           :fecha_hora => Time.now,
           :persona_vinculada_id => params[:persona_vinculada_id],
-          :usuario => current_user.usuario
+          :usuario => current_user.usuario,
+          :tipo_movimiento => 2
         )
 
         if !@asistencia_alumno_persona_vinculada.save

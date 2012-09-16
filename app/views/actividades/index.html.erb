@@ -1,47 +1,41 @@
-<h1>Listing actividades</h1>
+<div data-role="header">
+  <h1>Actividades</h1>
+  <%= link_to 'Registrar', new_actividad_path, "data-icon" => "plus", "class" => "ui-btn-right" %>
+</div>
 
-<table>
-  <tr>
-    <th>Anio escolar</th>
-    <th>Tipo evento</th>
-    <th>Fecha hora inicio</th>
-    <th>Fecha hora fin</th>
-    <th>Tipo actividad</th>
-    <th>Nombre</th>
-    <th>Detalle</th>
-    <th>Requiere autorizacion</th>
-    <th>Limite autorizacion</th>
-    <th>Inicio notificacion</th>
-    <th>Fin notificacion</th>
-    <th>Frecuencia dias notificacion</th>
-    <th>Usuario</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
+<div data-role="content" class="ui-content" role="main">
+  
+  <div data-role="collapsible-set" data-theme="b" data-content-theme="d" data-inset="false">
+    
+    <div data-role="collapsible" data-collapsed="false">
+      <h2>Pendientes</h2>
+      <ul data-role="listview" data-filter="true">
+        <% @actividades.pendiente(Time.now).each do |actividad| %>    
+          <li data-filtertext="<%= "#{actividad.fecha_hora_inicio.strftime('%d/%m/%Y')} #{TipoEvento.find(actividad.tipo_evento_id).descripcion} #{actividad.nombre}" %>" >
+            <%= link_to edit_actividad_path(actividad) do %>
+              <%= "#{actividad.fecha_hora_inicio.strftime('%d/%m/%Y')} - #{TipoEvento.find(actividad.tipo_evento_id).descripcion} -  #{actividad.nombre}" %> 
+            <% end %>
+            <%= link_to 'Eliminar', actividad, confirm: '¿Seguro que desea eliminar el registro?', method: :delete, "data-icon" => "delete" %>
+          </li>
+        <% end  %>
+      </ul>
+    </div>
+    
+    <div data-role="collapsible">
+      <h2>Realizadas</h2>
+      <ul data-role="listview" data-filter="true">
+        <% @actividades.realizada(Time.now).each do |actividad| %>    
+          <li data-filtertext="<%= "#{actividad.fecha_hora_inicio.strftime('%d/%m/%Y')} #{TipoEvento.find(actividad.tipo_evento_id).descripcion} #{actividad.nombre}" %>" >
+            <%= link_to actividad do %>
+              <%= "#{actividad.fecha_hora_inicio.strftime('%d/%m/%Y')} - #{TipoEvento.find(actividad.tipo_evento_id).descripcion} -  #{actividad.nombre}" %> 
+            <% end %>
+          </li>
+        <% end  %>
+      </ul>
+    </div>
+    
+  </div> <!-- collapsible set -->
+  
+</div>
 
-<% @actividades.each do |actividad| %>
-  <tr>
-    <td><%= actividad.anio_escolar_id %></td>
-    <td><%= actividad.tipo_evento_id %></td>
-    <td><%= actividad.fecha_hora_inicio %></td>
-    <td><%= actividad.fecha_hora_fin %></td>
-    <td><%= actividad.tipo_actividad %></td>
-    <td><%= actividad.nombre %></td>
-    <td><%= actividad.detalle %></td>
-    <td><%= actividad.requiere_autorizacion %></td>
-    <td><%= actividad.limite_autorizacion %></td>
-    <td><%= actividad.inicio_notificacion %></td>
-    <td><%= actividad.fin_notificacion %></td>
-    <td><%= actividad.frecuencia_dias_notificacion %></td>
-    <td><%= actividad.usuario %></td>
-    <td><%= link_to 'Show', actividad %></td>
-    <td><%= link_to 'Edit', edit_actividad_path(actividad) %></td>
-    <td><%= link_to 'Destroy', actividad, confirm: 'Are you sure?', method: :delete %></td>
-  </tr>
-<% end %>
-</table>
-
-<br />
-
-<%= link_to 'New Actividad', new_actividad_path %>
+<!--%= link_to 'Edit', edit_actividad_path(actividad) %-->

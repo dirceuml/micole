@@ -122,6 +122,6 @@ function validarFoto(form, inputFile) {
             return true; 
         }
     }
-    
+        
     
 }

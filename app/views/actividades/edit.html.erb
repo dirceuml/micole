@@ -1,6 +1,6 @@
-<h1>Editing actividad</h1>
+<div data-role="header">
+    <h1>Editar actividad</h1>
+    <%= link_to 'Regresar', actividades_path, "data-icon" => "back", "class" => "ui-btn-left", "data-mini" => "true" %>
+</div>
 
 <%= render 'form' %>
-
-<%= link_to 'Show', @actividad %> |
-<%= link_to 'Back', actividades_path %>

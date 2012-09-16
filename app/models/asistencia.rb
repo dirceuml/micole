@@ -5,6 +5,8 @@ class Asistencia < ActiveRecord::Base
 #  belongs_to :alumno, :through => :anios_alumnos   # se ha agregado el 26/08/2012
   
   scope :por_seccion_fecha, lambda { |seccion,fecha| joins(:anio_alumno).where("seccion_id = ? and to_char(fecha_hora, 'dd/mm/yyyy') = ?", seccion, fecha.strftime('%d/%m/%Y'))}
+  scope :movimiento, lambda { |tipo| where("tipo_movimiento = ? ", tipo)}
+  scope :salida, where(:tipo_movimiento => 2)
   
   def fecha
     fecha_hora.strftime('%d/%m/%Y')
