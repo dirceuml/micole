@@ -13,6 +13,21 @@ class ActividadesController < ApplicationController
     end
   end
 
+  # GET /calendario
+  # GET /calendario.json
+  def calendario
+    if current_user.nil?
+      redirect_to(log_in_path) and return
+    end
+    
+    @actividades = Actividad.all
+
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: @actividades }
+    end
+  end
+
   # GET /actividades/1
   # GET /actividades/1.json
   def show

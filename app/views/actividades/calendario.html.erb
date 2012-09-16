@@ -1,0 +1,75 @@
+<% width = "13%" %>
+<% height = "25px" %>
+<% font_size = "9px" %>
+<% anio = params[:anio].to_i %>
+<% mes = params[:mes].to_i %>
+<% dia = params[:dia] %>
+<% dia1anio = Date.strptime("1 1 #{anio}", "%d %m %Y") %>
+<% dia1mes = Date.strptime("1 #{mes} #{anio}", "%d %m %Y") %>
+<% semana_inicial = dia1mes.strftime('%W').to_i %>
+<% semana_final = semana_inicial + 5 %>
+
+<div data-role="header" style="text-align: center">  
+  <h1><%= "#{MESES[mes.to_i]} #{anio}" %></h1>
+  <% mes_actual = Date.strptime("#{dia} #{mes} #{anio}", "%d %m %Y") %>
+  <% mes_siguiente = mes_actual >> 1 %>
+  <% mes_anterior = mes_actual << 1 %>
+  <%= link_to '', calendario_actividades_path(mes_anterior.year, mes_anterior.month, mes_anterior.strftime("%d")), "data-icon" => "arrow-l", "class" => "ui-btn-left", "data-mini" => "true", "data-iconpos" => "notext" %>
+  <%= link_to '', calendario_actividades_path(mes_siguiente.year, mes_siguiente.month, mes_siguiente.strftime("%d")), "data-icon" => "arrow-r", "class" => "ui-btn-right", "data-mini" => "true", "data-iconpos" => "notext" %>
+</div>
+
+<div data-role="header" style="text-align: center" data-theme="b">
+  <%= "#{dia}/#{mes}/#{anio}" %>
+</div>
+
+<div style="overflow: hidden;">
+  <!-- titulos -->
+  <div style="margin: 0; padding: 0; border: 0; float: left; min-height:1px; width: 9%; clear: left;">
+    <div class="ui-bar ui-bar-a" style="height: <%= height %>; font-weight:normal; font-size: <%= font_size %>;">Sem</div>    
+  </div>
+  
+  <% for i in 1..7 do %>
+    <div style="margin: 0; padding: 0; border: 0; float: left; min-height:1px; width: <%= width %>;">
+      <div class="ui-bar ui-bar-a" style="height: <%= height %>; font-weight:normal; font-size: <%= font_size %> ;">
+        <%= DIAS_SEMANA_ABR_1[i] %>
+      </div>    
+    </div>
+  <% end %>
+  
+  <!-- fechas -->
+  <% for s in semana_inicial..semana_final do %>
+    <div style="margin: 0; padding: 0; border: 0; float: left; min-height:1px; width: 9%; clear: left;">
+      <div class="ui-bar ui-bar-a" style="height: 25px; font-weight:normal; font-size: 9px;">
+        <%= s %>
+      </div>    
+    </div>
+  
+    <% for i in 1..7 do %>
+      <% begin %>
+        <% fecha = Date.commercial( anio, s, i ) %>
+      <% rescue Exception => exc %>
+        <% if s < 10 %>
+          <% fecha = Date.commercial( anio - 1, 1, i ) %>
+        <% else %>
+          <% fecha = Date.commercial( anio + 1, 1, i ) %>
+        <% end %>
+      <% end %>
+      
+      <% ds = fecha.strftime("%d") %>
+  
+      <% if fecha == Date.strptime("#{dia} #{mes} #{anio}", "%d %m %Y") %>
+        <% theme = "e" %>
+      <% elsif fecha.month == mes %>
+        <% theme = "d" %>
+      <% else %>
+        <% theme = "c" %>
+      <% end %>
+  
+  <div style="margin: 0; padding: 0; border: 0; float: left; min-height:1px; width: <%= width %>; cursor:pointer" onClick="location.href='/calendario_actividades/<%= fecha.strftime("%Y/%m/%d") %>'">
+        <div class="ui-bar ui-bar-<%= theme %> " style="height: <%= height %>; font-weight:normal; font-size: <%= font_size %> ;">          
+          <%= ds %>
+        </div>    
+      </div>  
+    <% end %>
+  <% end %>
+</div>
