@@ -2,6 +2,8 @@ class Actividad < ActiveRecord::Base
   belongs_to :anio_escolar
   belongs_to :tipo_evento
   has_many :autorizaciones
+  has_many :actividades_secciones
+  has_many :secciones, :through => :actividades_secciones
   
   validates :anio_escolar_id, :tipo_evento_id, :fecha_hora_inicio, :fecha_hora_fin, :presence => { :message => ": El campo no puede estar vacio" }
   validates :tipo_actividad, :nombre, :detalle, :requiere_autorizacion, :usuario, :presence => { :message => ": El campo no puede estar vacio" }
@@ -13,7 +15,8 @@ class Actividad < ActiveRecord::Base
   #  DateTime.current fecha_hora_fin < DateTime.current
   
   scope :por_fecha_inicio, lambda { |fecha| where("to_char(fecha_hora_inicio, 'dd/mm/yyyy') = ?", fecha.strftime('%d/%m/%Y'))}
-  
+  scope :por_seccion, lambda { |seccion| joins(:actividades_secciones).where("actividades_secciones.seccion_id = ?", seccion)}
+  #  scope :por_persona, lambda { |persona| joins(:secciones => :anios_secciones).where("anios_secciones.persona_id = ?", persona)}
   
 #  attr_accessible :anio_escolar_id, :tipo_evento_id, :fecha_hora_inicio, :fecha_hora_fin, :tipo_actividad
 #  attr_accessible :nombre, :detalle, :requiere_autorizacion, :limite_autorizacion, :inicio_notificacion, :fin_notificacion

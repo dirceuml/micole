@@ -6,13 +6,13 @@
   <div class="content-primary">
     <ul data-role="listview">
         <li data-role="list-divider">Cuaderno de control</li>
-        <li><a href="/cuadernos_controles">Registrar</a></li>
-        <li><a href=<%= "/revision_cuaderno_control/#{current_user.usuario}" %> >Revisar</a></li>
-        <li><a href="/cuaderno_controles_revisiones/">Verificar</a></li>
+        <li><a href="<%= cuadernos_controles_path %>">Registrar</a></li>
+        <li><a href="<%= revision_cuaderno_control_path(current_user.usuario) %>" >Revisar</a></li>
+        <li><a href="<%= cuaderno_controles_revisiones_path %>">Verificar</a></li>
         <li data-role="list-divider">Seguridad de alumnos</li>
-        <li><a href="/personas_vinculadas">Personas vinculadas</a></li>
-        <li><a href="/alumnos_secciones">Vincular personas</a></li>
-        <li><a href="/salida">Salida de alumnos</a></li>
+        <li><a href="<%= personas_vinculadas_path %>">Personas vinculadas</a></li>
+        <li><a href="<%=  alumnos_secciones_path %>">Vincular personas</a></li>
+        <li><a href="<%= salida_path  %> ">Salida de alumnos</a></li>
         <li data-role="list-divider">Actividades del colegio</li>
         <li><a href="<%= actividades_path %>">Registrar</a></li>
         <li><a href="/calendario_actividades/<%= Date.current.strftime("%Y/%m/%d") %>">Calendario</a></li>
