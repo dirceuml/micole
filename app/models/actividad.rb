@@ -89,10 +89,5 @@ class Actividad < ActiveRecord::Base
   def set_datetime_fin
     self.fecha_hora_fin = "#{self.fecha_fin} #{self.hora_fin}:00"
   end
-  
-  def validate
-    if fecha_hora_inicio > fecha_hora_fin
-      errors.add(:fecha_hora_fin, "Error en rango de fecha de actividad ")
-    end
-  end
+
 end
