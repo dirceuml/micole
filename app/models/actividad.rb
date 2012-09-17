@@ -57,6 +57,9 @@ class Actividad < ActiveRecord::Base
   scope :pendiente, lambda { |fecha| where("to_char(fecha_hora_fin, 'yyyymmdd') >= ?", fecha.strftime('%Y%m%d'))}
   scope :realizada, lambda { |fecha| where("to_char(fecha_hora_fin, 'yyyymmdd') < ?", fecha.strftime('%Y%m%d'))}
   
+  scope :por_fecha_inicio, lambda { |fecha| where("to_char(fecha_hora_inicio, 'dd/mm/yyyy') = ?", fecha.strftime('%d/%m/%Y'))}
+  
+  
   attr_accessor :fecha_inicio, :hora_inicio, :fecha_fin, :hora_fin
   
   after_initialize :get_datetime_inicio, :get_datetime_fin
