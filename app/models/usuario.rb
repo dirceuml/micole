@@ -8,9 +8,9 @@ class Usuario < ActiveRecord::Base
   belongs_to :colegio
   belongs_to :perfil
   
-  validates :perfil_id, :usuario, :nombre, :presence => { :message => ": El campo no puede estar vacio" }
-  validates :clave, :confirmation => true
-  validates :clave, :presence => true, :on => :create
+  validates :usuario, :nombre, :perfil_id, :presence => { :message => ": El campo no puede estar vacio" }
+  validates :clave, :confirmation => { :message => ": No ha confirmado correctamente la clave" }
+  validates :clave, :presence => { :message => ": El campo no puede estar vacio" }, :on => :create
   validates :usuario, :uniqueness => { :scope => :colegio_id, :message => "El usuario ya esta registrado" }
   
   def self.authenticate(usuario, password)

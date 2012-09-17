@@ -21,7 +21,7 @@ ActiveRecord::Schema.define(:version => 20120907032144) do
     t.integer  "tipo_actividad",                              :null => false
     t.string   "nombre",                                      :null => false
     t.text     "detalle",                                     :null => false
-    t.date     "limite_autorizacion",                         :null => false
+    t.date     "limite_autorizacion"
     t.date     "inicio_notificacion"
     t.date     "fin_notificacion"
     t.integer  "frecuencia_dias_notificacion"

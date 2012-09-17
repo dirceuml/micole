@@ -34,25 +34,26 @@
     <div class="field">
         <%= f.label :fecha_hora_inicio, "for" => "name" %><br />
         <%= f.text_field :fecha_inicio, "data-mini" => "true", "data-role" => "datebox", "type" => "date", "style" => "width:120px" %>
-        <%= f.text_field :hora_inicio, :size => 5, :maxlength => 5, "style" => "width:60px" %>
+        <%= f.text_field :hora_inicio, :size => 5, :maxlength => 5, "style" => "width:60px", "data-mini" => "true" %>
     </div>
 
     <div class="field">
         <%= f.label :fecha_hora_fin, "for" => "name" %><br />
         <%= f.text_field :fecha_fin, "data-mini" => "true", "data-role" => "datebox", "type" => "date", "style" => "width:120px" %>
-        <%= f.text_field :hora_fin, :size => 5, :maxlength => 5, "style" => "width:60px" %>
+        <%= f.text_field :hora_fin, :size => 5, :maxlength => 5, "style" => "width:60px", "data-mini" => "true" %>
     </div>
 
-    <!--fieldset data-role="controlgroup" -->
+    <!--fieldset data-role="controlgroup"-->
     <div class="field">
-        <%= f.check_box :requiere_autorizacion, "class" => "custom", "data-mini" => "false" %>
+        <%= f.check_box :requiere_autorizacion, "class" => "custom", "data-mini" => "true" %>
         <%= f.label :requiere_autorizacion %> 
     </div>
-    <!--/fieldset-->
     <div class="field">
-        <%= f.label :limite_autorizacion, "for" => "name" %><br />
+        Ultimo dia para autorizacion<br />
+        <!--%= f.label :limite_autorizacion, "for" => "name" %><br /-->
         <%= f.text_field :limite_autorizacion, "data-mini" => "true", "data-role" => "datebox", "type" => "date", "style" => "width:120px" %>
     </div>
+    <!--/fieldset-->
     <div class="field">
         <%= f.label :inicio_notificacion, "for" => "name" %><br />
         <%= f.text_field :inicio_notificacion, "data-mini" => "true", "data-role" => "datebox", "type" => "date", "style" => "width:120px" %>
@@ -65,12 +66,13 @@
         <!--%= f.label :frecuencia_dias_notificacion, "for" => "Slider" %><br /-->
         <!--%= f.number_field :frecuencia_dias_notificacion, "type" => "range", "min" => "1", "max" => "10", "data-highlight" => "true", "data-mini" => "true" %-->
         Frecuencia de notificacion<br />
-        Cada <%= f.number_field :frecuencia_dias_notificacion, "type" => "number", "min" => "1", "max" => "10", "data-mini" => "true", "style" => "width:60px"  %> dia(s)
+        Cada <%= f.number_field :frecuencia_dias_notificacion, "type" => "number", "min" => "1", "max" => "30", "data-mini" => "true", "style" => "width:60px"  %> dia(s)
     </div>
 
     <div class="field">
         <%= f.hidden_field :usuario, :value => current_user.usuario %>
     </div>
+    <br />
     <div class="actions">
         <%= f.submit "Grabar", "data-inline" => "true", "data-theme" => "a", "data-icon" => "check", "data-mini" => "true" %>
     </div>
