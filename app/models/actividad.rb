@@ -8,13 +8,55 @@ class Actividad < ActiveRecord::Base
   validates_format_of :hora_inicio, :with => /\d{1,2}:\d{2}/, :message => "invalido"
   validates_format_of :hora_fin, :with => /\d{1,2}:\d{2}/, :message => "invalido"
   
+  validate :if => "!fecha_hora_inicio.nil? && !fecha_hora_fin.nil?" do |a|
+    if !a.fecha_hora_inicio.nil? && !a.fecha_hora_fin.nil?
+      if a.fecha_hora_inicio >= a.fecha_hora_fin
+        errors[:base] << "Error en rango de fechas de la actividad"
+      end
+    end
+  end
+  
+  validate :if => "requiere_autorizacion == 1" do |a|
+    if a.limite_autorizacion.nil?
+      errors[:base] << "Falta ingresar la fecha limite para autorizacion"
+    else
+      if (a.limite_autorizacion > a.fecha_hora_fin.to_date) || a.limite_autorizacion < a.fecha_hora_inicio.to_date 
+        errors[:base] << "Error en la fecha limite para autorizacion"
+      end
+    end
+  end
+  
+  validate :if => "!inicio_notificacion.nil? || !fin_notificacion.nil?" do |a|
+    if !a.inicio_notificacion.nil? || !a.fin_notificacion.nil?
+      if a.inicio_notificacion.nil?
+        errors[:base] << "Falta ingresar la fecha inicio de notificacion"
+      else
+         if a.fin_notificacion.nil?
+           errors[:base] << "Falta ingresar la fecha fin de notificacion"
+         else
+           if a.inicio_notificacion > a.fin_notificacion
+             errors[:base] << "Error en rango de fechas de notificacion"
+           else
+             if a.inicio_notificacion < a.fecha_hora_inicio.to_date || a.fin_notificacion > a.fecha_hora_fin.to_date
+               errors[:base] << "Las fechas de notificaciones estan fuera de la(s) fecha(s) de actividad"
+             else
+               if a.frecuencia_dias_notificacion.nil?
+                 errors[:base] << "Falta ingresar la frecuencia de notificacion"
+               else
+                 if a.frecuencia_dias_notificacion < 1 || a.frecuencia_dias_notificacion > 30
+                   errors[:base] << "Error en la frecuencia de notificacion (Rango de 1 a 30 dias)"
+                 end
+               end
+             end
+           end
+         end
+      end
+    end
+  end
+    
   scope :pendiente, lambda { |fecha| where("to_char(fecha_hora_fin, 'yyyymmdd') >= ?", fecha.strftime('%Y%m%d'))}
   scope :realizada, lambda { |fecha| where("to_char(fecha_hora_fin, 'yyyymmdd') < ?", fecha.strftime('%Y%m%d'))}
-  #  DateTime.current fecha_hora_fin < DateTime.current
   
-#  attr_accessible :anio_escolar_id, :tipo_evento_id, :fecha_hora_inicio, :fecha_hora_fin, :tipo_actividad
-#  attr_accessible :nombre, :detalle, :requiere_autorizacion, :limite_autorizacion, :inicio_notificacion, :fin_notificacion
-#  attr_accessible :frecuencia_dias_notificacion, :fecha_inicio, :hora_inicio 
   attr_accessor :fecha_inicio, :hora_inicio, :fecha_fin, :hora_fin
   
   after_initialize :get_datetime_inicio, :get_datetime_fin
@@ -40,5 +82,11 @@ class Actividad < ActiveRecord::Base
   
   def set_datetime_fin
     self.fecha_hora_fin = "#{self.fecha_fin} #{self.hora_fin}:00"
+  end
+  
+  def validate
+    if fecha_hora_inicio > fecha_hora_fin
+      errors.add(:fecha_hora_fin, "Error en rango de fecha de actividad ")
+    end
   end
 end
