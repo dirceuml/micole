@@ -71,10 +71,16 @@
         <% theme = "d" %>
       <% else %>
         <% theme = "c" %>
-      <% end %>  
+      <% end %>        
       
-      <% actividad = Actividad.por_fecha_inicio(fecha) %>
-      <% if actividad.count > 0 %>
+      <% begin %>
+        <% actividad = Actividad.por_persona_y_fecha(PersonaVinculada.logueado(current_user.usuario).first.id, fecha) %>
+        <% actividad_count = actividad.count %>
+      <% rescue Exception => exc %>
+        <% actividad_count = 0 %>
+      <% end %>
+  
+      <% if actividad_count > 0 %>
         <% if actividad.count == 1 %>
           <% url = "/actividades/#{actividad.first.id}" %>
         <% else %>
@@ -86,7 +92,7 @@
       <div style="margin: 0; padding: 0; border: 0; float: left; min-height:1px; width: <%= width %>; cursor:pointer" onClick="location.href='<%= url %>'">
         <div class="ui-bar ui-bar-<%= theme %> " style="padding: <%= padding %>; height: <%= height %>; font-weight:normal; font-size: <%= font_size %> ;">          
           <%= ds %>
-          <% if actividad.count > 0 %>
+          <% if actividad_count > 0 %>
             <br/>
             <%= image_tag('blank_small.gif') %>
             <%= image_tag('star_icon.gif') %>
