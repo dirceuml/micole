@@ -74,7 +74,6 @@
       <% end %>  
       
       <% actividad = Actividad.por_fecha_inicio(fecha) %>
-      <% actividad = Actividad.por_seccion(1) %>
       <% if actividad.count > 0 %>
         <% if actividad.count == 1 %>
           <% url = "/actividades/#{actividad.first.id}" %>
