@@ -72,19 +72,24 @@
       <% else %>
         <% theme = "c" %>
       <% end %>        
-      
-      <% begin %>
-        <% actividad = Actividad.por_persona_y_fecha(PersonaVinculada.logueado(current_user.usuario).first.id, fecha) %>
-        <% actividad_count = actividad.count %>
-      <% rescue Exception => exc %>
+  
+      <% persona = PersonaVinculada.logueado(current_user.usuario).first %>
+  
+      <% if persona.nil? %>
         <% actividad_count = 0 %>
+      <% else %>
+        <% persona_id = persona.id %>
+        <%# actividad = Actividad.por_persona_y_fecha(persona_id, fecha) %> <!-- activar cuando se implemente asignacion por seccion -->
+        <% actividad = Actividad.por_fecha_inicio(fecha) %> <!-- temporal hasta q se implemente asignacion por seccion -->
+        <% actividad_count = actividad.count %>        
       <% end %>
   
       <% if actividad_count > 0 %>
         <% if actividad.count == 1 %>
           <% url = "/actividades/#{actividad.first.id}" %>
         <% else %>
-          <% url = "/actividades?fecha=#{fecha.strftime('%d/%m/%Y')}" %>
+          <%# url = "/actividades?persona=#{persona_id}&fecha=#{fecha.strftime('%d/%m/%Y')}" %> <!-- activar cuando se implemente asignacion por seccion -->
+          <% url = "/actividades?fecha=#{fecha.strftime('%d/%m/%Y')}" %> <!-- temporal hasta q se implemente asignacion por seccion -->
         <% end %>
       <% else %>
         <% url = "/calendario_actividades/#{fecha.strftime('%Y/%m/%d')}" %>

@@ -7,9 +7,13 @@ class ActividadesController < ApplicationController
     end
     
     if params[:fecha].nil?
-      @actividades = Actividad.order("fecha_hora_inicio")
+      @actividades = Actividad.order("fecha_hora_inicio")      
     else
-      @actividades = Actividad.por_fecha_inicio(Date.strptime(params[:fecha], '%d/%m/%Y'))
+      if params[:persona].nil?
+        @actividades = Actividad.por_fecha_inicio(Date.strptime(params[:fecha], '%d/%m/%Y'))
+      else
+        @actividades = Actividad.por_persona_y_fecha(params[:persona], Date.strptime(params[:fecha], '%d/%m/%Y'))
+      end
     end
 
     respond_to do |format|
