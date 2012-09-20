@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120907032144) do
+ActiveRecord::Schema.define(:version => 20120920020325) do
 
   create_table "actividades", :force => true do |t|
     t.integer  "anio_escolar_id",                             :null => false
@@ -21,7 +21,6 @@ ActiveRecord::Schema.define(:version => 20120907032144) do
     t.integer  "tipo_actividad",                              :null => false
     t.string   "nombre",                                      :null => false
     t.text     "detalle",                                     :null => false
-    t.date     "limite_autorizacion"
     t.date     "inicio_notificacion"
     t.date     "fin_notificacion"
     t.integer  "frecuencia_dias_notificacion"
@@ -29,6 +28,7 @@ ActiveRecord::Schema.define(:version => 20120907032144) do
     t.datetime "created_at",                                  :null => false
     t.datetime "updated_at",                                  :null => false
     t.integer  "requiere_autorizacion",        :default => 0, :null => false
+    t.date     "limite_autorizacion"
   end
 
   add_index "actividades", ["anio_escolar_id"], :name => "fk_actividades_aniosescolares"
