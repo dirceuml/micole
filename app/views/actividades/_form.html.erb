@@ -34,14 +34,19 @@
     <div class="field">
         <%= f.label :fecha_hora_inicio, "for" => "name" %><br />
         <%= f.text_field :fecha_inicio, "data-mini" => "true", "data-role" => "datebox", "type" => "date", "style" => "width:120px" %>
-        <%= f.text_field :hora_inicio, :size => 5, :maxlength => 5, "style" => "width:60px", "data-mini" => "true" %>
-        <!--%= f.text_field :hora_inicio, "type" => "time", :size => 5, :maxlength => 5, "style" => "width:60px", "data-mini" => "true" %-->
+        <!--%= f.text_field :hora_min_inicio, :size => 5, :maxlength => 5, "style" => "width:60px", "data-mini" => "true" %-->
+        <!--%= f.text_field :hora_min_inicio, "type" => "time", :size => 5, :maxlength => 5, "style" => "width:60px", "data-mini" => "true" %-->
+        <%= f.number_field :hora_inicio, "type" => "number", "min" => "0", "max" => "23", "data-mini" => "true", "style" => "width:50px", "required" => "required" %>
+        :
+        <%= f.number_field :min_inicio, "type" => "number", "min" => "0", "max" => "59", "data-mini" => "true", "style" => "width:50px", "required" => "required" %>
     </div>
 
     <div class="field">
         <%= f.label :fecha_hora_fin, "for" => "name" %><br />
         <%= f.text_field :fecha_fin, "data-mini" => "true", "data-role" => "datebox", "type" => "date", "style" => "width:120px" %>
-        <%= f.text_field :hora_fin, :size => 5, :maxlength => 5, "style" => "width:60px", "data-mini" => "true" %>
+        <%= f.number_field :hora_fin, "type" => "number", "min" => "0", "max" => "23", "data-mini" => "true", "style" => "width:50px", "required" => "required" %>
+        :
+        <%= f.number_field :min_fin, "type" => "number", "min" => "0", "max" => "59", "data-mini" => "true", "style" => "width:50px", "required" => "required" %>        
     </div>
 
     <!--fieldset data-role="controlgroup"-->
@@ -67,7 +72,7 @@
         <!--%= f.label :frecuencia_dias_notificacion, "for" => "Slider" %><br /-->
         <!--%= f.number_field :frecuencia_dias_notificacion, "type" => "range", "min" => "1", "max" => "10", "data-highlight" => "true", "data-mini" => "true" %-->
         Frecuencia de notificacion<br />
-        Cada <%= f.number_field :frecuencia_dias_notificacion, "type" => "number", "min" => "1", "max" => "30", "data-mini" => "true", "style" => "width:60px"  %> dia(s)
+        Cada <%= f.number_field :frecuencia_dias_notificacion, "type" => "number", "min" => "1", "max" => "30", "data-mini" => "true", "style" => "width:50px"  %> dia(s)
     </div>
 
     <div class="field">
