@@ -44,15 +44,15 @@
     <div class="field">
         <%= f.label :fecha_hora_fin, "for" => "name" %><br />
         <%= f.text_field :fecha_fin, "data-mini" => "true", "data-role" => "datebox", "type" => "date", "style" => "width:120px" %>
-        <%= f.number_field :hora_fin, "type" => "number", "min" => "0", "max" => "23", "data-mini" => "true", "style" => "width:50px", "required" => "required" %>
+        <%= f.number_field :hora_fin, "type" => "number", "min" => "00", "max" => "23", "data-mini" => "true", "style" => "width:50px", "required" => "required" %>
         :
-        <%= f.number_field :min_fin, "type" => "number", "min" => "0", "max" => "59", "data-mini" => "true", "style" => "width:50px", "required" => "required" %>        
+        <%= f.number_field :min_fin, "type" => "number", "min" => "00", "max" => "59", "data-mini" => "true", "style" => "width:50px", "required" => "required" %>        
     </div>
 
     <!--fieldset data-role="controlgroup"-->
     <div class="field">
         <%= f.check_box :requiere_autorizacion, "class" => "custom", "data-mini" => "true" %>
-        <%= f.label :requiere_autorizacion %> 
+        <%= f.label :requiere_autorizacion %>
     </div>
     <div class="field">
         Ultimo dia para autorizacion<br />

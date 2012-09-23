@@ -11,24 +11,26 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120920020325) do
+ActiveRecord::Schema.define(:version => 20120923155120) do
 
   create_table "actividades", :force => true do |t|
-    t.integer  "anio_escolar_id",                             :null => false
-    t.integer  "tipo_evento_id",                              :null => false
-    t.datetime "fecha_hora_inicio",                           :null => false
-    t.datetime "fecha_hora_fin",                              :null => false
-    t.integer  "tipo_actividad",                              :null => false
-    t.string   "nombre",                                      :null => false
-    t.text     "detalle",                                     :null => false
+    t.integer  "anio_escolar_id",                                           :null => false
+    t.integer  "tipo_evento_id",                                            :null => false
+    t.datetime "fecha_hora_inicio",                                         :null => false
+    t.datetime "fecha_hora_fin",                                            :null => false
+    t.integer  "tipo_actividad",                                            :null => false
+    t.string   "nombre",                                                    :null => false
+    t.text     "detalle",                                                   :null => false
     t.date     "inicio_notificacion"
     t.date     "fin_notificacion"
     t.integer  "frecuencia_dias_notificacion"
-    t.string   "usuario",                                     :null => false
-    t.datetime "created_at",                                  :null => false
-    t.datetime "updated_at",                                  :null => false
-    t.integer  "requiere_autorizacion",        :default => 0, :null => false
+    t.string   "usuario",                                                   :null => false
+    t.datetime "created_at",                                                :null => false
+    t.datetime "updated_at",                                                :null => false
+    t.integer  "requiere_autorizacion",                      :default => 0, :null => false
     t.date     "limite_autorizacion"
+    t.integer  "estado",                                     :default => 0, :null => false
+    t.string   "observacion",                  :limit => 50
   end
 
   add_index "actividades", ["anio_escolar_id"], :name => "fk_actividades_aniosescolares"
