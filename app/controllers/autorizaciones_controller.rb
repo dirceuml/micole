@@ -2,13 +2,26 @@ class AutorizacionesController < ApplicationController
   # GET /autorizaciones
   # GET /autorizaciones.json
   def index
-    @autorizaciones = Autorizacion.all
+    @autorizaciones = Autorizacion.order("respuesta")
 
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @autorizaciones }
     end
   end
+  
+  def autorizacion
+    if current_user.nil?
+      redirect_to(log_in_path) and return
+    end
+    
+    @autorizaciones = Autorizacion.persona_autorizada(PersonaVinculada.logueado(params[:usuario]).pluck("personas_vinculadas.id"))
+    
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: @autorizaciones }
+    end
+  end  
 
   # GET /autorizaciones/1
   # GET /autorizaciones/1.json
