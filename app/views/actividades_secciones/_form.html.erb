@@ -1,29 +1,22 @@
-<%= form_for(@actividad_seccione) do |f| %>
-  <% if @actividad_seccione.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@actividad_seccione.errors.count, "error") %> prohibited this actividad_seccione from being saved:</h2>
+<%= form_for([@actividad, @actividad.actividades_secciones.build], :html => { :class => "ui-body ui-body-c", "data-ajax" => "false" }) do |f| %>
+  <% if !@alumno_persona_vinculada.nil? %>
+    <% if @actividad_seccion.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@actividad_seccion.errors.count, "error") %> impidieron la grabacion:</h2>
 
-      <ul>
-      <% @actividad_seccione.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
+        <ul>
+        <% @actividad_seccion.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
   <% end %>
 
-  <div class="field">
-    <%= f.label :actividad_id %><br />
-    <%= f.number_field :actividad_id %>
-  </div>
-  <div class="field">
-    <%= f.label :seccion_id %><br />
-    <%= f.number_field :seccion_id %>
-  </div>
-  <div class="field">
-    <%= f.label :usuario %><br />
-    <%= f.text_field :usuario %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
+  <div data-role="fieldcontain">
+    <%= f.hidden_field :actividad_id %>
+    <%= f.hidden_field :usuario, :value => current_user.usuario %>
+    Vincular sección:<br/><%= collection_select(:actividad_seccion, :seccion_id, Seccion.all, :id, :grado_seccion, {:prompt => ':: Seleccione ::' }, {"data-mini" => "true"}) %>
+    <%= f.submit "", "data-inline" => "true", "data-theme" => "a", "data-icon" => "plus", "data-mini" => "true", "data-iconpos" => "notext" %>    
   </div>
 <% end %>

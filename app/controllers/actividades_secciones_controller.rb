@@ -40,15 +40,20 @@ class ActividadesSeccionesController < ApplicationController
   # POST /actividades_secciones
   # POST /actividades_secciones.json
   def create
-    @actividad_seccione = ActividadSeccion.new(params[:actividad_seccione])
+    if current_user.nil?
+      redirect_to(log_in_path) and return
+    end
+    
+    @actividad = Actividad.find(params[:actividad_id])
+    @actividad_seccion = @actividad.actividades_secciones.create(params[:actividad_seccion])
 
     respond_to do |format|
-      if @actividad_seccione.save
-        format.html { redirect_to @actividad_seccione, notice: 'Actividad seccion was successfully created.' }
+      if @actividad_seccion.save
+        format.html { redirect_to @actividad }
         format.json { render json: @actividad_seccione, status: :created, location: @actividad_seccione }
       else
-        format.html { render action: "new" }
-        format.json { render json: @actividad_seccione.errors, status: :unprocessable_entity }
+        @actividad_seccion.seccion_id = ""
+        format.html { render 'actividades/show' } 
       end
     end
   end
