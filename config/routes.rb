@@ -19,6 +19,8 @@ Micole::Application.routes.draw do
   resources :cursos
 
   resources :autorizaciones
+  
+  get "autorizacion_actividad/:usuario" => "autorizaciones#autorizacion", :as => "autorizacion_actividad"
 
   resources :notas
 
