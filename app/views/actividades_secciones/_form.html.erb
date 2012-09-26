@@ -16,7 +16,11 @@
   <div data-role="fieldcontain">
     <%= f.hidden_field :actividad_id %>
     <%= f.hidden_field :usuario, :value => current_user.usuario %>
-    Vincular sección:<br/><%= collection_select(:actividad_seccion, :seccion_id, Seccion.all, :id, :grado_seccion, {:prompt => ':: Seleccione ::' }, {"data-mini" => "true"}) %>
-    <%= f.submit "", "data-inline" => "true", "data-theme" => "a", "data-icon" => "plus", "data-mini" => "true", "data-iconpos" => "notext" %>    
+    <div style="width: 280px; clear: left; float: left">
+      <%= collection_select(:actividad_seccion, :seccion_id, Seccion.all, :id, :grado_seccion, {:prompt => ':: Seleccione ::' }, {"data-mini" => "true"}) %>
+    </div>
+    <div style="float: left">
+      <%= f.submit "", "data-inline" => "true", "data-theme" => "a", "data-icon" => "plus", "data-mini" => "true", "data-iconpos" => "notext" %>    
+    </div>
   </div>
 <% end %>
