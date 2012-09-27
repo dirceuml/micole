@@ -60,7 +60,7 @@ class Actividad < ActiveRecord::Base
   
   scope :por_fecha_inicio, lambda { |fecha| where("to_char(fecha_hora_inicio, 'dd/mm/yyyy') = ?", fecha.strftime('%d/%m/%Y'))}
   scope :por_seccion, lambda { |seccion| joins(:actividades_secciones).where("actividades_secciones.seccion_id = ?", seccion)}
-  scope :por_persona, lambda { |persona| joins(:secciones => {:anios_alumnos => :personas_vinculadas}).where("personas_vinculadas.id = ?", persona)}
+  scope :por_persona, lambda { |persona| joins(:secciones => {:anios_alumnos => :personas_vinculadas}).uniq.where("personas_vinculadas.id = ?", persona)}
   scope :por_persona_y_fecha, lambda { |persona,fecha| por_persona(persona).where("to_char(fecha_hora_inicio, 'dd/mm/yyyy') = ?", fecha.strftime('%d/%m/%Y'))}
   
   attr_accessor :fecha_inicio, :hora_inicio, :min_inicio, :fecha_fin, :hora_fin, :min_fin

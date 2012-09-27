@@ -1,20 +1,18 @@
-<p id="notice"><%= notice %></p>
+<div data-role="header">
+  <h1>Vínculo con sección</h1>
+  <%= link_to 'Regresar', @actividad_seccion.actividad, "data-icon" => "back", "class" => "ui-btn-left", "data-mini" => "true" %>
+</div>
 
-<p>
-  <b>Actividad:</b>
-  <%= @actividad_seccione.actividad_id %>
-</p>
-
-<p>
-  <b>Seccion:</b>
-  <%= @actividad_seccione.seccion_id %>
-</p>
-
-<p>
-  <b>Usuario:</b>
-  <%= @actividad_seccione.usuario %>
-</p>
-
-
-<%= link_to 'Edit', edit_actividad_seccione_path(@actividad_seccione) %> |
-<%= link_to 'Back', actividades_secciones_path %>
+<div data-role="content" class="content-primary">
+  
+  <ul data-role="listview">
+    <li>
+      Actividad:
+      <%= @actividad_seccion.actividad.nombre %>
+    </li>
+    <li>
+      Sección:
+      <%= @actividad_seccion.seccion.grado_seccion %>
+    </li>
+  </ul>
+</div>

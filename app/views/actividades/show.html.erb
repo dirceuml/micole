@@ -1,24 +1,64 @@
 <div id='Actividad' data-role="header">
-  <h1>Detalles</h1>
+  <h1>Actividad</h1>
   <%= link_to 'Aceptar', actividades_path, "data-icon" => "check", "data-mini" => "true"  %>
+  <%= link_to 'Editar', edit_actividad_path(@actividad), "class" => "ui-btn-right", "data-theme" => "a", "data-icon" => "gear", "data-mini" => "true" %>
 </div>
 
-<div data-role="content" style="clear: left">
-    <b>Tipo Evento:</b> <%= "#{TipoEvento.find(@actividad.tipo_evento_id).descripcion}" %><p>
-    <b>Tipo Actividad:</b> <%= "#{ListaValor.find_by_tabla_and_item(6, @actividad.tipo_actividad).descripcion}" %><p>
-    <b>Nombre:</b> <%= @actividad.nombre %><p>
-    <b>Detalle:</b> <%= @actividad.detalle %><p>
-    <b>Fecha de inicio:</b> <%= @actividad.fecha_hora_inicio.strftime('%d/%m/%Y %H:%M') %><p>
-    <b>Fecha de termino:</b> <%= @actividad.fecha_hora_fin.strftime('%d/%m/%Y %H:%M') %><p>
-    <b>Requiere autorización:</b>
+<div data-role="content" style="clear: left; font-size: 12px;">    
+  <div style="clear: left; font-size: 16px; font-weight: bold">
+    <%= @actividad.nombre %>
+  </div>
+  <%= "#{TipoEvento.find(@actividad.tipo_evento_id).descripcion} (#{ListaValor.find_by_tabla_and_item(6, @actividad.tipo_actividad).descripcion})" %>
+    <p>
+    <%= @actividad.detalle %><p>
+    <b>Del:</b> <%= @actividad.fecha_hora_inicio.strftime('%d/%m/%Y %H:%M') %>
+    <b> Al:</b> <%= @actividad.fecha_hora_fin.strftime('%d/%m/%Y %H:%M') %><p>
+    <b>
     <% if @actividad.requiere_autorizacion == 1 %>
-     Si
+      Requiere autorización
     <% else %>
-     No
+      No requiere autorización
     <% end %>
+    </b>
     <p>
 </div>
 
-<div data-role="footer">
-  <%= link_to 'Editar', edit_actividad_path(@actividad), "class" => "ui-btn-left", "data-inline" => "true", "data-theme" => "a", "data-icon" => "gear", "data-mini" => "true" %>
+<%= render "actividades_secciones/form" %>
+
+<div data-role="content">
+  <ul id='actividades_secciones' data-role="listview">
+  <% @actividad.actividades_secciones.each do |actividad_seccion| %>
+    <% if !actividad_seccion.seccion_id.nil? %> 
+    <li>
+      <%= link_to simple_format(actividad_seccion.grado_seccion), [@actividad, actividad_seccion] %>
+      <%= link_to 'Eliminar vínculo', [actividad_seccion.actividad, actividad_seccion], confirm: '¿Seguro que desea eliminar el registro?', method: :delete, "data-icon" => "delete" %>
+    </li>
+    <% end %>
+  <% end %>
+  </ul>
 </div>
+
+<%= form_for(@actividad, :html => { :class => "ui-body ui-body-c" }) do |f| %>
+  <div data-role="fieldcontain">
+    <% if @actividad.estado == 1 %>
+      <%= f.hidden_field :estado, :value => 2 %>
+      <%= f.hidden_field :usuario, :value => current_user.usuario %>
+      <% hidden_field_tag(:accion, 2, "data-mini" => "true") %>
+    
+      <%#*<div class="field">%>
+        <%#*Observaciones<br />%>
+        <%#= f.text_area :observacion %>
+      <%#*</div>%>
+      <div class="actions">
+        <%= f.submit "Confirmar", "data-inline" => "true", "data-theme" => "a", "data-icon" => "check", "data-mini" => "true" %>
+      </div>
+    <% else %>
+      <%#*<div class="field">%>
+        <%#*Observaciones<br />%>
+        <%#= f.text_area :observacion, :readonly => true %>
+      <%#*</div>%>
+      <%#*<br />%>
+      <div data-role="footer"><%= ListaValor.find_by_tabla_and_item(8, @actividad.estado).descripcion %></div>
+    <% end %>
+  </div>
+<% end %>

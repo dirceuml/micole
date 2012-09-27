@@ -83,14 +83,18 @@ class ActividadesController < ApplicationController
   # PUT /actividades/1
   # PUT /actividades/1.json
   def update
-    @actividad = Actividad.find(params[:id])
+    if current_user.nil?
+      redirect_to(log_in_path) and return
+    end
 
+    @actividad = Actividad.find(params[:id])
+    
     respond_to do |format|
       if @actividad.update_attributes(params[:actividad])
-        format.html { redirect_to @actividad, notice: 'Actividad fue actualizado satisfactoriamente.' }
+        format.html { redirect_to @actividad, notice: 'Actividad fue actualizada satisfactoriamente.' }
         format.json { head :no_content }
       else
-        format.html { render action: "edit" }
+        format.html { redirect_to @actividad, notice: 'Cuaderno de control no fue revisado.' }
         format.json { render json: @actividad.errors, status: :unprocessable_entity }
       end
     end
