@@ -1,7 +1,7 @@
 <%= form_for(@autorizacion) do |f| %>
   <% if @autorizacion.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@autorizacion.errors.count, "error") %> prohibited this autorizacion from being saved:</h2>
+    <div id="error_explanation" data-role="header" data-theme="e">
+      <h2><%= pluralize(@autorizacion.errors.count, "error") %> impidieron que se grabe el registro:</h2>
 
       <ul>
       <% @autorizacion.errors.full_messages.each do |msg| %>
@@ -11,27 +11,33 @@
     </div>
   <% end %>
 
+<div data-role="fieldcontain">
   <div class="field">
-    <%= f.label :actividad_id %><br />
-    <%= f.number_field :actividad_id %>
+    <b>Actividad:</b> <%= @autorizacion.actividad.detalle %><p>
+    <b>Fecha de inicio:</b> <%= @autorizacion.actividad.fecha_hora_inicio.strftime('%d/%m/%Y %H:%M') %><p>
+    <b>Fecha de termino:</b> <%= @autorizacion.actividad.fecha_hora_fin.strftime('%d/%m/%Y %H:%M') %><p>
+    <b>Para:</b> <%= @autorizacion.alumno.apellidos_nombres %><p>
+  </div>
+
+  <div data-role="fieldcontain">
+    <b>Autorizar:</b><br />
+    <select <%= f.number_field :respuesta, "data-role" => "slider", "data-mini" => "true" %> >
+                <option value = 0 >No</option>
+                <option value = 1 >Si</option>
+    </select>
+  </div>
+
+  <div class="field">
+    <%= f.hidden_field :fecha_hora_autorizacion, :value => Time.now %>
   </div>
   <div class="field">
-    <%= f.label :alumno_id %><br />
-    <%= f.number_field :alumno_id %>
+    <%= f.hidden_field :fecha_hora_autorizacion, :value => Time.now %>
   </div>
   <div class="field">
-    <%= f.label :persona_vinculada_id %><br />
-    <%= f.number_field :persona_vinculada_id %>
-  </div>
-  <div class="field">
-    <%= f.label :fecha_hora_autorizacion %><br />
-    <%= f.datetime_select :fecha_hora_autorizacion %>
-  </div>
-  <div class="field">
-    <%= f.label :usuario %><br />
-    <%= f.text_field :usuario %>
+     <%= f.hidden_field :usuario, :value => current_user.usuario %>
   </div>
   <div class="actions">
-    <%= f.submit %>
+     <%= f.submit "Grabar", "data-inline" => "true", "data-theme" => "a", "data-icon" => "check", "data-mini" => "true" %>
   </div>
+</div>
 <% end %>

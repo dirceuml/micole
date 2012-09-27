@@ -1,30 +1,26 @@
-<p id="notice"><%= notice %></p>
+<div id='Autorizacion' data-role="header">
+  <h1>Detalles</h1>
+  <%= link_to 'Aceptar', autorizaciones_path, "data-icon" => "check", "data-mini" => "true"  %>
+</div>
 
-<p>
-  <b>Actividad:</b>
-  <%= @autorizacion.actividad_id %>
-</p>
+<div data-role="content" style="clear: left">
+    <b>Actividad:</b> <%= @autorizacion.actividad.detalle %><p>
+    <b>Fecha de inicio:</b> <%= @autorizacion.actividad.fecha_hora_inicio.strftime('%d/%m/%Y %H:%M') %><p>
+    <b>Fecha de termino:</b> <%= @autorizacion.actividad.fecha_hora_fin.strftime('%d/%m/%Y %H:%M') %><p>
+    <b>Para:</b> <%= @autorizacion.alumno.apellidos_nombres %><p>
+    <b>Autorizado:</b>
+    <% if @autorizacion.respuesta.nil? %>
+      (Sin respuesta)
+    <% else %>
+      <% if @autorizacion.respuesta == 0 %>
+        No
+      <% else %>
+        Si
+      <% end %>
+    <% end %>
+    <p>
+</div>
 
-<p>
-  <b>Alumno:</b>
-  <%= @autorizacion.alumno_id %>
-</p>
-
-<p>
-  <b>Persona vinculada:</b>
-  <%= @autorizacion.persona_vinculada_id %>
-</p>
-
-<p>
-  <b>Fecha hora autorizacion:</b>
-  <%= @autorizacion.fecha_hora_autorizacion %>
-</p>
-
-<p>
-  <b>Usuario:</b>
-  <%= @autorizacion.usuario %>
-</p>
-
-
-<%= link_to 'Edit', edit_autorizacion_path(@autorizacion) %> |
-<%= link_to 'Back', autorizaciones_path %>
+<div data-role="footer">
+  <!--%= link_to 'Editar', edit_autorizacion_path(@autorizacion), "class" => "ui-btn-left", "data-inline" => "true", "data-theme" => "a", "data-icon" => "gear", "data-mini" => "true" %-->
+</div>

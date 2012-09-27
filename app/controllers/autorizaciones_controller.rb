@@ -73,7 +73,7 @@ class AutorizacionesController < ApplicationController
 
     respond_to do |format|
       if @autorizacion.update_attributes(params[:autorizacion])
-        format.html { redirect_to @autorizacion, notice: 'Autorizacion was successfully updated.' }
+        format.html { redirect_to @autorizacion, notice: 'Autorizacion fue actualizado satisfactoriamente.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
