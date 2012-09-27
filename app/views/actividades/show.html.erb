@@ -15,9 +15,9 @@
     <b> Al:</b> <%= @actividad.fecha_hora_fin.strftime('%d/%m/%Y %H:%M') %><p>
     <b>
     <% if @actividad.requiere_autorizacion == 1 %>
-     Requiere autorización
+      Requiere autorización
     <% else %>
-     No requiere autorización
+      No requiere autorización
     <% end %>
     </b>
     <p>
@@ -37,3 +37,28 @@
   <% end %>
   </ul>
 </div>
+
+<%= form_for(@actividad, :html => { :class => "ui-body ui-body-c" }) do |f| %>
+  <div data-role="fieldcontain">
+    <% if @actividad.estado == 1 %>
+      <%= f.hidden_field :estado, :value => 2 %>
+      <%= f.hidden_field :usuario, :value => current_user.usuario %>
+      <% hidden_field_tag(:accion, 2, "data-mini" => "true") %>
+    
+      <%#*<div class="field">%>
+        <%#*Observaciones<br />%>
+        <%#= f.text_area :observacion %>
+      <%#*</div>%>
+      <div class="actions">
+        <%= f.submit "Confirmar", "data-inline" => "true", "data-theme" => "a", "data-icon" => "check", "data-mini" => "true" %>
+      </div>
+    <% else %>
+      <%#*<div class="field">%>
+        <%#*Observaciones<br />%>
+        <%#= f.text_area :observacion, :readonly => true %>
+      <%#*</div>%>
+      <%#*<br />%>
+      <div data-role="footer"><%= ListaValor.find_by_tabla_and_item(8, @actividad.estado).descripcion %></div>
+    <% end %>
+  </div>
+<% end %>
