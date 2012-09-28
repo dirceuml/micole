@@ -88,15 +88,35 @@ class ActividadesController < ApplicationController
     end
 
     @actividad = Actividad.find(params[:id])
+    estado_anterior = @actividad.estado
     
+    ActiveRecord::Base.transaction do
     respond_to do |format|
       if @actividad.update_attributes(params[:actividad])
-        format.html { redirect_to @actividad, notice: 'Actividad fue actualizada satisfactoriamente.' }
-        format.json { head :no_content }
+        if @actividad.estado == 2 and estado_anterior == 1 and @actividad.requiere_autorizacion == 1 
+          sql = '
+            Insert Into autorizaciones (actividad_id, alumno_id, respuesta, usuario, created_at, updated_at)
+            Select s.actividad_id, a.alumno_id, 0, \'' + current_user.usuario + '\', current_date, current_date
+            From actividades_secciones s, anios_alumnos a
+            Where s.actividad_id = ' + params[:id].to_s + '
+              And s.seccion_id = a.seccion_id'        
+
+          if CuadernoControlRevision.connection.insert(sql)
+            format.html { redirect_to @actividad, notice: 'Actividad fue actualizada satisfactoriamente.' }
+            format.json { head :no_content }
+          else
+            format.html { redirect_to @actividad, notice: 'Actividad no fue actualizada.' } #OJO
+            format.json { render json: @actividad.errors, status: :unprocessable_entity }
+          end
+        else
+          format.html { redirect_to @actividad, notice: 'Actividad fue actualizada satisfactoriamente.' }
+          format.json { head :no_content }
+        end
       else
-        format.html { redirect_to @actividad, notice: 'Cuaderno de control no fue revisado.' }
+        format.html { redirect_to @actividad, notice: 'Actividad no fue actualizada.' }
         format.json { render json: @actividad.errors, status: :unprocessable_entity }
       end
+    end
     end
   end
 
