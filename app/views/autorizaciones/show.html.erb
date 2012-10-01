@@ -1,6 +1,6 @@
 <div id='Autorizacion' data-role="header">
   <h1>Detalles</h1>
-  <%= link_to 'Aceptar', autorizaciones_path, "data-icon" => "check", "data-mini" => "true"  %>
+  <%= link_to 'Aceptar', autorizacion_actividad_path(current_user.usuario), "data-icon" => "check", "data-mini" => "true"  %>
 </div>
 
 <div data-role="content" style="clear: left">

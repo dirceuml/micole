@@ -22,8 +22,8 @@
   <div data-role="fieldcontain">
     <b>Autorizar:</b><br />
     <select <%= f.number_field :respuesta, "data-role" => "slider", "data-mini" => "true" %> >
-                <option value = 0 >No</option>
-                <option value = 1 >Si</option>
+                <option value = 0 <% if @autorizacion.respuesta == 0 %> selected <%end%> >No</option>
+                <option value = 1 <% if @autorizacion.respuesta == 1 %> selected <%end%> >Si</option>
     </select>
   </div>
 

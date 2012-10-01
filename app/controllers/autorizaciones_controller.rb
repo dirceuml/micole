@@ -1,7 +1,7 @@
 class AutorizacionesController < ApplicationController
   # GET /autorizaciones
   # GET /autorizaciones.json
-  def index
+  def xxxindexzz
     @autorizaciones = Autorizacion.order("respuesta")
 
     respond_to do |format|
@@ -21,7 +21,29 @@ class AutorizacionesController < ApplicationController
       format.html # index.html.erb
       format.json { render json: @autorizaciones }
     end
-  end  
+  end
+  
+def index
+    if current_user.nil?
+      redirect_to(log_in_path) and return
+    end
+    
+    actividad = params[:actividad_id]
+    if params[:seccion_id].nil?
+      seccion = ""
+    else
+      seccion = params[:seccion_id]
+    end
+    
+    @autorizaciones = Autorizacion.por_actividad(actividad).por_seccion(seccion)
+    
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: @autorizaciones }
+    end
+    
+  end
+  
 
   # GET /autorizaciones/1
   # GET /autorizaciones/1.json

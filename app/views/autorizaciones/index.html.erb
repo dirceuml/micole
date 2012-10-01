@@ -1,52 +1,80 @@
 <div data-role="header">
-  <h1>Autorizaciones</h1>
-  <%= link_to 'Registrar', new_autorizacion_path, "data-icon" => "plus", "class" => "ui-btn-right" %>
+  <h1>Consultar autorizaciones</h1>
 </div>
 
-<div data-role="content" class="ui-content" role="main">
-  
-  <div data-role="collapsible-set" data-theme="b" data-content-theme="d" data-inset="false">
-    
-    <div data-role="collapsible" data-collapsed="false">
-      <h2>Pendientes</h2>
-      <ul data-role="listview" data-filter="true">
-        <% @autorizaciones.vigente.pendiente.each do |autorizacion| %>
-          <li data-filtertext="<%= "#{autorizacion.actividad.fecha_hora_inicio.strftime('%d/%m/%Y')} - #{autorizacion.actividad.nombre} - #{autorizacion.alumno.apellidos_nombres}" %>" >
-            <%= link_to edit_autorizacion_path(autorizacion) do %>
-              <%= "#{autorizacion.actividad.fecha_hora_inicio.strftime('%d/%m/%Y')} - #{autorizacion.actividad.nombre} - #{autorizacion.alumno.apellidos_nombres}" %>
-            <% end %>
-            <!--%= link_to 'Eliminar', autorizacion, confirm: '¿Seguro que desea eliminar el registro?', method: :delete, "data-icon" => "delete" %-->
-          </li>
-        <% end  %>
-      </ul>
-    </div>
-    
+<% if params[:actividad_id].nil? %>
+  <% actividad = "" %>
+  <% seccion = "" %>
+<% else %>
+  <% actividad = params[:actividad_id] %>
+  <% seccion = params[:seccion_id] %>
+<% end %>
+
+<div data-role="content">
+    <%= form_tag(autorizaciones_path, {:method => :get, "onSubmit" => "return validarBusquedaXActividad();", "data-ajax" => "false", "name" => "buscar"}) do %>
+        <div data-role="fieldcontain">
+            <!--%= collection_select(:actividad, :tipo_evento_id, TipoEvento.where("cuaderno_control = 0")) %-->
+            Actividad: <%= collection_select(:actividad, :id, Actividad.where("anio_escolar_id = 1 and requiere_autorizacion = 1").order("fecha_hora_inicio DESC"), :id, :nombre_fecha, {:selected => actividad}, {"data-mini" => "true", :name => "actividad_id"}) %><br />
+            Sección: <%= collection_select(:seccion, :id, Seccion.all, :id, :grado_seccion, { :prompt => ':: Seleccione ::'}, {"data-mini" => "true", :name => "seccion_id"}) %>
+            <%= submit_tag "Buscar", "data-inline" => "true", "data-theme" => "a", "data-icon" => "search", "data-mini" => "true", :name => nil %>
+        </div>
+    <% end %>
+
+<div data-role="collapsible-set" data-theme="c" data-content-theme="d" data-inset="false">
     <div data-role="collapsible">
-      <h2>Respondidas</h2>
-      <ul data-role="listview" data-filter="true">
-        <% @autorizaciones.vigente.respondida.each do |autorizacion| %>    
-          <li data-filtertext="<%= "#{autorizacion.actividad.fecha_hora_inicio.strftime('%d/%m/%Y')} - #{autorizacion.actividad.nombre} - #{autorizacion.alumno.apellidos_nombres}" %>" >
-            <%= link_to edit_autorizacion_path(autorizacion) do %>
-              <%= "#{autorizacion.actividad.fecha_hora_inicio.strftime('%d/%m/%Y')} - #{autorizacion.actividad.nombre} - #{autorizacion.alumno.apellidos_nombres}" %> 
-            <% end %>
-          </li>
-        <% end  %>
-      </ul>
+        <h2>
+            <%if !actividad.empty?%>
+                <span class="ui-li-count ui-btn-up-f ui-btn-corner-all"><%=@autorizaciones.autorizado.count%></span>
+            <%end%>
+            Autorizados
+        </h2>
+        <ul data-role="listview" data-filter="true">
+            <% @autorizaciones.autorizado.each do |autorizacion| %>
+                <li data-filtertext="<%= "#{autorizacion.alumno.apellidos_nombres}" %>"  >
+                    <%= link_to "#" do %>
+                        <p class="ui-li-desc"> <%= "Seccion #{Seccion.find(AnioAlumno.find_by_anio_escolar_id_and_alumno_id(1,autorizacion.alumno_id).seccion_id).grado_seccion} - #{autorizacion.alumno.apellidos_nombres}" %> </p>
+                    <% end %>
+                </li>
+            <% end  %>
+        </ul>
     </div>
 
     <div data-role="collapsible">
-      <h2>Pasadas</h2>
-      <ul data-role="listview" data-filter="true">
-        <% @autorizaciones.pasado.each do |autorizacion| %>    
-          <li data-filtertext="<%= "#{autorizacion.actividad.fecha_hora_inicio.strftime('%d/%m/%Y')} - #{autorizacion.actividad.nombre} - #{autorizacion.alumno.apellidos_nombres}" %>" >
-            <%= link_to autorizacion do %>
-              <%= "#{autorizacion.actividad.fecha_hora_inicio.strftime('%d/%m/%Y')} - #{autorizacion.actividad.nombre} - #{autorizacion.alumno.apellidos_nombres}" %> 
-            <% end %>
-          </li>
-        <% end  %>
-      </ul>
+        <h2>
+            <%if !actividad.empty?%>
+                <span class="ui-li-count ui-btn-up-f ui-btn-corner-all"><%=@autorizaciones.no_autorizado.count%></span>
+            <%end%>
+            No Autorizados
+        </h2>
+        <ul data-role="listview"  data-filter="true">
+            <% @autorizaciones.no_autorizado.each do |autorizacion| %>
+                <li data-filtertext="<%= "#{autorizacion.alumno.apellidos_nombres}" %>"  >
+                    <%= link_to "#" do %>
+                        <p class="ui-li-desc"> <%= "Seccion #{Seccion.find(AnioAlumno.find_by_anio_escolar_id_and_alumno_id(1,autorizacion.alumno_id).seccion_id).grado_seccion} - #{autorizacion.alumno.apellidos_nombres}" %> </p>
+                    <% end %>
+                </li>
+            <% end  %>
+        </ul>
     </div>
-    
-  </div> <!-- collapsible set -->
+
+    <div data-role="collapsible">
+        <h2>
+            <%if !actividad.empty?%>
+                <span class="ui-li-count ui-btn-up-f ui-btn-corner-all"><%=@autorizaciones.pendiente.count%></span>
+            <%end%>
+             Pendientes
+        </h2>
+        <ul data-role="listview"  data-filter="true">
+            <% @autorizaciones.pendiente.each do |autorizacion| %>
+                <li data-filtertext="<%= "#{autorizacion.alumno.apellidos_nombres}" %>"  >
+                    <%= link_to "#" do %>
+                        <p class="ui-li-desc"> <%= "Seccion #{Seccion.find(AnioAlumno.find_by_anio_escolar_id_and_alumno_id(1,autorizacion.alumno_id).seccion_id).grado_seccion} - #{autorizacion.alumno.apellidos_nombres}" %> </p>
+                    <% end %>
+                </li>
+            <% end  %>
+        </ul>
+    </div>
+
+</div>
   
 </div>

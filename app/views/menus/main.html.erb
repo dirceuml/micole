@@ -16,6 +16,7 @@
         <li data-role="list-divider">Actividades del colegio</li>
         <li><a href="<%= actividades_path %>">Registrar</a></li>
         <li><a href="<%= autorizacion_actividad_path(current_user.usuario) %>" >Autorizar</a></li>
+        <li><a href="<%= autorizaciones_path %>" >Consultar autorizaciones</a></li>
         <li><a href="<%= calendario_actividades_path(Date.current.year, Date.current.month, Date.current.strftime('%d')) %>">Calendario</a></li>
         <li data-role="list-divider">Seguridad del sistema</li>
         <li><a href="<%= usuarios_path %>">Usuarios</a></li>
