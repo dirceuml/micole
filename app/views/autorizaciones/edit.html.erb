@@ -1,6 +1,6 @@
 <div data-role="header">
     <h1>Responder</h1>
-    <%= link_to 'Regresar', autorizaciones_path, "data-icon" => "back", "class" => "ui-btn-left", "data-mini" => "true" %>
+    <%= link_to 'Regresar', autorizacion_actividad_path(current_user.usuario), "data-icon" => "back", "class" => "ui-btn-left", "data-mini" => "true" %>
 </div>
 
 <%= render 'form' %>
