@@ -76,11 +76,6 @@
         Cada <%= f.number_field :frecuencia_dias_notificacion, "type" => "number", "min" => "1", "max" => "30", "data-mini" => "true", "style" => "width:50px"  %> dia(s)
     </div>
 
-    <% if @actividad.estado.nil? %>
-      <div class="field">
-          <%= f.hidden_field :estado, :value => 1 %>
-      </div>
-    <% end %>
     <div class="field">
         <%= f.hidden_field :usuario, :value => current_user.usuario %>
     </div>

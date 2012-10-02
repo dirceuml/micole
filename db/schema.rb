@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120923173023) do
+ActiveRecord::Schema.define(:version => 20121002040659) do
 
   create_table "actividades", :force => true do |t|
     t.integer  "anio_escolar_id",                                           :null => false
@@ -29,7 +29,7 @@ ActiveRecord::Schema.define(:version => 20120923173023) do
     t.datetime "updated_at",                                                :null => false
     t.integer  "requiere_autorizacion",                      :default => 0, :null => false
     t.date     "limite_autorizacion"
-    t.integer  "estado",                                     :default => 0, :null => false
+    t.integer  "estado",                                     :default => 1, :null => false
     t.string   "observacion",                  :limit => 50
   end
 
