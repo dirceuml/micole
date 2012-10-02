@@ -11,7 +11,7 @@
   <%# if @actividad.requiere_autorizacion == 1 and @actividad.autorizada(alumno) == 0 %>
   <% if @actividad.requiere_autorizacion == 1 %>
     Además, se le recuerda que debe indicar si autoriza la participación de su hijo, para lo cual tiene plazo hasta el 
-    <%= @actividad.fecha_limite_autorizacion.strftime('%d/%m/%Y %H:%mi') %>.
+    <%= @actividad.limite_autorizacion.strftime('%d/%m/%Y %H:%mi') %>.
   <% end %>
 </p>
 
