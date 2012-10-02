@@ -47,5 +47,6 @@ gem "bcrypt-ruby", :require => "bcrypt"
 #gem 'libv8', '3.11.8.0' # funciona para windows
 
 gem 'carrierwave'
+gem 'rufus-scheduler'
 
 #gem "eventmachine", "1.0.0.beta.4.1"
