@@ -1,6 +1,7 @@
 Estimado(a) señor(a) <%= @persona.apellidos_nombres %>:
 
-Se le recuerda que el <%= @actividad.fecha_hora_inicio.strftime('%d/%m/%Y %H:%mi') %> se llevará a cabo la siguiente actividad:
+Se le recuerda que el <%= @actividad.fecha_hora_inicio.strftime('%d/%m/%Y %H:%mi') %> se llevará a cabo la siguiente actividad, 
+en la que participará la sección de su hijo(a) <%= @alumno.apellidos_nombres %>:
 
 <%= @actividad.nombre %>
 

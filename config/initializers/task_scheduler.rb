@@ -5,7 +5,7 @@ scheduler = Rufus::Scheduler.start_new
 #end 
 
 #scheduler.cron '0 10 * * * Etc/GMT-5' do
-scheduler.cron '28 23 * * *' do
-  # todos los días a las 10:00 en GMT-5
+scheduler.cron '00 17 * * *' do
+  # todos los días a las 10:00 en GMT-5 
   Actividad.find(5).enviar_recordatorio
 end
