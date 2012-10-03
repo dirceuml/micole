@@ -6,7 +6,7 @@ class Autorizacion < ActiveRecord::Base
   scope :pendiente, where(:respuesta => nil)
   scope :autorizado, where(:respuesta => 1)
   scope :no_autorizado, where(:respuesta => 0)
-  scope :respondida, where(:respuesta => [0,1])
+  scope :respondido, where(:respuesta => [0,1])
   scope :vigente, lambda { joins(:actividad).where("to_char(actividades.limite_autorizacion, 'yyyymmdd') >= ?", Time.now.strftime('%Y%m%d'))}
   scope :pasado, lambda { joins(:actividad).where("to_char(actividades.limite_autorizacion, 'yyyymmdd') < ?", Time.now.strftime('%Y%m%d'))}
   scope :persona_autorizada, lambda { |persona| joins(:alumno => :alumnos_personas_vinculadas).where("autoriza_actividad = 1 and alumnos_personas_vinculadas.persona_vinculada_id = ?", persona) }
