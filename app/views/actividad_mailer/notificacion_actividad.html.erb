@@ -1,0 +1,21 @@
+<p>Estimado(a) señor(a) <%= @persona.apellidos_nombres %>:</p>
+<p>Se le recuerda que el <%= @actividad.fecha_hora_inicio.strftime('%d/%m/%Y %H:%M') %> se llevará a cabo la siguiente actividad, 
+en la que participará la sección de su hijo(a) <%= @alumno.apellidos_nombres %>:</p>
+
+<p>
+  <b><%= @actividad.nombre %></b>
+  <br>
+  <%= @actividad.detalle %>
+</p>
+
+<p>
+  <% if @actividad.requiere_autorizacion == 1 and @actividad.autorizaciones.find_by_alumno_id(@alumno.id).respuesta.nil? %>
+    Además, se le recuerda que debe indicar si autoriza la participación de su hijo, para lo cual tiene plazo hasta el 
+    <%= @actividad.limite_autorizacion.strftime('%d/%m/%Y %H:%M') %>.
+  <% end %>
+</p>
+
+<p>
+
+    <%= image_tag attachments['logo_small.jpg'].url -%>
+</p>

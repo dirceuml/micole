@@ -4,6 +4,8 @@ class Actividad < ActiveRecord::Base
   has_many :autorizaciones
   has_many :actividades_secciones
   has_many :secciones, :through => :actividades_secciones
+  has_many :alumnos, :through => :secciones
+  has_many :personas_vinculadas, :through => :alumnos
   
   validates :anio_escolar_id, :tipo_evento_id, :fecha_hora_inicio, :fecha_hora_fin, :presence => { :message => ": El campo no puede estar vacio" }
   validates :tipo_actividad, :nombre, :detalle, :requiere_autorizacion, :usuario, :presence => { :message => ": El campo no puede estar vacio" }
@@ -62,6 +64,7 @@ class Actividad < ActiveRecord::Base
   scope :por_seccion, lambda { |seccion| joins(:actividades_secciones).where("anio_escolar_id = 1 and actividades_secciones.seccion_id = ?", seccion)}
   scope :por_persona, lambda { |persona| joins(:secciones => {:anios_alumnos => :personas_vinculadas}).uniq.where("personas_vinculadas.id = ?", persona)}
   scope :por_persona_y_fecha, lambda { |persona,fecha| por_persona(persona).where("to_char(fecha_hora_inicio, 'dd/mm/yyyy') = ?", fecha.strftime('%d/%m/%Y'))}
+  scope :apoderados, lambda { |actividad| joins(:personas_vinculadas).where("actividades.id = ? and alumnos_personas_vinculadas.apoderado = 1", actividad)}
   
   attr_accessor :fecha_inicio, :hora_inicio, :min_inicio, :fecha_fin, :hora_fin, :min_fin
   
@@ -96,5 +99,17 @@ class Actividad < ActiveRecord::Base
   def nombre_fecha
      nombre+ " el "+ fecha_hora_inicio.strftime('%d/%m/%Y')
 #      to_date.to_s(:db)
+  end
+  
+  def enviar_recordatorio
+    if estado == 2 and !inicio_notificacion.nil?
+      if inicio_notificacion <= Date.current and fin_notificacion >= Date.current
+        alumnos.find_each do |a|
+          a.personas_vinculadas.where("apoderado = 1").find_each do |p|
+            ActividadMailer.notificacion_actividad(Actividad.find(id), a, p).deliver
+          end
+        end
+      end
+    end
   end
 end

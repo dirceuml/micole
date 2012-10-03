@@ -1,7 +1,9 @@
 <div id='Actividad' data-role="header">
   <h1>Actividad</h1>
   <%= link_to 'Aceptar', actividades_path, "data-icon" => "check", "data-mini" => "true"  %>
-  <%= link_to 'Editar', edit_actividad_path(@actividad), "class" => "ui-btn-right", "data-theme" => "a", "data-icon" => "gear", "data-mini" => "true" %>
+  <% if @actividad.estado != 1 %>
+    <%= link_to 'Editar', edit_actividad_path(@actividad), "class" => "ui-btn-right", "data-theme" => "a", "data-icon" => "gear", "data-mini" => "true" %>
+  <% end %>
 </div>
 
 <div data-role="content" style="clear: left; font-size: 12px;">    
@@ -23,7 +25,9 @@
     <p>
 </div>
 
-<%= render "actividades_secciones/form" %>
+<% if @actividad.estado == 1 %>
+  <%= render "actividades_secciones/form" %>
+<% end %>
 
 <div data-role="content">
   <ul id='actividades_secciones' data-role="listview">
