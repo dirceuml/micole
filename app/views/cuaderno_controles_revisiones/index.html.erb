@@ -23,11 +23,11 @@
   
 <div data-role="collapsible-set" data-theme="c" data-content-theme="d" data-inset="false">
     <div data-role="collapsible">
-        <h2> 
-            <% if !fecha.empty? %>
-              <span class="ui-li-count ui-btn-up-f ui-btn-corner-all"><%=@cuaderno_controles_revisiones.revisado.count%></span>
-            <%end%>
-             Revisados
+        <h2>
+          <li class= "ui-li ui-li-has-count">
+            Revisados
+            <span class="ui-li-count ui-btn-up-c ui-btn-corner-all"><%=@cuaderno_controles_revisiones.revisado.count%></span>
+          </li>
         </h2>
         <ul data-role="listview" data-filter="true">
         <!--div data-role="content" style="color: #06c"-->
@@ -53,10 +53,10 @@
     
     <div data-role="collapsible">
         <h2>
-            <% if !fecha.empty? %>
-                <span class="ui-li-count ui-btn-up-f ui-btn-corner-all"><%=@cuaderno_controles_revisiones.no_revisado.count%></span>
-            <%end%>
+          <li class= "ui-li ui-li-has-count">
             No Revisados
+            <span class="ui-li-count ui-btn-up-c ui-btn-corner-all"><%=@cuaderno_controles_revisiones.no_revisado.count%></span>
+          </li>
         </h2>  
         <ul data-role="listview" data-filter="true">
             <% @cuaderno_controles_revisiones.no_revisado.each do |cuaderno_control_revision| %>

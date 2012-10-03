@@ -10,6 +10,7 @@ Micole::Application.routes.draw do
   
   resources :asistencias
   post "salidas" => "asistencias#crear_en_bloque", :as => "salidas"
+  get "consulta_asistencia" => "asistencias#consultar", :as => "consulta_asistencia"
   
   resources :actividades_secciones
 

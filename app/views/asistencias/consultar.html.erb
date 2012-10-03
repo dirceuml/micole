@@ -1,35 +1,36 @@
 <div data-role="header">
-  <h1>Consultar salida de alumnos con personas autorizada</h1>
+  <h1>Consultar asistencia</h1>
 </div>
 
-<% if params[:seccion_id] == "0" %>
+<% if params[:seccion_id].nil? %>
   <% seccion = "" %>
-  <% fecha = "" %>
-  <% titulo = "" %>
+  <% fechaI = "" %>
+  <% fechaF = "" %>
 <% else %>
   <% seccion = params[:seccion_id] %>
-  <% fecha = params[:fecha] %>
-  <% titulo = "| Fecha: " + fecha + " | Sección: " + seccion + " |" %>
+  <% fechaI = params[:fechaI] %>
+  <% fechaF = params[:fechaF] %>
 <% end %>
 
 <div data-role="content">
-  <%= form_tag(buscar_asistencia_path, {"onSubmit" => "return validarBusquedaXFecha();", "data-ajax" => "false", "name" => "buscar"}) do %>
+  <%= form_tag(asistencias_path, {"onSubmit" => "return validarBusquedaXRangoFechas();", "data-ajax" => "false", "name" => "buscar", :method => :get}) do %>
     <div data-role="fieldcontain">
-      Fecha: <%= text_field_tag(:fecha, fecha, "data-mini" => "true", "data-role" => "datebox", "type" => "date", "style" => "width:120px") %>
+      Del: <%= text_field_tag(:fechaI, fechaI, "data-mini" => "true", "data-role" => "datebox", "type" => "date", "style" => "width:120px") %><br />
+      Al: <%= text_field_tag(:fechaF, fechaF, "data-mini" => "true", "data-role" => "datebox", "type" => "date", "style" => "width:120px") %><br />
       Sección: <%= collection_select(:seccion, :id, Seccion.all, :id, :grado_seccion, {:selected => seccion}, {"data-mini" => "true", :name => "seccion_id"}) %>
-      <%= submit_tag "Buscar", "data-inline" => "true", "data-theme" => "a", "data-icon" => "search", "data-mini" => "true" %>
+      <%= submit_tag "Buscar", "data-inline" => "true", "data-theme" => "a", "data-icon" => "search", "data-mini" => "true", :name => nil %>
     </div>
   <% end %>
   
   <ul data-role="listview" data-filter="true">
-    <div data-role="content" style="color: #06c">
-      <%= simple_format(titulo) %>
-    </div>
     <% @asistencias.each do |asistencia| %>
-    <li data-filtertext="<%= "#{asistencia.anio_alumno.alumno.apellidos_nombres}" %>" >
+    <li data-filtertext="<%= "#{asistencia.anio_alumno.alumno.apellidos_nombres} #{asistencia.persona_vinculada.apellidos_nombres}" %>" >
       <%= link_to "#" do %>
-        <%= simple_format("#{asistencia.anio_alumno.alumno.apellidos_nombres}" ) %>
-      <% end %>      
+        <!--strong></strong>PM -->
+        <p class="ui-li-aside ui-li-desc"><%= asistencia.hora%> </p>
+        <p class="ui-li-heading"> <%= simple_format("#{asistencia.anio_alumno.alumno.apellidos_nombres}") %> </p>
+        <p class="ui-li-heading"> <%= simple_format("Persona autorizada: #{asistencia.persona_vinculada.apellidos_nombres}") %> </p>
+      <% end %> 
     </li>
     <% end %>
   </ul>

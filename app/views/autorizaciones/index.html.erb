@@ -11,7 +11,8 @@
 <% end %>
 
 <div data-role="content">
-    <%= form_tag(autorizaciones_path, {:method => :get, "onSubmit" => "return validarBusquedaXActividad();", "data-ajax" => "false", "name" => "buscar"}) do %>
+    <!--"onSubmit" => "return validarBusquedaXActividad();", -->
+    <%= form_tag(autorizaciones_path, {:method => :get, "data-ajax" => "false", "name" => "buscar"}) do %>
         <div data-role="fieldcontain">
             <!--%= collection_select(:actividad, :tipo_evento_id, TipoEvento.where("cuaderno_control = 0")) %-->
             Actividad: <%= collection_select(:actividad, :id, Actividad.where("anio_escolar_id = 1 and requiere_autorizacion = 1").order("fecha_hora_inicio DESC"), :id, :nombre_fecha, {:selected => actividad}, {"data-mini" => "true", :name => "actividad_id"}) %><br />
@@ -23,11 +24,13 @@
 <div data-role="collapsible-set" data-theme="c" data-content-theme="d" data-inset="false">
     <div data-role="collapsible">
         <h2>
-            <%if !actividad.empty?%>
-                <span class="ui-li-count ui-btn-up-f ui-btn-corner-all"><%=@autorizaciones.autorizado.count%></span>
-            <%end%>
-            Autorizados
+            <!--class="ui-li-count ui-btn-up-c ui-btn-corner-all" -->
+            <li class= "ui-li ui-li-has-count">
+                Autorizados
+                <span class="ui-li-count ui-btn-up-c ui-btn-corner-all"><%=@autorizaciones.autorizado.count%></span> 
+            </li>
         </h2>
+        
         <ul data-role="listview" data-filter="true">
             <% @autorizaciones.autorizado.each do |autorizacion| %>
                 <li data-filtertext="<%= "#{autorizacion.alumno.apellidos_nombres}" %>"  >
@@ -41,10 +44,10 @@
 
     <div data-role="collapsible">
         <h2>
-            <%if !actividad.empty?%>
-                <span class="ui-li-count ui-btn-up-f ui-btn-corner-all"><%=@autorizaciones.no_autorizado.count%></span>
-            <%end%>
-            No Autorizados
+            <li class= "ui-li ui-li-has-count">
+                No Autorizados
+                <span class="ui-li-count ui-btn-up-c ui-btn-corner-all"><%=@autorizaciones.no_autorizado.count%></span>
+            </li>   
         </h2>
         <ul data-role="listview"  data-filter="true">
             <% @autorizaciones.no_autorizado.each do |autorizacion| %>
@@ -59,10 +62,10 @@
 
     <div data-role="collapsible">
         <h2>
-            <%if !actividad.empty?%>
-                <span class="ui-li-count ui-btn-up-f ui-btn-corner-all"><%=@autorizaciones.pendiente.count%></span>
-            <%end%>
-             Pendientes
+            <li class= "ui-li ui-li-has-count">
+                 Pendientes
+                <span class="ui-li-count ui-btn-up-c ui-btn-corner-all"><%=@autorizaciones.pendiente.count%></span>
+            </li>
         </h2>
         <ul data-role="listview"  data-filter="true">
             <% @autorizaciones.pendiente.each do |autorizacion| %>
