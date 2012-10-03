@@ -103,7 +103,7 @@ class Actividad < ActiveRecord::Base
   
   def enviar_recordatorio
     if estado == 2 and !inicio_notificacion.nil?
-      if inicio_notificacion <= Date.current 
+      if inicio_notificacion <= Date.current and fin_notificacion >= Date.current
         alumnos.find_each do |a|
           a.personas_vinculadas.where("apoderado = 1").find_each do |p|
             ActividadMailer.notificacion_actividad(Actividad.find(id), a, p).deliver

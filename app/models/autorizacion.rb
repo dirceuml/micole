@@ -3,6 +3,8 @@ class Autorizacion < ActiveRecord::Base
   belongs_to :alumno
   belongs_to :persona_vinculada
   
+  validates :alumno_id, :uniqueness => { :scope => :actividad_id, :message => " ya esta vinculado con la actividad." }
+  
   scope :pendiente, where(:respuesta => nil)
   scope :autorizado, where(:respuesta => 1)
   scope :no_autorizado, where(:respuesta => 0)
