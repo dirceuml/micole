@@ -1,0 +1,21 @@
+<p>Estimado(a) señor(a) <%= @persona.apellidos_nombres %>:</p>
+<p>Se le comunica que el colegio ha programado para el <%= @actividad.fecha_hora_inicio.strftime('%d/%m/%Y %H:%M') %> la siguiente actividad, 
+  en la que participará la sección de su hijo(a) <%= @alumno.apellidos_nombres %>:</p>
+<p>
+  <b><%= @actividad.nombre %></b>
+  <br>
+  <%= @actividad.detalle %>
+</p>
+<p>
+  Esta actividad requiere su autorización para que su hijo(a) participe. Para autorizar la actividad debe ingresar al
+  sistema MiCole a la opción Autorizaciones dentro del menú Actividades. 
+</p>
+<p>
+  Tiene plazo hasta el <%= @actividad.limite_autorizacion.strftime('%d/%m/%Y %H:%M') %> para responder a la solicitud de autorización.
+</p>
+<p>
+  Para cualquier consulta adicional, por favor, comuníquese con el profesor o con personal administrativo del colegio.
+</p>
+<p>
+  <%= image_tag attachments['logo_small.jpg'].url -%>
+</p>

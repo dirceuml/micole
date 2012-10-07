@@ -102,6 +102,9 @@ class ActividadesController < ApplicationController
               And s.seccion_id = a.seccion_id'        
 
           if CuadernoControlRevision.connection.insert(sql)
+            #envío de solicitud de autorización
+            @actividad.enviar_solicitud_autorizacion
+          
             format.html { redirect_to @actividad, notice: 'Actividad fue actualizada satisfactoriamente.' }
             format.json { head :no_content }
           else

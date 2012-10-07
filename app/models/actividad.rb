@@ -112,4 +112,14 @@ class Actividad < ActiveRecord::Base
       end
     end
   end
+  
+  def enviar_solicitud_autorizacion
+    if estado == 2 and requiere_autorizacion == 1
+      alumnos.find_each do |a|
+        a.personas_vinculadas.where("apoderado = 1").find_each do |p|
+          AutorizacionMailer.notificacion_autorizacion(Actividad.find(id), a, p).deliver
+        end
+      end
+    end
+  end
 end

@@ -1,7 +1,7 @@
 <%= form_for([@actividad, @actividad.actividades_secciones.build], :html => { :class => "ui-body ui-body-c", "data-ajax" => "false" }) do |f| %>
-  <% if !@alumno_persona_vinculada.nil? %>
+  <% if !@actividad_seccion.nil? %>
     <% if @actividad_seccion.errors.any? %>
-      <div id="error_explanation">
+      <div id="error_explanation" data-role="header" data-theme="e">
         <h2><%= pluralize(@actividad_seccion.errors.count, "error") %> impidieron la grabacion:</h2>
 
         <ul>
