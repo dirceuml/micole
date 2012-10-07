@@ -117,7 +117,8 @@ class Actividad < ActiveRecord::Base
     if estado == 2 and requiere_autorizacion == 1
       alumnos.find_each do |a|
         a.personas_vinculadas.where("apoderado = 1").find_each do |p|
-          AutorizacionMailer.notificacion_autorizacion(Actividad.find(id), a, p).deliver
+#          AutorizacionMailer.notificacion_autorizacion(Actividad.find(id), a, p).deliver
+          AutorizacionMailer.delay.notificacion_autorizacion(Actividad.find(id), a, p) #asincrono, con delayed_job
         end
       end
     end
