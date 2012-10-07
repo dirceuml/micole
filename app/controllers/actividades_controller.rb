@@ -96,12 +96,13 @@ class ActividadesController < ApplicationController
         if @actividad.estado == 2 and estado_anterior == 1 and @actividad.requiere_autorizacion == 1 
           sql = '
             Insert Into autorizaciones (actividad_id, alumno_id, respuesta, usuario, created_at, updated_at)
-            Select s.actividad_id, a.alumno_id, 0, \'' + current_user.usuario + '\', current_date, current_date
+            (Select s.actividad_id, a.alumno_id, 0, \'' + current_user.usuario + '\', current_date, current_date
             From actividades_secciones s, anios_alumnos a
             Where s.actividad_id = ' + params[:id].to_s + '
-              And s.seccion_id = a.seccion_id'        
+              And s.seccion_id = a.seccion_id)
+            Returning id'        
 
-          if CuadernoControlRevision.connection.insert(sql)
+          if Autorizacion.connection.insert(sql)
             #envío de solicitud de autorización
             @actividad.enviar_solicitud_autorizacion
           
