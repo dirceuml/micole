@@ -9,4 +9,5 @@ class AutorizacionMailer < ActionMailer::Base
     
     mail(:to => "#{persona.apellidos_nombres} <#{persona.correo}>", :subject => "Solicitud de autorizacion para actividad: #{actividad.nombre}")
   end
+#  handle_asynchronously :notificacion_autorizacion, :run_at => Proc.new { 2.minutes.from_now }
 end
