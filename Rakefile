@@ -12,13 +12,13 @@ task :scheduler => :environment do
 
   scheduler = Rufus::Scheduler.start_new
 
-scheduler.every("1m") do
+#scheduler.every("1m") do
 #scheduler.cron '0 10 * * * Etc/GMT-5' do
-#scheduler.cron '0 17 * * *' do
-  # todos los d√≠as a las 10:00 en GMT-5 
+scheduler.cron '30 1 * * *' do
+  # todos los di≠as a las 10:00
   Actividad.pendiente(Date.current).find_each do |a|
-    #a.enviar_recordatorio
-    puts "Funciona..."
+    a.enviar_recordatorio
+    #puts "Funciona..."
   end
 end
 
