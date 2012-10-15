@@ -10,4 +10,4 @@ scheduler.every("1m") do
   puts "Funciona"
 end
 
-scheduler.join
+#scheduler.join
