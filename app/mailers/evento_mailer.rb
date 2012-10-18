@@ -1,5 +1,5 @@
 class EventoMailer < ActionMailer::Base
-  default :from => "Administrador MiCole <sistema.micole@gmail.com>"
+  default :from => "Administrador MiCole <sistema.micole.adm@gmail.com>"
 
   def notificacion_evento(evento, persona)
     @evento = evento
