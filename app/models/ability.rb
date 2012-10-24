@@ -9,10 +9,22 @@ class Ability
        if user.id.nil?
          cannot :all, :all
        else
-         if user.perfil.id == 1
+         if user.perfil.id == 1 # administrador
            can :manage, :all
          else
-           can :read, :all
+           if user.perfil.id == 2 # padre
+             can :update, CuadernoControlRevision
+             can :update, Autorizacion
+             can :read, Actividad
+           else
+             can :read, :all # 3 personal administrativo
+             can :manage, CuadernoControl
+             can :manage, CuadernoControlEvento
+             can :read, CuadernoControlRevision
+             can :manage, Actividad
+             can :read, Autorizacion
+             can :create, Asistencia
+           end
          end         
        end
     #
