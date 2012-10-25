@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  action: 
+  subject_class: 
+  subject_id: 
+
+two:
+  action: 
+  subject_class: 
+  subject_id: 

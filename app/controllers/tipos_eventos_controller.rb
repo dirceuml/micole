@@ -1,4 +1,6 @@
 class TiposEventosController < ApplicationController
+  load_and_authorize_resource
+  
   # GET /tipos_eventos
   # GET /tipos_eventos.json
   def index
@@ -78,6 +80,14 @@ class TiposEventosController < ApplicationController
     respond_to do |format|
       format.html { redirect_to tipos_eventos_url }
       format.json { head :no_content }
+    end
+  end
+  
+  rescue_from CanCan::AccessDenied do |exception|
+    if current_user.nil?
+      redirect_to log_in_url, :alert => exception.message
+    else
+      redirect_to menu_url, :alert => exception.message
     end
   end
 end

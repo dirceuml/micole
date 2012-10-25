@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Perfil:</b>
+  <%= @perfil_permiso.perfil_id %>
+</p>
+
+<p>
+  <b>Permiso:</b>
+  <%= @perfil_permiso.permiso_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_perfil_permiso_path(@perfil_permiso) %> |
+<%= link_to 'Back', perfiles_permisos_path %>

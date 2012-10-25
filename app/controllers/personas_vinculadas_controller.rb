@@ -1,4 +1,6 @@
 class PersonasVinculadasController < ApplicationController    
+  load_and_authorize_resource
+  
   # GET /personas_vinculadas
   # GET /personas_vinculadas.json
   def index
@@ -138,6 +140,14 @@ class PersonasVinculadasController < ApplicationController
     respond_to do |format|
       format.html { redirect_to personas_vinculadas_url }
       format.json { head :no_content }
+    end
+  end
+  
+  rescue_from CanCan::AccessDenied do |exception|
+    if current_user.nil?
+      redirect_to log_in_url, :alert => exception.message
+    else
+      redirect_to menu_url, :alert => exception.message
     end
   end
 end

@@ -1,4 +1,6 @@
 class PerfilesTransaccionesController < ApplicationController
+  load_and_authorize_resource
+  
   # GET /perfiles_transacciones
   # GET /perfiles_transacciones.json
   def index
@@ -78,6 +80,14 @@ class PerfilesTransaccionesController < ApplicationController
     respond_to do |format|
       format.html { redirect_to perfiles_transacciones_url }
       format.json { head :no_content }
+    end
+  end
+  
+  rescue_from CanCan::AccessDenied do |exception|
+    if current_user.nil?
+      redirect_to log_in_url, :alert => exception.message
+    else
+      redirect_to menu_url, :alert => exception.message
     end
   end
 end

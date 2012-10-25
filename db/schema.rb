@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121007193014) do
+ActiveRecord::Schema.define(:version => 20121025042618) do
 
   create_table "actividades", :force => true do |t|
     t.integer  "anio_escolar_id",                                           :null => false
@@ -291,6 +291,17 @@ ActiveRecord::Schema.define(:version => 20121007193014) do
 
   add_index "perfiles", ["descripcion"], :name => "ak_perfiles_descripcion", :unique => true
 
+  create_table "perfiles_permisos", :force => true do |t|
+    t.integer  "perfil_id",  :null => false
+    t.integer  "permiso_id", :null => false
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "perfiles_permisos", ["perfil_id", "permiso_id"], :name => "ak_perfiles_permisos", :unique => true
+  add_index "perfiles_permisos", ["perfil_id"], :name => "fk_perfilespermisos_perfiles"
+  add_index "perfiles_permisos", ["permiso_id"], :name => "fk_perfilespermisos_permisos"
+
   create_table "perfiles_transacciones", :force => true do |t|
     t.integer  "perfil_id",      :null => false
     t.integer  "transaccion_id", :null => false
@@ -301,6 +312,14 @@ ActiveRecord::Schema.define(:version => 20121007193014) do
   add_index "perfiles_transacciones", ["perfil_id", "transaccion_id"], :name => "ak_perfiles_transacciones", :unique => true
   add_index "perfiles_transacciones", ["perfil_id"], :name => "fk_perfiltransaccion_perfil"
   add_index "perfiles_transacciones", ["transaccion_id"], :name => "fk_perfiltransaccion_transac"
+
+  create_table "permisos", :force => true do |t|
+    t.string   "action",        :null => false
+    t.string   "subject_class", :null => false
+    t.integer  "subject_id"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
 
   create_table "personas_vinculadas", :force => true do |t|
     t.integer  "tipo_documento",   :null => false

@@ -1,4 +1,5 @@
 class ActividadesController < ApplicationController
+  load_and_authorize_resource
   # GET /actividades
   # GET /actividades.json
   def index
@@ -133,6 +134,14 @@ class ActividadesController < ApplicationController
     respond_to do |format|
       format.html { redirect_to actividades_url }
       format.json { head :no_content }
+    end
+  end
+  
+  rescue_from CanCan::AccessDenied do |exception|
+    if current_user.nil?
+      redirect_to log_in_url, :alert => exception.message
+    else
+      redirect_to menu_url, :alert => exception.message
     end
   end
 end

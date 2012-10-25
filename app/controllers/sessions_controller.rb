@@ -1,4 +1,6 @@
 class SessionsController < ApplicationController
+  skip_authorize_resource
+  
   def new
   end
   
@@ -16,5 +18,13 @@ class SessionsController < ApplicationController
   def destroy
     session[:usuario_id] = nil
     redirect_to root_url #, :notice => "Cerro sesion!"
+  end
+  
+  rescue_from CanCan::AccessDenied do |exception|
+    if current_user.nil?
+      redirect_to log_in_url, :alert => exception.message
+    else
+      redirect_to root_url, :alert => exception.message
+    end
   end
 end

@@ -1,5 +1,9 @@
 Micole::Application.routes.draw do 
 
+  resources :perfiles_permisos
+
+  resources :permisos
+
   resources :curriculos
 
   resources :alumnos_personas_vinculadas
