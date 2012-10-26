@@ -68,16 +68,25 @@
         </ul>
       </div>
       
-      <% if can? :manage, @usuario %>
+      
         <div data-role="collapsible">
           <h2>
             Seguridad del sistema
           </h2>
-          <ul data-role="listview">      
+          <ul data-role="listview">  
+            <% if can? :manage, Perfil %>                
+              <li><a href="<%= perfiles_path %>">Perfiles</a></li>
+            <% end %>
+
+            <% if can? :manage, Usuario %>
               <li><a href="<%= usuarios_path %>">Usuarios</a></li>
-          </ul>
+            <% end %>
+
+            <% if can? :manage, Permiso %>                
+              <li><a href="<%= permisos_path %>">Permisos</a></li>
+            <% end %>
+          </ul>          
         </div> 
-      <% end %>
       
     </div>    
     

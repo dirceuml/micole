@@ -1,20 +1,16 @@
-<p id="notice"><%= notice %></p>
+<div id='Permiso' data-role="header">
+  <h1>Detalles</h1>
+  <%= link_to 'Aceptar', permisos_path, "data-icon" => "check", "data-mini" => "true"  %>
+</div>
 
-<p>
-  <b>Action:</b>
-  <%= @permiso.action %>
-</p>
-
-<p>
-  <b>Subject class:</b>
-  <%= @permiso.subject_class %>
-</p>
-
-<p>
-  <b>Subject:</b>
-  <%= @permiso.subject_id %>
-</p>
+<div data-role="content" style="clear: left">
+  <b>Clase de sujeto:</b> <%= @permiso.subject_class %><p>
+</div>
+<div data-role="content" style="clear: left">
+  <b>Acción:</b> <%= @permiso.action %><p>
+</div>
 
 
-<%= link_to 'Edit', edit_permiso_path(@permiso) %> |
-<%= link_to 'Back', permisos_path %>
+<div data-role="footer">
+<!--   <%= link_to 'Editar', edit_perfil_permiso_path(@perfil_permiso), "class" => "ui-btn-left", "data-inline" => "true", "data-theme" => "a", "data-icon" => "gear", "data-mini" => "true" %>  -->
+</div>

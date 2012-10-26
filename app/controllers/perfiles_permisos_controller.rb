@@ -1,4 +1,6 @@
 class PerfilesPermisosController < ApplicationController
+  load_and_authorize_resource
+  
   # GET /perfiles_permisos
   # GET /perfiles_permisos.json
   def index
@@ -40,11 +42,12 @@ class PerfilesPermisosController < ApplicationController
   # POST /perfiles_permisos
   # POST /perfiles_permisos.json
   def create
-    @perfil_permiso = PerfilPermiso.new(params[:perfil_permiso])
+    @perfil = Perfil.find(params[:perfil_id])
+    @perfil_permiso = @perfil.perfiles_permisos.create(params[:perfil_permiso])
 
     respond_to do |format|
       if @perfil_permiso.save
-        format.html { redirect_to @perfil_permiso, notice: 'Perfil permiso was successfully created.' }
+        format.html { redirect_to @perfil }
         format.json { render json: @perfil_permiso, status: :created, location: @perfil_permiso }
       else
         format.html { render action: "new" }
@@ -72,12 +75,18 @@ class PerfilesPermisosController < ApplicationController
   # DELETE /perfiles_permisos/1
   # DELETE /perfiles_permisos/1.json
   def destroy
-    @perfil_permiso = PerfilPermiso.find(params[:id])
+    @perfil = Perfil.find(params[:perfil_id])
+    @perfil_permiso = @perfil.perfiles_permisos.find(params[:id])
     @perfil_permiso.destroy
 
-    respond_to do |format|
-      format.html { redirect_to perfiles_permisos_url }
-      format.json { head :no_content }
+    redirect_to perfil_path(@perfil)
+  end
+  
+  rescue_from CanCan::AccessDenied do |exception|
+    if current_user.nil?
+      redirect_to log_in_url, :alert => exception.message
+    else
+      redirect_to menu_url, :alert => exception.message
     end
   end
 end

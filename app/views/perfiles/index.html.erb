@@ -7,7 +7,7 @@
   <ul data-role="listview" data-filter="true">
     <% @perfiles.each do |perfil| %>
     <li data-filtertext="<%= "#{perfil.descripcion}" %>" >
-      <%= link_to edit_perfil_path(perfil) do %>
+      <%= link_to perfil_path(perfil) do %>
         <%= simple_format("#{perfil.descripcion}") %>
       <% end %>
       <%= link_to 'Eliminar', perfil, confirm: '¿Seguro que desea eliminar el registro?', method: :delete, "data-icon" => "delete" %>

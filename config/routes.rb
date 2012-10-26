@@ -41,7 +41,9 @@ Micole::Application.routes.draw do
 
   resources :listas_valores
 
-  resources :perfiles
+  resources :perfiles do
+    resources :perfiles_permisos
+  end
   
   #get "sessions/new"
   get "log_out" => "sessions#destroy", :as => "log_out"

@@ -1,15 +1,16 @@
-<p id="notice"><%= notice %></p>
+<div id='PerfilPermiso' data-role="header">
+  <h1>Detalles</h1>
+  <%= link_to 'Aceptar', @perfil_permiso.perfil, "data-icon" => "check", "data-mini" => "true"  %>
+</div>
 
-<p>
-  <b>Perfil:</b>
-  <%= @perfil_permiso.perfil_id %>
-</p>
-
-<p>
-  <b>Permiso:</b>
-  <%= @perfil_permiso.permiso_id %>
-</p>
+<div data-role="content" style="clear: left">
+  <b>Perfil:</b> <%= @perfil_permiso.perfil.descripcion %><p>
+</div>
+<div data-role="content" style="clear: left">
+  <b>Permiso:</b> <%= @perfil_permiso.permiso.detalle %><p>
+</div>
 
 
-<%= link_to 'Edit', edit_perfil_permiso_path(@perfil_permiso) %> |
-<%= link_to 'Back', perfiles_permisos_path %>
+<div data-role="footer">
+<!--   <%= link_to 'Editar', edit_perfil_permiso_path(@perfil_permiso), "class" => "ui-btn-left", "data-inline" => "true", "data-theme" => "a", "data-icon" => "gear", "data-mini" => "true" %>  -->
+</div>

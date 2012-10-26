@@ -1,6 +1,6 @@
-<h1>Editing permiso</h1>
+<div data-role="header">
+    <h1>Editar permiso</h1>
+    <%= link_to 'Regresar', permisos_path, "data-icon" => "back", "class" => "ui-btn-left", "data-mini" => "true" %>
+</div>
 
 <%= render 'form' %>
-
-<%= link_to 'Show', @permiso %> |
-<%= link_to 'Back', permisos_path %>

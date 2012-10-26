@@ -1,25 +1,31 @@
-<%= form_for(@perfil_permiso) do |f| %>
-  <% if @perfil_permiso.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@perfil_permiso.errors.count, "error") %> prohibited this perfil_permiso from being saved:</h2>
+<%= form_for([@perfil, @perfil.perfiles_permisos.build], :html => { :class => "ui-body ui-body-c", "data-ajax" => "false" }) do |f| %>
+  <% if !@actividad_seccion.nil? %>
+    <% if @perfil_permiso.errors.any? %>
+      <div id="error_explanation" data-role="header" data-theme="e">
+        <h2><%= pluralize(@perfil_permiso.errors.count, "error") %> impidieron que se grabe el registro:</h2>
 
-      <ul>
-      <% @perfil_permiso.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
+        <ul>
+        <% @perfil_permiso.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
   <% end %>
 
-  <div class="field">
-    <%= f.label :perfil_id %><br />
-    <%= f.number_field :perfil_id %>
+Permisos:
+<div data-role="fieldcontain">
+  <%#*<div class="field">%>
+    <%#*Perfil: <br/>%>
+    <%#= collection_select(:perfil_permiso, :perfil_id, Perfil.all, :id, :descripcion, {:prompt => ':: Seleccione ::' }, {"data-mini" => "true"}) %>
+  <%#*</div>%>
+  <%= f.hidden_field :perfil_id %>
+  
+  <div style="width: 250px; clear: left; float: left">
+    <%= collection_select(:perfil_permiso, :permiso_id, Permiso.all, :id, :detalle, {:prompt => ':: Seleccione ::' }, {"data-mini" => "true"}) %>
   </div>
-  <div class="field">
-    <%= f.label :permiso_id %><br />
-    <%= f.number_field :permiso_id %>
+  <div style="float: left">
+    <%= f.submit "", "data-inline" => "true", "data-theme" => "a", "data-icon" => "plus", "data-mini" => "true", "data-iconpos" => "notext" %>    
   </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+</div>
 <% end %>

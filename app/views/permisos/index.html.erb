@@ -1,27 +1,17 @@
-<h1>Listing permisos</h1>
+<div data-role="header">
+  <h1>Permisos</h1>
+  <%= link_to 'Agregar', new_permiso_path, "data-icon" => "plus", "class" => "ui-btn-right" %>
+</div>
 
-<table>
-  <tr>
-    <th>Action</th>
-    <th>Subject class</th>
-    <th>Subject</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
-<% @permisos.each do |permiso| %>
-  <tr>
-    <td><%= permiso.action %></td>
-    <td><%= permiso.subject_class %></td>
-    <td><%= permiso.subject_id %></td>
-    <td><%= link_to 'Show', permiso %></td>
-    <td><%= link_to 'Edit', edit_permiso_path(permiso) %></td>
-    <td><%= link_to 'Destroy', permiso, confirm: 'Are you sure?', method: :delete %></td>
-  </tr>
-<% end %>
-</table>
-
-<br />
-
-<%= link_to 'New Permiso', new_permiso_path %>
+<div data-role="content">
+  <ul data-role="listview" data-filter="true">
+    <% @permisos.each do |permiso| %>
+    <li data-filtertext="<%= "#{permiso.subject_class} #{permiso.action}" %>" >
+      <%= link_to edit_permiso_path(permiso) do %>
+        <%= simple_format("#{permiso.subject_class}: #{permiso.action}") %>
+      <% end %>
+      <%= link_to 'Eliminar', permiso, confirm: '¿Seguro que desea eliminar el registro?', method: :delete, "data-icon" => "delete" %>
+    </li>
+    <% end  %>
+  </ul>
+</div>

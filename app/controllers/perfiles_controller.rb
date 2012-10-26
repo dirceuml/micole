@@ -46,7 +46,7 @@ class PerfilesController < ApplicationController
 
     respond_to do |format|
       if @perfil.save
-        format.html { redirect_to perfiles_path, notice: 'el Perfil fue creado satisfactoriamente' }
+        format.html { redirect_to @perfil, notice: 'el perfil fue creado satisfactoriamente' }
         format.json { render json: @perfil, status: :created, location: @perfil }
       else
         format.html { render action: "new" }
@@ -62,7 +62,7 @@ class PerfilesController < ApplicationController
 
     respond_to do |format|
       if @perfil.update_attributes(params[:perfil])
-        format.html { redirect_to perfiles_path }
+        format.html { redirect_to @perfil }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
