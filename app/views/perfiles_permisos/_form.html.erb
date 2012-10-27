@@ -22,7 +22,7 @@ Permisos:
   <%= f.hidden_field :perfil_id %>
   
   <div style="width: 250px; clear: left; float: left">
-    <%= collection_select(:perfil_permiso, :permiso_id, Permiso.all, :id, :detalle, {:prompt => ':: Seleccione ::' }, {"data-mini" => "true"}) %>
+    <%= collection_select(:perfil_permiso, :permiso_id, Permiso.order("subject_class, action"), :id, :detalle, {:prompt => ':: Seleccione ::' }, {"data-mini" => "true"}) %>
   </div>
   <div style="float: left">
     <%= f.submit "", "data-inline" => "true", "data-theme" => "a", "data-icon" => "plus", "data-mini" => "true", "data-iconpos" => "notext" %>    

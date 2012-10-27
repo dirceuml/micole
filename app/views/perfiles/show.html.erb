@@ -12,7 +12,7 @@
 
 <div data-role="content">
   <ul id='perfiles_permisos' data-role="listview">
-  <% @perfil.perfiles_permisos.each do |perfil_permiso| %>
+  <% @perfil.perfiles_permisos.find(:all, :joins => :permiso, :order => 'permisos.subject_class, permisos.action').each do |perfil_permiso| %>
     <% if !perfil_permiso.permiso_id.nil? %> 
     <li>
       <%= link_to simple_format(perfil_permiso.detalle), [@perfil, perfil_permiso] %>

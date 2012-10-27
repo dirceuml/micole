@@ -4,7 +4,7 @@ class PermisosController < ApplicationController
   # GET /permisos
   # GET /permisos.json
   def index
-    @permisos = Permiso.all
+    @permisos = Permiso.order("subject_class, action")
 
     respond_to do |format|
       format.html # index.html.erb
