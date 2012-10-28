@@ -46,6 +46,10 @@
         <% if can? :create, Asistencia %>
           <li><a href="<%= salida_path %>">Salida de alumnos</a></li>
         <% end %>
+
+        <% if can? :create, Asistencia %>
+          <li><a href="<%= marcacion_path %>">Registrar asistencia de alumnos</a></li>
+        <% end %>
       <% end %>
 
 
