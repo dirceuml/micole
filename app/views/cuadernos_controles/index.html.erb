@@ -1,6 +1,8 @@
 <div data-role="header">
   <h1>Cuaderno de control</h1>
-  <%= link_to 'Registrar', new_cuaderno_control_path, "data-icon" => "plus", "class" => "ui-btn-right" %>
+  <% if can? :create, CuadernoControl %>
+    <%= link_to 'Registrar', new_cuaderno_control_path, "data-icon" => "plus", "class" => "ui-btn-right" %>
+  <% end %>
 </div>
 <div data-role="content" class="ui-content" role="main">
   
@@ -14,9 +16,11 @@
             <%= link_to cuaderno_control do %>
               <!--%= image_tag("open_icon.jpg", :class => "ui-li-icon", :alt => "Abierto") %-->
               <%= "#{cuaderno_control.fecha.strftime('%d/%m/%Y')} - #{Seccion.find(cuaderno_control.seccion_id).grado_seccion}" %> 
-
             <% end %>
-            <%= link_to 'Eliminar', cuaderno_control, confirm: '¿Seguro que desea eliminar el registro?', method: :delete, "data-icon" => "delete" %>      
+              
+            <% if can? :destroy, CuadernoControl %>
+              <%= link_to 'Eliminar', cuaderno_control, confirm: '¿Seguro que desea eliminar el registro?', method: :delete, "data-icon" => "delete" %>      
+            <% end %>
           </li>
         <% end  %>
       </ul>

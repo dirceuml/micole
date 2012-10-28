@@ -1,14 +1,25 @@
 <div id='Perfil' data-role="header">
   <h1>Detalles</h1>
   <%= link_to 'Aceptar', perfiles_path, "data-icon" => "check", "data-mini" => "true"  %>
+  <%= link_to 'Editar', edit_perfil_path(@perfil), "class" => "ui-btn-right", "data-inline" => "true", "data-theme" => "a", "data-icon" => "gear", "data-mini" => "true" %>
 </div>
 
 <div data-role="content" style="clear: left">
-    <b>Descripcion:</b> <%= @perfil.descripcion %><p>
+  <h3>Perfil: <%= @perfil.descripcion %></h3>
 </div>
 
+<%= render "perfiles_permisos/form" %>
 
-<div data-role="footer">
-<!--   <%= link_to 'Editar', edit_perfil_path(@perfil), "class" => "ui-btn-left", "data-inline" => "true", "data-theme" => "a", "data-icon" => "gear", "data-mini" => "true" %>  -->
+<div data-role="content">
+  <ul id='perfiles_permisos' data-role="listview">
+  <% @perfil.perfiles_permisos.find(:all, :joins => :permiso, :order => 'permisos.subject_class, permisos.action').each do |perfil_permiso| %>
+    <% if !perfil_permiso.permiso_id.nil? %> 
+    <li>
+      <%= link_to simple_format(perfil_permiso.detalle), [@perfil, perfil_permiso] %>
+      <%= link_to 'Eliminar vínculo', [perfil_permiso.perfil, perfil_permiso], confirm: '¿Seguro que desea eliminar el vínculo?', method: :delete, "data-icon" => "delete" %>
+      
+    </li>
+    <% end %>
+  <% end %>
+  </ul>
 </div>
-

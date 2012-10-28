@@ -1,4 +1,5 @@
 class ActividadesSeccionesController < ApplicationController
+  load_and_authorize_resource
   # GET /actividades_secciones
   # GET /actividades_secciones.json
   def index
@@ -94,5 +95,13 @@ class ActividadesSeccionesController < ApplicationController
     @actividad_seccion.destroy
     
     redirect_to actividad_path(@actividad)
+  end
+  
+  rescue_from CanCan::AccessDenied do |exception|
+    if current_user.nil?
+      redirect_to log_in_url, :alert => exception.message
+    else
+      redirect_to menu_url, :alert => exception.message
+    end
   end
 end

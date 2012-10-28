@@ -50,4 +50,6 @@ gem 'carrierwave'
 gem 'rufus-scheduler'
 gem 'delayed_job_active_record' #antes ejecutar gem install delayed_job -v '3.0.3'
 
+gem 'cancan'
+
 #gem "eventmachine", "1.0.0.beta.4.1"

@@ -1,4 +1,5 @@
 class AlumnosPersonasVinculadasController < ApplicationController
+  load_and_authorize_resource
   # GET /alumnos_personas_vinculadas
   # GET /alumnos_personas_vinculadas.json
   def index
@@ -140,5 +141,13 @@ class AlumnosPersonasVinculadasController < ApplicationController
     @alumno_persona_vinculada.destroy
     
     redirect_to alumno_path(@alumno)
+  end
+  
+  rescue_from CanCan::AccessDenied do |exception|
+    if current_user.nil?
+      redirect_to log_in_url, :alert => exception.message
+    else
+      redirect_to menu_url, :alert => exception.message
+    end
   end
 end

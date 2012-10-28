@@ -1,5 +1,5 @@
 class AutorizacionMailer < ActionMailer::Base
-  default :from => "Administrador MiCole <sistema.micole@gmail.com>"
+  default :from => "Administrador MiCole <sistema.micole.adm@gmail.com>"
 
   def notificacion_autorizacion(actividad, alumno, persona)
     @actividad = actividad
@@ -9,4 +9,5 @@ class AutorizacionMailer < ActionMailer::Base
     
     mail(:to => "#{persona.apellidos_nombres} <#{persona.correo}>", :subject => "Solicitud de autorizacion para actividad: #{actividad.nombre}")
   end
+#  handle_asynchronously :notificacion_autorizacion, :run_at => Proc.new { 2.minutes.from_now }
 end

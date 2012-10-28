@@ -1,4 +1,6 @@
 class ListasValoresController < ApplicationController
+  load_and_authorize_resource
+  
   # GET /listas_valores
   # GET /listas_valores.json
   def index
@@ -78,6 +80,14 @@ class ListasValoresController < ApplicationController
     respond_to do |format|
       format.html { redirect_to listas_valores_url }
       format.json { head :no_content }
+    end
+  end
+  
+  rescue_from CanCan::AccessDenied do |exception|
+    if current_user.nil?
+      redirect_to log_in_url, :alert => exception.message
+    else
+      redirect_to menu_url, :alert => exception.message
     end
   end
 end

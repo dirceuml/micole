@@ -1,4 +1,6 @@
 class MenusController < ApplicationController
+  skip_authorize_resource
+  
   # GET /menus
   # GET /menus.json
   def index
@@ -89,6 +91,14 @@ class MenusController < ApplicationController
     respond_to do |format|
       format.html { redirect_to menus_url }
       format.json { head :no_content }
+    end
+  end
+  
+  rescue_from CanCan::AccessDenied do |exception|
+    if current_user.nil?
+      redirect_to log_in_url, :alert => exception.message
+    else
+      redirect_to root_url, :alert => exception.message
     end
   end
 end

@@ -1,4 +1,5 @@
 class CuadernoControlesRevisionesController < ApplicationController
+  load_and_authorize_resource
   
   # GET /cuaderno_controles_eventos
   # GET /cuaderno_controles_eventos.json
@@ -7,14 +8,20 @@ class CuadernoControlesRevisionesController < ApplicationController
       redirect_to(log_in_path) and return
     end
     
-    seccion = params[:seccion_id]
-    if params[:seccion_id].nil?
-      fecha = Date.current
-    else
-      fecha = params[:fecha].to_date
-    end    
+    if params[:accion].nil? || params[:accion] == "verificar"
+      seccion = params[:seccion_id]
+      if params[:seccion_id].nil?
+        fecha = Date.current
+      else
+        fecha = params[:fecha].to_date
+      end    
 
-    @cuaderno_controles_revisiones = CuadernoControlRevision.verificar(seccion, fecha)
+      @cuaderno_controles_revisiones = CuadernoControlRevision.verificar(seccion, fecha)
+    else
+      if params[:accion] == "revisar"
+        @cuaderno_controles_revisiones = CuadernoControlRevision.cerrado.se_revisan_por(PersonaVinculada.logueado(params[:usuario]).pluck("personas_vinculadas.id"))
+      end
+    end
      
     respond_to do |format|
       format.html # index.html.erb
@@ -152,6 +159,14 @@ class CuadernoControlesRevisionesController < ApplicationController
     respond_to do |format|
       format.html { redirect_to @cuaderno_control }
       format.json { head :no_content }
+    end
+  end
+  
+  rescue_from CanCan::AccessDenied do |exception|
+    if current_user.nil?
+      redirect_to log_in_url, :alert => exception.message
+    else
+      redirect_to menu_url, :alert => exception.message
     end
   end
 end

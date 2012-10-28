@@ -57,8 +57,8 @@ class Actividad < ActiveRecord::Base
     end
   end
     
-  scope :pendiente, lambda { |fecha| where("anio_escolar_id = 1 and to_char(fecha_hora_fin, 'yyyymmdd') >= ?", fecha.strftime('%Y%m%d'))}
-  scope :realizada, lambda { |fecha| where("anio_escolar_id = 1 and to_char(fecha_hora_fin, 'yyyymmdd') < ?", fecha.strftime('%Y%m%d'))}
+  scope :pendiente, lambda { |fecha| where("actividades.anio_escolar_id = 1 and to_char(fecha_hora_fin, 'yyyymmdd') >= ?", fecha.strftime('%Y%m%d'))}
+  scope :realizada, lambda { |fecha| where("actividades.anio_escolar_id = 1 and to_char(fecha_hora_fin, 'yyyymmdd') < ?", fecha.strftime('%Y%m%d'))}
   
   scope :por_fecha_inicio, lambda { |fecha| where("anio_escolar_id = 1 and to_char(fecha_hora_inicio, 'dd/mm/yyyy') = ?", fecha.strftime('%d/%m/%Y'))}
   scope :por_seccion, lambda { |seccion| joins(:actividades_secciones).where("anio_escolar_id = 1 and actividades_secciones.seccion_id = ?", seccion)}

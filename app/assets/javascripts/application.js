@@ -124,14 +124,3 @@ function validarFoto(form, inputFile) {
     }
 }
 
-
-function validarBusquedaXActividad()
-{ 
-    if (actividad.value == "") 
-    {
-        alert("Seleccione una actividad");
-        return false;
-    }
-    
-    return true;
-}

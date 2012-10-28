@@ -1,0 +1,73 @@
+<div data-role="header">
+  <h1>Registrar asistencia</h1>
+</div>
+
+<% if params[:codigo_alumno].nil? %>
+  <% codigo = "" %>
+<% else %>
+  <% codigo = params[:codigo_alumno] %>  
+<% end %>
+
+<div data-role="content">
+  <div class="ui-grid-a">
+    <div class="ui-block-a" style="text-align: center;">
+      <b>Alumno</b>
+       <hr>
+       <%= form_tag(marcacion_path, {:method => :get, "data-ajax" => "false", "name" => "buscar"}) do %>            
+         <div data-role="fieldcontain">
+            <div style="text-align: left;">
+              Código:<br/>
+              <%if codigo == ""%>
+                <%= text_field_tag(:codigo_alumno, codigo, "data-mini" => "true", "autofocus" => "true") %>
+              <%else%>
+                <%= text_field_tag(:codigo_alumno, codigo, "data-mini" => "true") %>
+              <%end%>
+              <%= submit_tag "Buscar", "data-inline" => "true", "data-theme" => "a", "data-icon" => "search", "data-mini" => "true", :name => nil %>
+            </div>
+          </div>
+      <% end %>
+      <hr>
+    </div>
+
+    <% if !params[:codigo_alumno].nil? %>
+    <div class="ui-block-b" style="text-align: center;">
+       <% if !codigo.empty? %>
+        <div data-role="content" style="color: #06c; text-align: center">
+          <% alumnoanio = AnioAlumno.find_by_anio_escolar_id_and_alumno_id(1, codigo) %>
+          <% if !alumnoanio.nil? %>
+            
+            <% operacion = "ingreso" %>
+            <% salida = 0 %>
+            <%= image_tag(alumnoanio.alumno.foto) %> <br/>
+            Código: <%= codigo %> <br/>
+    `       <%= alumnoanio.alumno.apellidos_nombres %>
+            <% @asistencias.each do |asistencia| %>
+              <br/>
+              <% if asistencia.tipo_movimiento ==1 %>
+                Ingreso: <%= asistencia.hora %>
+                <% operacion = "salida" %>
+              <% end %>
+              <% if asistencia.tipo_movimiento ==2 %>
+                Salida: <%= asistencia.hora %>
+                <% salida = 1 %>
+              <% end %>
+            <% end %>
+            <br/>
+            <%if salida == 0%>
+              <%= form_tag(marcaciongrabar_path, {"data-ajax" => "false", "name" => "registrar"}) do %>
+                <%= hidden_field_tag 'codigo_alumno', codigo %>
+                <div>
+                    <%= submit_tag "Registrar " + operacion, "data-inline" => "true", "data-theme" => "a", "data-icon" => "check", "data-mini" => "true", "autofocus" => "true" %>
+                </div>
+              <% end %>
+            <% end %>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+    
+    <% end %>
+    
+  </div><!-- /grid-a --> 
+  
+</div>

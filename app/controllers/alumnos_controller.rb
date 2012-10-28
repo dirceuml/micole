@@ -1,4 +1,6 @@
 class AlumnosController < ApplicationController
+  load_and_authorize_resource
+  
   # GET /alumnos
   # GET /alumnos.json
   def index
@@ -91,6 +93,14 @@ class AlumnosController < ApplicationController
     respond_to do |format|
       format.html { redirect_to alumnos_url }
       format.json { head :no_content }
+    end
+  end
+  
+  rescue_from CanCan::AccessDenied do |exception|
+    if current_user.nil?
+      redirect_to log_in_url, :alert => exception.message
+    else
+      redirect_to menu_url, :alert => exception.message
     end
   end
 end

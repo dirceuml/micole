@@ -1,7 +1,7 @@
 <%= form_for(@asistencia) do |f| %>
   <% if @asistencia.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@asistencia.errors.count, "error") %> prohibited this asistencia from being saved:</h2>
+      <h2><%= pluralize(@asistencia.errors.count, "error") %> impidieron que se grabe el registro:</h2>
 
       <ul>
       <% @asistencia.errors.full_messages.each do |msg| %>
@@ -11,23 +11,21 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :anio_alumno_id %><br />
-    <%= f.number_field :anio_alumno_id %>
-  </div>
-  <div class="field">
-    <%= f.label :persona_vinculada_id %><br />
-    <%= f.number_field :persona_vinculada_id %>
-  </div>
-  <div class="field">
-    <%= f.label :fecha_hora %><br />
-    <%= f.datetime_select :fecha_hora %>
-  </div>
-  <div class="field">
-    <%= f.label :usuario %><br />
-    <%= f.text_field :usuario %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+  <div data-role="fieldcontain">
+    <!--div class="field"-->
+        <!--%= f.number_field :anio_alumno_id %-->
+    <!--/div-->
+    <!--div class="field" -->
+        <!--%= f.number_field :persona_vinculada_id %-->
+    <!--/div-->
+    <div class="field">
+        <%= f.hidden_field :fecha_hora, :value => Time.now %>
+    </div>
+    <div class="field">
+        <%= f.hidden_field :usuario, :value => current_user.usuario %>
+    </div>
+    <div class="actions">
+        <%= f.submit "Registrar", "data-inline" => "true", "data-theme" => "a", "data-icon" => "check", "data-mini" => "true" %>
+    </div>
+ </div>
 <% end %>

@@ -1,4 +1,6 @@
 class CuadernoControlesEventosController < ApplicationController
+  load_and_authorize_resource
+  
   before_filter :find_cuaderno_control
   
   before_filter :find_cuaderno_control_evento, :only => [:show,
@@ -143,4 +145,12 @@ class CuadernoControlesEventosController < ApplicationController
     def find_cuaderno_control_evento
       @cuaderno_control_evento = @cuaderno_control.cuaderno_controles_eventos.find(params[:id])
     end 
+  
+  rescue_from CanCan::AccessDenied do |exception|
+    if current_user.nil?
+      redirect_to log_in_url, :alert => exception.message
+    else
+      redirect_to menu_url, :alert => exception.message
+    end
+  end
 end

@@ -1,5 +1,5 @@
 class ActividadMailer < ActionMailer::Base
-  default :from => "Administrador MiCole <sistema.micole@gmail.com>"
+  default :from => "Administrador MiCole <sistema.micole.adm@gmail.com>"
 
   def notificacion_actividad(actividad, alumno, persona)
     @actividad = actividad
