@@ -8,3 +8,10 @@ scheduler.cron '00 15 * * *' do
     a.enviar_recordatorio
   end
 end
+
+scheduler.cron '00 15 * * *' do
+  # todos los días a las 10:00 en GMT-5 
+  AnioAlumno.inasistencia_fecha(Date.current).find_each do |a|
+    a.enviar_inasistencia
+  end
+end
