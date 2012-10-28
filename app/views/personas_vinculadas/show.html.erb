@@ -14,5 +14,7 @@
 </div>
 
 <div data-role="footer">
-  <%= link_to 'Editar', edit_persona_vinculada_path(@persona_vinculada), "class" => "ui-btn-left", "data-inline" => "true", "data-theme" => "a", "data-icon" => "gear", "data-mini" => "true" %>
+  <% if (can? :update, @persona_vinculada) %>
+    <%= link_to 'Editar', edit_persona_vinculada_path(@persona_vinculada), "class" => "ui-btn-left", "data-inline" => "true", "data-theme" => "a", "data-icon" => "gear", "data-mini" => "true" %>
+  <% end %>
 </div>

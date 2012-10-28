@@ -1,25 +1,39 @@
 <div data-role="header">
   <h1><%=  "#{@cuaderno_control.fecha.strftime('%d/%m/%Y')} | #{Seccion.find(@cuaderno_control.seccion_id).grado_seccion}" %></h1>
-  <% if @cuaderno_control.estado == 1 %>
-    <%= link_to 'Agregar evento', new_cuaderno_control_cuaderno_control_evento_path(@cuaderno_control), "data-icon" => "plus", "class" => "ui-btn-right", "data-mini" => "true" %>
+  
+  <% if can? :create, CuadernoControlEvento %>
+    <% if @cuaderno_control.estado == 1 %>
+      <%= link_to 'Agregar evento', new_cuaderno_control_cuaderno_control_evento_path(@cuaderno_control), "data-icon" => "plus", "class" => "ui-btn-right", "data-mini" => "true" %>
+    <% end %>
   <% end %>
+  
   <%= link_to 'Regresar', cuadernos_controles_path, "data-icon" => "back", "class" => "ui-btn-left", "data-mini" => "true" %>
 </div>
 
 <div data-role="content">
   <ul id='cuaderno_controles_eventos' data-role="listview" data-filter="true">
-    <% @cuaderno_control.cuaderno_controles_eventos.each do |cuaderno_control_evento| %>
-    <li data-role="list-divider">      
-      <%= TipoEvento.find(cuaderno_control_evento.tipo_evento_id).descripcion %> 
-	<% if Alumno.find_by_id(cuaderno_control_evento.alumno_id) %>
-        <%= " - #{Alumno.find_by_id(cuaderno_control_evento.alumno_id).apellidos_nombres}" %>
-      <% end %>
-    </li>
+    <% @cuaderno_control.cuaderno_controles_eventos.each do |cuaderno_control_evento| %>    
     <li>
-      <% if @cuaderno_control.estado == 1 %>
-        <%= link_to simple_format(cuaderno_control_evento.descripcion), [:edit, @cuaderno_control, cuaderno_control_evento] %>
-        <%= link_to 'Eliminar', [@cuaderno_control, cuaderno_control_evento], confirm: '¿Seguro que desea eliminar el registro?', method: :delete, "data-icon" => "delete" %>
+      <% if (@cuaderno_control.estado == 1) && (can? :manage, cuaderno_control_evento) %>        
+        <%= link_to [:edit, @cuaderno_control, cuaderno_control_evento] do %>
+          <%= TipoEvento.find(cuaderno_control_evento.tipo_evento_id).descripcion %> 
+          
+          <% if Alumno.find_by_id(cuaderno_control_evento.alumno_id) %>
+            <%= " - #{Alumno.find_by_id(cuaderno_control_evento.alumno_id).apellidos_nombres}" %>
+          <% end %>   
+          <p/>
+          <%= simple_format(cuaderno_control_evento.descripcion) %>
+      
+          <%= link_to 'Eliminar', [@cuaderno_control, cuaderno_control_evento], confirm: '¿Seguro que desea eliminar el registro?', method: :delete, "data-icon" => "delete" %>          
+        <% end %>
+          
       <% else %>
+          
+        <%= TipoEvento.find(cuaderno_control_evento.tipo_evento_id).descripcion %> 
+          <% if Alumno.find_by_id(cuaderno_control_evento.alumno_id) %>
+          <%= " - #{Alumno.find_by_id(cuaderno_control_evento.alumno_id).apellidos_nombres}" %>
+        <% end %>
+        <p/>
         <%= simple_format(cuaderno_control_evento.descripcion) %>
       <% end %>
     </li>
@@ -28,7 +42,7 @@
 </div>
 
 <div data-role="footer">
-  <% if @cuaderno_control.estado == 1 %>
+  <% if (@cuaderno_control.estado == 1) && (can? :cerrar, @cuaderno_control) %>
     <%= link_to 'Cerrar', "/cierre_cuadernos_controles/#{@cuaderno_control.id}", "class" => "ui-btn-left", "data-inline" => "true", "data-theme" => "a", "data-icon" => "check", "data-mini" => "true" %>
   <% else %>
     <%= ListaValor.find_by_tabla_and_item(5, @cuaderno_control.estado).descripcion %>

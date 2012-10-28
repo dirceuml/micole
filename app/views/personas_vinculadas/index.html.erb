@@ -1,23 +1,29 @@
 <div data-role="header">
   <h1>Personas vinculadas</h1>
-  <%= link_to 'Agregar', new_persona_vinculada_path, "data-icon" => "plus", "class" => "ui-btn-right" %>
+  
+  <% if (can? :create, PersonaVinculada) %>
+    <%= link_to 'Agregar', new_persona_vinculada_path, "data-icon" => "plus", "class" => "ui-btn-right" %>
+  <% end %>
 </div>
 
 
 <div data-role="content">
   <ul data-role="listview" data-filter="true">
     <% @personas_vinculadas.each do |persona_vinculada| %>
-    <li data-role="list-divider" data-theme="b" data-icon="false" data-mini="true">  
-      <%= link_to persona_vinculada do %>
-        <%= "#{persona_vinculada.apellidos_nombres} - #{ListaValor.find_by_tabla_and_item(2, persona_vinculada.tipo_documento).descripcion} #{persona_vinculada.numero_documento}" %>
-      <% end %>
-    </li>
     <li data-filtertext="<%= "#{persona_vinculada.apellidos_nombres} #{persona_vinculada.numero_documento} #{persona_vinculada.correo} #{persona_vinculada.telefono_fijo} #{persona_vinculada.telefono_movil}" %>" >
-      <%= link_to edit_persona_vinculada_path(persona_vinculada) do %>
+      <%= link_to persona_vinculada do %>
+        <h3><%= "#{persona_vinculada.apellidos_nombres} - #{ListaValor.find_by_tabla_and_item(2, persona_vinculada.tipo_documento).descripcion} #{persona_vinculada.numero_documento}" %></h3>
         <%= simple_format("Correo: #{persona_vinculada.correo}") %>
         <%= simple_format("Teléfonos: #{persona_vinculada.telefono_fijo} / #{persona_vinculada.telefono_movil}") %>
       <% end %>
-      <%= link_to 'Eliminar', persona_vinculada, confirm: '¿Seguro que desea eliminar el registro?', method: :delete, "data-icon" => "delete" %>      
+        
+      <% if (can? :update, persona_vinculada) %>
+        <%= link_to 'Editar', edit_persona_vinculada_path(persona_vinculada), "data-inline" => "true", "data-role" => "button", "data-mini" => "true" %>
+      <% end %>     
+        
+      <% if (can? :destroy, persona_vinculada) %>
+        <%= link_to 'Eliminar', persona_vinculada, confirm: '¿Seguro que desea eliminar el registro?', method: :delete, "data-icon" => "delete" %>      
+      <% end %>
     </li>
     <% end  %>
   </ul>
