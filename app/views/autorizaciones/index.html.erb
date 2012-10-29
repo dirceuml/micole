@@ -21,13 +21,13 @@
     </div>
   <% end %>
 
-  <div data-role="collapsible-set" data-theme="c" data-content-theme="d" data-inset="false">
+  <div data-role="collapsible-set" data-theme="b" data-content-theme="d" data-inset="false">
     <div data-role="collapsible">
         <h2>
             <!--class="ui-li-count ui-btn-up-c ui-btn-corner-all" -->
             <li class= "ui-li ui-li-has-count">
                 Autorizados
-                <span class="ui-li-count ui-btn-up-c ui-btn-corner-all"><%=@autorizaciones.autorizado.count%></span> 
+                <span class="ui-li-count ui-btn-up-b ui-btn-corner-all"><%=@autorizaciones.autorizado.count%></span> 
             </li>
         </h2>
         
@@ -46,7 +46,7 @@
         <h2>
             <li class= "ui-li ui-li-has-count">
                 No Autorizados
-                <span class="ui-li-count ui-btn-up-c ui-btn-corner-all"><%=@autorizaciones.no_autorizado.count%></span>
+                <span class="ui-li-count ui-btn-up-b ui-btn-corner-all"><%=@autorizaciones.no_autorizado.count%></span>
             </li>   
         </h2>
         <ul data-role="listview"  data-filter="true">
@@ -64,7 +64,7 @@
         <h2>
             <li class= "ui-li ui-li-has-count">
                  Pendientes
-                <span class="ui-li-count ui-btn-up-c ui-btn-corner-all"><%=@autorizaciones.pendiente.count%></span>
+                <span class="ui-li-count ui-btn-up-b ui-btn-corner-all"><%=@autorizaciones.pendiente.count%></span>
             </li>
         </h2>
         <ul data-role="listview"  data-filter="true">
