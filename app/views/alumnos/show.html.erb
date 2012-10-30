@@ -18,7 +18,10 @@
     <% if !alumno_persona_vinculada.persona_vinculada_id.nil? %> 
     <li>
       <%= link_to simple_format(alumno_persona_vinculada.apellidos_nombres), [@alumno, alumno_persona_vinculada] %>
-      <%= link_to 'Eliminar vínculo', [alumno_persona_vinculada.alumno, alumno_persona_vinculada], confirm: '¿Seguro que desea eliminar el registro?', method: :delete, "data-icon" => "delete" %>
+      
+      <% if can? :destroy, AlumnoPersonaVinculada %>
+        <%= link_to 'Eliminar vínculo', [alumno_persona_vinculada.alumno, alumno_persona_vinculada], confirm: '¿Seguro que desea eliminar el registro?', method: :delete, "data-icon" => "delete" %>
+      <% end %>
     </li>
     <% end %>
   <% end %>

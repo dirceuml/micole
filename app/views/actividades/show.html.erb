@@ -1,8 +1,11 @@
 <div id='Actividad' data-role="header">
   <h1>Actividad</h1>
   <%= link_to 'Aceptar', actividades_path, "data-icon" => "check", "data-mini" => "true"  %>
-  <% if @actividad.estado == 1 %>
-    <%= link_to 'Editar', edit_actividad_path(@actividad), "class" => "ui-btn-right", "data-theme" => "a", "data-icon" => "gear", "data-mini" => "true" %>
+  
+  <% if can? :create, Actividad %>
+    <% if @actividad.estado == 1 %>
+        <%= link_to 'Editar', edit_actividad_path(@actividad), "class" => "ui-btn-right", "data-theme" => "a", "data-icon" => "gear", "data-mini" => "true" %>
+    <% end %>
   <% end %>
 </div>
 
@@ -35,8 +38,11 @@
     <% if !actividad_seccion.seccion_id.nil? %> 
     <li>
       <%= link_to simple_format(actividad_seccion.grado_seccion), [@actividad, actividad_seccion] %>
-      <% if @actividad.estado == 1 %>
-        <%= link_to 'Eliminar vínculo', [actividad_seccion.actividad, actividad_seccion], confirm: '¿Seguro que desea eliminar el registro?', method: :delete, "data-icon" => "delete" %>
+      
+      <% if can? :destroy, ActividadSeccion %>
+        <% if @actividad.estado == 1 %>
+            <%= link_to 'Eliminar vínculo', [actividad_seccion.actividad, actividad_seccion], confirm: '¿Seguro que desea eliminar el registro?', method: :delete, "data-icon" => "delete" %>
+        <% end %>
       <% end %>
     </li>
     <% end %>
