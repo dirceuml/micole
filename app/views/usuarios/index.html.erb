@@ -1,17 +1,27 @@
 <div data-role="header">
   <h1>Usuarios</h1>
-  <%= link_to 'Registrar', new_usuario_path, "data-icon" => "plus", "class" => "ui-btn-right" %>
+  <% if can? :create, Usuario %>
+    <%= link_to 'Registrar', new_usuario_path, "data-icon" => "plus", "class" => "ui-btn-right" %>
+  <% end %>
 </div>
 
 <div data-role="content">
   <ul data-role="listview" data-filter="true">
     <% @usuarios.each do |usuario| %>
     <li data-filtertext="<%= "#{usuario.usuario} #{usuario.nombre} #{Perfil.find(usuario.perfil_id)}" %>" >
-      <%= link_to edit_usuario_path(usuario) do %>
+      <% if can? :update, Usuario %>
+        <% link_opcion = edit_usuario_path(usuario) %>
+      <% else %>
+        <% link_opcion = usuario %>
+      <% end %>
+      <%= link_to link_opcion do %>
         <%= simple_format("#{usuario.nombre} (#{usuario.usuario} - #{Perfil.find(usuario.perfil_id).descripcion})") %>
       <% end %>
-      <%= link_to 'Eliminar', usuario, confirm: '¿Seguro que desea eliminar el registro?', method: :delete, "data-icon" => "delete" %>      
+      
+      <% if can? :destroy, Usuario %>
+        <%= link_to 'Eliminar', usuario, confirm: '¿Seguro que desea eliminar el registro?', method: :delete, "data-icon" => "delete" %>
+      <% end %>
     </li>
-    <% end  %>
+    <% end %>
   </ul>
 </div>

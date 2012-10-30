@@ -1,17 +1,27 @@
 <div data-role="header">
   <h1>Permisos por perfil</h1>
-  <%= link_to 'Agregar', new_perfil_permiso_path, "data-icon" => "plus", "class" => "ui-btn-right" %>
+  <% if can? :create, PerfilPermiso %>
+    <%= link_to 'Agregar', new_perfil_permiso_path, "data-icon" => "plus", "class" => "ui-btn-right" %>
+  <% end %>
 </div>
 
 <div data-role="content">
   <ul data-role="listview" data-filter="true">
     <% @perfiles_permisos.each do |perfil_permiso| %>
     <li data-filtertext="<%= "#{perfil_permiso.perfil.descripcion} #{perfil_permiso.permiso.subject_class} #{perfil_permiso.permiso.action}" %>" >
-      <%= link_to edit_perfil_permiso_path(perfil_permiso) do %>
+      <% if can? :update, PerfilPermiso %>
+        <% link_opcion = edit_perfil_permiso_path(perfil_permiso) %>
+      <% else %>
+        <% link_opcion = perfil_permiso %>
+      <% end %>
+      <%= link_to link_opcion do %>
         <%= simple_format("#{perfil_permiso.perfil.descripcion}: #{perfil_permiso.permiso.subject_class} => #{perfil_permiso.permiso.action}") %>
       <% end %>
-      <%= link_to 'Eliminar', perfil_permiso, confirm: '¿Seguro que desea eliminar el registro?', method: :delete, "data-icon" => "delete" %>
+      
+      <% if can? :destroy, PerfilPermiso %>
+        <%= link_to 'Eliminar', perfil_permiso, confirm: '¿Seguro que desea eliminar el registro?', method: :delete, "data-icon" => "delete" %>
+      <% end %>
     </li>
-    <% end  %>
+    <% end %>
   </ul>
 </div>

@@ -1,9 +1,15 @@
 <div data-role="header">
   <h1>Actividades</h1>
+<<<<<<< HEAD
+  <% if can? :create, Actividad %>
+    <%= link_to 'Registrar', new_actividad_path, "data-icon" => "plus", "class" => "ui-btn-right" %>
+  <% end  %>
+=======
   
   <% if can? :create, Actividad %>
     <%= link_to 'Registrar', new_actividad_path, "data-icon" => "plus", "class" => "ui-btn-right" %>
   <% end %>
+>>>>>>> cb0e98fcd3d77d87c707b5c4ec375711c1276cf0
 </div>
 
 <div data-role="content" class="ui-content" role="main">
@@ -26,6 +32,13 @@
                 <%= link_to 'Eliminar', actividad, confirm: '¿Seguro que desea eliminar el registro?', method: :delete, "data-icon" => "delete" %>
               <% end %>
             <% end %>
+<<<<<<< HEAD
+            
+            <% if can? :destroy, Actividad %>
+              <%= link_to 'Eliminar', actividad, confirm: '¿Seguro que desea eliminar el registro?', method: :delete, "data-icon" => "delete" %>
+            <% end  %>
+=======
+>>>>>>> cb0e98fcd3d77d87c707b5c4ec375711c1276cf0
           </li>
         <% end  %>
       </ul>

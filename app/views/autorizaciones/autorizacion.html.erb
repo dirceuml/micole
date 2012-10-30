@@ -18,7 +18,13 @@
       <ul data-role="listview" data-filter="true">
         <% @autorizaciones.pendiente.vigente.each do |autorizacion| %>
           <li data-filtertext="<%= "#{autorizacion.actividad.fecha_hora_inicio.strftime('%d/%m/%Y')} - #{autorizacion.actividad.nombre} - #{autorizacion.alumno.apellidos_nombres}" %>" >
-            <%= link_to edit_autorizacion_path(autorizacion) do %>
+            <% if can? :update, Autorizacion %>
+              <% link_opcion = edit_autorizacion_path(autorizacion) %>
+            <%else%>
+              <% link_opcion = autorizacion %>
+            <%end%>
+            <%= link_to link_opcion do %>
+            <!--%= link_to edit_autorizacion_path(autorizacion) do %-->
               <h3 class= "ui-li-heading"> <%= "#{autorizacion.actividad.fecha_hora_inicio.strftime('%d/%m/%Y')} - #{autorizacion.actividad.nombre}" %>  </h3>
               <p class="ui-li-desc"> <%= "Para: #{autorizacion.alumno.apellidos_nombres}" %></p>
               <p class="ui-li-desc"> <%= "Plazo: #{autorizacion.actividad.limite_autorizacion.strftime('%d/%m/%Y')}" %></p>
@@ -39,7 +45,12 @@
       <ul data-role="listview" data-filter="true">
         <% @autorizaciones.respondido.vigente.each do |autorizacion| %>    
           <li data-filtertext="<%= "#{autorizacion.actividad.fecha_hora_inicio.strftime('%d/%m/%Y')} - #{autorizacion.actividad.nombre} - #{autorizacion.alumno.apellidos_nombres}" %>" >
-            <%= link_to edit_autorizacion_path(autorizacion) do %>
+            <% if can? :update, Autorizacion %>
+              <% link_opcion = edit_autorizacion_path(autorizacion) %>
+            <%else%>
+              <% link_opcion = autorizacion %>
+            <%end%>
+            <%= link_to link_opcion do %>
               <h3 class= "ui-li-heading"> <%= "#{autorizacion.actividad.fecha_hora_inicio.strftime('%d/%m/%Y')} - #{autorizacion.actividad.nombre}" %>  </h3>
               <p class="ui-li-desc"> <%= "Para: #{autorizacion.alumno.apellidos_nombres}" %></p>
               <p class="ui-li-desc"> Autorizado: <% if autorizacion.respuesta.nil? %> Sin respuesta <%else%> <%if autorizacion.respuesta ==0%> No <%else%> Si <%end%> <%end%></p>

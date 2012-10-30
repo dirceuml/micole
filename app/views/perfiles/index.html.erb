@@ -1,6 +1,8 @@
 <div data-role="header">
   <h1>Perfiles</h1>
-  <%= link_to 'Registrar', new_perfil_path, "data-icon" => "plus", "class" => "ui-btn-right" %>
+  <% if can? :create, Perfil %>
+    <%= link_to 'Registrar', new_perfil_path, "data-icon" => "plus", "class" => "ui-btn-right" %>
+  <% end  %>
 </div>
 
 <div data-role="content">
@@ -10,7 +12,10 @@
       <%= link_to perfil_path(perfil) do %>
         <%= simple_format("#{perfil.descripcion}") %>
       <% end %>
-      <%= link_to 'Eliminar', perfil, confirm: '¿Seguro que desea eliminar el registro?', method: :delete, "data-icon" => "delete" %>
+      
+      <% if can? :destroy, Perfil %>
+        <%= link_to 'Eliminar', perfil, confirm: '¿Seguro que desea eliminar el registro?', method: :delete, "data-icon" => "delete" %>
+      <% end  %>
     </li>
     <% end  %>
   </ul>

@@ -21,7 +21,7 @@
 
 <%= form_for(@cuaderno_control_revision, :url => {:action => "revisar"}, :html => { :class => "ui-body ui-body-c" }) do |f| %>
   <% if @cuaderno_control_revision.revisado == 0 %>
-    <% if can? :update, @cuaderno_control_revision %>   
+    <% if can? :update, @cuaderno_control_revision %>
       <div class="field">
         Observaciones<br />
         <%= f.text_area :observaciones %>

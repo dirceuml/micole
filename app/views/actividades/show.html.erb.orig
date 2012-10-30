@@ -1,9 +1,16 @@
 <div id='Actividad' data-role="header">
   <h1>Actividad</h1>
   <%= link_to 'Aceptar', actividades_path, "data-icon" => "check", "data-mini" => "true"  %>
+<<<<<<< HEAD
+  
+  <% if can? :create, Actividad %>
+    <% if @actividad.estado == 1 %>
+        <%= link_to 'Editar', edit_actividad_path(@actividad), "class" => "ui-btn-right", "data-theme" => "a", "data-icon" => "gear", "data-mini" => "true" %>
+=======
   <% if @actividad.estado == 1 %>
     <% if (can? :update, @actividad) %>
       <%= link_to 'Editar', edit_actividad_path(@actividad), "class" => "ui-btn-right", "data-theme" => "a", "data-icon" => "gear", "data-mini" => "true" %>
+>>>>>>> cb0e98fcd3d77d87c707b5c4ec375711c1276cf0
     <% end %>
   <% end %>
 </div>
@@ -37,14 +44,23 @@
   <ul id='actividades_secciones' data-role="listview">
   <% @actividad.actividades_secciones.each do |actividad_seccion| %>
     <% if !actividad_seccion.seccion_id.nil? %> 
-      <% if can? :read, actividad_seccion %>
-        <li>
-          <%= link_to simple_format(actividad_seccion.grado_seccion), [@actividad, actividad_seccion] %>
+<<<<<<< HEAD
+    <li>
+      <%= link_to simple_format(actividad_seccion.grado_seccion), [@actividad, actividad_seccion] %>
+      
+      <% if can? :destroy, ActividadSeccion %>
         <% if @actividad.estado == 1 %>
             <%= link_to 'Eliminar vínculo', [actividad_seccion.actividad, actividad_seccion], confirm: '¿Seguro que desea eliminar el registro?', method: :delete, "data-icon" => "delete" %>
         <% end %>
+=======
+      <% if can? :read, actividad_seccion %>
+        <li>
+          <%= link_to simple_format(actividad_seccion.grado_seccion), [@actividad, actividad_seccion] %>
+          <% if @actividad.estado == 1 %>
+            <%= link_to 'Eliminar vínculo', [actividad_seccion.actividad, actividad_seccion], confirm: '¿Seguro que desea eliminar el registro?', method: :delete, "data-icon" => "delete" %>
           <% end %>
         </li>
+>>>>>>> cb0e98fcd3d77d87c707b5c4ec375711c1276cf0
       <% end %>
     <% end %>
   <% end %>
