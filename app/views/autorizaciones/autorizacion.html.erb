@@ -18,7 +18,7 @@
       <ul data-role="listview" data-filter="true">
         <% @autorizaciones.pendiente.vigente.each do |autorizacion| %>
           <li data-filtertext="<%= "#{autorizacion.actividad.fecha_hora_inicio.strftime('%d/%m/%Y')} - #{autorizacion.actividad.nombre} - #{autorizacion.alumno.apellidos_nombres}" %>" >
-            <% if can? :update, Autorizacion %>
+            <% if can? :update, autorizacion %>
               <% link_opcion = edit_autorizacion_path(autorizacion) %>
             <%else%>
               <% link_opcion = autorizacion %>
@@ -45,7 +45,7 @@
       <ul data-role="listview" data-filter="true">
         <% @autorizaciones.respondido.vigente.each do |autorizacion| %>    
           <li data-filtertext="<%= "#{autorizacion.actividad.fecha_hora_inicio.strftime('%d/%m/%Y')} - #{autorizacion.actividad.nombre} - #{autorizacion.alumno.apellidos_nombres}" %>" >
-            <% if can? :update, Autorizacion %>
+            <% if can? :update, autorizacion %>
               <% link_opcion = edit_autorizacion_path(autorizacion) %>
             <%else%>
               <% link_opcion = autorizacion %>

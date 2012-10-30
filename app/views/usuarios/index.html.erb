@@ -9,7 +9,7 @@
   <ul data-role="listview" data-filter="true">
     <% @usuarios.each do |usuario| %>
     <li data-filtertext="<%= "#{usuario.usuario} #{usuario.nombre} #{Perfil.find(usuario.perfil_id)}" %>" >
-      <% if can? :update, Usuario %>
+      <% if can? :update, usuario %>
         <% link_opcion = edit_usuario_path(usuario) %>
       <% else %>
         <% link_opcion = usuario %>
@@ -18,7 +18,7 @@
         <%= simple_format("#{usuario.nombre} (#{usuario.usuario} - #{Perfil.find(usuario.perfil_id).descripcion})") %>
       <% end %>
       
-      <% if can? :destroy, Usuario %>
+      <% if can? :destroy, usuario %>
         <%= link_to 'Eliminar', usuario, confirm: '¿Seguro que desea eliminar el registro?', method: :delete, "data-icon" => "delete" %>
       <% end %>
     </li>

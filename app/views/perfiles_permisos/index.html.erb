@@ -9,7 +9,7 @@
   <ul data-role="listview" data-filter="true">
     <% @perfiles_permisos.each do |perfil_permiso| %>
     <li data-filtertext="<%= "#{perfil_permiso.perfil.descripcion} #{perfil_permiso.permiso.subject_class} #{perfil_permiso.permiso.action}" %>" >
-      <% if can? :update, PerfilPermiso %>
+      <% if can? :update, perfil_permiso %>
         <% link_opcion = edit_perfil_permiso_path(perfil_permiso) %>
       <% else %>
         <% link_opcion = perfil_permiso %>
@@ -18,7 +18,7 @@
         <%= simple_format("#{perfil_permiso.perfil.descripcion}: #{perfil_permiso.permiso.subject_class} => #{perfil_permiso.permiso.action}") %>
       <% end %>
       
-      <% if can? :destroy, PerfilPermiso %>
+      <% if can? :destroy, perfil_permiso %>
         <%= link_to 'Eliminar', perfil_permiso, confirm: '¿Seguro que desea eliminar el registro?', method: :delete, "data-icon" => "delete" %>
       <% end %>
     </li>

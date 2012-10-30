@@ -13,7 +13,7 @@
         <%= simple_format("#{perfil.descripcion}") %>
       <% end %>
       
-      <% if can? :destroy, Perfil %>
+      <% if can? :destroy, perfil %>
         <%= link_to 'Eliminar', perfil, confirm: '¿Seguro que desea eliminar el registro?', method: :delete, "data-icon" => "delete" %>
       <% end  %>
     </li>

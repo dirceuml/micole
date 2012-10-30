@@ -10,7 +10,7 @@
     <% @permisos.each do |permiso| %>
     <li data-filtertext="<%= "#{permiso.subject_class} #{permiso.action}" %>" >
       
-      <% if can? :update, Permiso %>
+      <% if can? :update, permiso %>
         <% link_opcion = edit_permiso_path(permiso) %>
       <% else %>
         <% link_opcion = permiso %>
@@ -19,7 +19,7 @@
         <%= simple_format("#{permiso.subject_class}: #{permiso.action}") %>
       <% end %>
       
-      <% if can? :destroy, Permiso %>
+      <% if can? :destroy, permiso %>
         <%= link_to 'Eliminar', permiso, confirm: '¿Seguro que desea eliminar el registro?', method: :delete, "data-icon" => "delete" %>
       <% end %>
     </li>
