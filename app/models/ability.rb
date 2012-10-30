@@ -16,7 +16,9 @@ class Ability
         end
       end
     end
-    
+ can :manage, Perfil
+ can :manage, Permiso
+ can :manage, PerfilPermiso
 #       user ||= Usuario.new # guest user (not logged in)
 #       
 #       if user.id.nil?

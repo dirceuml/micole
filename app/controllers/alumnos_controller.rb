@@ -4,20 +4,13 @@ class AlumnosController < ApplicationController
   # GET /alumnos
   # GET /alumnos.json
   def index
-    @alumnos = Alumno.all
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @alumnos }
-    end
-  end
-
-  # GET /alumnos/1/listar_seccion
-  # GET /alumnos/1/listar_seccion.json
-  def listar_seccion
     seccion = params[:seccion_id]
     
-    @alumnos = Alumno.pertenecen_a_seccion(seccion)
+    if !seccion.nil?
+      @alumnos = Alumno.pertenecen_a_seccion(seccion)
+    else
+      @alumnos = Alumno.all
+    end
 
     respond_to do |format|
       format.html # index.html.erb

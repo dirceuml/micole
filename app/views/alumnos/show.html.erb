@@ -6,7 +6,7 @@
     <% alumno_id = params[:alumno_persona_vinculada][:alumno_id] %>
   <% end %>
   <% seccion = AnioAlumno.find_by_anio_escolar_id_and_alumno_id(1, alumno_id).seccion_id %>
-  <%= link_to 'Regresar', alumnos_secciones_path(seccion), "data-icon" => "back", "class" => "ui-btn-left", "data-mini" => "true" %>
+  <%= link_to 'Regresar', alumnos_path(:seccion_id => seccion), "data-icon" => "back", "class" => "ui-btn-left", "data-mini" => "true" %>
 </div>
 
 <div data-role="header" style="text-align: center" data-theme="c">
@@ -17,15 +17,22 @@
   <% @alumno.alumnos_personas_vinculadas.each do |alumno_persona_vinculada| %>
     <% if !alumno_persona_vinculada.persona_vinculada_id.nil? %> 
     <li>
-      <%= link_to simple_format(alumno_persona_vinculada.apellidos_nombres), [@alumno, alumno_persona_vinculada] %>
-      <%= link_to 'Eliminar vínculo', [alumno_persona_vinculada.alumno, alumno_persona_vinculada], confirm: '¿Seguro que desea eliminar el registro?', method: :delete, "data-icon" => "delete" %>
+      <% if can? :read, alumno_persona_vinculada %>
+        <%= link_to simple_format(alumno_persona_vinculada.apellidos_nombres), [@alumno, alumno_persona_vinculada] %>
+      <% end %>
+      
+      <% if can? :destroy, alumno_persona_vinculada %>
+        <%= link_to 'Eliminar vínculo', [alumno_persona_vinculada.alumno, alumno_persona_vinculada], confirm: '¿Seguro que desea eliminar el registro?', method: :delete, "data-icon" => "delete" %>
+      <% end %>
     </li>
     <% end %>
   <% end %>
   </ul>
 </div>
 
-<br/>
-Agregar personas vinculadas:
+<% if can? :create, AlumnoPersonaVinculada %>
+  <br/>
+  Agregar personas vinculadas:
 
-<%= render "alumnos_personas_vinculadas/form" %>
+  <%= render "alumnos_personas_vinculadas/form" %>
+<% end %>

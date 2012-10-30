@@ -2,7 +2,9 @@
   <h1>Actividad</h1>
   <%= link_to 'Aceptar', actividades_path, "data-icon" => "check", "data-mini" => "true"  %>
   <% if @actividad.estado == 1 %>
-    <%= link_to 'Editar', edit_actividad_path(@actividad), "class" => "ui-btn-right", "data-theme" => "a", "data-icon" => "gear", "data-mini" => "true" %>
+    <% if (can? :update, @actividad) %>
+      <%= link_to 'Editar', edit_actividad_path(@actividad), "class" => "ui-btn-right", "data-theme" => "a", "data-icon" => "gear", "data-mini" => "true" %>
+    <% end %>
   <% end %>
 </div>
 
@@ -25,46 +27,52 @@
     <p>
 </div>
 
-<% if @actividad.estado == 1 %>
-  <%= render "actividades_secciones/form" %>
+<% if can? :create, ActividadSeccion %>
+  <% if @actividad.estado == 1 %>
+    <%= render "actividades_secciones/form" %>
+  <% end %>
 <% end %>
 
 <div data-role="content">
   <ul id='actividades_secciones' data-role="listview">
   <% @actividad.actividades_secciones.each do |actividad_seccion| %>
     <% if !actividad_seccion.seccion_id.nil? %> 
-    <li>
-      <%= link_to simple_format(actividad_seccion.grado_seccion), [@actividad, actividad_seccion] %>
-      <% if @actividad.estado == 1 %>
-        <%= link_to 'Eliminar vínculo', [actividad_seccion.actividad, actividad_seccion], confirm: '¿Seguro que desea eliminar el registro?', method: :delete, "data-icon" => "delete" %>
+      <% if can? :read, actividad_seccion %>
+        <li>
+          <%= link_to simple_format(actividad_seccion.grado_seccion), [@actividad, actividad_seccion] %>
+          <% if @actividad.estado == 1 %>
+            <%= link_to 'Eliminar vínculo', [actividad_seccion.actividad, actividad_seccion], confirm: '¿Seguro que desea eliminar el registro?', method: :delete, "data-icon" => "delete" %>
+          <% end %>
+        </li>
       <% end %>
-    </li>
     <% end %>
   <% end %>
   </ul>
 </div>
 
-<%= form_for(@actividad, :html => { :class => "ui-body ui-body-c" }) do |f| %>
-  <div data-role="fieldcontain">
-    <% if @actividad.estado == 1 %>
-      <%= f.hidden_field :estado, :value => 2 %>
-      <%= f.hidden_field :usuario, :value => current_user.usuario %>
-      <% hidden_field_tag(:accion, 2, "data-mini" => "true") %>
-    
-      <%#*<div class="field">%>
-        <%#*Observaciones<br />%>
-        <%#= f.text_area :observacion %>
-      <%#*</div>%>
-      <div class="actions">
-        <%= f.submit "Confirmar", "data-inline" => "true", "data-theme" => "a", "data-icon" => "check", "data-mini" => "true" %>
-      </div>
-    <% else %>
-      <%#*<div class="field">%>
-        <%#*Observaciones<br />%>
-        <%#= f.text_area :observacion, :readonly => true %>
-      <%#*</div>%>
-      <%#*<br />%>
-      <div data-role="footer"><%= ListaValor.find_by_tabla_and_item(8, @actividad.estado).descripcion %></div>
-    <% end %>
-  </div>
+<% if can? :update, @actividad %>
+  <%= form_for(@actividad, :html => { :class => "ui-body ui-body-c" }) do |f| %>
+    <div data-role="fieldcontain">
+      <% if @actividad.estado == 1 %>
+        <%= f.hidden_field :estado, :value => 2 %>
+        <%= f.hidden_field :usuario, :value => current_user.usuario %>
+        <% hidden_field_tag(:accion, 2, "data-mini" => "true") %>
+
+        <%#*<div class="field">%>
+          <%#*Observaciones<br />%>
+          <%#= f.text_area :observacion %>
+        <%#*</div>%>
+        <div class="actions">
+          <%= f.submit "Confirmar", "data-inline" => "true", "data-theme" => "a", "data-icon" => "check", "data-mini" => "true" %>
+        </div>
+      <% else %>
+        <%#*<div class="field">%>
+          <%#*Observaciones<br />%>
+          <%#= f.text_area :observacion, :readonly => true %>
+        <%#*</div>%>
+        <%#*<br />%>
+        <div data-role="footer"><%= ListaValor.find_by_tabla_and_item(8, @actividad.estado).descripcion %></div>
+      <% end %>
+    </div>
+  <% end %>
 <% end %>

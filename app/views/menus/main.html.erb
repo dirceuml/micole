@@ -30,7 +30,7 @@
       <% end %>
 
 
-      <% if (can? :read, PersonaVinculada) || (can? :read, AlumnoPersonaVinculada) || (can? :create, Asistencia) %>
+      <% if (can? :read, PersonaVinculada) || (can? :read, Alumno) || (can? :consultar, AlumnoPersonaVinculada) || (can? :create, Asistencia) %>
         <li data-role="list-divider" data-icon="false" data-mini="true">
           Seguridad de alumnos
         </li>
@@ -39,11 +39,11 @@
           <li><a href="<%= personas_vinculadas_path %>">Personas vinculadas</a></li>
         <% end %>
 
-        <% if can? :read, AlumnoPersonaVinculada %>
-          <li><a href="<%= alumnos_secciones_path %>">Vincular personas</a></li>
+        <% if can? :read, Alumno %>
+          <li><a href="<%= alumnos_path(:seccion_id => 0) %>">Vincular personas</a></li>
         <% end %>
 
-        <% if can? :create, Asistencia %>
+        <% if can? :consultar, AlumnoPersonaVinculada %>
           <li><a href="<%= salida_path %>">Salida de alumnos</a></li>
         <% end %>
 

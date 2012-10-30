@@ -1,6 +1,9 @@
 <div data-role="header">
   <h1>Actividades</h1>
-  <%= link_to 'Registrar', new_actividad_path, "data-icon" => "plus", "class" => "ui-btn-right" %>
+  
+  <% if can? :create, Actividad %>
+    <%= link_to 'Registrar', new_actividad_path, "data-icon" => "plus", "class" => "ui-btn-right" %>
+  <% end %>
 </div>
 
 <div data-role="content" class="ui-content" role="main">
@@ -12,10 +15,17 @@
       <ul data-role="listview" data-filter="true">
         <% @actividades.pendiente(Time.now).each do |actividad| %>    
           <li data-filtertext="<%= "#{actividad.fecha_hora_inicio.strftime('%d/%m/%Y')} #{TipoEvento.find(actividad.tipo_evento_id).descripcion} #{actividad.nombre}" %>" >
-            <%= link_to edit_actividad_path(actividad) do %>
-              <%= "#{actividad.fecha_hora_inicio.strftime('%d/%m/%Y')} - #{TipoEvento.find(actividad.tipo_evento_id).descripcion} -  #{actividad.nombre}" %> 
+            <%= link_to actividad do %>  
+              <%= simple_format("#{actividad.fecha_hora_inicio.strftime('%d/%m/%Y')} - #{TipoEvento.find(actividad.tipo_evento_id).descripcion} -  #{actividad.nombre}") %>
+                        
+              <% if (can? :update, actividad) %>
+                <%= link_to 'Editar', edit_actividad_path(actividad), "data-inline" => "true", "data-role" => "button", "data-mini" => "true" %>
+              <% end %>
+
+              <% if can? :destroy, actividad %>
+                <%= link_to 'Eliminar', actividad, confirm: '¿Seguro que desea eliminar el registro?', method: :delete, "data-icon" => "delete" %>
+              <% end %>
             <% end %>
-            <%= link_to 'Eliminar', actividad, confirm: '¿Seguro que desea eliminar el registro?', method: :delete, "data-icon" => "delete" %>
           </li>
         <% end  %>
       </ul>
@@ -26,9 +36,7 @@
       <ul data-role="listview" data-filter="true">
         <% @actividades.realizada(Time.now).each do |actividad| %>    
           <li data-filtertext="<%= "#{actividad.fecha_hora_inicio.strftime('%d/%m/%Y')} #{TipoEvento.find(actividad.tipo_evento_id).descripcion} #{actividad.nombre}" %>" >
-            <%= link_to actividad do %>
-              <%= "#{actividad.fecha_hora_inicio.strftime('%d/%m/%Y')} - #{TipoEvento.find(actividad.tipo_evento_id).descripcion} -  #{actividad.nombre}" %> 
-            <% end %>
+            <%= link_to simple_format("#{actividad.fecha_hora_inicio.strftime('%d/%m/%Y')} - #{TipoEvento.find(actividad.tipo_evento_id).descripcion} -  #{actividad.nombre}"), actividad %>                            
           </li>
         <% end  %>
       </ul>
