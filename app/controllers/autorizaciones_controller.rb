@@ -1,51 +1,39 @@
 class AutorizacionesController < ApplicationController
   load_and_authorize_resource
+  
   # GET /autorizaciones
   # GET /autorizaciones.json
-  def xxxindexzz
-    @autorizaciones = Autorizacion.order("respuesta")
+  def index
+    if current_user.nil?
+      redirect_to(log_in_path) and return
+    end
+    
+    if params[:accion].nil? || params[:accion] == "consultar"
+      actividad = params[:actividad_id]
+      if params[:seccion_id].nil?
+        seccion = ""
+      else
+        seccion = params[:seccion_id]
+      end
 
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @autorizaciones }
-    end
-  end
-  
-  def autorizacion
-    if current_user.nil?
-      redirect_to(log_in_path) and return
-    end
-    
-    @autorizaciones = Autorizacion.persona_autorizada(PersonaVinculada.logueado(params[:usuario]).pluck("personas_vinculadas.id"))
-    
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @autorizaciones }
-    end
-  end
-  
-def index
-    if current_user.nil?
-      redirect_to(log_in_path) and return
-    end
-    
-    actividad = params[:actividad_id]
-    if params[:seccion_id].nil?
-      seccion = ""
+      @autorizaciones = Autorizacion.por_actividad(actividad).por_seccion(seccion)
+      
+      respond_to do |format|
+        format.html # index.html.erb
+        format.json { render json: @autorizaciones }
+      end
     else
-      seccion = params[:seccion_id]
-    end
-    
-    @autorizaciones = Autorizacion.por_actividad(actividad).por_seccion(seccion)
-    
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @autorizaciones }
-    end
-    
+      if params[:accion] == "autorizar"
+        @autorizaciones = Autorizacion.persona_autorizada(PersonaVinculada.logueado(params[:usuario]).pluck("personas_vinculadas.id"))
+        
+        respond_to do |format|
+          format.html { render :autorizacion, :usuario => "cvargas" }# index.html.erb
+          format.json { render json: @autorizaciones }
+        end
+      end
+    end   
   end
   
-
   # GET /autorizaciones/1
   # GET /autorizaciones/1.json
   def show

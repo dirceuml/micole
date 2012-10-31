@@ -15,16 +15,17 @@
           <li><a href="<%= cuadernos_controles_path %>">Registrar</a></li>
         <% end %>  
 
-        <% if can? :update, CuadernoControlRevision %>
+        <%# if can? :update, CuadernoControlRevision %>
+        <% if current_user.perfil_id == 2 %>
           <li>
-            <%#= revision_cuaderno_control_path(current_user.usuario) %>
             <a href="<%= cuaderno_controles_revisiones_path(:accion => "revisar", :usuario => current_user.usuario) %>">
               Revisar
             </a>
           </li>
         <% end %>
 
-        <% if can? :read, CuadernoControlRevision %>    
+        <%# if can? :read, CuadernoControlRevision %>    
+        <% if current_user.perfil_id == 3 %>
           <li><a href="<%= cuaderno_controles_revisiones_path(:accion => "verificar") %>">Verificar</a></li>
         <% end %>
       <% end %>
@@ -62,15 +63,18 @@
           <li><a href="<%= actividades_path %>">Registrar</a></li>
         <% end %>
 
-        <% if can? :update, Autorizacion %>
-          <li><a href="<%= autorizacion_actividad_path(current_user.usuario) %>" >Autorizar</a></li>
+        <%# if can? :update, Autorizacion %>
+        <% if current_user.perfil_id == 2 %>
+          <li><a href="<%= autorizaciones_path(:accion => "autorizar", :usuario => current_user.usuario) %>" >Autorizar</a></li>          
         <% end %>
 
-        <% if can? :read, Autorizacion %>
-          <li><a href="<%= autorizaciones_path %>" >Consultar autorizaciones</a></li>
+        <%# if can? :read, Autorizacion %>
+        <% if current_user.perfil_id == 3 %>
+          <li><a href="<%= autorizaciones_path(:accion => "consultar") %>" >Consultar autorizaciones</a></li>
         <% end %>
 
-        <% if can? :calendario, Actividad %>
+        <%# if can? :calendario, Actividad %>
+        <% if current_user.perfil_id == 2 %>
           <li><a href="<%= calendario_actividades_path(Date.current.year, Date.current.month, Date.current.strftime('%d')) %>">Calendario</a></li>
         <% end %>
       <% end %>

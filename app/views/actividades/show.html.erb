@@ -40,9 +40,8 @@
       <% if can? :read, actividad_seccion %>
         <li>
           <%= link_to simple_format(actividad_seccion.grado_seccion), [@actividad, actividad_seccion] %>
-        <% if @actividad.estado == 1 %>
-            <%= link_to 'Eliminar vínculo', [actividad_seccion.actividad, actividad_seccion], confirm: '¿Seguro que desea eliminar el registro?', method: :delete, "data-icon" => "delete" %>
-        <% end %>
+          <% if @actividad.estado == 1 %>
+             <%= link_to 'Eliminar vínculo', [actividad_seccion.actividad, actividad_seccion], confirm: '¿Seguro que desea eliminar el registro?', method: :delete, "data-icon" => "delete" %>
           <% end %>
         </li>
       <% end %>

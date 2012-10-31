@@ -1,6 +1,5 @@
 <div data-role="header">
   <h1>Autorizaciones</h1>
-  <!--%= link_to 'Registrar', new_autorizacion_path, "data-icon" => "plus", "class" => "ui-btn-right" %-->
 </div>
 
 <div data-role="content" class="ui-content" role="main">
@@ -24,7 +23,6 @@
               <% link_opcion = autorizacion %>
             <%end%>
             <%= link_to link_opcion do %>
-            <!--%= link_to edit_autorizacion_path(autorizacion) do %-->
               <h3 class= "ui-li-heading"> <%= "#{autorizacion.actividad.fecha_hora_inicio.strftime('%d/%m/%Y')} - #{autorizacion.actividad.nombre}" %>  </h3>
               <p class="ui-li-desc"> <%= "Para: #{autorizacion.alumno.apellidos_nombres}" %></p>
               <p class="ui-li-desc"> <%= "Plazo: #{autorizacion.actividad.limite_autorizacion.strftime('%d/%m/%Y')}" %></p>
