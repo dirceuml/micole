@@ -61,8 +61,6 @@ Micole::Application.routes.draw do
 
   resources :cuaderno_controles_revisiones
   
-  get "revision_cuaderno_control/:usuario" => "cuaderno_controles_revisiones#revision", :as => "revision_cuaderno_control"
-  
   resources :alumnos do
     resources :alumnos_personas_vinculadas
   end
@@ -72,8 +70,6 @@ Micole::Application.routes.draw do
   end
   
   get "cierre_cuadernos_controles/:id" => "cuadernos_controles#cerrar", :as => "cerrar_cuaderno_control"
-
-  put "revision_cuaderno_controles_revisiones/:id" => "cuaderno_controles_revisiones#revisar", :as => "revisar_cuaderno_control_revision"
 
   resources :anios_alumnos
 

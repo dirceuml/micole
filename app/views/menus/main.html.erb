@@ -10,92 +10,78 @@
         Cuaderno de control
       </li>
 
-      <% if (can? :manage, CuadernoControl) || (can? :update, CuadernoControlRevision) || (can? :read, CuadernoControlRevision) %>
-        <% if can? :manage, CuadernoControl %>
+      <% if [1,2,3].include? current_user.perfil_id %>
+        <% if [1,3].include? current_user.perfil_id %>
           <li><a href="<%= cuadernos_controles_path %>">Registrar</a></li>
         <% end %>  
 
-        <%# if can? :update, CuadernoControlRevision %>
-        <% if current_user.perfil_id == 2 %>
+        <% if [1,2].include? current_user.perfil_id %>
           <li>
-            <a href="<%= cuaderno_controles_revisiones_path(:accion => "revisar", :usuario => current_user.usuario) %>">
+            <a href="<%= cuaderno_controles_revisiones_path(:accion => :revisar, :usuario => current_user.usuario) %>">
               Revisar
             </a>
           </li>
         <% end %>
 
-        <%# if can? :read, CuadernoControlRevision %>    
-        <% if current_user.perfil_id == 3 %>
-          <li><a href="<%= cuaderno_controles_revisiones_path(:accion => "verificar") %>">Verificar</a></li>
+        <% if [1,3].include? current_user.perfil_id %>
+          <li><a href="<%= cuaderno_controles_revisiones_path(:accion => :verificar) %>">Verificar</a></li>
         <% end %>
       <% end %>
 
 
-      <% if (can? :read, PersonaVinculada) || (can? :read, Alumno) || (can? :consultar, AlumnoPersonaVinculada) || (can? :create, Asistencia) %>
+      <% if [1,3].include? current_user.perfil_id %>
         <li data-role="list-divider" data-icon="false" data-mini="true">
           Seguridad de alumnos
         </li>
 
-        <% if can? :read, PersonaVinculada %>
+        <% if [1,3].include? current_user.perfil_id %>
           <li><a href="<%= personas_vinculadas_path %>">Personas vinculadas</a></li>
         <% end %>
 
-        <% if can? :read, Alumno %>
+        <% if [1,3].include? current_user.perfil_id %>
           <li><a href="<%= alumnos_path(:seccion_id => 0) %>">Vincular personas</a></li>
         <% end %>
 
-        <% if can? :consultar, AlumnoPersonaVinculada %>
+        <% if [1,3].include? current_user.perfil_id %>
           <li><a href="<%= salida_path %>">Salida de alumnos</a></li>
         <% end %>
 
-        <% if can? :create, Asistencia %>
+        <% if [1,3].include? current_user.perfil_id %>
           <li><a href="<%= marcacion_path %>">Registrar asistencia de alumnos</a></li>
         <% end %>
       <% end %>
 
 
-      <% if (can? :manage, Actividad) || (can? :update, Autorizacion) || (can? :read, Autorizacion) || (can? :calendario, Actividad) %>
+      <% if [1,2,3].include? current_user.perfil_id %>
         <li data-role="list-divider" data-icon="false" data-mini="true">
           Actividades del colegio
         </li>
 
-        <% if can? :manage, Actividad %>
+        <% if [1,3].include? current_user.perfil_id %>
           <li><a href="<%= actividades_path %>">Registrar</a></li>
         <% end %>
 
-        <%# if can? :update, Autorizacion %>
-        <% if current_user.perfil_id == 2 %>
-          <li><a href="<%= autorizaciones_path(:accion => "autorizar", :usuario => current_user.usuario) %>" >Autorizar</a></li>          
+        <% if [1,2].include? current_user.perfil_id %>
+          <li><a href="<%= autorizaciones_path(:accion => :autorizar, :usuario => current_user.usuario) %>" >Autorizar</a></li>          
         <% end %>
 
-        <%# if can? :read, Autorizacion %>
-        <% if current_user.perfil_id == 3 %>
-          <li><a href="<%= autorizaciones_path(:accion => "consultar") %>" >Consultar autorizaciones</a></li>
+        <% if [1,3].include? current_user.perfil_id %>
+          <li><a href="<%= autorizaciones_path(:accion => :consultar) %>" >Consultar autorizaciones</a></li>
         <% end %>
 
-        <%# if can? :calendario, Actividad %>
-        <% if current_user.perfil_id == 2 %>
+        <% if [1,2].include? current_user.perfil_id %>
           <li><a href="<%= calendario_actividades_path(Date.current.year, Date.current.month, Date.current.strftime('%d')) %>">Calendario</a></li>
         <% end %>
       <% end %>
 
-
-      <% if (can? :manage, Perfil) || (can? :manage, Usuario) || (can? :manage, Permiso) %>
+          
+      <% if current_user.perfil_id == 1 %>
         <li data-role="list-divider" data-icon="false" data-mini="true">
           Seguridad del sistema
         </li>
-
-        <% if can? :manage, Permiso %>                
-          <li><a href="<%= permisos_path %>">Permisos</a></li>
-        <% end %>
-
-        <% if can? :manage, Perfil %>                
-          <li><a href="<%= perfiles_path %>">Perfiles</a></li>
-        <% end %>
-
-        <% if can? :manage, Usuario %>
-          <li><a href="<%= usuarios_path %>">Usuarios</a></li>
-        <% end %>
+        <li><a href="<%= permisos_path %>">Permisos</a></li>
+        <li><a href="<%= perfiles_path %>">Perfiles</a></li>
+        <li><a href="<%= usuarios_path %>">Usuarios</a></li>
       <% end %>
     </ul>
     

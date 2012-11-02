@@ -26,25 +26,7 @@ class CuadernoControlesRevisionesController < ApplicationController
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @cuaderno_controles_revisiones }
-    end
-    
-    
-  end
-
-  # GET /cuaderno_controles_revisiones/1/20120131/verificar
-  # GET /cuaderno_controles_revisiones.json
-  def revision
-    if current_user.nil?
-      redirect_to(log_in_path) and return
-    end
-
-    #@cuaderno_controles_revisiones = CuadernoControlRevision.cerrado.se_revisan_por(PersonaVinculada.logueado(current_user.usuario).pluck("personas_vinculadas.id"))
-    @cuaderno_controles_revisiones = CuadernoControlRevision.cerrado.se_revisan_por(PersonaVinculada.logueado(params[:usuario]).pluck("personas_vinculadas.id"))
-        
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @cuaderno_controles_revisiones }
-    end
+    end       
   end
 
   # GET /cuaderno_controles_eventos/1
@@ -86,28 +68,6 @@ class CuadernoControlesRevisionesController < ApplicationController
     end
   end
   
-  # PUT /cuaderno_controles_revisiones/1/revisar
-  def revisar
-    if current_user.nil?
-      redirect_to(log_in_path) and return
-    end
-
-    @cuaderno_control_revision = CuadernoControlRevision.find(params[:id])
-    
-    revisor = PersonaVinculada.logueado(current_user.usuario).pluck("personas_vinculadas.id")
-    observaciones = params[:cuaderno_control_revision][:observaciones]
-
-    respond_to do |format|
-      if @cuaderno_control_revision.update_attributes(:revisado => 1, :persona_vinculada_id => revisor, :observaciones => observaciones)
-        format.html { redirect_to @cuaderno_control_revision, notice: 'Cuaderno de control revisado satisfactoriamente.' }
-        format.json { head :no_content }
-      else
-        format.html { redirect_to @cuaderno_control_revision, notice: 'Cuaderno de control no fue revisado.' }
-        format.json { render json: @cuaderno_control_revision.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
   # POST /cuaderno_controles_eventos
   # POST /cuaderno_controles_eventos.json
   def create
