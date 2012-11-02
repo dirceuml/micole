@@ -11,21 +11,63 @@
     </div>
   <% end %>
 
-  <div data-role="fieldcontain">
-    <!--div class="field"-->
-        <!--%= f.number_field :anio_alumno_id %-->
-    <!--/div-->
-    <!--div class="field" -->
-        <!--%= f.number_field :persona_vinculada_id %-->
-    <!--/div-->
-    <div class="field">
-        <%= f.hidden_field :fecha_hora, :value => Time.now %>
-    </div>
-    <div class="field">
-        <%= f.hidden_field :usuario, :value => current_user.usuario %>
-    </div>
-    <div class="actions">
-        <%= f.submit "Registrar", "data-inline" => "true", "data-theme" => "a", "data-icon" => "check", "data-mini" => "true" %>
-    </div>
- </div>
+  <% codigo = "" %>
+  <% if params[:codigo_alumno].nil? %>
+    <% codigoregistrado = "" %>
+  <% else %>
+    <% codigoregistrado = params[:codigo_alumno] %>  
+  <% end %>
+
+  <div data-role="content">
+    <div class="ui-grid-a">
+      <div class="ui-block-a" style="text-align: center;">
+        <b>Alumno</b>
+        <hr>
+        <!--@asistencia -->
+        <%= form_tag(asistencias_path, {:method => :get, "onSubmit" => "return validarCodigoAlumno();", "data-ajax" => "false", "name" => "buscar"}) do %>
+          <!-- No llama a la funcion validarCodigoAlumno() -->
+          <div data-role="fieldcontain">
+            <div style="text-align: left;">
+              Código:<br/>
+              <%= text_field_tag(:codigo_alumno, codigo, "data-mini" => "true", "autofocus" => "true") %>
+              <!--div class="field"-->
+                <!--%= f.hidden_field :fecha_hora, :value => Time.now %-->
+              <!--/div-->
+              <!--div class="field"-->
+                <!--%= f.hidden_field :usuario, :value => current_user.usuario %-->
+              <!--/div-->
+              <%= submit_tag "Registrar", "data-inline" => "true", "data-theme" => "a", "data-icon" => "check", "data-mini" => "true", :name => nil %>
+            </div>
+          </div>
+        <% end %>
+        <hr>
+      </div>
+
+      <% if !codigoregistrado.empty? %>
+        <div class="ui-block-b" style="text-align: center;">
+          <div data-role="content" style="color: #06c; text-align: center">
+            <% alumnoanio = AnioAlumno.find_by_anio_escolar_id_and_alumno_id(1, codigoregistrado) %>
+            <% if !alumnoanio.nil? %>
+              <%= image_tag(alumnoanio.alumno.foto) %> <br/>
+              Código: <%= codigoregistrado %> <br/>
+              <%= alumnoanio.alumno.apellidos_nombres %>
+              <% asistenciaeliminar = @asistencias.each %>
+              <% @asistencias.each do |asistencia| %>
+                <br/>
+                <% if asistencia.tipo_movimiento ==1 %>
+                  Ingreso: <%= asistencia.hora %>
+                <% end %>
+                <% if asistencia.tipo_movimiento ==2 %>
+                  Salida: <%= asistencia.hora %>
+                <% end %>
+                <% asistenciaeliminar = asistencia %>
+              <% end %>
+              <%= link_to 'Eliminar', asistenciaeliminar, confirm: '¿Seguro que desea eliminar el registro?', method: :delete, "data-icon" => "delete" %>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    </div><!-- /grid-a --> 
+  </div>  
+
 <% end %>

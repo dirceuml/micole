@@ -9,7 +9,7 @@ class AnioAlumno < ActiveRecord::Base
   
   validates :anio_escolar_id, :alumno_id, :usuario, :presence => true
   
-  scope :inasistencia_fecha, lambda { |fecha| where("anio_escolar_id = 1 and id not (Select anio_alumno_id from asistencias where tipo_movimiento = 2 and to_char(fecha_hora, 'dd/mm/yyyy') = ?)", fecha.strftime('%d/%m/%Y'))}
+  scope :inasistencia_fecha, lambda { |fecha| where("anio_escolar_id = 1 and id not in (Select anio_alumno_id from asistencias where tipo_movimiento = 2 and to_char(fecha_hora, 'dd/mm/yyyy') = ?)", fecha.strftime('%d/%m/%Y'))}
   
   def enviar_inasistencia
     alumno.personas_vinculadas.where("apoderado = 1").find_each do |p|

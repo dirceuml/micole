@@ -124,3 +124,12 @@ function validarFoto(form, inputFile) {
     }
 }
 
+function validarCodigoAlumno()
+{ 
+    if (codigo_alumno.value == "") 
+    {
+        alert("Ingrese el Código del alumno");
+        return false;
+    }
+    return true;
+}
