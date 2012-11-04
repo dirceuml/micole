@@ -46,7 +46,7 @@ class PermisosController < ApplicationController
 
     respond_to do |format|
       if @permiso.save
-        format.html { redirect_to @permiso, notice: 'Permiso was successfully created.' }
+        format.html { redirect_to @permiso, notice: 'El Permiso fue creado satisfactoriamente.' }
         format.json { render json: @permiso, status: :created, location: @permiso }
       else
         format.html { render action: "new" }
@@ -62,7 +62,7 @@ class PermisosController < ApplicationController
 
     respond_to do |format|
       if @permiso.update_attributes(params[:permiso])
-        format.html { redirect_to @permiso, notice: 'Permiso was successfully updated.' }
+        format.html { redirect_to @permiso, notice: 'El Permiso fue actualizado satisfactoriamente.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
