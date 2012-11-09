@@ -13,7 +13,7 @@ class AnioAlumno < ActiveRecord::Base
   
   def enviar_inasistencia
     alumno.personas_vinculadas.where("apoderado = 1").find_each do |p|
-      ActividadMailer.notificacion_inasistencia(alumno, p).deliver
+      InasistenciaMailer.notificacion_inasistencia(alumno, p).deliver
     end
   end
 end
