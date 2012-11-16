@@ -54,10 +54,10 @@
               <% asistenciaeliminar = @asistencias.each %>
               <% @asistencias.each do |asistencia| %>
                 <br/>
-                <% if asistencia.tipo_movimiento ==1 %>
+                <% if asistencia.tipo_movimiento == 1 %>
                   Ingreso: <%= asistencia.hora %>
                 <% end %>
-                <% if asistencia.tipo_movimiento ==2 %>
+                <% if asistencia.tipo_movimiento == 2 %>
                   Salida: <%= asistencia.hora %>
                 <% end %>
                 <% asistenciaeliminar = asistencia %>

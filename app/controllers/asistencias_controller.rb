@@ -37,65 +37,7 @@ class AsistenciasController < ApplicationController
       format.html # index.html.erb
       format.json { render json: @alumnos }
     end    
-  end
-  
-  def registrar_grabar
-    codigo = params[:codigo_alumno].to_i
-    @asistencias = Asistencia.por_alumno_fecha(codigo, Date.current)
-    
-    ingreso = 0
-    fecha_hora = Time.now
-    salida  = 0
-    @asistencias.each do |asistencia|
-      if asistencia.tipo_movimiento == 1
-        ingreso = 1
-        fecha_hora = asistencia.fecha_hora
-      end
-      if asistencia.tipo_movimiento == 2
-        salida = 1
-      end      
-    end
-    movimiento = 0
-    if ingreso == 0 && salida  == 0
-      movimiento = 1
-    end
-    if ingreso == 1 && salida  == 0
-      if (Time.now- fecha_hora) > 60
-        movimiento = 2
-      end
-    end
-    
-    if movimiento == 0
-      if salida  == 0
-        flash[:notice] = 'Ha intentado registrar dos veces el ingreso'
-      else
-        flash[:notice] = 'Ha intentado registrar dos veces la salida'
-      end
-      redirect_to :controller => 'asistencias', :action => 'registrar', :codigo_alumno => codigo
-#      format.html { render action: "registrar"}
-    else
-      @asistencia = Asistencia.new(
-          :anio_alumno_id => AnioAlumno.find_by_anio_escolar_id_and_alumno_id(1, codigo).id,
-          :fecha_hora => Time.now,
-          :usuario => current_user.usuario,
-          :tipo_movimiento => movimiento
-        )
-      if !@asistencia.save
-          flash[:notice] = 'Ocurrio un error al registrar la asistencia'
-          format.html { render action: "registrar" }
-      else
-          if @guardados.nil?
-            @guardados = [@asistencia.id]
-          else
-            @guardados.push(@asistencia)
-          end
-#          flash[:notice] = 'Registro satisfactorio'
-      end
-      redirect_to :controller => 'asistencias', :action => 'registrar', :codigo_alumno => nil
-    end
-    
-  end
-  
+  end  
   
   def consultar
     seccion = params[:seccion_id]
@@ -158,76 +100,67 @@ class AsistenciasController < ApplicationController
   # POST /asistencias
   # POST /asistencias.json
   def create
-#    @asistencia = Asistencia.new(params[:asistencia])
-
-#    respond_to do |format|
-#      if @asistencia.save
-#        format.html { redirect_to @asistencia, notice: 'Asistencia was successfully created.' }
-#        format.json { render json: @asistencia, status: :created, location: @asistencia }
-#      else
-#        format.html { render action: "new" }
-#        format.json { render json: @asistencia.errors, status: :unprocessable_entity }
-#      end
-#    end
-
     codigo = params[:codigo_alumno].to_i
     if codigo == 0
       flash[:notice] = 'Ingrese el codigo del alumno'
-      redirect_to :controller => 'asistencias', :action => 'new'
-#      format.html { render action: "new" }   # esta linea no funciona
-    else
-      
-    @asistencias = Asistencia.por_alumno_fecha(codigo, Date.current)
-    
-    ingreso = 0
-    fecha_hora = Time.now
-    salida  = 0
-    @asistencias.each do |asistencia|
-      if asistencia.tipo_movimiento == 1
-        ingreso = 1
-        fecha_hora = asistencia.fecha_hora
-      end
-      if asistencia.tipo_movimiento == 2
-        salida = 1
-      end      
-    end
-    movimiento = 0
-    if ingreso == 0 && salida  == 0
-      movimiento = 1
-    end
-    if ingreso == 1 && salida  == 0
-      if (Time.now- fecha_hora) > 60
-        movimiento = 2
-      end
-    end
-    
-    if movimiento == 0
-      if salida  == 0
-        flash[:notice] = 'Ha intentado registrar dos veces el ingreso'
+      render :new
+    else      
+      @asistencias = Asistencia.por_alumno_fecha(codigo, Date.current)
+
+      if @asistencias.nil?
+        flash[:notice] = "El codigo #{codigo} no existe"
+        redirect_to :new_asistencia
       else
-        flash[:notice] = 'Ha intentado registrar dos veces la salida'
-      end
-      redirect_to :controller => 'asistencias', :action => 'new'
-    else
-      @asistencia = Asistencia.new(
-          :anio_alumno_id => AnioAlumno.find_by_anio_escolar_id_and_alumno_id(1, codigo).id,
-          :fecha_hora => Time.now,
-          :usuario => current_user.usuario,
-          :tipo_movimiento => movimiento
-        )
-      if !@asistencia.save
-          flash[:notice] = 'Ocurrio un error al registrar la asistencia'
-          format.html { render action: "new" }
-      else
-          if @guardados.nil?
-            @guardados = [@asistencia.id]
-          else
-            @guardados.push(@asistencia)
+    
+        ingreso = 0
+        fecha_hora = Time.now
+        salida  = 0
+        @asistencias.each do |asistencia|
+          if asistencia.tipo_movimiento == 1
+            ingreso = 1
+            fecha_hora = asistencia.fecha_hora
           end
+          if asistencia.tipo_movimiento == 2
+            salida = 1
+          end      
+        end
+        movimiento = 0
+        if ingreso == 0 && salida  == 0
+          movimiento = 1
+        end
+        if ingreso == 1 && salida  == 0
+          if (Time.now- fecha_hora) > 60
+            movimiento = 2
+          end
+        end
+
+        if movimiento == 0
+          if salida  == 0
+            flash[:notice] = 'Ha intentado registrar dos veces el ingreso'
+          else
+            flash[:notice] = 'Ha intentado registrar dos veces la salida'
+          end
+          render :new
+        else
+          @asistencia = Asistencia.new(
+              :anio_alumno_id => AnioAlumno.find_by_anio_escolar_id_and_alumno_id(1, codigo).id,
+              :fecha_hora => Time.now,
+              :usuario => current_user.usuario,
+              :tipo_movimiento => movimiento
+            )
+          if !@asistencia.save
+              flash[:notice] = 'Ocurrio un error al registrar la asistencia'
+              format.html { render action: "new" }
+          else
+              if @guardados.nil?
+                @guardados = [@asistencia.id]
+              else
+                @guardados.push(@asistencia)
+              end
+          end
+          redirect_to :controller => 'asistencias', :action => 'new' , :codigo_alumno => codigo
+        end
       end
-      redirect_to :controller => 'asistencias', :action => 'new' , :codigo_alumno => codigo
-    end
-    
     end
   end
 
