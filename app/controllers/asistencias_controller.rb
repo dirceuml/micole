@@ -106,7 +106,7 @@ class AsistenciasController < ApplicationController
     else      
       @asistencias = Asistencia.por_alumno_fecha(codigo, Date.current)
 
-      if @asistencias.empty?
+      if @asistencias
         flash[:notice] = "El codigo #{codigo} no existe"
         redirect_to :new_asistencia
       else
