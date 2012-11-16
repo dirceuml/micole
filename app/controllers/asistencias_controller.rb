@@ -103,13 +103,11 @@ class AsistenciasController < ApplicationController
     if codigo == 0
       flash[:notice] = 'Ingrese el codigo del alumno'
       render :new
-    else      
+    else    
+        
       @asistencias = Asistencia.por_alumno_fecha(codigo, Date.current)
 
-      if @asistencias
-        flash[:notice] = "El codigo #{codigo} no existe"
-        redirect_to :new_asistencia
-      else
+      if @asistencias != nil
         ingreso = 0
         fecha_hora = Time.now
         salida  = 0
@@ -158,6 +156,9 @@ class AsistenciasController < ApplicationController
           end
           redirect_to :controller => 'asistencias', :action => 'new' , :codigo_alumno => codigo
         end
+      else
+        flash[:notice] = "El codigo #{codigo} no existe"
+        redirect_to :new_asistencia
       end
     end
   end
