@@ -1,0 +1,94 @@
+<div data-role="header">
+    <h1>Menú de opciones</h1>
+</div>
+
+<div data-role="content">
+  <div class="content-primary">    
+    <ul data-role="listview">  
+
+      <li data-role="list-divider" data-icon="false" data-mini="true">
+        Cuaderno de control
+      </li>
+
+      <% if [1,2,3].include? current_user.perfil_id %>
+        <% if [1,3].include? current_user.perfil_id %>
+          <li><a href="<%= cuadernos_controles_path %>">Registrar</a></li>
+        <% end %>  
+
+        <% if [1,2].include? current_user.perfil_id %>
+          <li>
+            <a href="<%= cuaderno_controles_revisiones_path(:accion => :revisar, :usuario => current_user.usuario) %>">
+              Revisar
+            </a>
+          </li>
+        <% end %>
+
+        <% if [1,3].include? current_user.perfil_id %>
+          <li><a href="<%= cuaderno_controles_revisiones_path(:accion => :verificar) %>">Verificar</a></li>
+        <% end %>
+      <% end %>
+
+
+      <% if [1,3].include? current_user.perfil_id %>
+        <li data-role="list-divider" data-icon="false" data-mini="true">
+          Seguridad de alumnos
+        </li>
+
+        <% if [1,3].include? current_user.perfil_id %>
+          <li><a href="<%= personas_vinculadas_path %>">Personas vinculadas</a></li>
+        <% end %>
+
+        <% if [1,3].include? current_user.perfil_id %>
+          <li><a href="<%= alumnos_path(:seccion_id => 0) %>">Vincular personas</a></li>
+        <% end %>
+
+        <% if [1,3].include? current_user.perfil_id %>
+          <li><a href="<%= salida_path %>">Salida de alumnos</a></li>
+        <% end %>
+
+<<<<<<< HEAD
+        <% if [1,3].include? current_user.perfil_id %>
+          <li><a href="<%= marcacion_path %>">Registrar asistencia de alumnos</a></li>
+=======
+        <% if can? :create, Asistencia %>
+          <li><a href="<%= new_asistencia_path %>">Registrar asistencia de alumnos</a></li>
+>>>>>>> 007c5e38f2b9da568bb75bc13c3069795ee4b419
+        <% end %>
+      <% end %>
+
+
+      <% if [1,2,3].include? current_user.perfil_id %>
+        <li data-role="list-divider" data-icon="false" data-mini="true">
+          Actividades del colegio
+        </li>
+
+        <% if [1,3].include? current_user.perfil_id %>
+          <li><a href="<%= actividades_path %>">Registrar</a></li>
+        <% end %>
+
+        <% if [1,2].include? current_user.perfil_id %>
+          <li><a href="<%= autorizaciones_path(:accion => :autorizar, :usuario => current_user.usuario) %>" >Autorizar</a></li>          
+        <% end %>
+
+        <% if [1,3].include? current_user.perfil_id %>
+          <li><a href="<%= autorizaciones_path(:accion => :consultar) %>" >Consultar autorizaciones</a></li>
+        <% end %>
+
+        <% if [1,2].include? current_user.perfil_id %>
+          <li><a href="<%= calendario_actividades_path(Date.current.year, Date.current.month, Date.current.strftime('%d')) %>">Calendario</a></li>
+        <% end %>
+      <% end %>
+
+          
+      <% if current_user.perfil_id == 1 %>
+        <li data-role="list-divider" data-icon="false" data-mini="true">
+          Seguridad del sistema
+        </li>
+        <li><a href="<%= permisos_path %>">Permisos</a></li>
+        <li><a href="<%= perfiles_path %>">Perfiles</a></li>
+        <li><a href="<%= usuarios_path %>">Usuarios</a></li>
+      <% end %>
+    </ul>
+    
+  </div><!--/content-primary -->	
+</div>

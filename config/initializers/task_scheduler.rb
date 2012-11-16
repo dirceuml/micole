@@ -11,11 +11,10 @@ scheduler.every("36h") do
 end
 
 
-scheduler.every("36h") do
-#scheduler.cron '0 10 * * 1-5 Etc/GMT-5' do
-  # todos los d√≠as a las 10:00 en GMT-5 
+scheduler.cron '0 15 * * 1-5' do
+  # todos los di≠as de la semana a las 10:00 en GMT-5 
   AnioAlumno.inasistencia_fecha(Date.current).find_each do |a|
-    a.enviar_inasistencia
+    a.enviar_inasistencia    
   end
 end
 
