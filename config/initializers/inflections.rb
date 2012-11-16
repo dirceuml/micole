@@ -33,5 +33,5 @@ ActiveSupport::Inflector.inflections do |inflect|
   inflect.irregular 'session', 'sessions'
   inflect.irregular 'actividad_seccion', 'actividades_secciones'
   inflect.irregular 'cuaderno_control_revision', 'cuaderno_controles_revisiones'
-  inflect.irregular 'ActividadSeccion', 'ActividadesSecciones'
+  #inflect.irregular 'ActividadSeccion', 'ActividadesSecciones'
 end
