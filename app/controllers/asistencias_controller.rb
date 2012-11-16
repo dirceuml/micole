@@ -11,7 +11,6 @@ class AsistenciasController < ApplicationController
       fecha = params[:fecha].to_date
     end
     
-#    @asistencias = Asistencia.por_seccion_fecha(seccion, fecha).movimiento(2)
     @asistencias = Asistencia.por_seccion_fecha(seccion, fecha).salida
 
     respond_to do |format|
