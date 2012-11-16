@@ -104,8 +104,8 @@ class AsistenciasController < ApplicationController
       flash[:notice] = 'Ingrese el codigo del alumno'
       render :new
     else    
-      @asist = Asistencia.find(codigo)
-      if @asist.nil?
+      
+      if !Asistencia.find_by_id(codigo)
         flash[:notice] = "El codigo #{codigo} no existe"
         redirect_to(:new_asistencia) and return
       end
