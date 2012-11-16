@@ -107,7 +107,7 @@ class AsistenciasController < ApplicationController
         
       @asistencias = Asistencia.por_alumno_fecha(codigo, Date.current)
 
-      if @asistencias != nil
+      if !Asistencia.find(codigo)
         ingreso = 0
         fecha_hora = Time.now
         salida  = 0
