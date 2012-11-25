@@ -176,58 +176,61 @@ class AsistenciasController < ApplicationController
       redirect_to :controller => 'asistencias', :action => 'new'
 #      format.html { render action: "new" }   # esta linea no funciona
     else
+      @asistencias = Asistencia.por_alumno_fecha(codigo, Date.current)
       
-    @asistencias = Asistencia.por_alumno_fecha(codigo, Date.current)
-    
-    ingreso = 0
-    fecha_hora = Time.now
-    salida  = 0
-    @asistencias.each do |asistencia|
-      if asistencia.tipo_movimiento == 1
-        ingreso = 1
-        fecha_hora = asistencia.fecha_hora
-      end
-      if asistencia.tipo_movimiento == 2
-        salida = 1
-      end      
-    end
-    movimiento = 0
-    if ingreso == 0 && salida  == 0
-      movimiento = 1
-    end
-    if ingreso == 1 && salida  == 0
-      if (Time.now- fecha_hora) > 60
-        movimiento = 2
-      end
-    end
-    
-    if movimiento == 0
-      if salida  == 0
-        flash[:notice] = 'Ha intentado registrar dos veces el ingreso'
+      if @asistencias.nil?
+        flash[:notice] = 'El codigo del alumno no existe'
+        redirect_to :controller => 'asistencias', :action => 'new'
       else
-        flash[:notice] = 'Ha intentado registrar dos veces la salida'
-      end
-      redirect_to :controller => 'asistencias', :action => 'new'
-    else
-      @asistencia = Asistencia.new(
-          :anio_alumno_id => AnioAlumno.find_by_anio_escolar_id_and_alumno_id(1, codigo).id,
-          :fecha_hora => Time.now,
-          :usuario => current_user.usuario,
-          :tipo_movimiento => movimiento
-        )
-      if !@asistencia.save
-          flash[:notice] = 'Ocurrio un error al registrar la asistencia'
-          format.html { render action: "new" }
-      else
-          if @guardados.nil?
-            @guardados = [@asistencia.id]
-          else
-            @guardados.push(@asistencia)
+        ingreso = 0
+        fecha_hora = Time.now
+        salida  = 0
+        @asistencias.each do |asistencia|
+          if asistencia.tipo_movimiento == 1
+            ingreso = 1
+            fecha_hora = asistencia.fecha_hora
           end
+          if asistencia.tipo_movimiento == 2
+            salida = 1
+          end      
+        end
+        movimiento = 0
+        if ingreso == 0 && salida  == 0
+          movimiento = 1
+        end
+        if ingreso == 1 && salida  == 0
+          if (Time.now- fecha_hora) > 60
+            movimiento = 2
+          end
+        end
+          
+        if movimiento == 0
+          if salida  == 0
+            flash[:notice] = 'Ha intentado registrar dos veces el ingreso'
+          else
+            flash[:notice] = 'Ha intentado registrar dos veces la salida'
+          end
+          redirect_to :controller => 'asistencias', :action => 'new'
+        else
+          @asistencia = Asistencia.new(
+              :anio_alumno_id => AnioAlumno.find_by_anio_escolar_id_and_alumno_id(1, codigo).id,
+              :fecha_hora => Time.now,
+              :usuario => current_user.usuario,
+              :tipo_movimiento => movimiento
+            )
+          if !@asistencia.save
+              flash[:notice] = 'Ocurrio un error al registrar la asistencia'
+              format.html { render action: "new" }
+          else
+              if @guardados.nil?
+                @guardados = [@asistencia.id]
+              else
+                @guardados.push(@asistencia)
+              end
+          end
+          redirect_to :controller => 'asistencias', :action => 'new' , :codigo_alumno => codigo
+        end
       end
-      redirect_to :controller => 'asistencias', :action => 'new' , :codigo_alumno => codigo
-    end
-    
     end
   end
 
