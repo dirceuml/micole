@@ -3,11 +3,33 @@
   <head>
     <title>Software para colegios orientado a los padres: MiCole</title>
     <meta charset="utf-8">
+    
+    <meta property="og:title" content="MiCole.pe" />
+    <meta property="og:type" content="product" />
+    <meta property="og:url" content="http://micole.herokuapp.com" />
+    <meta property="og:image" content="http://micole.herokuapp.com/assets/logo_small2.gif" />
+    <meta property="og:site_name" content="Mi Cole" />
+    <meta property="fb:admins" content="1276612484" />
+
     <link rel="stylesheet" href="landingpage.css" />
   </head>
 
-  <body class="statement">
-      
+  <body class="statement">              
+        <!-- facebook -->
+        <div id="fb-root"></div>
+            <script>
+                (function(d, s, id) {
+                  var js, fjs = d.getElementsByTagName(s)[0];
+                  if (d.getElementById(id)) return;
+                  js = d.createElement(s); js.id = id;
+                  js.src = "//connect.facebook.net/es_LA/all.js#xfbml=1";
+                  fjs.parentNode.insertBefore(js, fjs);
+                }(document, 'script', 'facebook-jssdk'));
+            </script>
+        <!-- facebook -->
+        
+        
+      <!-- feedback -->
         <script type="text/javascript">
             reformal_wdg_w    = "713";
             reformal_wdg_h    = "460";
@@ -32,8 +54,13 @@
         </script>
 
         <script type="text/javascript" language="JavaScript" src="http://idea.informer.com/tabn2v4.js?domain=micole"></script><noscript><a href="http://micole.idea.informer.com">Mi Cole feedback</a> <a href="http://idea.informer.com"> Powered by <img src="http://widget.idea.informer.com/tmpl/images/widget_logo.jpg" /></a></noscript>
-
+        <!-- feedback -->
+        
       <div class="container">
+          <!-- facebook: like -->
+          <div class="fb-like" data-href="http://micole.herokuapp.com" data-send="false" data-width="450" data-show-faces="false"></div>
+          <!-- facebook: like -->
+          
           <nav>
               <ul>
                 <li><strong><a href="/">Precios</a></strong><br />Desde S/. 0.50 por alumno</li>
