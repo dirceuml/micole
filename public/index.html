@@ -79,38 +79,38 @@
               <div id="randomdiv8" class="stamp uptime" style="display: none;"></div>
               <div id="randomdiv9" class="stamp love" style="display: none;"></div>
               <div id="randomdiv10" class="stamp millions" style="display: none;"></div>
-            </nav>
+          </nav>
           
             <script type="text/javascript" language="JavaScript">
 
-/* Random Div Display Version 1.0. March 9, 2009
-   Will Bontrager http://www.willmaster.com/
-   Copyright 2009 Bontrager Connection, LLC */
+                /* Random Div Display Version 1.0. March 9, 2009
+                   Will Bontrager http://www.willmaster.com/
+                   Copyright 2009 Bontrager Connection, LLC */
 
-NumberOfDivsToRandomDisplay = 10;
+                NumberOfDivsToRandomDisplay = 10;
 
-var CookieName = 'DivRamdomValueCookie';
-function DisplayRandomDiv() {
-var r = Math.ceil(Math.random() * NumberOfDivsToRandomDisplay);
-if(NumberOfDivsToRandomDisplay > 1) {
-   var ck = 0;
-   var cookiebegin = document.cookie.indexOf(CookieName + "=");
-   if(cookiebegin > -1) {
-      cookiebegin += 1 + CookieName.length;
-      cookieend = document.cookie.indexOf(";",cookiebegin);
-      if(cookieend < cookiebegin) { cookieend = document.cookie.length; }
-      ck = parseInt(document.cookie.substring(cookiebegin,cookieend));
-      }
-   while(r == ck) { r = Math.ceil(Math.random() * NumberOfDivsToRandomDisplay); }
-   document.cookie = CookieName + "=" + r;
-   }
-for( var i=1; i<=NumberOfDivsToRandomDisplay; i++) {
-   document.getElementById("randomdiv"+i).style.display="none";
-   }
-document.getElementById("randomdiv"+r).style.display="block";
-}
-DisplayRandomDiv();
-</script>
+                var CookieName = 'DivRamdomValueCookie';
+                function DisplayRandomDiv() {
+                var r = Math.ceil(Math.random() * NumberOfDivsToRandomDisplay);
+                if(NumberOfDivsToRandomDisplay > 1) {
+                   var ck = 0;
+                   var cookiebegin = document.cookie.indexOf(CookieName + "=");
+                   if(cookiebegin > -1) {
+                      cookiebegin += 1 + CookieName.length;
+                      cookieend = document.cookie.indexOf(";",cookiebegin);
+                      if(cookieend < cookiebegin) { cookieend = document.cookie.length; }
+                      ck = parseInt(document.cookie.substring(cookiebegin,cookieend));
+                      }
+                   while(r == ck) { r = Math.ceil(Math.random() * NumberOfDivsToRandomDisplay); }
+                   document.cookie = CookieName + "=" + r;
+                   }
+                for( var i=1; i<=NumberOfDivsToRandomDisplay; i++) {
+                   document.getElementById("randomdiv"+i).style.display="none";
+                   }
+                document.getElementById("randomdiv"+r).style.display="block";
+                }
+                DisplayRandomDiv();
+            </script>
 
       
       <header>
@@ -126,14 +126,23 @@ DisplayRandomDiv();
       </header>
       
       <footer>
-          <p><a href="/" data-behavior="show_opt_in" class="optin">Noticias por Email</a> &nbsp; <span>|</span> &nbsp; <a href="/">Ayuda</a> &nbsp; <span>|</span> &nbsp; <a href="/">Contacto</a>  &nbsp; <span>|</span> &nbsp; Copyright &copy;2012, Todos los derechos reservados.</p>
-        </footer>
+         <p><a href="/" data-behavior="show_opt_in" class="optin">Noticias por Email</a> &nbsp; <span>|</span> &nbsp; <a href="/">Ayuda</a> &nbsp; <span>|</span> &nbsp; <a href="/">Contacto</a>  &nbsp; <span>|</span> &nbsp; Copyright &copy;2012, Todos los derechos reservados.</p>
+      </footer>
 
 
   </div>
-</div>
 
-</div>
+<!-- UserVoice -->
+<script type="text/javascript">
+  var uvOptions = {};
+  (function() {
+    var uv = document.createElement('script'); uv.type = 'text/javascript'; uv.async = true;
+    uv.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'widget.uservoice.com/qPlvTYYpeZitBca9rH6Uw.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(uv, s);
+  })();
+</script>
+<!-- UserVoice -->
+
 </body>
 
 </html>
