@@ -1,18 +1,19 @@
 <!DOCTYPE html>
 <html lang="es">
   <head>
-    <title>Software para colegios orientado a los padres: MiCole</title>
+    <title>Software para colegios orientado a los padres: MiCole - Vídeos</title>
     <meta charset="utf-8">
     
     <meta property="og:title" content="MiCole.pe" />
     <meta property="og:type" content="product" />
-    <meta property="og:url" content="http://micole.herokuapp.com" />
+    <meta property="og:url" content="http://micole.herokuapp.com/video.html" />
     <meta property="og:image" content="http://micole.herokuapp.com/assets/logo.gif" />
     <meta property="og:site_name" content="Mi Cole" />
     <meta property="fb:admins" content="1276612484" />
-    <meta property="og:description" content="Software para colegios orientado a los padres"/>
+    <meta property="og:description" content="Vídeos mostrando la funcionalidad de MiCole"/>
 
     <link rel="stylesheet" href="landingpage.css" />
+    <script type="text/javascript" src="lib.js"></script>
   </head>
 
   <body class="statement">              
@@ -61,7 +62,6 @@
           <nav>
               <ul>
                 <li><a class="button pequeno azul" href="#"><span>Prueba el sistema</span></a></li>
-                <li><a class="button pequeno azul" href="/video.html"><span>Mira los vídeos</span></a></li>
                 <li><a class="button pequeno azul" href="#"><span>Precios</span></a><!--strong><a href="/">Precios</a></strong--></li>
                 <li><a class="button pequeno azuloscuro" href="log_in"><span>Log in</span></a></li>
                 <!--li><strong><a href="/">Precios</a></strong></br>Desde S/. 0.50</li-->
@@ -151,19 +151,53 @@
                 DisplayRandomDiv();
             </script>
 
-      
-      <header>
-        <aside>Comunicación eficiente y efectiva con los padres</aside>
-        <h1 class='pitch'><span>Comunicación eficiente y efectiva con los padres</h1>
-        <ul style="list-style-image: url('check.jpg'); font-size: 24px; font-family: Arial; font-weight: bold;">
-            <li style="padding:15px">Notificaciones automáticas a padres sobre accidentes, eventos y otros</li>
-            <li style="padding:15px">Cuaderno de control virtualizado</li>
-            <li style="padding:15px">Seguridad para los alumnos</li>
-            <li style="padding:15px">Acceso móvil</li>
-        </ul>
+        <div id="blanket" style="display:none"></div>
         
-      </header>
+        <div id="videoControl" style="display:none">
+            <div style="background-color: #000; color: #fff">
+               Control diario               
+            </div>
+            <iframe src="https://docs.google.com/file/d/0BxYRoYEO1myjbnU2WHRndVJRTFk/preview" width="640" height="385"></iframe>
+            <div><a href="#" onclick="popup('videoControl')" >Cerrar</a></div>
+        </div>
+        
+        <div id="videoEventos" style="display:none">
+            <div style="background-color: #000; color: #fff">Comunicación de eventos</div>
+            <iframe src="https://docs.google.com/file/d/0BxYRoYEO1myjNGhOM3MzT2NlYms/preview" width="640" height="385"></iframe>
+            <div><a href="#" onclick="popup('videoEventos')" >Cerrar</a></div>
+        </div>
+        
+        <div id="videoNotificaciones" style="display:none">
+            <div style="background-color: #000; color: #fff">Calendario de actividades y notificaciones a los padres</div>
+            <iframe src="https://docs.google.com/file/d/0BxYRoYEO1myjbmRUREgxTUJWMDQ/preview" width="640" height="385"></iframe>
+            <div><a href="#" onclick="popup('videoNotificaciones')" >Cerrar</a></div>
+        </div>
+        
+        <div id="videoSeguridad" style="display:none">
+            <div style="background-color: #000; color: #fff">Seguridad de alumnos</div>
+            <iframe src="https://docs.google.com/file/d/0BxYRoYEO1myjQ1N4ekRNeFdOU00/preview" width="640" height="385"></iframe>
+            <div><a href="#" onclick="popup('videoSeguridad')" >Cerrar</a></div>
+        </div>
+      
+        <header>
+            <h1 class='pitch'><span>Vídeos</h1>
+            <p>
+                <a href="#" onclick="popup('videoControl')">Control diario</a> 
+            </p>
             
+            <p>
+                <a href="#" onclick="popup('videoEventos')">Comunicación de eventos</a> 
+            </p>
+            
+            <p>
+                <a href="#" onclick="popup('videoNotificaciones')">Calendario de actividades y notificaciones a los padres</a> 
+            </p>
+            
+            <p>
+                <a href="#" onclick="popup('videoSeguridad')">Seguridad de alumnos</a> 
+            </p>
+        </header>    
+      
       <footer>
          <p><a href="/" data-behavior="show_opt_in" class="optin">Noticias por Email</a> &nbsp; <span>|</span> &nbsp; <a href="/">Ayuda</a> &nbsp; <span>|</span> &nbsp; Copyright &copy;2012, Todos los derechos reservados.</p>
       </footer>
