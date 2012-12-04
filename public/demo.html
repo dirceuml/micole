@@ -122,29 +122,44 @@
               
           
             <h1><span>Demo del sistema</span></h1>
-            <div style="float: left; width: 400px">
-              <p>Puede iniciar sesión en el sistema MiCole como padre o como profesor y/o personal administrativo para probar su funcionalidad.</p>
-              <p>Los usuarios con los que puede ingresar al sistema son:</p>
-              <p><h3>Como padre:</h3></p>
-              <p>Usuario: padre</p>
-              <p>Password: padre</p>
+            <div style="float: left; width: 600px">
+              <p>Puede iniciar sesión en el sistema MiCole como padre o como profesor / personal administrativo para probar su funcionalidad.</p>
+              <p>Las principales opciones que podrá probar, de acuerdo al perfil seleccionado, son las siguientes:</p>
               <p><h3>Como profesor / personal administrativo:</h3></p>
-              <p>Usuario: profesor</p>
-              <p>Password: profesor</p>
+              <p>
+                  <ul>
+                      <li>Registro de cuaderno de control</li>
+                      <li>Verificación de cuaderno de control</li>
+                      <li>Registro de actividades</li>
+                      <li>Registro de personas vinculadas</li>
+                      <li>Salida de alumnos</li>
+                  </ul>
+              </p>
+              <p><h3>Como padre:</h3></p>
+              <p>
+                  <ul>
+                      <li>Revisión de cuaderno de control</li>
+                      <li>Autorización de actividades</li>
+                      <li>Calendario de actividades</li>
+                  </ul>
+              </p>
+              <p>
+                  Si tiene alguna duda acerca del uso de alguna de las opciones, puede <a href="/video.html">ver los videos de demostración</a>.
+              </p>
             </div>  
             
-            <div style="float: right; width: 400px">
-                <div><h2>Iniciar sesión</h2></div>
+            <div style="float: right; width: 400px;" align="center">
+                <div><h2>Ingresar al sistema</h2></div>
                 <div>
-                    <form method="post" action="/sessions?action=create">
-                      <div align="center">
+                    <form method="post" action="/sessions?action=create" name="frmDemo">
+                      <div>
                         <p>
-                          Usuario:<br />
-                          <input type="text" name="usuario" id="usuario">
-                        </p>
-                        <p>
-                          Clave:<br />
-                          <input type="password" name="clave" id="password">
+                          Perfil:<br />
+                          <select name="usuario" onchange="frmDemo.clave.value=frmDemo.usuario.value;return true;">
+                            <option value="profesor" label="Profesor / Personal administrativo" selected>
+                            <option value="padre" label="Padre">
+                          </select>
+                          <input type="hidden" name="clave" id="clave" value="profesor">
                         </p>
                         <p class="button"><input type="submit" name="submit" value="Iniciar sesión"></p>
                       </div>  
