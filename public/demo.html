@@ -1,18 +1,19 @@
 <!DOCTYPE html>
 <html lang="es">
   <head>
-    <title>Software para colegios orientado a los padres: MiCole</title>
+    <title>Software para colegios orientado a los padres: MiCole - Vídeos</title>
     <meta charset="utf-8">
     
     <meta property="og:title" content="MiCole.pe" />
     <meta property="og:type" content="product" />
-    <meta property="og:url" content="http://micole.herokuapp.com" />
+    <meta property="og:url" content="http://micole.herokuapp.com/video.html" />
     <meta property="og:image" content="http://micole.herokuapp.com/assets/logo.gif" />
     <meta property="og:site_name" content="Mi Cole" />
     <meta property="fb:admins" content="1276612484" />
-    <meta property="og:description" content="Software para colegios orientado a los padres"/>
+    <meta property="og:description" content="Demo del sistema MiCole"/>
 
     <link rel="stylesheet" href="landingpage.css" />
+    <script type="text/javascript" src="lib.js"></script>
   </head>
 
   <body class="statement">              
@@ -60,9 +61,8 @@
       <div class="container">         
           <nav>
               <ul>
-                <li><a class="button pequeno azul" href="/demo.html"><span>Prueba el sistema</span></a></li>
-                <li><a class="button pequeno azul" href="/video.html"><span>Mira los vídeos</span></a></li>
-                <li><a class="button pequeno azul" href="/precios.html"><span>Precios</span></a><!--strong><a href="/">Precios</a></strong--></li>
+                <li><a class="button pequeno azul" href="/video.html"><span>Mira los vídeos</span></a><!--strong><a href="/">Precios</a></strong--></li>
+                <li><a class="button pequeno azul" href="/precios.html"><span>Precios</span></a></li>
                 <li><a class="button pequeno azuloscuro" href="log_in"><span>Log in</span></a></li>
                 <!--li><strong><a href="/">Precios</a></strong></br>Desde S/. 0.50</li-->
                 <!--li class="signin"><a href="log_in">Log in</a></li-->
@@ -119,19 +119,38 @@
             </script>
           <!-- google+ -->
           </nav>
-      
-      <header>
-        <aside>Comunicación eficiente y efectiva con los padres</aside>
-        <h1 class='pitch'><span>Comunicación eficiente y efectiva con los padres</h1>
-        <ul style="list-style-image: url('check.jpg'); font-size: 24px; font-family: Arial; font-weight: bold;">
-            <li style="padding:15px">Notificaciones automáticas a padres sobre accidentes, eventos y otros</li>
-            <li style="padding:15px">Cuaderno de control virtualizado</li>
-            <li style="padding:15px">Seguridad para los alumnos</li>
-            <li style="padding:15px">Acceso móvil</li>
-        </ul>
-        
-      </header>
+              
+          
+            <h1><span>Demo del sistema</span></h1>
+            <div style="float: left; width: 400px">
+              <p>Puede iniciar sesión en el sistema MiCole como padre o como profesor y/o personal administrativo para probar su funcionalidad.</p>
+              <p>Los usuarios con los que puede ingresar al sistema son:</p>
+              <p><h3>Como padre:</h3></p>
+              <p>Usuario: padre</p>
+              <p>Password: padre</p>
+              <p><h3>Como profesor / personal administrativo:</h3></p>
+              <p>Usuario: profesor</p>
+              <p>Password: profesor</p>
+            </div>  
             
+            <div style="float: right; width: 400px">
+                <div><h2>Iniciar sesión</h2></div>
+                <div>
+                    <form method="post" action="/sessions?action=create">
+                      <div align="center">
+                        <p>
+                          Usuario:<br />
+                          <input type="text" name="usuario" id="usuario">
+                        </p>
+                        <p>
+                          Clave:<br />
+                          <input type="password" name="clave" id="password">
+                        </p>
+                        <p class="button"><input type="submit" name="submit" value="Iniciar sesión"></p>
+                      </div>  
+                  </form>
+                </div>
+            </div>
       <footer>
          <p><a href="/" data-behavior="show_opt_in" class="optin">Noticias por Email</a> &nbsp; <span>|</span> &nbsp; <a href="/">Ayuda</a> &nbsp; <span>|</span> &nbsp; Copyright &copy;2012, Todos los derechos reservados.</p>
       </footer>
@@ -166,6 +185,7 @@
       })();
     </script>
     <!-- UserVoice -->
+
 </body>
 
 </html>

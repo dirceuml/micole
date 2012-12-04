@@ -10,7 +10,7 @@
     <meta property="og:image" content="http://micole.herokuapp.com/assets/logo.gif" />
     <meta property="og:site_name" content="Mi Cole" />
     <meta property="fb:admins" content="1276612484" />
-    <meta property="og:description" content="Vídeos mostrando la funcionalidad de MiCole"/>
+    <meta property="og:description" content="Tabla de precios del sistema MiCole"/>
 
     <link rel="stylesheet" href="landingpage.css" />
     <script type="text/javascript" src="lib.js"></script>
@@ -61,8 +61,8 @@
       <div class="container">         
           <nav>
               <ul>
-                <li><a class="button pequeno azul" href="#"><span>Prueba el sistema</span></a></li>
-                <li><a class="button pequeno azul" href="#"><span>Mira los vídeos</span></a><!--strong><a href="/">Precios</a></strong--></li>
+                <li><a class="button pequeno azul" href="/demo.html"><span>Prueba el sistema</span></a></li>
+                <li><a class="button pequeno azul" href="/video.html"><span>Mira los vídeos</span></a><!--strong><a href="/">Precios</a></strong--></li>
                 <li><a class="button pequeno azuloscuro" href="log_in"><span>Log in</span></a></li>
                 <!--li><strong><a href="/">Precios</a></strong></br>Desde S/. 0.50</li-->
                 <!--li class="signin"><a href="log_in">Log in</a></li-->
@@ -119,68 +119,13 @@
             </script>
           <!-- google+ -->
           </nav>
+
           
-            <script type="text/javascript" language="JavaScript">
-
-                /* Random Div Display Version 1.0. March 9, 2009
-                   Will Bontrager http://www.willmaster.com/
-                   Copyright 2009 Bontrager Connection, LLC */
-
-                NumberOfDivsToRandomDisplay = 10;
-
-                var CookieName = 'DivRamdomValueCookie';
-                function DisplayRandomDiv() {
-                var r = Math.ceil(Math.random() * NumberOfDivsToRandomDisplay);
-                if(NumberOfDivsToRandomDisplay > 1) {
-                   var ck = 0;
-                   var cookiebegin = document.cookie.indexOf(CookieName + "=");
-                   if(cookiebegin > -1) {
-                      cookiebegin += 1 + CookieName.length;
-                      cookieend = document.cookie.indexOf(";",cookiebegin);
-                      if(cookieend < cookiebegin) { cookieend = document.cookie.length; }
-                      ck = parseInt(document.cookie.substring(cookiebegin,cookieend));
-                      }
-                   while(r == ck) { r = Math.ceil(Math.random() * NumberOfDivsToRandomDisplay); }
-                   document.cookie = CookieName + "=" + r;
-                   }
-                for( var i=1; i<=NumberOfDivsToRandomDisplay; i++) {
-                   document.getElementById("randomdiv"+i).style.display="none";
-                   }
-                document.getElementById("randomdiv"+r).style.display="block";
-                }
-                DisplayRandomDiv();
-            </script>
-
-        <div id="blanket" style="display:none"></div>
-        
-        <div id="videoControl" style="display:none">
-            <div style="background-color: #000; color: #fff">
-               Control diario               
-            </div>
-            <iframe src="https://docs.google.com/file/d/0BxYRoYEO1myjbnU2WHRndVJRTFk/preview" width="640" height="385"></iframe>
-            <div><a href="#" onclick="popup('videoControl')" >Cerrar</a></div>
-        </div>
-        
-        <div id="videoEventos" style="display:none">
-            <div style="background-color: #000; color: #fff">Comunicación de eventos</div>
-            <iframe src="https://docs.google.com/file/d/0BxYRoYEO1myjNGhOM3MzT2NlYms/preview" width="640" height="385"></iframe>
-            <div><a href="#" onclick="popup('videoEventos')" >Cerrar</a></div>
-        </div>
-        
-        <div id="videoNotificaciones" style="display:none">
-            <div style="background-color: #000; color: #fff">Calendario de actividades y notificaciones a los padres</div>
-            <iframe src="https://docs.google.com/file/d/0BxYRoYEO1myjbmRUREgxTUJWMDQ/preview" width="640" height="385"></iframe>
-            <div><a href="#" onclick="popup('videoNotificaciones')" >Cerrar</a></div>
-        </div>
-        
-        <div id="videoSeguridad" style="display:none">
-            <div style="background-color: #000; color: #fff">Seguridad de alumnos</div>
-            <iframe src="https://docs.google.com/file/d/0BxYRoYEO1myjQ1N4ekRNeFdOU00/preview" width="640" height="385"></iframe>
-            <div><a href="#" onclick="popup('videoSeguridad')" >Cerrar</a></div>
-        </div>
-      
-        <header>
             <h1><span>Tabla de precios</span></h1>
+            <p>
+                Los beneficios de MiCole pueden ser aprovechados a muy bajos precios, los cuales varían de acuerdo a la cantidad de alumnos.
+                
+            </p>
             <div>
                 <table cellspacing="0px" style="text-align: center;">
                     <tr>
@@ -204,9 +149,8 @@
                         <td>S/. 1.00</td>
                     </tr>
                 </table>
-            </div>
-        </header>    
-      
+            </div>  
+            <p></p>
       <footer>
          <p><a href="/" data-behavior="show_opt_in" class="optin">Noticias por Email</a> &nbsp; <span>|</span> &nbsp; <a href="/">Ayuda</a> &nbsp; <span>|</span> &nbsp; Copyright &copy;2012, Todos los derechos reservados.</p>
       </footer>

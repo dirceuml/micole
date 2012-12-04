@@ -61,8 +61,8 @@
       <div class="container">         
           <nav>
               <ul>
-                <li><a class="button pequeno azul" href="#"><span>Prueba el sistema</span></a></li>
-                <li><a class="button pequeno azul" href="#"><span>Precios</span></a><!--strong><a href="/">Precios</a></strong--></li>
+                <li><a class="button pequeno azul" href="/demo.html"><span>Prueba el sistema</span></a></li>
+                <li><a class="button pequeno azul" href="/precios.html"><span>Precios</span></a><!--strong><a href="/">Precios</a></strong--></li>
                 <li><a class="button pequeno azuloscuro" href="log_in"><span>Log in</span></a></li>
                 <!--li><strong><a href="/">Precios</a></strong></br>Desde S/. 0.50</li-->
                 <!--li class="signin"><a href="log_in">Log in</a></li-->
@@ -119,37 +119,6 @@
             </script>
           <!-- google+ -->
           </nav>
-          
-            <script type="text/javascript" language="JavaScript">
-
-                /* Random Div Display Version 1.0. March 9, 2009
-                   Will Bontrager http://www.willmaster.com/
-                   Copyright 2009 Bontrager Connection, LLC */
-
-                NumberOfDivsToRandomDisplay = 10;
-
-                var CookieName = 'DivRamdomValueCookie';
-                function DisplayRandomDiv() {
-                var r = Math.ceil(Math.random() * NumberOfDivsToRandomDisplay);
-                if(NumberOfDivsToRandomDisplay > 1) {
-                   var ck = 0;
-                   var cookiebegin = document.cookie.indexOf(CookieName + "=");
-                   if(cookiebegin > -1) {
-                      cookiebegin += 1 + CookieName.length;
-                      cookieend = document.cookie.indexOf(";",cookiebegin);
-                      if(cookieend < cookiebegin) { cookieend = document.cookie.length; }
-                      ck = parseInt(document.cookie.substring(cookiebegin,cookieend));
-                      }
-                   while(r == ck) { r = Math.ceil(Math.random() * NumberOfDivsToRandomDisplay); }
-                   document.cookie = CookieName + "=" + r;
-                   }
-                for( var i=1; i<=NumberOfDivsToRandomDisplay; i++) {
-                   document.getElementById("randomdiv"+i).style.display="none";
-                   }
-                document.getElementById("randomdiv"+r).style.display="block";
-                }
-                DisplayRandomDiv();
-            </script>
 
         <div id="blanket" style="display:none"></div>
         
@@ -179,8 +148,11 @@
             <div><a href="#" onclick="popup('videoSeguridad')" >Cerrar</a></div>
         </div>
       
-        <header>
+        
             <h1><span>Vídeos</span></h1>
+            <p>
+                En los siguientes videos podrá ver el sistema en uso y apreciar los beneficios que ofrece:
+            </p>
             <p>
                 <a href="#" onclick="popup('videoControl')">Control diario</a> 
             </p>
@@ -196,7 +168,6 @@
             <p>
                 <a href="#" onclick="popup('videoSeguridad')">Seguridad de alumnos</a> 
             </p>
-        </header>    
       
       <footer>
          <p><a href="/" data-behavior="show_opt_in" class="optin">Noticias por Email</a> &nbsp; <span>|</span> &nbsp; <a href="/">Ayuda</a> &nbsp; <span>|</span> &nbsp; Copyright &copy;2012, Todos los derechos reservados.</p>
