@@ -1,18 +1,82 @@
-th {
+select {
+  -webkit-appearance: button;
+  -webkit-border-radius: 2px;
+  -webkit-box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
+  -webkit-padding-end: 20px;
+  -webkit-padding-start: 2px;
+  -webkit-user-select: none;
+  background-image: url(select-arrow.png), 
+    -webkit-linear-gradient(#FAFAFA, #F4F4F4 40%, #E5E5E5);
+  background-position: center right;
+  background-repeat: no-repeat;
+  border: 1px solid #AAA;
+  color: #369;
+  font-size: 16px;
+  font-weight: bold;
+  margin: 0;
+  overflow: hidden;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+input.submit {    
+    font-size: 16px;
+    font-weight: bold;
+    height: 32px;
+}
+
+
+div.precios {
+    margin-top: 40px;
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+div.precios table {
+    border-spacing:0px;
+    border-collapse:collapse;
+    display: table;
+    text-align: center;
+    margin-left:auto; 
+    margin-right:auto;
+    background-color: #e6e6fa;
+    box-shadow: 3px 3px 8px #999;
+    font-weight: bold;
+}
+
+div.precios table th {
+    border-color: #CCC; 
+    border-style: solid; 
+    border-width: 1px;
+    width: 220px;
+    height: 35px;
+    font-size: 16px;
+    background-color: #369;
+    border-color: #369;
+    color: #fff;
+}
+  
+div.precios table td {
     border-color: #CCC; 
     border-style: solid; 
     border-width: 1px;
     height: 30px;
-    font-weight: bold;
-    font-size: 16px;
-    color: #369;
+    border-color: #369;
+    font-size: 14px;
+    color: #191970
 }
-  
-td {
-    border-color: #CCC; 
-    border-style: solid; 
-    border-width: 1px;
-    height: 22px;
+
+div.redessociales {
+    width: 1000px;
+    bottom: 0px;
+    position: absolute;
+    text-align: center;
+    background-color: #fff;    
+    border-top: 1px solid #d4cdc1;
+    padding-top: 5px;
+    padding-bottom: 5px;
 }
 
 /* header */
@@ -82,7 +146,8 @@ body {
     line-height: 1.1em; }
   body > div.container {
     width: 1000px;
-    margin: 0 auto 20px; }
+    margin: 0 auto 20px;
+  }
 
 a:link, a:visited {
   color: #369;
@@ -114,7 +179,7 @@ nav {
     padding: 0; }
     nav > ul li {
       float: left;
-      margin-right: 30px;
+      margin-right: 5px;
       font-size: 14px;
       text-align: center;
       line-height: 1.1em; }
