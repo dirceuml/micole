@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <title>Software para colegios orientado a los padres: MiCole - Vídeos</title>
+    <meta charset="utf-8">
+    
+    <meta property="og:title" content="MiCole.pe" />
+    <meta property="og:type" content="product" />
+    <meta property="og:url" content="http://micole.herokuapp.com/video.html" />
+    <meta property="og:image" content="http://micole.herokuapp.com/assets/logo.gif" />
+    <meta property="og:site_name" content="Mi Cole" />
+    <meta property="fb:admins" content="1276612484" />
+    <meta property="og:description" content="Vídeos mostrando la funcionalidad de MiCole"/>
+
+    <link rel="stylesheet" href="landingpage.css" />
+    <script type="text/javascript" src="lib.js"></script>
+  </head>
+
+  <body class="secundario">              
+    <!-- facebook -->
+    <div id="fb-root"></div>
+        <script>
+            (function(d, s, id) {
+              var js, fjs = d.getElementsByTagName(s)[0];
+              if (d.getElementById(id)) return;
+              js = d.createElement(s); js.id = id;
+              js.src = "//connect.facebook.net/es_LA/all.js#xfbml=1";
+              fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));
+        </script>
+        <!-- facebook -->
+        
+      <div class="container">         
+          <nav>              
+              <ul>
+                <li><strong><a href="/demo.html">Demo</a>&nbsp;|</strong></li>
+                <li><strong><a href="/video.html">Videos</a>&nbsp;|</strong></li>
+                <li><strong><a href="/precios.html">Precios</a>&nbsp;&nbsp;&nbsp;</strong></li>
+                <li><a class="button pequeno azuloscuro" href="log_in"><span>Log in</span></a></li>
+              </ul>              
+              <a href="/" class="logo">MiCole</a>
+          </nav>     
+          
+          <header>
+            <h2><span>Vídeos</span></h2>
+            <p>
+                En los siguientes videos podrá ver el sistema en uso y apreciar los beneficios que ofrece:
+            </p>
+            <p>
+                <a href="#" onclick="popup('videoControl')">Control diario</a> 
+            </p>
+
+            <p>
+                <a href="#" onclick="popup('videoEventos')">Comunicación de eventos</a> 
+            </p>
+
+            <p>
+                <a href="#" onclick="popup('videoNotificaciones')">Calendario de actividades y notificaciones a los padres</a> 
+            </p>
+
+            <p>
+                <a href="#" onclick="popup('videoSeguridad')">Seguridad de alumnos</a> 
+            </p>
+
+            <br>
+            <p>
+              También puede <a href="/demo.html">probar el sistema</a> accediendo como padre o profesor.
+            </p>
+          </header> 
+
+        <div id="blanket" style="display:none"></div>
+        
+        <div id="videoControl" style="display:none">
+            <div style="background-color: #000; color: #fff">
+               Control diario               
+            </div>
+            <iframe src="https://docs.google.com/file/d/0BxYRoYEO1myjbnU2WHRndVJRTFk/preview" width="640" height="385"></iframe>
+            <div><a href="#" onclick="popup('videoControl')" >Cerrar</a></div>
+        </div>
+        
+        <div id="videoEventos" style="display:none">
+            <div style="background-color: #000; color: #fff">Comunicación de eventos</div>
+            <iframe src="https://docs.google.com/file/d/0BxYRoYEO1myjNGhOM3MzT2NlYms/preview" width="640" height="385"></iframe>
+            <div><a href="#" onclick="popup('videoEventos')" >Cerrar</a></div>
+        </div>
+        
+        <div id="videoNotificaciones" style="display:none">
+            <div style="background-color: #000; color: #fff">Calendario de actividades y notificaciones a los padres</div>
+            <iframe src="https://docs.google.com/file/d/0BxYRoYEO1myjbmRUREgxTUJWMDQ/preview" width="640" height="385"></iframe>
+            <div><a href="#" onclick="popup('videoNotificaciones')" >Cerrar</a></div>
+        </div>
+        
+        <div id="videoSeguridad" style="display:none">
+            <div style="background-color: #000; color: #fff">Seguridad de alumnos</div>
+            <iframe src="https://docs.google.com/file/d/0BxYRoYEO1myjQ1N4ekRNeFdOU00/preview" width="640" height="385"></iframe>
+            <div><a href="#" onclick="popup('videoSeguridad')" >Cerrar</a></div>
+        </div>
+      
+      <div class="redessociales">
+          <!-- facebook: like -->
+          <div class="fb-like" data-href="http://micole.herokuapp.com" data-send="false" data-width="450" data-show-faces="false"></div>
+          <!-- facebook: like -->
+          
+          <!-- twiter -->
+          <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://micole.herokuapp.com" data-via="SistemaMiCole" data-lang="en">Tweet</a>
+            <script>
+              !function(d,s,id)
+              {
+                var js,fjs=d.getElementsByTagName(s)[0];
+                if(!d.getElementById(id))
+                {
+                    js=d.createElement(s);
+                    js.id=id;
+                    js.src="https://platform.twitter.com/widgets.js";
+                    fjs.parentNode.insertBefore(js,fjs);
+                }
+              }
+              (document,"script","twitter-wjs");
+            </script>
+          <!-- twiter -->
+          
+          <!-- google+ -->
+            <!-- Inserta esta etiqueta donde quieras que aparezca Botón +1. -->
+            <div class="g-plusone" data-size="medium"></div>
+
+            <!-- Inserta esta etiqueta después de la última etiqueta de Botón +1. -->
+            <script type="text/javascript">
+              window.___gcfg = {lang: 'es'};
+
+              (function() {
+                var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+                po.src = 'https://apis.google.com/js/plusone.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+              })();
+            </script>
+          <!-- google+ -->
+        </div>    
+
+  </div>
+
+
+    <!-- Google analytics -->
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-36705480-1']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+    <!-- Google analytics -->
+
+    <!-- UserVoice -->
+    <script type="text/javascript">
+      var uvOptions = {};
+      (function() {
+        var uv = document.createElement('script'); uv.type = 'text/javascript'; uv.async = true;
+        uv.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'widget.uservoice.com/qPlvTYYpeZitBca9rH6Uw.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(uv, s);
+      })();
+    </script>
+    <!-- UserVoice -->
+
+</body>
+
+</html>

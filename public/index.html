@@ -3,11 +3,34 @@
   <head>
     <title>Software para colegios orientado a los padres: MiCole</title>
     <meta charset="utf-8">
+    
+    <meta property="og:title" content="MiCole.pe" />
+    <meta property="og:type" content="product" />
+    <meta property="og:url" content="http://micole.herokuapp.com" />
+    <meta property="og:image" content="http://micole.herokuapp.com/assets/logo.gif" />
+    <meta property="og:site_name" content="Mi Cole" />
+    <meta property="fb:admins" content="1276612484" />
+    <meta property="og:description" content="Software para colegios orientado a los padres"/>
+
     <link rel="stylesheet" href="landingpage.css" />
   </head>
 
-  <body class="statement">
-      
+  <body class="principal">              
+        <!-- facebook -->
+        <div id="fb-root"></div>
+            <script>
+                (function(d, s, id) {
+                  var js, fjs = d.getElementsByTagName(s)[0];
+                  if (d.getElementById(id)) return;
+                  js = d.createElement(s); js.id = id;
+                  js.src = "//connect.facebook.net/es_LA/all.js#xfbml=1";
+                  fjs.parentNode.insertBefore(js, fjs);
+                }(document, 'script', 'facebook-jssdk'));
+            </script>
+        <!-- facebook -->
+        
+        
+      <!-- feedback -- >
         <script type="text/javascript">
             reformal_wdg_w    = "713";
             reformal_wdg_h    = "460";
@@ -32,80 +55,108 @@
         </script>
 
         <script type="text/javascript" language="JavaScript" src="http://idea.informer.com/tabn2v4.js?domain=micole"></script><noscript><a href="http://micole.idea.informer.com">Mi Cole feedback</a> <a href="http://idea.informer.com"> Powered by <img src="http://widget.idea.informer.com/tmpl/images/widget_logo.jpg" /></a></noscript>
-
-      <div class="container">
-          <nav>
+        <!-- feedback -->
+        
+      <div class="container">         
+          <nav>    
               <ul>
-                <li><strong><a href="/">Precios</a></strong><br />Desde S/. 0.50 por alumno</li>
-                <li><strong><a href="/">30 días de prueba</a></strong><br />Empieza ya!</li>
-                <li class="signin"><a href="log_in">Log in</a></li>
-              </ul>
+                <li><strong><a href="/demo.html">Demo</a>&nbsp;|</strong></li>
+                <li><strong><a href="/video.html">Videos</a>&nbsp;|</strong></li>
+                <li><strong><a href="/precios.html">Precios</a>&nbsp;&nbsp;&nbsp;</strong></li>
+                <li><a class="button pequeno azuloscuro" href="log_in"><span>Log in</span></a></li>
+                <!--li><strong><a href="/">Precios</a></strong></br>Desde S/. 0.50</li-->
+                <!--li class="signin"><a href="log_in">Log in</a></li-->
+              </ul>    
               <a href="/" class="logo">MiCole</a>
-              <div id="randomdiv1" class="stamp companies" style="display: none;"></div>
-              <div id="randomdiv2" class="stamp popular" style="display: none;"></div>
-              <div id="randomdiv3" class="stamp million" style="display: none;"></div>
-              <div id="randomdiv4" class="stamp friendly" style="display: none;"></div>
-              <div id="randomdiv5" class="stamp countries-color" style="display: none;"></div>
-              <div id="randomdiv6" class="stamp since" style="display: none;"></div>
-              <div id="randomdiv7" class="stamp easy" style="display: none;"></div>
-              <div id="randomdiv8" class="stamp uptime" style="display: none;"></div>
-              <div id="randomdiv9" class="stamp love" style="display: none;"></div>
-              <div id="randomdiv10" class="stamp millions" style="display: none;"></div>
-            </nav>
-          
-            <script type="text/javascript" language="JavaScript">
-
-/* Random Div Display Version 1.0. March 9, 2009
-   Will Bontrager http://www.willmaster.com/
-   Copyright 2009 Bontrager Connection, LLC */
-
-NumberOfDivsToRandomDisplay = 10;
-
-var CookieName = 'DivRamdomValueCookie';
-function DisplayRandomDiv() {
-var r = Math.ceil(Math.random() * NumberOfDivsToRandomDisplay);
-if(NumberOfDivsToRandomDisplay > 1) {
-   var ck = 0;
-   var cookiebegin = document.cookie.indexOf(CookieName + "=");
-   if(cookiebegin > -1) {
-      cookiebegin += 1 + CookieName.length;
-      cookieend = document.cookie.indexOf(";",cookiebegin);
-      if(cookieend < cookiebegin) { cookieend = document.cookie.length; }
-      ck = parseInt(document.cookie.substring(cookiebegin,cookieend));
-      }
-   while(r == ck) { r = Math.ceil(Math.random() * NumberOfDivsToRandomDisplay); }
-   document.cookie = CookieName + "=" + r;
-   }
-for( var i=1; i<=NumberOfDivsToRandomDisplay; i++) {
-   document.getElementById("randomdiv"+i).style.display="none";
-   }
-document.getElementById("randomdiv"+r).style.display="block";
-}
-DisplayRandomDiv();
-</script>
-
+          </nav>
       
-      <header>
-        <aside>Comunicación eficiente y efectiva con los padres</aside>
-        <h1 class='pitch'><span>Comunicación eficiente y efectiva con los padres</h1>
-        <ul style="list-style-image: url('check.jpg'); font-size: 24px; font-family: Arial; font-weight: bold;">
-            <li style="padding:15px">Notificaciones automáticas a padres sobre accidentes, eventos y otros</li>
-            <li style="padding:15px">Cuaderno de control virtualizado</li>
-            <li style="padding:15px">Seguridad para los alumnos</li>
-            <li style="padding:15px">Acceso móvil</li>
-        </ul>
-        <p id='personPitch'></p>
-      </header>
-      
-      <footer>
-          <p><a href="/" data-behavior="show_opt_in" class="optin">Noticias por Email</a> &nbsp; <span>|</span> &nbsp; <a href="/">Ayuda</a> &nbsp; <span>|</span> &nbsp; <a href="/">Contacto</a>  &nbsp; <span>|</span> &nbsp; Copyright &copy;2012, Todos los derechos reservados.</p>
-        </footer>
+          <header>
+            <aside>Comunicación eficiente y efectiva con los padres</aside>
+            <h1><span>Comunicación eficiente y efectiva con los padres</span></h1>
+            <ul style="list-style-image: url('check.jpg'); font-size: 24px; font-family: Arial; font-weight: bold;">
+                <li style="padding:15px">Notificaciones automáticas a padres sobre accidentes, eventos y otros</li>
+                <li style="padding:15px">Cuaderno de control virtualizado</li>
+                <li style="padding:15px">Seguridad para los alumnos</li>
+                <li style="padding:15px">Acceso móvil</li>
+            </ul>
+
+            <div style="text-align: center">
+                <a class="button mediano azul" href="/demo.html"><span>Prueba el sistema</span></a>&nbsp;&nbsp;&nbsp;
+                <a class="button mediano azul" href="/video.html"><span>Mira los vídeos</span></a>
+            </div>
+          </header>
+
+          <div class="redessociales">
+            <!-- facebook: like -->
+            <div class="fb-like" data-href="http://micole.herokuapp.com" data-send="false" data-width="450" data-show-faces="false"></div>
+            <!-- facebook: like -->
+
+            <!-- twiter -->
+            <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://micole.herokuapp.com" data-via="SistemaMiCole" data-lang="en">Tweet</a>
+
+            <script>
+              !function(d,s,id)
+              {
+                var js,fjs=d.getElementsByTagName(s)[0];
+                if(!d.getElementById(id))
+                {
+                    js=d.createElement(s);
+                    js.id=id;
+                    js.src="https://platform.twitter.com/widgets.js";
+                    fjs.parentNode.insertBefore(js,fjs);
+                }
+              }
+              (document,"script","twitter-wjs");
+            </script>
+            <!-- twiter -->
+
+            <!-- google+ -->
+            <div class="g-plusone" data-size="medium"></div>
+
+            <script type="text/javascript">
+              window.___gcfg = {lang: 'es'};
+
+              (function() {
+                var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+                po.src = 'https://apis.google.com/js/plusone.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+              })();
+            </script>
+            <!-- google+ -->
+          </div>
+
+          <!--footer>
+             <p><a href="/" data-behavior="show_opt_in" class="optin">Noticias por Email</a> &nbsp; <span>|</span> &nbsp; <a href="/">Ayuda</a> &nbsp; <span>|</span> &nbsp; Copyright &copy;2012, Todos los derechos reservados.</p>
+          </footer-->
+    </div> <!-- class container -->
 
 
-  </div>
-</div>
+    <!-- Google analytics -->
+    <script type="text/javascript">
 
-</div>
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-36705480-1']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+    <!-- Google analytics -->
+
+    <!-- UserVoice -->
+    <script type="text/javascript">
+      var uvOptions = {};
+      (function() {
+        var uv = document.createElement('script'); uv.type = 'text/javascript'; uv.async = true;
+        uv.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'widget.uservoice.com/qPlvTYYpeZitBca9rH6Uw.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(uv, s);
+      })();
+    </script>
+    <!-- UserVoice -->
 </body>
 
 </html>

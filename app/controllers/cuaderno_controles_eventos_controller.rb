@@ -115,7 +115,7 @@ class CuadernoControlesEventosController < ApplicationController
       if !@cuaderno_control_evento.alumno_id.nil?
         if TipoEvento.find(@cuaderno_control_evento.tipo_evento_id).notificacion_inmediata == 1
           PersonaVinculada.receptores_notificacion_evento(@cuaderno_control_evento.id).find_each do |p|
-            EventoMailer.notificacion_evento(@cuaderno_control_evento, p).deliver
+            EventoMailer.delay.notificacion_evento(@cuaderno_control_evento, p).deliver
           end
         end
       end
