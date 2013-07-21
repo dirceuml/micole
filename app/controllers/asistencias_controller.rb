@@ -49,7 +49,8 @@ class AsistenciasController < ApplicationController
     end
     
 #    @asistencias = Asistencia.por_seccion_fecha(seccion, fecha).movimiento(2)
-    @asistencias = Asistencia.por_seccion_fecha(seccion, fecha).salida
+
+    @asistencias = Asistencia.por_seccion_rango_fechas(seccion, fechaI, fechaF)
 
     respond_to do |format|
       format.html # index.html.erb
