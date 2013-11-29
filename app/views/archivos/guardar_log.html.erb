@@ -1,0 +1,7 @@
+﻿<h2> Guardar log </h2>
+<%= form_tag({:controller => "archivos", :action => "guardar_log"}, :method => "post") do %>
+   <%= text_area_tag "logs", @logs, :cols => 50, :rows => 10, :required => "required" %>
+   <br />
+   <%= submit_tag "Guardar log" %>
+<% end %>
+<p> <%= link_to "Volver a la lista de archivos", :controller => "archivos", :action => "listar_archivos" %> </p>

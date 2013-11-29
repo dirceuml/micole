@@ -1,0 +1,21 @@
+﻿<div class="box round first grid">
+                <h2>
+                    Subir archivo
+                </h2>
+                <div class="block">                                                           
+                    
+                                        
+<%= form_tag({:controller => "archivos", :action => "subir_archivos"}, :method => "post", :multipart => true) do %>
+   <%= file_field_tag "archivo", :required => "required" %>
+   <%= submit_tag "Subir archivo" %>
+<% end %>
+<% if @formato_erroneo %>
+  <div>
+     <p> El formato ingresado es incorrecto. Usted sólo puede subir archivos .pdf, .doc y .docx </p>
+  </div>
+<% end %>                                       
+                                        
+			
+                    
+                </div>
+            </div>

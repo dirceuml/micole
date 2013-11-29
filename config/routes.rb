@@ -1,5 +1,12 @@
 Micole::Application.routes.draw do 
 
+  get "admin/archivos/subir_archivos" => "archivos#subir_archivos", :as => "subir_archivos"
+  post "admin/archivos/subir_archivos" => "archivos#subir_archivos", :as => "subir_archivos"
+  get "admin/archivos/listar" => "archivos#listar_archivos", :as => "listar_archivos"
+  post "admin/archivos/borrar_archivos" => "archivos#borrar_archivos", :as => "borrar_archivos"
+  get "admin/archivos/guardar_log" => "archivos#guardar_log", :as => "guardar_log"
+  post "admin/archivos/guardar_log" => "archivos#guardar_log", :as => "guardar_log"
+
   resources :perfiles_permisos
 
   resources :permisos
