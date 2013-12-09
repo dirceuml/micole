@@ -40,12 +40,14 @@ class AsistenciasController < ApplicationController
   
   def consultar
     seccion = params[:seccion_id]
+    tipo_movimiento = params[:tipo_movimiento]
     if params[:seccion_id].nil?
       fechaI = Date.current
       fechaF = Date.current
     else
       fechaI = params[:fechaI].to_date
       fechaF = params[:fechaF].to_date
+
     end
     
 #    @asistencias = Asistencia.por_seccion_fecha(seccion, fecha).movimiento(2)

@@ -1,33 +1,28 @@
-<h1>Listing tipos_eventos</h1>
+<div data-role="header">
+  <h1>Tipos de eventos</h1>
+  <% if can? :create, TipoEvento %>
+    <%= link_to 'Registrar', new_tipo_evento_path, "data-icon" => "plus", "class" => "ui-btn-right" %>
+  <% end %>
+</div>
 
-<table>
-  <tr>
-    <th>Colegio</th>
-    <th>Descripcion</th>
-    <th>Notificacion inmediata</th>
-    <th>Alcance</th>
-    <th>Cuaderno control</th>
-    <th>Usuario</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
-<% @tipos_eventos.each do |tipo_evento| %>
-  <tr>
-    <td><%= tipo_evento.colegio_id %></td>
-    <td><%= tipo_evento.descripcion %></td>
-    <td><%= tipo_evento.notificacion_inmediata %></td>
-    <td><%= tipo_evento.alcance %></td>
-    <td><%= tipo_evento.cuaderno_control %></td>
-    <td><%= tipo_evento.usuario %></td>
-    <td><%= link_to 'Show', tipo_evento %></td>
-    <td><%= link_to 'Edit', edit_tipo_evento_path(tipo_evento) %></td>
-    <td><%= link_to 'Destroy', tipo_evento, confirm: 'Are you sure?', method: :delete %></td>
-  </tr>
-<% end %>
-</table>
-
-<br />
-
-<%= link_to 'New Tipo evento', new_tipo_evento_path %>
+<div data-role="content">
+  <ul data-role="listview" data-filter="true">
+    <% @tipos_eventos.each do |tipo_evento| %>
+    <li data-filtertext="<%= "#{tipo_evento.descripcion} #{ListaValor.find_by_tabla_and_item(1, tipo_evento.alcance).descripcion}" %>" >
+      <% if can? :update, tipo_evento %>
+        <% link_opcion = edit_tipo_evento_path(tipo_evento) %>
+      <% else %>
+        <% link_opcion = tipo_evento %>
+      <% end %>
+      <%= link_to link_opcion do %>
+        <%= simple_format("#{tipo_evento.descripcion}") %>
+        <!-- #{ListaValor.find_by_tabla_and_item(1, tipo_evento.alcance).descripcion} -->
+      <% end %>
+      
+      <% if can? :destroy, tipo_evento %>
+        <%= link_to 'Eliminar', tipo_evento, confirm: '¿Seguro que desea eliminar el registro?', method: :delete, "data-icon" => "delete" %>
+      <% end %>
+    </li>
+    <% end %>
+  </ul>
+</div>
