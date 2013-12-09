@@ -1,35 +1,31 @@
-<p id="notice"><%= notice %></p>
+<div id='tipo_evento' data-role="header">
+  <h1>Detalles</h1>
+  <%= link_to 'Aceptar', tipos_eventos_path, "data-icon" => "check", "data-mini" => "true"  %>
+</div>
 
-<p>
-  <b>Colegio:</b>
-  <%= @tipo_evento.colegio_id %>
-</p>
-
-<p>
-  <b>Descripcion:</b>
-  <%= @tipo_evento.descripcion %>
-</p>
-
-<p>
+<div data-role="content" style="clear: left">
+  <b>Descripcion:</b> <%= @tipo_evento.descripcion %> <p>
   <b>Notificacion inmediata:</b>
-  <%= @tipo_evento.notificacion_inmediata %>
-</p>
+      <% if @tipo_evento.notificacion_inmediata == 1 %>
+        Si
+      <% else %>
+        No
+      <% end %>
+      <p>
+  <b>Alcance:</b> 
+      <%= "#{ListaValor.find_by_tabla_and_item(1, @tipo_evento.alcance).descripcion}" %>
+      <p>
+  <b>En cuaderno de control:</b>
+      <% if @tipo_evento.cuaderno_control == 1 %>
+        Si
+      <% else %>
+        No
+      <% end %>
+      <p>
+</div>
 
-<p>
-  <b>Alcance:</b>
-  <%= @tipo_evento.alcance %>
-</p>
-
-<p>
-  <b>Cuaderno control:</b>
-  <%= @tipo_evento.cuaderno_control %>
-</p>
-
-<p>
-  <b>Usuario:</b>
-  <%= @tipo_evento.usuario %>
-</p>
-
-
-<%= link_to 'Edit', edit_tipo_evento_path(@tipo_evento) %> |
-<%= link_to 'Back', tipos_eventos_path %>
+<div data-role="footer">
+  <% if can? :update, @tipo_evento %>
+    <%= link_to 'Editar', tipos_eventos_path(@tipo_evento), "class" => "ui-btn-left", "data-inline" => "true", "data-theme" => "a", "data-icon" => "gear", "data-mini" => "true" %>
+  <% end %>
+</div>

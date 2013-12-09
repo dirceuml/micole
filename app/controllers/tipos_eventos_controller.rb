@@ -46,7 +46,7 @@ class TiposEventosController < ApplicationController
 
     respond_to do |format|
       if @tipo_evento.save
-        format.html { redirect_to @tipo_evento, notice: 'Tipo evento was successfully created.' }
+        format.html { redirect_to @tipo_evento, notice: 'Tipo de evento fue creado satisfactoriamente' }
         format.json { render json: @tipo_evento, status: :created, location: @tipo_evento }
       else
         format.html { render action: "new" }
@@ -62,7 +62,7 @@ class TiposEventosController < ApplicationController
 
     respond_to do |format|
       if @tipo_evento.update_attributes(params[:tipo_evento])
-        format.html { redirect_to @tipo_evento, notice: 'Tipo evento was successfully updated.' }
+        format.html { redirect_to @tipo_evento, notice: 'Tipo de evento fue actualizado satisfactoriamente' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
