@@ -2,6 +2,10 @@ Micole::Application.routes.draw do
 
   get "admin/archivos/subir_archivos" => "archivos#subir_archivos", :as => "subir_archivos"
   post "admin/archivos/subir_archivos" => "archivos#subir_archivos", :as => "subir_archivos"
+  get "admin/archivos/cargar_alumnos" => "archivos#cargar_alumnos", :as => "cargar_alumnos"
+  post "admin/archivos/cargar_alumnos" => "archivos#cargar_alumnos", :as => "cargar_alumnos"
+  get "admin/archivos/cargar_padres" => "archivos#cargar_padres", :as => "cargar_padres"
+  post "admin/archivos/cargar_padres" => "archivos#cargar_padres", :as => "cargar_padres"
   get "admin/archivos/listar" => "archivos#listar_archivos", :as => "listar_archivos"
   post "admin/archivos/borrar_archivos" => "archivos#borrar_archivos", :as => "borrar_archivos"
   get "admin/archivos/guardar_log" => "archivos#guardar_log", :as => "guardar_log"
