@@ -56,9 +56,48 @@ class ArchivosController < ApplicationController
             subir_archivo = "ok";
             
             File.open("#{Ruta_directorio_archivos}#{nombre}", "r").each_line do |line|
-              codigo, nombre_alumno = line.split("|")
+              dni, nombres, apellido_paterno, apellido_materno, fecha_nacimiento, telefono_fijo, telefono_movil, direccion, correo = line.split("|")
               
+              alumno = Alumno.find_by_dni(dni)
+
+              if !alumno.nil?
+                alumno.nombres = nombres
+                alumno.apellido_paterno = apellido_paterno
+                alumno.apellido_materno = apellido_materno
+                alumno.correo = correo
+                alumno.fecha_nacimiento = fecha_nacimiento
+                alumno.direccion = direccion
+                alumno.telefono_fijo = telefono_fijo
+                alumno.telefono_movil = telefono_movil
+                alumno.usuario= :current_user
               
+                alumno.update_attributes(
+                  :nombres => nombres,
+                  :apellido_paterno => apellido_paterno,
+                  :apellido_materno => apellido_materno,
+                  :fecha_nacimiento => fecha_nacimiento,
+                  :telefono_fijo => telefono_fijo,
+                  :telefono_movil => telefono_movil,
+                  :direccion => direccion,
+                  :correo => correo,
+                  :usuario => :current_user
+                )
+              else
+                Alumno.create(
+                  :dni => dni,
+                  :nombres => nombres,
+                  :apellido_paterno => apellido_paterno,
+                  :apellido_materno => apellido_materno,
+                  :fecha_nacimiento => fecha_nacimiento,
+                  :telefono_fijo => telefono_fijo,
+                  :telefono_movil => telefono_movil,
+                  :direccion => direccion,
+                  :correo => correo,
+                  :usuario => :current_user
+                )
+              end
+            
+            
             end
          else
             subir_archivo = "error";

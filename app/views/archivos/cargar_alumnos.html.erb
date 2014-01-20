@@ -5,9 +5,9 @@
                 <div class="block">                                                           
                     
                                         
-<%= form_tag({:controller => "archivos", :action => "subir_archivos"}, :method => "post", :multipart => true) do %>
+<%= form_tag({:controller => "archivos", :action => "cargar_alumnos"}, :method => "post", :multipart => true) do %>
    <%= file_field_tag "archivo", :required => "required" %>
-   <%= submit_tag "Subir archivo" %>
+   <%= submit_tag "Cargar alumnos" %>
 <% end %>
 <% if @formato_erroneo %>
   <div>
