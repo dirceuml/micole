@@ -1,13 +1,13 @@
 ﻿<div class="box round first grid">
                 <h2>
-                    Cargar padres
+                    Cargar vínculos entre alumnos y padres
                 </h2>
                 <div class="block">                                                           
                     
                                         
-<%= form_tag({:controller => "archivos", :action => "cargar_padres"}, :method => "post", :multipart => true) do %>
+<%= form_tag({:controller => "archivos", :action => "cargar_vinculos"}, :method => "post", :multipart => true) do %>
    <%= file_field_tag "archivo", :required => "required" %>
-   <%= submit_tag "Cargar padres" %>
+   <%= submit_tag "Cargar vínculos" %>
 <% end %>
 <% if @formato_erroneo %>
   <div>
