@@ -147,6 +147,7 @@ class ArchivosController < ApplicationController
                   :telefono_fijo => telefono_fijo,
                   :telefono_movil => telefono_movil,
                   :correo => correo,
+                  :foto => "foto.jpg",
                   :user => :current_user
                 )
                 
