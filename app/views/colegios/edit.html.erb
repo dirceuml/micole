@@ -1,6 +1,6 @@
-<h1>Editing colegio</h1>
+<div data-role="header">
+    <h1>Editar colegio</h1>
+    <%= link_to 'Regresar', colegios_path, "data-icon" => "back", "class" => "ui-btn-left", "data-mini" => "true" %>
+</div>
 
 <%= render 'form' %>
-
-<%= link_to 'Show', @colegio %> |
-<%= link_to 'Back', colegios_path %>

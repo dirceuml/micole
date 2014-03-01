@@ -1,7 +1,7 @@
 <%= form_for(@grado) do |f| %>
   <% if @grado.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@grado.errors.count, "error") %> prohibited this grado from being saved:</h2>
+    <div id="error_explanation" data-role="header" data-theme="e">
+      <h2><%= pluralize(@grado.errors.count, "error") %> impidieron que se grabe el registro:</h2>
 
       <ul>
       <% @grado.errors.full_messages.each do |msg| %>
@@ -11,19 +11,20 @@
     </div>
   <% end %>
 
+<div data-role="fieldcontain">
   <div class="field">
-    <%= f.label :anio_escolar_id %><br />
-    <%= f.number_field :anio_escolar_id %>
+    <%= f.hidden_field :anio_escolar_id, :value => 1 %>
   </div>
-  <div class="field">
+ <div class="field">
     <%= f.label :grado %><br />
     <%= f.number_field :grado %>
   </div>
+  
   <div class="field">
-    <%= f.label :usuario %><br />
-    <%= f.text_field :usuario %>
+    <%= f.hidden_field :usuario, :value => current_user.usuario %>
   </div>
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit "Grabar", "data-inline" => "true", "data-theme" => "a", "data-icon" => "check", "data-mini" => "true" %>
   </div>
+</div>
 <% end %>

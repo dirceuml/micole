@@ -1,5 +1,7 @@
-<h1>New grado</h1>
+<div data-role="header">
+  <h1>Crear grado</h1>
+  <%= link_to 'Regresar', grados_path, "data-icon" => "back", "class" => "ui-btn-left", "data-mini" => "true" %>
+</div>
 
 <%= render 'form' %>
 
-<%= link_to 'Back', grados_path %>

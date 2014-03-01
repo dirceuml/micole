@@ -1,7 +1,7 @@
 <%= form_for(@lista_valor) do |f| %>
   <% if @lista_valor.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@lista_valor.errors.count, "error") %> prohibited this lista_valor from being saved:</h2>
+    <div id="error_explanation" data-role="header" data-theme="e">
+      <h2><%= pluralize(@lista_valor.errors.count, "error") %> impidieron que se grabe el registro:</h2>
 
       <ul>
       <% @lista_valor.errors.full_messages.each do |msg| %>
@@ -10,24 +10,35 @@
       </ul>
     </div>
   <% end %>
+  
+  
+  <div data-role="fieldcontain">
+    <div class="field">
+        <%= "Tipo de variable" %><br />
+        <%= collection_select(:lista_valor, :tabla, ListaValor.where("tabla=0"), :item, :descripcion, {:prompt => ':: Seleccione ::'}, {"data-mini" => "true"}) %>
+    </div>
+    <div class="field">
+        <%= f.label :item %><br />
+        <%= f.number_field :item %>
+    </div>
+    <div class="field">
+        <%= f.label :descripcion %><br />
+        <%= f.text_field :descripcion %>
+    </div>
+    <div class="field">
+        <%= f.label :abreviatura %><br />
+        <%= f.text_field :abreviatura %>
+    </div>    
+    <div class="actions">
+        <%= f.submit "Grabar", "data-inline" => "true", "data-theme" => "a", "data-icon" => "check", "data-mini" => "true" %>
+    </div>
+  </div>
 
+  
+  <!--
   <div class="field">
     <%= f.label :tabla %><br />
     <%= f.number_field :tabla %>
   </div>
-  <div class="field">
-    <%= f.label :item %><br />
-    <%= f.number_field :item %>
-  </div>
-  <div class="field">
-    <%= f.label :descripcion %><br />
-    <%= f.text_field :descripcion %>
-  </div>
-  <div class="field">
-    <%= f.label :abreviatura %><br />
-    <%= f.text_field :abreviatura %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+  -->
 <% end %>

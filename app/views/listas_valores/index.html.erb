@@ -1,29 +1,84 @@
-<h1>Listing listas_valores</h1>
+<div data-role="header">
+  <h1>Variables</h1>
+  <% if can? :create, ListaValor %>
+    <%= link_to 'Registrar', new_lista_valor_path, "data-icon" => "plus", "class" => "ui-btn-right" %>
+  <% end %>
+</div>
 
-<table>
-  <tr>
-    <th>Tabla</th>
-    <th>Item</th>
-    <th>Descripcion</th>
-    <th>Abreviatura</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
+<div data-role="content" class="ui-content" role="main">
+  
+  <div data-role="collapsible-set" data-theme="b" data-content-theme="d" data-inset="false">
+    
+   <% @listas_valores.detalle(0).order("descripcion").each do |lista_tabla| %>
+     
+    <div data-role="collapsible" data-collapsed="true">
+      <h2><%= lista_tabla.descripcion %></h2>
+      <ul data-role="listview" data-filter="true">
+        <% @listas_valores.detalle(lista_tabla.item).order("item").each do |lista_valor| %>    
+          <li data-filtertext="<%= "#{lista_valor.descripcion}" %>" >
+            <% if can? :update, lista_valor %>
+                <% link_opcion = edit_lista_valor_path(lista_valor) %>
+            <% else %>
+                <% link_opcion = lista_valor %>
+            <% end %>
+            <%= link_to link_opcion do %>
+                <%= simple_format("#{lista_valor.item}  -  #{lista_valor.descripcion}") %>
+                
+                <% if can? :destroy, lista_valor %>
+                    <%= link_to 'Eliminar', lista_valor, confirm: '¿Seguro que desea eliminar el registro?', method: :delete, "data-icon" => "delete" %>
+                <% end %>                                    
+            <% end %>
+          </li>
+        <% end  %>
+      </ul>
+    </div>
+  <% end  %>
+    
+        
+  </div> <!-- collapsible set -->
+  
+</div>
 
-<% @listas_valores.each do |lista_valor| %>
-  <tr>
-    <td><%= lista_valor.tabla %></td>
-    <td><%= lista_valor.item %></td>
-    <td><%= lista_valor.descripcion %></td>
-    <td><%= lista_valor.abreviatura %></td>
-    <td><%= link_to 'Show', lista_valor %></td>
-    <td><%= link_to 'Edit', edit_lista_valor_path(lista_valor) %></td>
-    <td><%= link_to 'Destroy', lista_valor, confirm: 'Are you sure?', method: :delete %></td>
-  </tr>
+
+
+
+<!-- prueba
+<% if params[:item].nil? %>
+  <% tabla_id = "" %>
+<% else %>
+  <% tabla_id = params[:item] %>
 <% end %>
-</table>
 
-<br />
+<div data-role="content">
+  <%= form_tag(listas_valores_path, {:method => :get, "data-ajax" => "false", "name" => "buscar"}) do %>
+    <div data-role="fieldcontain">
+      Tipo de Variable: <%= collection_select(:lista_valor, :item, ListaValor.where("tabla= 0").order("Descripcion"), :item, :descripcion, {:selected => tabla_id}, {"data-mini" => "true", :name => "tabla_id"}) %><br />
+      <%= submit_tag "Buscar", "data-inline" => "true", "data-theme" => "a", "data-icon" => "search", "data-mini" => "true", :name => nil %>
+    </div>
+  <% end %>
+  
+  <ul data-role="listview" data-filter="true">
+   <% if !tabla_id.empty? %>
+    <% @listas_valores.detalle(tabla_id).each do |lista_valor| %>
+    <li data-filtertext="<%= "#{lista_valor.descripcion}" %>" >
+      <% if can? :update, lista_valor %>
+        <% link_opcion = edit_lista_valor_path(lista_valor) %>
+      <% else %>
+        <% link_opcion = lista_valor %>
+      <% end %>
+      <%= link_to link_opcion do %>
+        <%= simple_format("#{lista_valor.descripcion}") %>
+      <% end %>
+      
+      <% if can? :destroy, lista_valor %>
+        <%= link_to 'Eliminar', lista_valor, confirm: '¿Seguro que desea eliminar el registro?', method: :delete, "data-icon" => "delete" %>
+      <% end %>
+    </li>
+    <% end %>
+    <% end %>
+  </ul>
+</div>
 
-<%= link_to 'New Lista valor', new_lista_valor_path %>
+-->
+
+

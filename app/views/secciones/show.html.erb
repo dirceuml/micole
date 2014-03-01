@@ -1,20 +1,15 @@
-<p id="notice"><%= notice %></p>
+<div id='seccion' data-role="header">
+  <h1>Detalles</h1>
+  <%= link_to 'Aceptar', secciones_path, "data-icon" => "check", "data-mini" => "true"  %>
+</div>
 
-<p>
-  <b>Grado:</b>
-  <%= @seccion.grado_id %>
-</p>
+<div data-role="content" style="clear: left">
+  <b>Grado:</b> <%= Grado.find(@seccion.grado_id).grado %> <p>
+  <b>Seccion:</b> <%= @seccion.seccion %> <p>
+</div>
 
-<p>
-  <b>Seccion:</b>
-  <%= @seccion.seccion %>
-</p>
-
-<p>
-  <b>Usuario:</b>
-  <%= @seccion.usuario %>
-</p>
-
-
-<%= link_to 'Edit', edit_seccion_path(@seccion) %> |
-<%= link_to 'Back', secciones_path %>
+<div data-role="footer">
+  <% if can? :update, @seccion %>
+    <%= link_to 'Editar', edit_seccion_path(@seccion), "class" => "ui-btn-left", "data-inline" => "true", "data-theme" => "a", "data-icon" => "gear", "data-mini" => "true" %>
+  <% end %>
+</div>

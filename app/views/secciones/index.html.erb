@@ -1,27 +1,27 @@
-<h1>Listing secciones</h1>
+<div data-role="header">
+  <h1>Secciones</h1>
+  <% if can? :create, Seccion %>
+    <%= link_to 'Registrar', new_seccion_path, "data-icon" => "plus", "class" => "ui-btn-right" %>
+  <% end %>
+</div>
 
-<table>
-  <tr>
-    <th>Grado</th>
-    <th>Seccion</th>
-    <th>Usuario</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
-<% @secciones.each do |seccion| %>
-  <tr>
-    <td><%= seccion.grado_id %></td>
-    <td><%= seccion.seccion %></td>
-    <td><%= seccion.usuario %></td>
-    <td><%= link_to 'Show', seccion %></td>
-    <td><%= link_to 'Edit', edit_seccion_path(seccion) %></td>
-    <td><%= link_to 'Destroy', seccion, confirm: 'Are you sure?', method: :delete %></td>
-  </tr>
-<% end %>
-</table>
-
-<br />
-
-<%= link_to 'New Seccion', new_seccion_path %>
+<div data-role="content">
+  <ul data-role="listview" data-filter="true">
+    <% @secciones.seccion_anioescolar(1).each do |seccion| %>
+    <li data-filtertext="<%= "#{Grado.find(seccion.grado_id).grado} - #{seccion.seccion}" %>" >
+      <% if can? :update, seccion %>
+        <% link_opcion = edit_seccion_path(seccion) %>
+      <% else %>
+        <% link_opcion = seccion %>
+      <% end %>
+      <%= link_to link_opcion do %>
+        <%= simple_format("Seccion : #{Grado.find(seccion.grado_id).grado} -  #{seccion.seccion}" ) %>
+      <% end %>
+      
+      <% if can? :destroy, seccion %>
+        <%= link_to 'Eliminar', seccion, confirm: '¿Seguro que desea eliminar el registro?', method: :delete, "data-icon" => "delete" %>
+      <% end %>
+    </li>
+    <% end %>
+  </ul>
+</div>

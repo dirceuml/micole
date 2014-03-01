@@ -1,45 +1,20 @@
-<p id="notice"><%= notice %></p>
+<div id='colegio' data-role="header">
+  <h1>Detalles</h1>
+  <%= link_to 'Aceptar', colegios_path, "data-icon" => "check", "data-mini" => "true"  %>
+</div>
 
-<p>
-  <b>Nombre:</b>
-  <%= @colegio.nombre %>
-</p>
+<div data-role="content" style="clear: left">
+  <b>Descripcion:</b> <%= @colegio.nombre %> <p>
+  <b>Ruc:</b> <%= @colegio.ruc %> <p>
+  <b>Direccion:</b> <%= @colegio.direccion %> <p>
+  <b>Telefono:</b> <%= @colegio.telefono %> <p>
+  <b>Correo:</b> <%= @colegio.correo %> <p>
+  <b>Logo:</b> <%= @colegio.logo %> <p>
+  <b>Director:</b> <%= @colegio.director %> <p>
+</div>
 
-<p>
-  <b>Ruc:</b>
-  <%= @colegio.ruc %>
-</p>
-
-<p>
-  <b>Direccion:</b>
-  <%= @colegio.direccion %>
-</p>
-
-<p>
-  <b>Telefono:</b>
-  <%= @colegio.telefono %>
-</p>
-
-<p>
-  <b>Correo:</b>
-  <%= @colegio.correo %>
-</p>
-
-<p>
-  <b>Logo:</b>
-  <%= @colegio.logo %>
-</p>
-
-<p>
-  <b>Director:</b>
-  <%= @colegio.director %>
-</p>
-
-<p>
-  <b>Usuario:</b>
-  <%= @colegio.usuario %>
-</p>
-
-
-<%= link_to 'Edit', edit_colegio_path(@colegio) %> |
-<%= link_to 'Back', colegios_path %>
+<div data-role="footer">
+  <% if can? :update, @colegio %>
+    <%= link_to 'Editar', edit_colegio_path(@colegio), "class" => "ui-btn-left", "data-inline" => "true", "data-theme" => "a", "data-icon" => "gear", "data-mini" => "true" %>
+  <% end %>
+</div>

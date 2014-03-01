@@ -1,45 +1,27 @@
-<h1>Listing colegios</h1>
+<div data-role="header">
+  <h1>Colegios</h1>
+  <% if can? :create, Colegio %>
+    <%= link_to 'Registrar', new_colegio_path, "data-icon" => "plus", "class" => "ui-btn-right" %>
+  <% end %>
+</div>
 
-<table>
-  <tr>
-    <th>Nombre</th>
-    <th>Ruc</th>
-    <th>Direccion</th>
-    <th>Telefono</th>
-    <th>Correo</th>
-    <th>Logo</th>
-    <th>Director</th>
-    <th>Usuario</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
-<% @colegios.each do |colegio| %>
-  <tr>
-    <td><%= colegio.nombre %></td>
-    <td><%= colegio.ruc %></td>
-    <td><%= colegio.direccion %></td>
-    <td><%= colegio.telefono %></td>
-    <td><%= colegio.correo %></td>
-    <td><%= colegio.logo %></td>
-    <td><%= colegio.director %></td>
-    <td><%= colegio.usuario %></td>
-    <% if can? :read, @colegio %>
-        <td><%= link_to 'Show', colegio %></td>
+<div data-role="content">
+  <ul data-role="listview" data-filter="true">
+    <% @colegios.each do |colegio| %>
+    <li data-filtertext="<%= "#{colegio.nombre} #{colegio.direccion}" %>" >
+      <% if can? :update, colegio %>
+        <% link_opcion = edit_colegio_path(colegio) %>
+      <% else %>
+        <% link_opcion = colegio %>
+      <% end %>
+      <%= link_to link_opcion do %>
+        <%= simple_format("#{colegio.nombre}") %>
+      <% end %>
+      
+      <% if can? :destroy, colegio %>
+        <%= link_to 'Eliminar', colegio, confirm: '¿Seguro que desea eliminar el registro?', method: :delete, "data-icon" => "delete" %>
+      <% end %>
+    </li>
     <% end %>
-    <% if can? :update, @colegio %>
-        <td><%= link_to 'Edit', edit_colegio_path(colegio) %></td>
-    <% end %>
-    <% if can? :destroy, @colegio %>
-        <td><%= link_to 'Destroy', colegio, confirm: 'Are you sure?', method: :delete %></td>
-    <% end %>
-  </tr>
-<% end %>
-</table>
-
-<br />
-
-<% if can? :create, @colegio %>
-    <%= link_to 'New Colegio', new_colegio_path %>
-<% end %>
+  </ul>
+</div>

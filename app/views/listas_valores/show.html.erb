@@ -1,25 +1,20 @@
-<p id="notice"><%= notice %></p>
+<div id='lista_valor' data-role="header">
+  <h1>Detalles</h1>
+  <%= link_to 'Aceptar', listas_valores_path, "data-icon" => "check", "data-mini" => "true"  %>
+</div>
 
-<p>
-  <b>Tabla:</b>
-  <%= @lista_valor.tabla %>
-</p>
+<div data-role="content" style="clear: left">
+  <b>Alcance:</b> 
+      <%= "#{ListaValor.find_by_tabla_and_item(0, @lista_valor.tabla).descripcion}" %>
+      <p>
+  <b>Item:</b> <%= @lista_valor.item %> <p>
+  <b>Descripcion:</b> <%= @lista_valor.descripcion %> <p>
+  <b>Abreviatura:</b> <%= @lista_valor.abreviatura %> <p>
 
-<p>
-  <b>Item:</b>
-  <%= @lista_valor.item %>
-</p>
+</div>
 
-<p>
-  <b>Descripcion:</b>
-  <%= @lista_valor.descripcion %>
-</p>
-
-<p>
-  <b>Abreviatura:</b>
-  <%= @lista_valor.abreviatura %>
-</p>
-
-
-<%= link_to 'Edit', edit_lista_valor_path(@lista_valor) %> |
-<%= link_to 'Back', listas_valores_path %>
+<div data-role="footer">
+  <% if can? :update, @lista_valor %>
+    <%= link_to 'Editar', edit_lista_valor_path(@lista_valor), "class" => "ui-btn-left", "data-inline" => "true", "data-theme" => "a", "data-icon" => "gear", "data-mini" => "true" %>
+  <% end %>
+</div>

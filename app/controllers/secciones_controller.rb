@@ -4,7 +4,7 @@ class SeccionesController < ApplicationController
   # GET /secciones
   # GET /secciones.json
   def index
-    @secciones = Seccion.all
+    @secciones = Seccion.order("grado_id")
 
     respond_to do |format|
       format.html # index.html.erb
@@ -46,7 +46,7 @@ class SeccionesController < ApplicationController
 
     respond_to do |format|
       if @seccion.save
-        format.html { redirect_to @seccion, notice: 'Seccion was successfully created.' }
+        format.html { redirect_to @seccion, notice: 'La seccion fue creado satisfactoriamente.' }
         format.json { render json: @seccion, status: :created, location: @seccion }
       else
         format.html { render action: "new" }
@@ -62,7 +62,7 @@ class SeccionesController < ApplicationController
 
     respond_to do |format|
       if @seccion.update_attributes(params[:seccion])
-        format.html { redirect_to @seccion, notice: 'Seccion was successfully updated.' }
+        format.html { redirect_to @seccion, notice: 'La seccion fue actualizado satisfactoriamente.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

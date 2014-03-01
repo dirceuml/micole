@@ -1,7 +1,7 @@
 <%= form_for(@seccion) do |f| %>
   <% if @seccion.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@seccion.errors.count, "error") %> prohibited this seccion from being saved:</h2>
+    <div id="error_explanation" data-role="header" data-theme="e">
+      <h2><%= pluralize(@seccion.errors.count, "error") %> impidieron que se grabe el registro:</h2>
 
       <ul>
       <% @seccion.errors.full_messages.each do |msg| %>
@@ -10,20 +10,24 @@
       </ul>
     </div>
   <% end %>
-
+  
+<div data-role="fieldcontain">
   <div class="field">
-    <%= f.label :grado_id %><br />
-    <%= f.number_field :grado_id %>
+    <%= f.label :Grado, "for" => "name" %><br />
+    <%= collection_select(:seccion, :grado_id, Grado.where("anio_escolar_id= ?", 1).order("grado"), :id, :grado, {:prompt => ':: Seleccione ::'}, {"data-mini" => "true"}) %>
   </div>
+  
   <div class="field">
     <%= f.label :seccion %><br />
     <%= f.text_field :seccion %>
   </div>
+  
   <div class="field">
-    <%= f.label :usuario %><br />
-    <%= f.text_field :usuario %>
+    <%= f.hidden_field :usuario, :value => current_user.usuario %>
   </div>
+    
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit "Grabar", "data-inline" => "true", "data-theme" => "a", "data-icon" => "check", "data-mini" => "true" %>
   </div>
+</div>
 <% end %>

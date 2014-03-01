@@ -1,27 +1,27 @@
-<h1>Listing grados</h1>
+<div data-role="header">
+  <h1>Grados</h1>
+  <% if can? :create, Grado %>
+    <%= link_to 'Registrar', new_grado_path, "data-icon" => "plus", "class" => "ui-btn-right" %>
+  <% end %>
+</div>
 
-<table>
-  <tr>
-    <th>Anio escolar</th>
-    <th>Grado</th>
-    <th>Usuario</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
-<% @grados.each do |grado| %>
-  <tr>
-    <td><%= grado.anio_escolar_id %></td>
-    <td><%= grado.grado %></td>
-    <td><%= grado.usuario %></td>
-    <td><%= link_to 'Show', grado %></td>
-    <td><%= link_to 'Edit', edit_grado_path(grado) %></td>
-    <td><%= link_to 'Destroy', grado, confirm: 'Are you sure?', method: :delete %></td>
-  </tr>
-<% end %>
-</table>
-
-<br />
-
-<%= link_to 'New Grado', new_grado_path %>
+<div data-role="content">
+  <ul data-role="listview" data-filter="true">
+    <% @grados.anio_escolar(1).each do |grado| %>
+    <li data-filtertext="<%= "#{grado.grado}" %>" >
+      <% if can? :update, grado %>
+        <% link_opcion = edit_grado_path(grado) %>
+      <% else %>
+        <% link_opcion = grado %>
+      <% end %>
+      <%= link_to link_opcion do %>
+        <%= simple_format("Grado : #{grado.grado}") %>
+      <% end %>
+      
+      <% if can? :destroy, grado %>
+        <%= link_to 'Eliminar', grado, confirm: '¿Seguro que desea eliminar el registro?', method: :delete, "data-icon" => "delete" %>
+      <% end %>
+    </li>
+    <% end %>
+  </ul>
+</div>

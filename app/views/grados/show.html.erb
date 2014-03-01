@@ -1,20 +1,15 @@
-<p id="notice"><%= notice %></p>
+<div id='Grado' data-role="header">
+  <h1>Detalles</h1>
+  <%= link_to 'Aceptar', grados_path, "data-icon" => "check", "data-mini" => "true"  %>
+</div>
 
-<p>
-  <b>Anio escolar:</b>
-  <%= @grado.anio_escolar_id %>
-</p>
+<div data-role="content" style="clear: left">
+  <b>Año escolar:</b> <%= AnioEscolar.find(@grado.anio_escolar_id).anio %> <p>
+  <b>Grado:</b> <%= @grado.grado %> <p>
+</div>
 
-<p>
-  <b>Grado:</b>
-  <%= @grado.grado %>
-</p>
-
-<p>
-  <b>Usuario:</b>
-  <%= @grado.usuario %>
-</p>
-
-
-<%= link_to 'Edit', edit_grado_path(@grado) %> |
-<%= link_to 'Back', grados_path %>
+<div data-role="footer">
+  <% if can? :update, @grado %>
+    <%= link_to 'Editar', edit_grado_path(@grado), "class" => "ui-btn-left", "data-inline" => "true", "data-theme" => "a", "data-icon" => "gear", "data-mini" => "true" %>
+  <% end %>
+</div>

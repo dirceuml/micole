@@ -4,7 +4,7 @@ class GradosController < ApplicationController
   # GET /grados
   # GET /grados.json
   def index
-    @grados = Grado.all
+    @grados = Grado.order("grado")
 
     respond_to do |format|
       format.html # index.html.erb
@@ -46,7 +46,7 @@ class GradosController < ApplicationController
 
     respond_to do |format|
       if @grado.save
-        format.html { redirect_to @grado, notice: 'Grado was successfully created.' }
+        format.html { redirect_to @grado, notice: 'El grado fue creado satisfactoriamente.' }
         format.json { render json: @grado, status: :created, location: @grado }
       else
         format.html { render action: "new" }
@@ -62,7 +62,7 @@ class GradosController < ApplicationController
 
     respond_to do |format|
       if @grado.update_attributes(params[:grado])
-        format.html { redirect_to @grado, notice: 'Grado was successfully updated.' }
+        format.html { redirect_to @grado, notice: 'El grado fue actualizado satisfactoriamente.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

@@ -1,6 +1,6 @@
-<h1>Editing seccion</h1>
+<div data-role="header">
+    <h1>Editar seccion</h1>
+    <%= link_to 'Regresar', secciones_path, "data-icon" => "back", "class" => "ui-btn-left", "data-mini" => "true" %>
+</div>
 
 <%= render 'form' %>
-
-<%= link_to 'Show', @seccion %> |
-<%= link_to 'Back', secciones_path %>

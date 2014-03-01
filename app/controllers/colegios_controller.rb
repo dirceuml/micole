@@ -45,7 +45,7 @@ class ColegiosController < ApplicationController
 
     respond_to do |format|
       if @colegio.save
-        format.html { redirect_to @colegio, notice: 'Colegio was successfully created.' }
+        format.html { redirect_to @colegio, notice: 'El colegio fue creado satisfactoriamente.' }
         format.json { render json: @colegio, status: :created, location: @colegio }
       else
         format.html { render action: "new" }
@@ -61,7 +61,7 @@ class ColegiosController < ApplicationController
 
     respond_to do |format|
       if @colegio.update_attributes(params[:colegio])
-        format.html { redirect_to @colegio, notice: 'Colegio was successfully updated.' }
+        format.html { redirect_to @colegio, notice: 'El Colegio fue actualizado satisfactoriamente.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

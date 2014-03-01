@@ -26,6 +26,6 @@
 
 <div data-role="footer">
   <% if can? :update, @tipo_evento %>
-    <%= link_to 'Editar', tipos_eventos_path(@tipo_evento), "class" => "ui-btn-left", "data-inline" => "true", "data-theme" => "a", "data-icon" => "gear", "data-mini" => "true" %>
+    <%= link_to 'Editar', edit_tipo_evento_path(@tipo_evento), "class" => "ui-btn-left", "data-inline" => "true", "data-theme" => "a", "data-icon" => "gear", "data-mini" => "true" %>
   <% end %>
 </div>
