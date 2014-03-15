@@ -41,13 +41,19 @@
     <%= f.label :director %><br />
     <%= f.text_field :director %>
   </div>
-
+  <div class="field">
+    Estado<br />
+    <select <%= f.number_field :estado, "data-role" => "slider", "data-mini" => "true" %> >
+                <option value = 0 <% if @colegio.estado == 0 %> selected <%end%> >Baja</option>
+                <option value = 1 <% if @colegio.estado == 1 %> selected <%end%> >Activo</option>
+    </select>
+  </div>
   <div class="field">
     <%= f.hidden_field :usuario, :value => current_user.usuario %>
   </div>
-    
+
+</div>
   <div class="actions">
     <%= f.submit "Grabar", "data-inline" => "true", "data-theme" => "a", "data-icon" => "check", "data-mini" => "true" %>
   </div>
-</div>
 <% end %>

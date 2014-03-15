@@ -65,6 +65,10 @@ Micole::Application.routes.draw do
   get "sign_up" => "usuarios#new", :as => "sign_up"
 
   resources :usuarios
+  
+  get "crearusuarios" => "usuarios#crear_masivo", :as => "crearusuarios"
+  post "grabarusuarios" => "usuarios#grabar_masivo", :as => "grabarusuarios"
+  
   resources :sessions
   
 

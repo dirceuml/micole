@@ -7,15 +7,23 @@
 
 <div data-role="content">
   <ul data-role="listview" data-filter="true">
+    <% estadocolegio = '' %>
     <% @colegios.each do |colegio| %>
-    <li data-filtertext="<%= "#{colegio.nombre} #{colegio.direccion}" %>" >
+    <% if colegio.estado == 1 %> <% estadocolegio= 'Activo' %> <% else %> <% estadocolegio= 'Baja' %> <% end %>
+    <li data-filtertext="<%= "#{colegio.nombre} #{colegio.direccion} #{estadocolegio}" %>" >
       <% if can? :update, colegio %>
         <% link_opcion = edit_colegio_path(colegio) %>
       <% else %>
         <% link_opcion = colegio %>
       <% end %>
       <%= link_to link_opcion do %>
-        <%= simple_format("#{colegio.nombre}") %>
+        <p> <%= simple_format("#{colegio.nombre}") %> </p>
+        <% if colegio.estado == 1 %>
+          <p class="ui-li-aside ui-li-desc"> Activo </p>
+        <% else %>
+          <p class="ui-li-aside ui-li-desc"> Baja </p>
+        <% end %>
+        
       <% end %>
       
       <% if can? :destroy, colegio %>

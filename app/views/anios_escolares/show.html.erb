@@ -1,30 +1,23 @@
-<p id="notice"><%= notice %></p>
+<div id='anio_escolar' data-role="header">
+  <h1>Detalles</h1>
+  <%= link_to 'Aceptar', anios_escolares_path, "data-icon" => "check", "data-mini" => "true"  %>
+</div>
 
-<p>
-  <b>Colegio:</b>
-  <%= @anio_escolar.colegio_id %>
-</p>
+<div data-role="content" style="clear: left">
+  <b>Colegio:</b> <%= Colegio.find(@anio_escolar.colegio_id).nombre %> <p>
+  <b>Año escolar:</b> <%= @anio_escolar.anio %> <p>
+  <b>Del :</b> <%= @anio_escolar.inicio_clases %> <p>
+  <b>Al :</b> <%= @anio_escolar.fin_clases %> <p>
+  <b>Activo:</b> 
+  <% if @anio_escolar.activo == 1 %>
+   Si <p>
+  <% else %>
+   No <p>
+  <% end %>
+</div>
 
-<p>
-  <b>Anio:</b>
-  <%= @anio_escolar.anio %>
-</p>
-
-<p>
-  <b>Inicio clases:</b>
-  <%= @anio_escolar.inicio_clases %>
-</p>
-
-<p>
-  <b>Fin clases:</b>
-  <%= @anio_escolar.fin_clases %>
-</p>
-
-<p>
-  <b>Usuario:</b>
-  <%= @anio_escolar.usuario %>
-</p>
-
-
-<%= link_to 'Edit', edit_anio_escolar_path(@anio_escolar) %> |
-<%= link_to 'Back', anios_escolares_path %>
+<div data-role="footer">
+  <% if can? :update, @anio_escolar %>
+    <%= link_to 'Editar', edit_anio_escolar_path(@anio_escolar), "class" => "ui-btn-left", "data-inline" => "true", "data-theme" => "a", "data-icon" => "gear", "data-mini" => "true" %>
+  <% end %>
+</div>

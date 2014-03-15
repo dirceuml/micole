@@ -1,5 +1,6 @@
-<h1>New anio_escolar</h1>
+<div data-role="header">
+  <h1>Aperturar nuevo año escolar</h1>
+  <%= link_to 'Regresar', anios_escolares_path, "data-icon" => "back", "class" => "ui-btn-left", "data-mini" => "true" %>
+</div>
 
 <%= render 'form' %>
-
-<%= link_to 'Back', anios_escolares_path %>

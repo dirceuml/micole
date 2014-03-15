@@ -1,7 +1,7 @@
 <%= form_for(@anio_escolar) do |f| %>
   <% if @anio_escolar.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@anio_escolar.errors.count, "error") %> prohibited this anio_escolar from being saved:</h2>
+    <div id="error_explanation" data-role="header" data-theme="e">
+      <h2><%= pluralize(@anio_escolar.errors.count, "error") %> impidieron que se grabe el registro:</h2>
 
       <ul>
       <% @anio_escolar.errors.full_messages.each do |msg| %>
@@ -11,27 +11,42 @@
     </div>
   <% end %>
 
+<div data-role="fieldcontain">  
   <div class="field">
-    <%= f.label :colegio_id %><br />
-    <%= f.number_field :colegio_id %>
+    <%= f.hidden_field :colegio_id, :value => 1 %>
   </div>
   <div class="field">
-    <%= f.label :anio %><br />
-    <%= f.number_field :anio %>
+    <%= f.label :año %><br />
+    <%= f.number_field :anio, "data-mini" => "true", "style" => "width:135px", :readonly => true %>
   </div>
   <div class="field">
-    <%= f.label :inicio_clases %><br />
-    <%= f.date_select :inicio_clases %>
+    <%= f.label :inicio_de_clases %><br />
+    <%= f.text_field :inicio_clases, "data-mini" => "true", "data-role" => "datebox", "type" => "date", "style" => "width:135px" %>        
   </div>
   <div class="field">
-    <%= f.label :fin_clases %><br />
-    <%= f.date_select :fin_clases %>
+    <%= f.label :fin_de_clases %><br />
+    <%= f.text_field :fin_clases, "data-mini" => "true", "data-role" => "datebox", "type" => "date", "style" => "width:135px" %>    
   </div>
   <div class="field">
-    <%= f.label :usuario %><br />
-    <%= f.text_field :usuario %>
+    Activo<br />
+    <% if @anio_escolar.activo == 1 %>
+        <select <%= f.number_field :activo, "data-role" => "slider", "data-mini" => "true", :disabled => true %> >
+                <option value = 0 <% if @anio_escolar.activo == 0 %> selected <%end%> >No</option>
+                <option value = 1 <% if @anio_escolar.activo == 1 %> selected <%end%> >Si</option>
+        </select>
+    <% else %>
+        <select <%= f.number_field :activo, "data-role" => "slider", "data-mini" => "true" %> >
+                <option value = 0 <% if @anio_escolar.activo == 0 %> selected <%end%> >No</option>
+                <option value = 1 <% if @anio_escolar.activo == 1 %> selected <%end%> >Si</option>
+        </select>        
+    <% end %>
   </div>
-  <div class="actions">
-    <%= f.submit %>
+  <div class="field">
+    <%= f.hidden_field :usuario, :value => current_user.usuario %>
+  </div>
+  
+</div>
+<div class="actions">
+    <%= f.submit "Grabar", "data-inline" => "true", "data-theme" => "a", "data-icon" => "check", "data-mini" => "true" %>
   </div>
 <% end %>

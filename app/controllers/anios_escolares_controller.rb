@@ -4,7 +4,7 @@ class AniosEscolaresController < ApplicationController
   # GET /anios_escolares
   # GET /anios_escolares.json
   def index
-    @anios_escolares = AnioEscolar.all
+    @anios_escolares = AnioEscolar.order("anio") # all
 
     respond_to do |format|
       format.html # index.html.erb
@@ -27,7 +27,13 @@ class AniosEscolaresController < ApplicationController
   # GET /anios_escolares/new.json
   def new
     @anio_escolar = AnioEscolar.new
-
+    
+    ultimoanio = AnioEscolar.anioescolarcolegio(1).maximum('anio')
+    if ultimoanio.nil?
+      ultimoanio = Time.now.year - 1
+    end
+    @anio_escolar.anio = ultimoanio+ 1
+    
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @anio_escolar }
@@ -43,10 +49,14 @@ class AniosEscolaresController < ApplicationController
   # POST /anios_escolares.json
   def create
     @anio_escolar = AnioEscolar.new(params[:anio_escolar])
-
     respond_to do |format|
       if @anio_escolar.save
-        format.html { redirect_to @anio_escolar, notice: 'Anio escolar was successfully created.' }
+        if @anio_escolar.activo == 1
+          # Desactivar otros años escolares
+          sql = 'update anios_escolares set activo = 0 where colegio_id = '+ @anio_escolar.colegio_id.to_s + ' And activo = 1 And id <> '+ @anio_escolar.id.to_s
+          registros = AnioEscolar.connection.update(sql)
+        end
+        format.html { redirect_to @anio_escolar, notice: 'El registro fue creado satisfactoriamente.' }
         format.json { render json: @anio_escolar, status: :created, location: @anio_escolar }
       else
         format.html { render action: "new" }
@@ -62,7 +72,13 @@ class AniosEscolaresController < ApplicationController
 
     respond_to do |format|
       if @anio_escolar.update_attributes(params[:anio_escolar])
-        format.html { redirect_to @anio_escolar, notice: 'Anio escolar was successfully updated.' }
+        
+        if @anio_escolar.activo == 1
+          sql = 'update anios_escolares set activo = 0 where colegio_id = '+ @anio_escolar.colegio_id.to_s + ' And activo = 1 And id <> '+ @anio_escolar.id.to_s
+          registros = AnioEscolar.connection.update(sql)
+        end
+        
+        format.html { redirect_to @anio_escolar, notice: 'El registro fue actualizado satisfactoriamente.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

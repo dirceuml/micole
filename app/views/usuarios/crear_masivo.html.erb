@@ -1,0 +1,27 @@
+<div data-role="header">
+  <h1>Crear masivamente usuarios</h1>
+</div>
+
+<% if @usuario.errors.any? %>
+    <div id="error_explanation" data-role="header" data-theme="e">
+      <h2><%= pluralize(@usuario.errors.count, "error") %> impidieron que se grabe el registro:</h2>
+
+      <ul>
+      <% @usuario.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+<% end %>
+
+
+<% opcion = 1 %>
+
+<%= form_tag(grabarusuarios_path, {"data-ajax" => "false", "name" => "crearusuarios"}) do %>
+  <div data-role="fieldcontain">
+    <%= hidden_field_tag 'colegio_id', "1" %>
+    <div class="actions">
+        <%= submit_tag "Procesar", "data-inline" => "true", "data-theme" => "a", "data-icon" => "check", "data-mini" => "true" %>
+    </div>
+  </div>
+<% end %>

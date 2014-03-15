@@ -1,31 +1,33 @@
-<h1>Listing anios_escolares</h1>
+<div data-role="header">
+  <h1>Años escolares</h1>
+  <% if can? :create, AnioEscolar %>
+    <%= link_to 'Registrar', new_anio_escolar_path, "data-icon" => "plus", "class" => "ui-btn-right" %>
+  <% end %>
+</div>
 
-<table>
-  <tr>
-    <th>Colegio</th>
-    <th>Anio</th>
-    <th>Inicio clases</th>
-    <th>Fin clases</th>
-    <th>Usuario</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
-<% @anios_escolares.each do |anio_escolar| %>
-  <tr>
-    <td><%= anio_escolar.colegio_id %></td>
-    <td><%= anio_escolar.anio %></td>
-    <td><%= anio_escolar.inicio_clases %></td>
-    <td><%= anio_escolar.fin_clases %></td>
-    <td><%= anio_escolar.usuario %></td>
-    <td><%= link_to 'Show', anio_escolar %></td>
-    <td><%= link_to 'Edit', edit_anio_escolar_path(anio_escolar) %></td>
-    <td><%= link_to 'Destroy', anio_escolar, confirm: 'Are you sure?', method: :delete %></td>
-  </tr>
-<% end %>
-</table>
-
-<br />
-
-<%= link_to 'New Anio escolar', new_anio_escolar_path %>
+<div data-role="content">
+  <ul data-role="listview" data-filter="true">
+    <% @anios_escolares.anioescolarcolegio(1).each do |anio_escolar| %>
+    <li data-filtertext="<%= "#{anio_escolar.anio}" %>" >
+      <% if can? :update, anio_escolar %>
+        <% link_opcion = edit_anio_escolar_path(anio_escolar) %>
+      <% else %>
+        <% link_opcion = anio_escolar %>
+      <% end %>
+      <%= link_to link_opcion do %>
+        <% if anio_escolar.activo == 1 %>
+          <p> <%= simple_format("#{anio_escolar.anio} (Activo)") %> </p>
+        <% else %>
+          <p> <%= simple_format("#{anio_escolar.anio}") %> </p>
+        <% end %>
+        <p class="ui-li-aside ui-li-desc"> <%= Colegio.find(anio_escolar.colegio_id).nombre %> </p>
+      <% end %>
+      
+      <!-- los colegios no deben tener acceso a la opcion para eliminar un año escolar -->
+      <% if can? :destroy, anio_escolar %>
+        <%= link_to 'Eliminar', anio_escolar, confirm: '¿Seguro que desea eliminar el registro?', method: :delete, "data-icon" => "delete" %>
+      <% end %>
+    </li>
+    <% end %>
+  </ul>
+</div>
