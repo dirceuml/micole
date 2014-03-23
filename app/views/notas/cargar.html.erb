@@ -1,0 +1,29 @@
+﻿<div>
+                <h2>
+                    Cargar notas
+                </h2>
+                <div class="block">                                                           
+                    
+                                        
+<%= form_tag({:controller => "notas", :action => "cargar"}, :method => "post", :multipart => true, "data-ajax" => "false") do %>
+   <%= file_field_tag "archivo", :required => "required" %>
+   <%= submit_tag "Cargar notas" %>
+<% end %>
+<% if @formato_erroneo %>
+  <div>
+     <p> El formato ingresado es incorrecto. Usted sólo puede subir archivos .txt </p>
+  </div>
+<% end %>                                       
+                                        
+<% if params[:res] == "1" %>
+  <div>
+     <p> Archivo cargado satisfactoriamente </p>
+  </div>
+<% else %>
+  <div>
+     <p> No se pudo cargar el archivo </p>
+  </div>
+<% end %> 			
+                    
+  </div>
+</div>

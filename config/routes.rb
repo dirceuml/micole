@@ -11,7 +11,7 @@ Micole::Application.routes.draw do
   get "admin/archivos/listar" => "archivos#listar_archivos", :as => "listar_archivos"
   post "admin/archivos/borrar_archivos" => "archivos#borrar_archivos", :as => "borrar_archivos"
   get "admin/archivos/guardar_log" => "archivos#guardar_log", :as => "guardar_log"
-  post "admin/archivos/guardar_log" => "archivos#guardar_log", :as => "guardar_log"
+  post "admin/archivos/guardar_log" => "archivos#guardar_log", :as => "guardar_log"   
 
   resources :perfiles_permisos
 
@@ -44,6 +44,8 @@ Micole::Application.routes.draw do
   resources :autorizaciones
   
   resources :notas
+  get "cargar_notas" => "notas#cargar", :as => "cargar_notas"
+  post "cargar_notas" => "notas#cargar", :as => "cargar_notas"
 
   resources :menus
   

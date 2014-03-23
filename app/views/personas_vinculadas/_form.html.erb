@@ -50,6 +50,9 @@
     <div class="field">
       <%= f.hidden_field :user, :value => current_user.usuario %>
     </div>
+    <div class="field">
+      <%= f.hidden_field :origen, :value => "manual" %>
+    </div>
     <div class="actions">
       <%= f.submit "Grabar", "data-inline" => "true", "data-theme" => "a", "data-icon" => "check", "data-mini" => "true" %>
     </div>

@@ -1,4 +1,4 @@
-scheduler = Rufus::Scheduler.start_new
+scheduler = Rufus::Scheduler.new
 
 scheduler.every("36h") do
 #scheduler.cron '0 10 * * * Etc/GMT-5' do

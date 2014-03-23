@@ -1,10 +1,13 @@
 class NotasController < ApplicationController
   load_and_authorize_resource
+  Ruta_directorio_archivos = "public/archivos/";
   
   # GET /notas
   # GET /notas.json
   def index
-    @notas = Nota.all
+    dni = params[:dni]
+    
+    @notas = Nota.por_dni(dni)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -83,6 +86,65 @@ class NotasController < ApplicationController
     end
   end
   
+  def cargar
+   @formato_erroneo = false;
+   if request.post?
+      #Archivo subido por el usuario.
+      archivo = params[:archivo];
+      #Nombre original del archivo.
+      nombre = archivo.original_filename;
+      #Directorio donde se va a guardar.
+      directorio = Ruta_directorio_archivos;
+      #Extensi�n del archivo.
+      extension = nombre.slice(nombre.rindex("."), nombre.length).downcase;
+      #Verifica que el archivo tenga una extensi�n correcta.
+      if extension == ".txt" or extension == ".xls" or extension == ".xlsx"
+         #Ruta del archivo.
+         path = File.join(directorio, nombre);
+         #Crear en el archivo en el directorio. Guardamos el resultado en una variable, ser� true si el archivo se ha guardado correctamente.
+         resultado = File.open(path, "wb") { |f| f.write(archivo.read) };
+         #Verifica si el archivo se subi� correctamente.
+         if resultado
+            res = "1";
+            
+            File.open("#{Ruta_directorio_archivos}#{nombre}", "r").each_line do |line|
+              dni, curso, tipo_nota, calificacion = line.split("|")
+              
+            anio_id = 1
+            alumno_id = Alumno.find_by_dni(dni).id
+            anio_alumno_id = AnioAlumno.find_by_anio_escolar_id_and_alumno_id(anio_id, alumno_id).id
+            curso_id = Curso.find_by_abreviatura(curso).id
+            tipo_nota_id = TipoNota.find_by_abreviatura(tipo_nota).id
+              
+            nota = Nota.find_by_anio_alumno_id_and_curso_id_and_tipo_nota_id(anio_alumno_id, curso_id, tipo_nota_id)
+            
+            if !nota.nil?
+              nota.update_attributes(
+                :nota => calificacion,
+                :usuario => :current_user
+              )
+            else
+              Nota.create(
+                :anio_alumno_id => anio_alumno_id,
+                :curso_id => curso_id,
+                :tipo_nota_id => tipo_nota_id,
+                :nota => calificacion,
+                :usuario => :current_user
+              )
+            end
+            
+            end
+         else
+            res = "0";
+         end
+         #Redirige al controlador "archivos", a la acci�n "lista_archivos" y con la variable de tipo GET "subir_archivos" con el valor "ok" si se subi� el archivo y "error" si no se pudo.
+         redirect_to :controller => "notas", :action => "cargar", :res => res;
+      else
+         @formato_erroneo = true;
+      end
+    end
+ end
+ 
   rescue_from CanCan::AccessDenied do |exception|
     if current_user.nil?
       redirect_to log_in_url, :alert => exception.message

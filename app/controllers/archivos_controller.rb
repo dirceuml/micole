@@ -135,7 +135,7 @@ class ArchivosController < ApplicationController
                   :telefono_fijo => telefono_fijo,
                   :telefono_movil => telefono_movil,
                   :correo => correo,
-                  :usuario => :current_user
+                  :user => :current_user
                 )
               else
                 PersonaVinculada.create(
@@ -148,7 +148,8 @@ class ArchivosController < ApplicationController
                   :telefono_movil => telefono_movil,
                   :correo => correo,
                   :foto => "foto.jpg",
-                  :user => :current_user
+                  :user => :current_user,
+                  :origen => "carga"
                 )
                 
               end
@@ -226,8 +227,6 @@ class ArchivosController < ApplicationController
       end
     end
  end
-
-
 
   def listar_archivos
    #Guardamos la lista de archivos de la carpeta "archivos".

@@ -1,33 +1,65 @@
-<h1>Listing notas</h1>
+<div data-role="header">
+  <h1>Consulta de notas</h1>
+</div>
 
-<table>
-  <tr>
-    <th>Anio alumno</th>
-    <th>Curso</th>
-    <th>Tipo nota</th>
-    <th>Nota</th>
-    <th>Observaciones</th>
-    <th>Usuario</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
-<% @notas.each do |nota| %>
-  <tr>
-    <td><%= nota.anio_alumno_id %></td>
-    <td><%= nota.curso_id %></td>
-    <td><%= nota.tipo_nota_id %></td>
-    <td><%= nota.nota %></td>
-    <td><%= nota.observaciones %></td>
-    <td><%= nota.usuario %></td>
-    <td><%= link_to 'Show', nota %></td>
-    <td><%= link_to 'Edit', edit_nota_path(nota) %></td>
-    <td><%= link_to 'Destroy', nota, confirm: 'Are you sure?', method: :delete %></td>
-  </tr>
+<% if params[:dni] == "0" %>
+  <% dni = "" %>
+<% else %>
+  <% dni = params[:dni] %>
 <% end %>
-</table>
 
-<br />
+<div data-role="content">    
+  <div>
+    
+    <div style="text-align: center;">
+      <%= form_tag(notas_path, {:method => :get, "onSubmit" => "return validarBusquedaXDocumento();", "data-ajax" => "false", "name" => "buscar"}) do %>            
+         <div data-role="fieldcontain">
+            <div style="text-align: left;">
+              N° DNI:  <%= text_field_tag(:dni, dni, "data-mini" => "true") %>
+            </div>
+<br/>
+            <div>
+              <%= submit_tag "Buscar", "data-inline" => "true", "data-theme" => "a", "data-icon" => "search", "data-mini" => "true", :name => nil %>
+            </div>
+          </div>         
+      <% end %>
+      <hr>
+    </div>
 
-<%= link_to 'New Nota', new_nota_path %>
+    <% if params[:dni] != "0" %>
+    <div style="text-align: center;">
+       <% if dni != "" %>
+        <div data-role="content" style="color: #06c; text-align: center">
+          <% alumno = Alumno.find_by_dni(dni) %>
+          <% if !alumno.nil? %>
+            <%= alumno.apellidos_nombres %>
+            <br/>
+            
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+    
+    <div>     
+      <% if !alumno.nil? %>
+      <table style="border-width: 1px; border-style: solid; width: 100%">
+        <tr>
+          <th style="border-width: 1px; border-style: solid; width: 60%">Curso</th>
+          <th style="border-width: 1px; border-style: solid; width: 30%">Tipo de nota</td>
+          <th style="border-width: 1px; border-style: solid; width: 10%">Nota</th>
+        </tr>
+            <% @notas.each do |nota| %>
+              <tr>
+                <td style="width: 60%"><%= Curso.find(nota.curso_id).descripcion %></td>
+                <td style="width: 30%"><%= TipoNota.find(nota.tipo_nota_id).descripcion %></td>
+                <td style="width: 10%"><%= nota.nota %></td>
+              </tr>
+            <% end %> 
+       </table>   
+        <% end %>
+    </div>
+    <% end %>
+    
+  </div><!-- /grid-a --> 
+  
+</div>
