@@ -8,6 +8,7 @@ class NotasController < ApplicationController
     dni = params[:dni]
     
     @notas = Nota.por_dni(dni)
+    @cursos = @notas.uniq.pluck(:curso_id)
 
     respond_to do |format|
       format.html # index.html.erb

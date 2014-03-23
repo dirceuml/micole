@@ -6,6 +6,7 @@ class Alumno < ActiveRecord::Base
   has_many :personas_vinculadas, :through => :alumnos_personas_vinculadas
   has_many :anios_alumnos
   has_many :anios_escolares, :through => :anios_alumnos
+  has_many :secciones, :through => :anios_alumnos
   
   has_many :asistencias, :through => :anios_alumnos
   
@@ -13,6 +14,11 @@ class Alumno < ActiveRecord::Base
   
   def apellidos_nombres
     apellido_paterno + " " + apellido_materno + " " + nombres
+  end
+  
+  def grado_seccion
+    secc = AnioAlumno.find_by_anio_escolar_id_and_alumno_id(1, self.id).seccion
+    secc.grado.grado.to_s + " " + secc.seccion
   end
   
   def salida_registrada (alumno_id, fecha)
