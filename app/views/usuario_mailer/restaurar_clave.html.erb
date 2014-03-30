@@ -1,0 +1,20 @@
+# encoding: utf-8
+
+<p>Estimado(a) señor(a) <%= @usuario.nombre %>:</p>
+<p>Se le envia este correo porque usted ha solicitado restaurar su contraseña.</p>
+<p>Sus datos para inciar sesión en el sistema son:</p>
+
+<p>
+  <b>Usuario: <%= @usuario.usuario %></b>
+  <br>
+  <b>Nueva contraseña: <%= @nueva_clave %></b>
+</p>
+
+<p>
+  Luego de iniciar sesión en el sistema MiCole, por favor, cambie su contraseña. 
+</p>
+
+<p>
+
+    <%= image_tag attachments['logo_small.jpg'].url -%>
+</p>

@@ -2,7 +2,7 @@ class Ability
   include CanCan::Ability
 
   def initialize(user)
-  
+    user ||= Usuario.new # guest user (not logged in)
     if !user.id.nil?
       if user.perfil.id == 1 # administrador
         can :manage, :all

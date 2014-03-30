@@ -1,5 +1,5 @@
 class UsuariosController < ApplicationController
-  load_and_authorize_resource
+  load_and_authorize_resource :except => :restaurar_clave
   
   # GET /usuarios
   # GET /usuarios.json
@@ -164,6 +164,28 @@ class UsuariosController < ApplicationController
     end
     
     redirect_to :controller => 'usuarios', :action => 'crear_masivo'
+  end
+  
+  def restaurar_clave
+    if request.post?
+      usuario = Usuario.find_by_usuario(params[:usuario])
+      
+      if !usuario.nil?      
+        nueva_clave = SecureRandom.urlsafe_base64
+
+        usuario.update_attributes(
+          :clave => nueva_clave
+        )
+
+        UsuarioMailer.restaurar_clave(usuario, nueva_clave).deliver
+
+        res = "1"
+      else
+        res = "2"
+      end
+      
+      redirect_to :controller => "usuarios", :action => "restaurar_clave", :res => res;
+    end
   end
   
   rescue_from CanCan::AccessDenied do |exception|
