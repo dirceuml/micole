@@ -17,6 +17,10 @@ class MenusController < ApplicationController
       redirect_to(log_in_path) and return
     end
     
+    if dias_restantes_expiracion_clave <= 0
+      redirect_to(cambiar_clave_path(current_user)) and return
+    end
+    
     respond_to do |format|
       format.html # main.html.erb
       format.json { render json: @menus }

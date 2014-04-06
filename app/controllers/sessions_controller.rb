@@ -9,16 +9,11 @@ class SessionsController < ApplicationController
     if user
       session[:usuario_id] = user.id
       
-      dias_transcurridos = (Date.current - user.fecha_clave).to_i
-      dias_expiracion = 60
-      dias_aviso = 5
-      
-      if dias_transcurridos >= (dias_expiracion - dias_aviso)
-        dias_restantes = dias_expiracion - dias_transcurridos
-        redirect_to expiracion_clave_path(:id => user.id, :dias => dias_restantes)
+      if dias_restantes_expiracion_clave <= dias_aviso_expiracion_clave
+        redirect_to expiracion_clave_path(:id => user.id) 
       else
         redirect_to menu_path
-      end           
+      end
     else
       flash.now.alert = "Usuario o clave invalidos"
       render "new"

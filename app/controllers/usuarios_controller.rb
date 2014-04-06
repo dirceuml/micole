@@ -210,7 +210,6 @@ class UsuariosController < ApplicationController
   # GET /usuarios/1.json
   def expiracion
     @usuario = Usuario.find(params[:id])
-    @dias = params[:dias]
 
     respond_to do |format|
       format.html # show.html.erb

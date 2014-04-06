@@ -73,7 +73,7 @@ Micole::Application.routes.draw do
   get "restaurar_clave" => "usuarios#restaurar_clave", :as => "restaurar_clave"
   post "restaurar_clave" => "usuarios#restaurar_clave", :as => "restaurar_clave"
   get "usuarios/:id/cambiar_clave" => "usuarios#cambiar_clave", :as => "cambiar_clave"
-  get "usuarios/:id/expiracion/:dias" => "usuarios#expiracion", :as => "expiracion_clave"
+  get "usuarios/:id/expiracion" => "usuarios#expiracion", :as => "expiracion_clave"
   
   resources :sessions
   
