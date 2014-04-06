@@ -59,13 +59,26 @@ class UsuariosController < ApplicationController
   # PUT /usuarios/1.json
   def update
     @usuario = Usuario.find(params[:id])
-
+    
+    if !params[:clave_actual].nil?
+      user = Usuario.authenticate(params[:usuario], params[:clave_actual])
+      
+      if !user
+        format.html { render action: "cambiar_clave" }
+      end
+    end
+    
     respond_to do |format|
       if @usuario.update_attributes(params[:usuario])
         format.html { redirect_to @usuario, notice: 'Usuario fue actualizado satisfactoriamente' }
         format.json { head :no_content }
       else
-        format.html { render action: "edit" }
+        if params[:perfil_id].nil?
+          format.html { render action: "cambiar_clave" }
+        else
+          format.html { render action: "edit" }
+        end
+        
         format.json { render json: @usuario.errors, status: :unprocessable_entity }
       end
     end
@@ -185,6 +198,23 @@ class UsuariosController < ApplicationController
       end
       
       redirect_to :controller => "usuarios", :action => "restaurar_clave", :res => res;
+    end
+  end
+  
+  # GET /usuarios/1/cambiar_clave
+  def cambiar_clave
+    @usuario = Usuario.find(params[:id])
+  end
+  
+  # GET /usuarios/1/expiracion/5
+  # GET /usuarios/1.json
+  def expiracion
+    @usuario = Usuario.find(params[:id])
+    @dias = params[:dias]
+
+    respond_to do |format|
+      format.html # show.html.erb
+      format.json { render json: @usuario }
     end
   end
   

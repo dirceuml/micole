@@ -95,6 +95,13 @@
           
         <li><a href="<%= notas_path %>">Consultar</a></li>
       <% end %> 
+        
+      <% if [1,2,3].include? current_user.perfil_id %> 
+        <li data-role="list-divider" data-icon="false" data-mini="true">
+          Mi cuenta
+        </li>
+        <li><a href="<%= cambiar_clave_path(:id => current_user.id) %>">Cambiar clave</a></li>
+      <% end %>
     </ul>
     
   </div><!--/content-primary -->	
