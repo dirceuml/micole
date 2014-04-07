@@ -102,6 +102,15 @@
         </li>
         <li><a href="<%= cambiar_clave_path(:id => current_user.id) %>">Cambiar clave</a></li>
       <% end %>
+        
+      <% if current_user.perfil_id == 1 %> 
+        <li data-role="list-divider" data-icon="false" data-mini="true">
+          Administracion
+        </li>
+        <li><%= link_to "Cargar alumnos", :controller => "archivos", :action => "cargar_alumnos" %> </li>
+        <li><%= link_to "Cargar padres", :controller => "archivos", :action => "cargar_padres" %> </li>
+        <li><%= link_to "Cargar vínculos", :controller => "archivos", :action => "cargar_vinculos" %> </li>
+      <% end %>
     </ul>
     
   </div><!--/content-primary -->	

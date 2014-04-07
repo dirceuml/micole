@@ -14,16 +14,18 @@
      <p> El formato ingresado es incorrecto. Usted sólo puede subir archivos .txt </p>
   </div>
 <% end %>                                       
-                                        
-<% if params[:res] == "1" %>
-  <div>
-     <p> Archivo cargado satisfactoriamente </p>
-  </div>
-<% else %>
-  <div>
-     <p> No se pudo cargar el archivo </p>
-  </div>
-<% end %> 			
+    
+<% if !params[:res].nil? %>        
+  <% if params[:res] == "1" %>
+    <div>
+       <p> Archivo cargado satisfactoriamente </p>
+    </div>
+  <% else %>
+    <div>
+       <p> No se pudo cargar el archivo </p>
+    </div>
+  <% end %> 
+<% end %>                 
                     
   </div>
 </div>

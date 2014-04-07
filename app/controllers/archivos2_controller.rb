@@ -1,4 +1,5 @@
 class ArchivosController < ApplicationController
+  layout 'admin'
   Ruta_archivo_logs = "public/logs/log.txt";
   Ruta_directorio_archivos = "public/archivos/";
   
@@ -52,7 +53,7 @@ class ArchivosController < ApplicationController
          resultado = File.open(path, "wb") { |f| f.write(archivo.read) };
          #Verifica si el archivo se subi� correctamente.
          if resultado
-            res = "1";
+            subir_archivo = "ok";
             
             File.open("#{Ruta_directorio_archivos}#{nombre}", "r").each_line do |line|
               dni, nombres, apellido_paterno, apellido_materno, fecha_nacimiento, telefono_fijo, telefono_movil, direccion, correo = line.split("|")
@@ -84,13 +85,15 @@ class ArchivosController < ApplicationController
                   :correo => correo,
                   :usuario => :current_user
                 )
-              end                        
+              end
+            
+            
             end
          else
-            res = "0";
+            subir_archivo = "error";
          end
          #Redirige al controlador "archivos", a la acci�n "lista_archivos" y con la variable de tipo GET "subir_archivos" con el valor "ok" si se subi� el archivo y "error" si no se pudo.
-         redirect_to :controller => "archivos", :action => "cargar_alumnos", :res => res;
+         redirect_to :controller => "archivos", :action => "listar_archivos", :subir_archivo => subir_archivo;
       else
          @formato_erroneo = true;
       end
@@ -117,7 +120,7 @@ class ArchivosController < ApplicationController
          resultado = File.open(path, "wb") { |f| f.write(archivo.read) };
          #Verifica si el archivo se subi� correctamente.
          if resultado
-            res = "1";
+            subir_archivo = "ok";
             
             File.open("#{Ruta_directorio_archivos}#{nombre}", "r").each_line do |line|
               tipo_documento, numero_documento, nombres, apellido_paterno, apellido_materno, telefono_fijo, telefono_movil, correo = line.split("|")
@@ -152,10 +155,10 @@ class ArchivosController < ApplicationController
               end
             end
          else
-            res = "0";
+            subir_archivo = "error";
          end
          #Redirige al controlador "archivos", a la acci�n "lista_archivos" y con la variable de tipo GET "subir_archivos" con el valor "ok" si se subi� el archivo y "error" si no se pudo.
-         redirect_to :controller => "archivos", :action => "listar_archivos", :res => res;
+         redirect_to :controller => "archivos", :action => "listar_archivos", :subir_archivo => subir_archivo;
       else
          @formato_erroneo = true;
       end
@@ -183,7 +186,7 @@ class ArchivosController < ApplicationController
          resultado = File.open(path, "wb") { |f| f.write(archivo.read) };
          #Verifica si el archivo se subi� correctamente.
          if resultado
-            res = "1";
+            subir_archivo = "ok";
             
             File.open("#{Ruta_directorio_archivos}#{nombre}", "r").each_line do |line|
               dni_alumno, tipo_documento_padre, numero_documento_padre, inicio_vigencia = line.split("|")
@@ -215,10 +218,10 @@ class ArchivosController < ApplicationController
               end
             end
          else
-            res = "0";
+            subir_archivo = "error";
          end
          #Redirige al controlador "archivos", a la acci�n "lista_archivos" y con la variable de tipo GET "subir_archivos" con el valor "ok" si se subi� el archivo y "error" si no se pudo.
-         redirect_to :controller => "archivos", :action => "listar_archivos", :res => res;
+         redirect_to :controller => "archivos", :action => "listar_archivos", :subir_archivo => subir_archivo;
       else
          @formato_erroneo = true;
       end

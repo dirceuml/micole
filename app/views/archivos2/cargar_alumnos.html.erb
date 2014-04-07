@@ -1,31 +1,21 @@
 ﻿<div class="box round first grid">
                 <h2>
-                    Cargar vínculos entre alumnos y padres
+                    Cargar alumnos
                 </h2>
                 <div class="block">                                                           
                     
                                         
-<%= form_tag({:controller => "archivos", :action => "cargar_vinculos"}, :method => "post", :multipart => true, "data-ajax" => "false") do %>
+<%= form_tag({:controller => "archivos", :action => "cargar_alumnos"}, :method => "post", :multipart => true) do %>
    <%= file_field_tag "archivo", :required => "required" %>
-   <%= submit_tag "Cargar vínculos" %>
+   <%= submit_tag "Cargar alumnos" %>
 <% end %>
 <% if @formato_erroneo %>
   <div>
      <p> El formato ingresado es incorrecto. Usted sólo puede subir archivos .txt </p>
   </div>
 <% end %>                                       
-                   
-<% if !params[:res].nil? %>                   
-  <% if params[:res] == "1" %>
-    <div>
-       <p> Archivo cargado satisfactoriamente </p>
-    </div>
-  <% else %>
-    <div>
-       <p> No se pudo cargar el archivo </p>
-    </div>
-  <% end %> 	
-<% end %>                  
+                                        
+			
                     
                 </div>
             </div>
