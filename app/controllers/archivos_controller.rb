@@ -35,6 +35,8 @@ class ArchivosController < ApplicationController
  
   def cargar_alumnos
    @formato_erroneo = false;
+   errores = Array.new;
+   
    if request.post?
       #Archivo subido por el usuario.
       archivo = params[:archivo];
@@ -52,43 +54,71 @@ class ArchivosController < ApplicationController
          resultado = File.open(path, "wb") { |f| f.write(archivo.read) };
          #Verifica si el archivo se subi� correctamente.
          if resultado
-            res = "1";
+            res = "1";  
+            count = 0;
             
-            File.open("#{Ruta_directorio_archivos}#{nombre}", "r").each_line do |line|
-              dni, nombres, apellido_paterno, apellido_materno, fecha_nacimiento, telefono_fijo, telefono_movil, direccion, correo = line.split("|")
-              
-              alumno = Alumno.find_by_dni(dni)
+            File.open("#{Ruta_directorio_archivos}#{nombre}", "r").each_line do |line|                           
+              begin
+                count += 1
+                raise StandardError, "Estructura incorrecta." if line.count("|") != 8
+                
+                dni, nombres, apellido_paterno, apellido_materno, fecha_nacimiento, telefono_fijo, telefono_movil, direccion, correo = line.split("|")
+                
+                raise StandardError, "Debe especificar un DNI." if dni.nil? || dni.strip == ""
+                raise StandardError, "Debe especificar los nombres." if nombres.nil? || nombres.strip == ""
+                raise StandardError, "Debe especificar el apellido paterno." if apellido_paterno.nil? || apellido_paterno.strip == ""
+                raise StandardError, "Debe especificar el apellido materno." if apellido_materno.nil? || apellido_materno.strip == ""
+                raise StandardError, "Debe especificar la fecha de nacimiento." if fecha_nacimiento.nil? || fecha_nacimiento.strip == ""
+                
+                alumno = Alumno.find_by_dni(dni)
 
-              if !alumno.nil?
-                alumno.update_attributes(
-                  :nombres => nombres,
-                  :apellido_paterno => apellido_paterno,
-                  :apellido_materno => apellido_materno,
-                  :fecha_nacimiento => fecha_nacimiento,
-                  :telefono_fijo => telefono_fijo,
-                  :telefono_movil => telefono_movil,
-                  :direccion => direccion,
-                  :correo => correo,
-                  :usuario => :current_user
-                )
-              else
-                Alumno.create(
-                  :dni => dni,
-                  :nombres => nombres,
-                  :apellido_paterno => apellido_paterno,
-                  :apellido_materno => apellido_materno,
-                  :fecha_nacimiento => fecha_nacimiento,
-                  :telefono_fijo => telefono_fijo,
-                  :telefono_movil => telefono_movil,
-                  :direccion => direccion,
-                  :correo => correo,
-                  :usuario => :current_user
-                )
-              end                        
+                if !alumno.nil?
+                  alumno.update_attributes!(
+                    :nombres => nombres,
+                    :apellido_paterno => apellido_paterno,
+                    :apellido_materno => apellido_materno,
+                    :fecha_nacimiento => fecha_nacimiento,
+                    :telefono_fijo => telefono_fijo,
+                    :telefono_movil => telefono_movil,
+                    :direccion => direccion,
+                    :correo => correo,
+                    :usuario => :current_user
+                  )
+                else
+                  Alumno.create!(
+                    :dni => dni,
+                    :nombres => nombres,
+                    :apellido_paterno => apellido_paterno,
+                    :apellido_materno => apellido_materno,
+                    :fecha_nacimiento => fecha_nacimiento,
+                    :telefono_fijo => telefono_fijo,
+                    :telefono_movil => telefono_movil,
+                    :direccion => direccion,
+                    :correo => correo,
+                    :usuario => :current_user
+                  )
+                end    
+              rescue => e
+                errores.push "Linea #{count}: #{e.message}"                    
+              end
             end
          else
             res = "0";
          end
+         
+          #Abre el archivo de logs, Si no existe lo crea, si existe lo sobrescribe
+        File.open(Ruta_archivo_logs, "w"){
+          |f|;
+          errores.each do |e|
+            f.puts(e);
+          end
+          f.close();
+        };
+        
+        if File.size?(Ruta_archivo_logs)
+          res = "2";
+        end
+        
          #Redirige al controlador "archivos", a la acci�n "lista_archivos" y con la variable de tipo GET "subir_archivos" con el valor "ok" si se subi� el archivo y "error" si no se pudo.
          redirect_to :controller => "archivos", :action => "cargar_alumnos", :res => res;
       else
@@ -100,6 +130,8 @@ class ArchivosController < ApplicationController
   
   def cargar_padres
    @formato_erroneo = false;
+   errores = Array.new;
+   
    if request.post?
       #Archivo subido por el usuario.
       archivo = params[:archivo];
@@ -117,43 +149,72 @@ class ArchivosController < ApplicationController
          resultado = File.open(path, "wb") { |f| f.write(archivo.read) };
          #Verifica si el archivo se subi� correctamente.
          if resultado
-            res = "1";
+            res = "1";            
+            count = 0;
             
             File.open("#{Ruta_directorio_archivos}#{nombre}", "r").each_line do |line|
-              tipo_documento, numero_documento, nombres, apellido_paterno, apellido_materno, telefono_fijo, telefono_movil, correo = line.split("|")
-              
-              padre = PersonaVinculada.find_by_tipo_documento_and_numero_documento(tipo_documento, numero_documento)
-
-              if !padre.nil?
-                padre.update_attributes(
-                  :nombres => nombres,
-                  :apellido_paterno => apellido_paterno,
-                  :apellido_materno => apellido_materno,
-                  :telefono_fijo => telefono_fijo,
-                  :telefono_movil => telefono_movil,
-                  :correo => correo,
-                  :user => :current_user
-                )
-              else
-                PersonaVinculada.create(
-                  :tipo_documento => tipo_documento,
-                  :numero_documento => numero_documento,
-                  :nombres => nombres,
-                  :apellido_paterno => apellido_paterno,
-                  :apellido_materno => apellido_materno,
-                  :telefono_fijo => telefono_fijo,
-                  :telefono_movil => telefono_movil,
-                  :correo => correo,
-                  :foto => "foto.jpg",
-                  :user => :current_user,
-                  :origen => "carga"
-                )
+              begin
+                count += 1
+                raise StandardError, "Estructura incorrecta." if line.count("|") != 7
                 
+                tipo_documento, numero_documento, nombres, apellido_paterno, apellido_materno, telefono_fijo, telefono_movil, correo = line.split("|")
+
+                raise StandardError, "Debe especificar el tipo de documento de identidad." if tipo_documento.nil? || tipo_documento.strip == ""
+                raise StandardError, "Debe especificar el numero de documento de identidad." if numero_documento.nil? || numero_documento.strip == ""
+                raise StandardError, "Debe especificar los nombres." if nombres.nil? || nombres.strip == ""
+                raise StandardError, "Debe especificar el apellido paterno." if apellido_paterno.nil? || apellido_paterno.strip == ""
+                raise StandardError, "Debe especificar el apellido materno." if apellido_materno.nil? || apellido_materno.strip == ""
+                raise StandardError, "Debe especificar la direccion de correo." if correo.nil? || correo.strip == ""
+                
+                padre = PersonaVinculada.find_by_tipo_documento_and_numero_documento(tipo_documento, numero_documento)
+
+                if !padre.nil?
+                  padre.update_attributes!(
+                    :nombres => nombres,
+                    :apellido_paterno => apellido_paterno,
+                    :apellido_materno => apellido_materno,
+                    :telefono_fijo => telefono_fijo,
+                    :telefono_movil => telefono_movil,
+                    :correo => correo,
+                    :user => :current_user
+                  )
+                else
+                  PersonaVinculada.create!(
+                    :tipo_documento => tipo_documento,
+                    :numero_documento => numero_documento,
+                    :nombres => nombres,
+                    :apellido_paterno => apellido_paterno,
+                    :apellido_materno => apellido_materno,
+                    :telefono_fijo => telefono_fijo,
+                    :telefono_movil => telefono_movil,
+                    :correo => correo,
+                    :foto => "foto.jpg",
+                    :user => :current_user,
+                    :origen => "carga"
+                  )
+
+                end
+              rescue => e
+                errores.push "Linea #{count}: #{e.message}"
               end
             end
          else
             res = "0";
          end
+         
+          #Abre el archivo de logs, Si no existe lo crea, si existe lo sobrescribe
+        File.open(Ruta_archivo_logs, "w"){
+          |f|;
+          errores.each do |e|
+            f.puts(e);
+          end
+          f.close();
+        };
+        
+        if File.size?(Ruta_archivo_logs)
+          res = "2";
+        end
+        
          #Redirige al controlador "archivos", a la acci�n "lista_archivos" y con la variable de tipo GET "subir_archivos" con el valor "ok" si se subi� el archivo y "error" si no se pudo.
          redirect_to :controller => "archivos", :action => "listar_archivos", :res => res;
       else
@@ -166,6 +227,8 @@ class ArchivosController < ApplicationController
   
   def cargar_vinculos
    @formato_erroneo = false;
+   errores = Array.new;
+   
    if request.post?
       #Archivo subido por el usuario.
       archivo = params[:archivo];
@@ -183,40 +246,70 @@ class ArchivosController < ApplicationController
          resultado = File.open(path, "wb") { |f| f.write(archivo.read) };
          #Verifica si el archivo se subi� correctamente.
          if resultado
-            res = "1";
+            res = "1";            
+            count = 0;
             
             File.open("#{Ruta_directorio_archivos}#{nombre}", "r").each_line do |line|
-              dni_alumno, tipo_documento_padre, numero_documento_padre, inicio_vigencia = line.split("|")
-              
-              alumno = Alumno.find_by_dni(dni_alumno)
-              padre = PersonaVinculada.find_by_tipo_documento_and_numero_documento(tipo_documento_padre, numero_documento_padre)
+              begin
+                count += 1
+                raise StandardError, "Estructura incorrecta." if line.count("|") != 3
+                
+                dni_alumno, tipo_documento_padre, numero_documento_padre, inicio_vigencia = line.split("|")
+                
+                raise StandardError, "Debe especificar el DNI del alumno." if dni_alumno.nil? || dni_alumno.strip == ""
+                raise StandardError, "Debe especificar el tipo de documento de identidad del padre." if tipo_documento_padre.nil? || tipo_documento_padre.strip == ""
+                raise StandardError, "Debe especificar el numero de documento de identidad del padre." if numero_documento_padre.nil? || numero_documento_padre.strip == ""
+                raise StandardError, "Debe especificar la fecha de inicio de vigencia del vinculo." if inicio_vigencia.nil? || inicio_vigencia.strip == ""
 
-              vinculo = AlumnoPersonaVinculada.find_by_persona_vinculada_id_and_alumno_id(padre.id, alumno.id)
+                alumno = Alumno.find_by_dni(dni_alumno)
+                raise ActiveRecord::RecordNotFound, "Alumno no encontrado" if alumno.nil?
+                
+                padre = PersonaVinculada.find_by_tipo_documento_and_numero_documento(tipo_documento_padre, numero_documento_padre)
+                raise ActiveRecord::RecordNotFound, "Padre no encontrado" if alumno.nil?
 
-              if !vinculo.nil?
-                vinculo.update_attributes(
-                  :persona_vinculada_id => padre.id,
-                  :alumno_id => alumno.id,
-                  :inicio_vigencia => inicio_vigencia,
-                  :usuario => :current_user
-                )
-              else
-                AlumnoPersonaVinculada.create(
-                  :persona_vinculada_id => padre.id,
-                  :alumno_id => alumno.id,
-                  :inicio_vigencia => inicio_vigencia,
-                  :tipo_vinculo => 1,
-                  :vigencia_vinculo => 2,
-                  :apoderado => 1,
-                  :autoriza_actividad => 1,
-                  :revisa_control => 1,
-                  :usuario => :current_user
-                )
+                vinculo = AlumnoPersonaVinculada.find_by_persona_vinculada_id_and_alumno_id(padre.id, alumno.id)
+
+                if !vinculo.nil?
+                  vinculo.update_attributes!(
+                    :persona_vinculada_id => padre.id,
+                    :alumno_id => alumno.id,
+                    :inicio_vigencia => inicio_vigencia,
+                    :usuario => :current_user
+                  )
+                else
+                  AlumnoPersonaVinculada.create!(
+                    :persona_vinculada_id => padre.id,
+                    :alumno_id => alumno.id,
+                    :inicio_vigencia => inicio_vigencia,
+                    :tipo_vinculo => 1,
+                    :vigencia_vinculo => 2,
+                    :apoderado => 1,
+                    :autoriza_actividad => 1,
+                    :revisa_control => 1,
+                    :usuario => :current_user
+                  )
+                end
+              rescue => e
+                errores.push "Linea #{count}: #{e.message}"
               end
             end
          else
             res = "0";
          end
+         
+          #Abre el archivo de logs, Si no existe lo crea, si existe lo sobrescribe
+        File.open(Ruta_archivo_logs, "w"){
+          |f|;
+          errores.each do |e|
+            f.puts(e);
+          end
+          f.close();
+        };
+        
+        if File.size?(Ruta_archivo_logs)
+          res = "2";
+        end
+        
          #Redirige al controlador "archivos", a la acci�n "lista_archivos" y con la variable de tipo GET "subir_archivos" con el valor "ok" si se subi� el archivo y "error" si no se pudo.
          redirect_to :controller => "archivos", :action => "listar_archivos", :res => res;
       else
@@ -276,28 +369,4 @@ class ArchivosController < ApplicationController
    redirect_to :controller => "archivos", :action => "listar_archivos", :eliminar_archivo => eliminar_archivo;
  end
 
-  def guardar_log
-	#Si llega por post intentar� guardar los comentarios que ha ingresado el usuario.
-   if request.post?
-      #Guarda los comentarios en una variable
-      logs = params[:logs];
-      #Abre el archivo de logs, Si no existe lo crea, si existe lo sobrescribe
-      File.open(Ruta_archivo_logs, "wb"){
-         #Alias
-         |f|;
-         #Escribe el contenido del archivo.
-         f.write(logs);
-         #Lo cierra para liberar memoria.
-         f.close();
-      };
-   end
-   #Verifica si existe el archivo de los comentarios.
-   if File.exist?(Ruta_archivo_logs)
-      #Guarda el contenido del archivo de los comentarios.
-      @logs = File.read(Ruta_archivo_logs);
-   else
-      #No existe el archivo de los comentarios as� que guarda comillas vac�as en los comentarios.
-      @logs = "";
-   end
-  end
 end
