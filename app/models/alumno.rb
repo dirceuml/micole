@@ -13,6 +13,7 @@ class Alumno < ActiveRecord::Base
   has_many :asistencias, :through => :anios_alumnos
   
   validates :nombres, :apellido_paterno, :apellido_materno, :usuario, :presence => true
+  validate :rango_fecha_nacimiento
   
   def apellidos_nombres
     apellido_paterno + " " + apellido_materno + " " + nombres
@@ -30,6 +31,14 @@ class Alumno < ActiveRecord::Base
   def find_asistencia_by_alumno_id_and_fecha (alumno_id, fecha)
     Asistencia.find(:all, :conditions => ["to_char(fecha_hora, 'dd/mm/yyyy') = '#{fecha}' and anio_alumno_id = #{alumno_id}"]).first
     # creo que se debe revisar la parte de la condicion: anio_alumno_id = #{alumno_id
+  end
+  
+  def rango_fecha_nacimiento
+    if fecha_nacimiento.present?
+      if !fecha_nacimiento.between?(Date.parse(18.years.ago.to_s), Date.parse(4.years.ago.to_s)) then
+        errors.add(:clave, "La fecha de nacimiento esta fuera del rango permitido.")
+      end
+    end
   end
   
   scope :hijos_de, lambda { |padre| joins(:alumno_persona_vinculada).where("apoderado = 1 and persona_vinculada_id = ?", padre) }

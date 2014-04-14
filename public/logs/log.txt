@@ -1,2 +1,2 @@
-Linea 1: Validation failed: Fecha nacimiento La fecha de nacimiento esta fuera del rango permitido.
-Linea 2: Validation failed: Fecha nacimiento La fecha de nacimiento esta fuera del rango permitido.
+Linea 1: Estructura incorrecta.
+Linea 2: Estructura incorrecta.
