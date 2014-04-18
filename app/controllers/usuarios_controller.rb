@@ -150,7 +150,7 @@ class UsuariosController < ApplicationController
               end
             end
             
-            clave  = nomusu
+            clave = SecureRandom.urlsafe_base64
             if opcion == 1 && !correo.nil?
               notificado = 1
             else
@@ -172,7 +172,8 @@ class UsuariosController < ApplicationController
               format.html { render action: "crear_masivo" }
             else
               if notificado == 1
-                @usuario.enviar_credenciales   ## Envio de credenciales a los usuarios para el acceso al sistema
+                # Envio de credenciales a los usuarios para el acceso al sistema
+                UsuarioMailer.delay.notificar_credencial(@usuario, clave, 1)   ## Asincrono
               end
               
               if @guardados.nil?
@@ -197,11 +198,18 @@ class UsuariosController < ApplicationController
         @usuarios_notificacion.each do |usuariopendiente|
           @usuario = Usuario.find(usuariopendiente.id)
           if !@usuario.correo.nil?
-            # Actualizar estado de notificado
-            sql = 'update usuarios set notificado = 1 where id = '+ @usuario.id.to_s
-            registros = Usuario.connection.update(sql)
+            # Actualizar estado de notificado y se crea nueva contraseña
+            nueva_clave = SecureRandom.urlsafe_base64
+
+            # sql = 'update usuarios set notificado = 1 where id = '+ @usuario.id.to_s
+            # registros = Usuario.connection.update(sql)            
+            @usuario.update_attributes(
+              :clave => nueva_clave,
+              :notificado => 1
+            )
             
-            @usuario.enviar_credenciales   ## Envio de credenciales a los usuarios para el acceso al sistema
+            # Envio de credenciales a los usuarios para el acceso al sistema
+            UsuarioMailer.delay.notificar_credencial(@usuario, nueva_clave, 1)   ## Asincrono
           end
         end
       end
@@ -216,13 +224,14 @@ class UsuariosController < ApplicationController
       
       if !usuario.nil?      
         nueva_clave = SecureRandom.urlsafe_base64
-
+        
         usuario.update_attributes(
           :clave => nueva_clave
         )
-
-        UsuarioMailer.restaurar_clave(usuario, nueva_clave).deliver
-
+        
+        # UsuarioMailer.restaurar_clave(usuario, nueva_clave).deliver
+        UsuarioMailer.notificar_credencial(usuario, nueva_clave, 2).deliver
+        
         res = "1"
       else
         res = "2"

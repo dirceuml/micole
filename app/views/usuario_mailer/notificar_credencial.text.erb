@@ -1,0 +1,19 @@
+# encoding: utf-8
+
+Estimado(a) señor(a) <%= @usuario.nombre %>:
+
+<% if @tipo == 1 %>
+Se ha creado las credenciales para que Ud. pueda ingresar al sistema MiCole
+<% else %>
+Se le envía este correo porque usted ha solicitado restaurar su contraseña.
+Sus datos para inciar sesión en el sistema son:
+<% end %>
+
+usuario: <%= @usuario.usuario %>
+
+<% if @tipo == 1 %> Contraseña: <% else %> Nueva contraseña: <% end %> <%= @clave %>
+
+Luego de iniciar sesión en el sistema MiCole, por favor, cambie su contraseña.
+
+
+MiCole.com

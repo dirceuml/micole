@@ -13,6 +13,6 @@ class Grado < ActiveRecord::Base
     end
   end 
   
-  scope :anio_escolar, lambda { |anioescolar| where("grados.anio_escolar_id = ?", anioescolar)}
+  scope :por_anio_escolar, where("grados.anio_escolar_id = ?", 1)
   
 end

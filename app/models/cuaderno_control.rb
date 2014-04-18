@@ -6,6 +6,8 @@ class CuadernoControl < ActiveRecord::Base
   validates :seccion_id, :fecha, :estado, :usuario, :presence => { :message => ": El campo no puede estar vacio" }
   validates :fecha, :uniqueness => {:scope => :seccion_id, :message => ": Solamente puede haber un registro por fecha y seccion"} 
   
-  scope :cerrado, where(:estado => 2)
-  scope :abierto, where(:estado => 1)
+  scope :cerrado, joins(:seccion => :grados).where("grados.anio_escolar_id = ? and estado = 2", 1)
+  scope :abierto, joins(:seccion => :grados).where("grados.anio_escolar_id = ? and estado = 1", 1)
+  #scope :cerrado, where(:estado => 2)
+  #scope :abierto, where(:estado => 1)
 end

@@ -13,10 +13,10 @@ class Usuario < ActiveRecord::Base
   validates :clave, :presence => { :message => ": El campo no puede estar vacio" }, :on => :create
   validates :usuario, :uniqueness => { :message => "El usuario ya esta registrado" }
   #validates :usuario, :uniqueness => { :scope => :colegio_id, :message => "El usuario ya esta registrado" }
-  
-  scope :pendientenotificar, where("notificado = 0 and colegio_id = ?", 1)
   validate :clave_actual_ok, on: :update
   validate :clave_diferente, on: :update
+  
+  scope :pendientenotificar, where("notificado = 0 and colegio_id = ?", 1)
   
   
   def self.authenticate(usuario, password)
@@ -62,9 +62,5 @@ class Usuario < ActiveRecord::Base
 #    fecha_expiracion = user.fecha_clave + :dias_expiracion_clave
 #    (Date.current - fecha_expiracion).to_i      
 #  end
-
-  def enviar_credenciales
-    UsuarioMailer.delay.notificacion_credencial(Usuario.find(id))   ## Asincrono
-  end
 
 end

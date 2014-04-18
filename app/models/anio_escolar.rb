@@ -10,7 +10,7 @@ class AnioEscolar < ActiveRecord::Base
   validates :colegio_id, :anio, :usuario, :presence => { :message => ": El campo no puede estar vacio" }
   validates :anio, :uniqueness => {:scope => :colegio_id, :message => "Solamente se puede configurar un periodo por colegio"}
   
-  scope :anioescolarcolegio, lambda { |colegioid| where("anios_escolares.colegio_id = ?", colegioid)}
+  scope :anioescolarcolegio, where("anios_escolares.colegio_id = ?", 1)
   
   validate :if => "!anio.nil?" do |a|
     if a.anio > Time.now.year

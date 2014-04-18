@@ -403,8 +403,8 @@ ActiveRecord::Schema.define(:version => 20140414013800) do
     t.datetime "created_at",                                :null => false
     t.datetime "updated_at",                                :null => false
     t.string   "clave_salt",           :default => "clave", :null => false
-    t.date     "fecha_clave"
     t.integer  "notificado",           :default => 0,       :null => false
+    t.date     "fecha_clave"
   end
 
   add_index "usuarios", ["colegio_id", "usuario"], :name => "ak_usuarios", :unique => true

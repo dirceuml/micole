@@ -28,7 +28,7 @@ class AniosEscolaresController < ApplicationController
   def new
     @anio_escolar = AnioEscolar.new
     
-    ultimoanio = AnioEscolar.anioescolarcolegio(1).maximum('anio')
+    ultimoanio = AnioEscolar.anioescolarcolegio.maximum('anio')
     if ultimoanio.nil?
       ultimoanio = Time.now.year - 1
     end

@@ -11,7 +11,7 @@ class AnioAlumno < ActiveRecord::Base
   validates :alumno_id, :uniqueness => {:scope => :anio_escolar_id, :message => ": Este alumno esta matriculado. Verifique" }
   
   scope :inasistencia_fecha, lambda { |fecha| where("anio_escolar_id = 1 and id not in (Select anio_alumno_id from asistencias where tipo_movimiento = 2 and to_char(fecha_hora, 'dd/mm/yyyy') = ?)", fecha.strftime('%d/%m/%Y'))}
-  scope :pertenecen_a_seccion, lambda { |seccion| where("anios_alumnos.seccion_id = ?", seccion)}
+  scope :pertenecen_a_seccion, lambda { |seccion| where("anios_alumnos.anio_escolar_id = ? and anios_alumnos.seccion_id = ?", 1, seccion)}
   
   def enviar_inasistencia
     alumno.personas_vinculadas.where("apoderado = 1").find_each do |p|
