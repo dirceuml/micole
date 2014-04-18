@@ -16,11 +16,11 @@
       <% end %>
       <%= link_to link_opcion do %>
         <% if anio_escolar.activo == 1 %>
-          <p> <%= simple_format("#{anio_escolar.anio} (Activo)") %> </p>
+          <p> <%= "#{anio_escolar.anio} (Activo)" %> </p>
         <% else %>
           <p> <%= simple_format("#{anio_escolar.anio}") %> </p>
         <% end %>
-        <p class="ui-li-aside ui-li-desc"> <%= Colegio.find(anio_escolar.colegio_id).nombre %> </p>
+        <p class="ui-li-aside"> <%= Colegio.find(anio_escolar.colegio_id).nombre %> </p>
       <% end %>
       
       <!-- los colegios no deben tener acceso a la opcion para eliminar un año escolar -->

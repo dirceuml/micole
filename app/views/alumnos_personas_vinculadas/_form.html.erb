@@ -15,7 +15,7 @@
 
 <div data-role="fieldcontain">
   <div class="field">
-    Persona:<br/><%= collection_select(:alumno_persona_vinculada, :persona_vinculada_id, PersonaVinculada.all, :id, :apellidos_nombres, {:prompt => ':: Seleccione ::' }, {"data-mini" => "true"}) %>
+    Persona:<br/><%= collection_select(:alumno_persona_vinculada, :persona_vinculada_id, PersonaVinculada.order("apellido_paterno","apellido_materno", "nombres"), :id, :apellidos_nombres, {:prompt => ':: Seleccione ::' }, {"data-mini" => "true"}) %>
   </div>
   <div class="field">
     <%= f.hidden_field :alumno_id %>
@@ -27,10 +27,10 @@
     Vigencia:<br/><%= collection_select(:alumno_persona_vinculada, :vigencia_vinculo, ListaValor.where("tabla = 4"), :item, :descripcion, {:prompt => ':: Seleccione ::' }, {"data-mini" => "true"}) %>
   </div>
   <div class="field">
-    Inicio:<br/><%= f.text_field :inicio_vigencia, "data-mini" => "true", "data-role" => "datebox", "type" => "date", "style" => "width:120px" %>    
+    Inicio:<br/><%= f.text_field :inicio_vigencia, "data-mini" => "true", "data-role" => "datebox", "type" => "date", "style" => "width:130px" %>    
   </div>
   <div class="field">
-    Fin:<br/><%= f.text_field :fin_vigencia, "data-mini" => "true", "data-role" => "datebox", "type" => "date", "style" => "width:120px" %>
+    Fin:<br/><%= f.text_field :fin_vigencia, "data-mini" => "true", "data-role" => "datebox", "type" => "date", "style" => "width:130px" %>
   </div>
 <br/>
   <fieldset data-role="controlgroup">

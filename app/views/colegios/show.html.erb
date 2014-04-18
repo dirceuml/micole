@@ -9,8 +9,14 @@
   <b>Direccion:</b> <%= @colegio.direccion %> <p>
   <b>Telefono:</b> <%= @colegio.telefono %> <p>
   <b>Correo:</b> <%= @colegio.correo %> <p>
-  <b>Logo:</b> <%= @colegio.logo %> <p>
   <b>Director:</b> <%= @colegio.director %> <p>
+  <b>Activo:</b>
+  <% if @colegio.estado == 1 %>
+    Si
+  <% else %>
+    No
+  <% end %>
+  <p>
 </div>
 
 <div data-role="footer">

@@ -7,9 +7,11 @@ class AnioAlumno < ActiveRecord::Base
   has_many :asistencias
 #  has_many :personas_vinculadas
   
-  validates :anio_escolar_id, :alumno_id, :usuario, :presence => true
+  validates :anio_escolar_id, :alumno_id, :usuario, :seccion_id, :presence => { :message => ": El campo no puede estar vacio" }
+  validates :alumno_id, :uniqueness => {:scope => :anio_escolar_id, :message => ": Este alumno esta matriculado. Verifique" }
   
   scope :inasistencia_fecha, lambda { |fecha| where("anio_escolar_id = 1 and id not in (Select anio_alumno_id from asistencias where tipo_movimiento = 2 and to_char(fecha_hora, 'dd/mm/yyyy') = ?)", fecha.strftime('%d/%m/%Y'))}
+  scope :pertenecen_a_seccion, lambda { |seccion| where("anios_alumnos.seccion_id = ?", seccion)}
   
   def enviar_inasistencia
     alumno.personas_vinculadas.where("apoderado = 1").find_each do |p|

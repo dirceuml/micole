@@ -1,7 +1,7 @@
 <%= form_for(@anio_alumno) do |f| %>
   <% if @anio_alumno.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@anio_alumno.errors.count, "error") %> prohibited this anio_alumno from being saved:</h2>
+    <div id="error_explanation" data-role="header" data-theme="e">
+      <h2><%= pluralize(@anio_alumno.errors.count, "error") %> impidieron que se grabe el registro:</h2>
 
       <ul>
       <% @anio_alumno.errors.full_messages.each do |msg| %>
@@ -11,23 +11,30 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :anio_escolar_id %><br />
-    <%= f.number_field :anio_escolar_id %>
+  <div data-role="fieldcontain">
+    <div class="field">
+        <%= f.label :alumno_id %><br />
+        <%= f.number_field :alumno_id, "style" => "width:150px"%>
+    </div>
+    <div class="field">
+        <%= f.label :seccion_id %><br />
+        <%= collection_select(:anio_alumno, :seccion_id, Seccion.seccion_anioescolar(1).order('grados.grado','seccion'), :id, :grado_seccion, { :prompt => ':: Seleccione ::'}, {"data-mini" => "true"}) %>
+    </div>
+    <div class="field">
+    Estado<br />
+    <select <%= f.number_field :estado, "data-role" => "slider", "data-mini" => "true" %> >
+                <option value = 0 <% if @anio_alumno.estado == 0 %> selected <%end%> >Baja</option>
+                <option value = 1 <% if @anio_alumno.estado == 1 %> selected <%end%> >Activo</option>
+    </select>
   </div>
-  <div class="field">
-    <%= f.label :alumno_id %><br />
-    <%= f.number_field :alumno_id %>
-  </div>
-  <div class="field">
-    <%= f.label :seccion_id %><br />
-    <%= f.number_field :seccion_id %>
-  </div>
-  <div class="field">
-    <%= f.label :usuario %><br />
-    <%= f.text_field :usuario %>
+    <div class="field">
+        <%= f.hidden_field :anio_escolar_id, :value => "1" %>
+    </div>
+    <div class="field">
+        <%= f.hidden_field :usuario, :value => current_user.usuario%>
+    </div>
   </div>
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit "Grabar", "data-inline" => "true", "data-theme" => "a", "data-icon" => "check", "data-mini" => "true" %>
   </div>
 <% end %>

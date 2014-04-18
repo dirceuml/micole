@@ -4,8 +4,14 @@ class AniosAlumnosController < ApplicationController
   # GET /anios_alumnos
   # GET /anios_alumnos.json
   def index
-    @anios_alumnos = AnioAlumno.all
-
+    seccion = params[:seccion_id]
+    
+    if !seccion.nil?
+      @anios_alumnos = AnioAlumno.pertenecen_a_seccion(seccion)
+    else
+      @anios_alumnos = AnioAlumno.all
+    end
+    
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @anios_alumnos }
@@ -46,7 +52,7 @@ class AniosAlumnosController < ApplicationController
 
     respond_to do |format|
       if @anio_alumno.save
-        format.html { redirect_to @anio_alumno, notice: 'Anio alumno was successfully created.' }
+        format.html { redirect_to @anio_alumno, notice: 'Matricula del alumno fue creado satisfactoriamente.' }
         format.json { render json: @anio_alumno, status: :created, location: @anio_alumno }
       else
         format.html { render action: "new" }
@@ -62,7 +68,7 @@ class AniosAlumnosController < ApplicationController
 
     respond_to do |format|
       if @anio_alumno.update_attributes(params[:anio_alumno])
-        format.html { redirect_to @anio_alumno, notice: 'Anio alumno was successfully updated.' }
+        format.html { redirect_to @anio_alumno, notice: 'Matricula del alumno fue actualizado satisfactoriamente.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

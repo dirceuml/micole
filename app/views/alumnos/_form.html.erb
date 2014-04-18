@@ -1,7 +1,7 @@
-<%= form_for(@alumno) do |f| %>
+<%= form_for(@alumno, :html => { :class => "ui-body ui-body-c", :multipart => true, "data-ajax" => "false", "onSubmit" => "return validarFoto(document.personas, alumno[foto]);", "name" => "personas" }) do |f| %>
   <% if @alumno.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@alumno.errors.count, "error") %> prohibited this alumno from being saved:</h2>
+    <div id="error_explanation" data-role="header" data-theme="e">
+      <h2><%= pluralize(@alumno.errors.count, "error") %> impidieron que se grabe el registro:</h2>
 
       <ul>
       <% @alumno.errors.full_messages.each do |msg| %>
@@ -10,48 +10,52 @@
       </ul>
     </div>
   <% end %>
-
-  <div class="field">
-    <%= f.label :nombres %><br />
-    <%= f.text_field :nombres %>
-  </div>
-  <div class="field">
-    <%= f.label :apellido_paterno %><br />
-    <%= f.text_field :apellido_paterno %>
-  </div>
-  <div class="field">
-    <%= f.label :apellido_materno %><br />
-    <%= f.text_field :apellido_materno %>
-  </div>
-  <div class="field">
-    <%= f.label :fecha_nacimiento %><br />
-    <%= f.date_select :fecha_nacimiento %>
-  </div>
-  <div class="field">
-    <%= f.label :telefono_fijo %><br />
-    <%= f.text_field :telefono_fijo %>
-  </div>
-  <div class="field">
-    <%= f.label :telefono_movil %><br />
-    <%= f.text_field :telefono_movil %>
-  </div>
-  <div class="field">
-    <%= f.label :direccion %><br />
-    <%= f.text_area :direccion %>
-  </div>
-  <div class="field">
-    <%= f.label :correo %><br />
-    <%= f.text_field :correo %>
-  </div>
-  <div class="field">
-    <%= f.label :foto %><br />
-    <%= f.text_field :foto %>
-  </div>
-  <div class="field">
-    <%= f.label :usuario %><br />
-    <%= f.text_field :usuario %>
+  <div data-role="fieldcontain">
+    <div class="field">
+        <%= f.label :nombres %><br />
+        <%= f.text_field :nombres %>
+    </div>
+    <div class="field">
+        <%= f.label :apellido_paterno %><br />
+        <%= f.text_field :apellido_paterno %>
+    </div>
+    <div class="field">
+        <%= f.label :apellido_materno %><br />
+        <%= f.text_field :apellido_materno %>
+    </div>
+    <div class="field">
+        <%= f.label :fecha_nacimiento %><br />
+        <%= f.text_field :fecha_nacimiento, "data-role" => "datebox", "type" => "date", "style" => "width:150px" %>
+    </div>
+    <div class="field">
+        <%= f.label :dni %><br />
+        <%= f.text_field :dni ,"style" => "width:150px", :placeholder => "99999999" %>
+    </div>
+    <div class="field">
+        <%= f.label :telefono_fijo %><br />
+        <%= f.telephone_field :telefono_fijo, "style" => "width:150px", :placeholder => "444-4444" %>
+    </div>
+    <div class="field">
+        <%= f.label :telefono_movil %><br />
+        <%= f.telephone_field :telefono_movil, "style" => "width:150px", :placeholder => "999999999" %>
+    </div>
+    <div class="field">
+        <%= f.label :direccion %><br />
+        <%= f.text_area :direccion %>
+    </div>
+    <div class="field">
+        <%= f.label :correo %><br />
+        <%= f.email_field :correo, :placeholder => "dirceu@example.com" %>
+    </div>
+    <div class="field">
+        <%= f.label :foto %><br />
+        <%= f.file_field :foto %>
+    </div>
+    <div class="field">
+        <%= f.hidden_field :usuario, :value => current_user.usuario %>
+    </div>
   </div>
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit "Grabar", "data-inline" => "true", "data-theme" => "a", "data-icon" => "check", "data-mini" => "true" %>
   </div>
 <% end %>

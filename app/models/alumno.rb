@@ -9,7 +9,8 @@ class Alumno < ActiveRecord::Base
   
   has_many :asistencias, :through => :anios_alumnos
   
-  validates :nombres, :apellido_paterno, :apellido_materno, :usuario, :presence => true
+  validates :nombres, :apellido_paterno, :apellido_materno, :usuario, :presence => { :message => ": El campo no puede estar vacio" }
+  validates :dni, :presence => { :message => ": El campo no puede estar vacio" }, :uniqueness => { :message => ": Este DNI esta registrado. Verifique" }, :format => { :with => /\A[+-]?\d+\Z/, :message => ": Solo se permiten numeros"}
   
   def apellidos_nombres
     apellido_paterno + " " + apellido_materno + " " + nombres

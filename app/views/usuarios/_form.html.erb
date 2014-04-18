@@ -43,8 +43,16 @@
     <%= f.label :correo %><br />
     <%= f.email_field :correo, :placeholder => "dirceu@example.com" %>
   </div>
-  <div class="actions">
-    <%= f.submit "Grabar", "data-inline" => "true", "data-theme" => "a", "data-icon" => "check", "data-mini" => "true" %>
-  </div>
+
+  Notificado por correo:<br />
+  <select <%= f.number_field :notificado, "data-role" => "slider", "data-mini" => "true" %> >
+              <option value = 0 <% if @usuario.notificado == 0 %> selected <%end%> >No</option>
+              <option value = 1 <% if @usuario.notificado == 1 %> selected <%end%> >Si</option>
+  </select>
+  
 </div>
+<div class="actions">
+    <%= f.submit "Grabar", "data-inline" => "true", "data-theme" => "a", "data-icon" => "check", "data-mini" => "true" %>
+</div>
+
 <% end %>

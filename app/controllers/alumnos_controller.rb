@@ -17,7 +17,35 @@ class AlumnosController < ApplicationController
       format.json { render json: @alumnos }
     end
   end
+  
+  # GET /vincularpersona
+  # GET /vincularpersona.json
+  def alumnoseccion
+    seccion = params[:seccion_id]
+    
+    if !seccion.nil?
+      @alumnos = Alumno.pertenecen_a_seccion(seccion)
+    else
+      @alumnos = Alumno.all
+    end
 
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: @alumnos }
+    end
+  end
+  
+  # GET /vincularpersona/1
+  # GET /vincularpersona/1.json
+  def alumnopersona        # vincularpersona
+    @alumno = Alumno.find(params[:id])
+    
+    respond_to do |format|
+      format.html # show.html.erb
+      format.json { render json: @alumno }
+    end
+  end  
+  
   # GET /alumnos/1
   # GET /alumnos/1.json
   def show
@@ -28,6 +56,7 @@ class AlumnosController < ApplicationController
       format.json { render json: @alumno }
     end
   end
+  
 
   # GET /alumnos/new
   # GET /alumnos/new.json
@@ -52,7 +81,7 @@ class AlumnosController < ApplicationController
     
     respond_to do |format|
       if @alumno.save
-        format.html { redirect_to @alumno, notice: 'Alumno creado satisfactoriamente.' }
+        format.html { redirect_to @alumno, notice: 'El alumno fue creado satisfactoriamente.' }
         format.json { render json: @alumno, status: :created, location: @alumno }
       else
         format.html { render action: "new" }
@@ -68,7 +97,7 @@ class AlumnosController < ApplicationController
 
     respond_to do |format|
       if @alumno.update_attributes(params[:alumno])
-        format.html { redirect_to @alumno, notice: 'Alumno was successfully updated.' }
+        format.html { redirect_to @alumno, notice: 'El alumno fue actualizado satisfactoriamente.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

@@ -11,7 +11,10 @@ class Usuario < ActiveRecord::Base
   validates :usuario, :nombre, :perfil_id, :presence => { :message => ": El campo no puede estar vacio" }
   validates :clave, :confirmation => { :message => ": No ha confirmado correctamente la clave" }
   validates :clave, :presence => { :message => ": El campo no puede estar vacio" }, :on => :create
-  validates :usuario, :uniqueness => { :scope => :colegio_id, :message => "El usuario ya esta registrado" }
+  validates :usuario, :uniqueness => { :message => "El usuario ya esta registrado" }
+  #validates :usuario, :uniqueness => { :scope => :colegio_id, :message => "El usuario ya esta registrado" }
+  
+  scope :pendientenotificar, where("notificado = 0 and colegio_id = ?", 1)
   
   def self.authenticate(usuario, password)
     user = find_by_usuario(usuario)
@@ -29,4 +32,9 @@ class Usuario < ActiveRecord::Base
       self.clave_hash = BCrypt::Engine.hash_secret(clave, clave_salt)
     end
   end
+  
+  def enviar_credenciales
+    UsuarioMailer.delay.notificacion_credencial(Usuario.find(id))   ## Asincrono
+  end
+  
 end

@@ -87,15 +87,10 @@ class UsuariosController < ApplicationController
     if current_user.nil?
       redirect_to(log_in_path) and return
     end
-    #if params[:opcion].nil?
-    #  @usuarios = Usuarios.all
-    #else
-    opcion = 1
-    @usuarios = Usuario.all
-    #end
     
-    # @usuario = Usuario.new
-
+    #@usuario = Usuario.new
+    @usuarios = Usuario.all
+    
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @usuario }
@@ -103,61 +98,97 @@ class UsuariosController < ApplicationController
   end
   
   def grabar_masivo
-     
-    @nuevos_usuarios = PersonaVinculada.connection.select_rows("Select id, nombres, apellido_paterno, apellido_materno, correo From personas_vinculadas 
+    opcion = params[:creausuarios].to_i
+    
+    if opcion == 1 || opcion == 2    # crear usuarios y notificar por correo  o solo crear usuarios
+      @nuevos_usuarios = PersonaVinculada.connection.select_rows("Select id, nombres, apellido_paterno, apellido_materno, correo From personas_vinculadas 
               Where id not in (Select persona_vinculada_id from usuarios where colegio_id= 1 and persona_vinculada_id <> 0) and id in (Select persona_vinculada_id From alumnos_personas_vinculadas 
               Join anios_alumnos on anios_alumnos.alumno_id = alumnos_personas_vinculadas.alumno_id join anios_escolares on anios_escolares.id = anios_alumnos.anio_escolar_id
               Where vigencia_vinculo= 2 And (apoderado= 1 Or autoriza_actividad = 1 Or revisa_control= 1) and anios_alumnos.anio_escolar_id = 1 and anios_escolares.colegio_id= 1)")
       
-    if @nuevos_usuarios.nil?
-      flash[:notice] = 'No existen personas vinculadas sin usuario'
-      render :crear_masivo
-    else
-      ActiveRecord::Base.transaction do
-        @nuevos_usuarios.each do |usuario|
-          idperv = usuario[0].to_i
-          correo = usuario[4]
-          nombre = usuario[1]
-          apepat = usuario[2]  # .strip
-          apemat = usuario[3]  # .strip
-          nomusu = nombre[0].downcase+ apepat.downcase
-          
-          #cantidadusuario = Usuario.count(:all).where("usuario like '?%'",nomusu)
-          
-          # hallando la ultima secuencia de nombre de usuario
-          @usuariosregistrados = Usuario.connection.select_rows("Select usuario from usuarios where usuario like '"+ nomusu+ "%'")
-          if !@usuariosregistrados.nil?
-            ultsec = 0
-            @usuariosregistrados.each do |registrado|
-              #secact= nombre.gsub(nomusu, '').to_i
-              secact= registrado[0].reverse.to_i
-              if secact > ultsec
-                ultsec = secact
+      if @nuevos_usuarios.nil?
+        flash[:notice] = 'No existen personas vinculadas sin usuario'
+        render :crear_masivo
+      else
+        ActiveRecord::Base.transaction do
+          @nuevos_usuarios.each do |usuario|
+            idperv = usuario[0].to_i
+            correo = usuario[4]
+            nombre = usuario[1]
+            apepat = usuario[2]  # .strip
+            apemat = usuario[3]  # .strip
+            nomusu = nombre[0].downcase+ apepat.downcase
+            
+            #cantidadusuario = Usuario.count(:all).where("usuario like '?%'",nomusu)
+            
+            # hallando la ultima secuencia de nombre de usuario
+            @usuariosregistrados = Usuario.connection.select_rows("Select usuario from usuarios where usuario like '"+ nomusu+ "%'")
+            if !@usuariosregistrados.nil?
+              ultsec = -1
+              @usuariosregistrados.each do |registrado|
+                #secact= nombre.gsub(nomusu, '').to_i
+                secact= registrado[0].gsub(nomusu,'').to_i
+                if secact > ultsec
+                  ultsec = secact
+                end
+              end
+              if ultsec > -1
+                nomusu= nomusu+ (ultsec+ 1).to_s
               end
             end
-            nomusu= nomusu+ (ultsec+ 1).to_s
-          end
-          
-          clave  = nomusu
-          @usuario = Usuario.new(
-            :colegio_id => 1,
-            :usuario => nomusu,
-            :nombre  => nombre+ " "+ apepat+ " "+ apemat,
-            :clave => clave,
-            :perfil_id => 2,     # Padre
-            :persona_vinculada_id => idperv,
-            :correo => correo,
-            :created_at => Time.now
-          )
-          if !@usuario.save
-            flash[:notice] = 'Ocurrio un error al registrar los usuarios'
-            format.html { render action: "crear_masivo" }
-          else
-            if @guardados.nil?
-              @guardados = [@usuario.id]
+            
+            clave  = nomusu
+            if opcion == 1 && !correo.nil?
+              notificado = 1
             else
-              @guardados.push(@usuario)
+              notificado = 0
             end
+            @usuario = Usuario.new(
+              :colegio_id => 1,
+              :usuario => nomusu,
+              :nombre  => nombre+ " "+ apepat+ " "+ apemat,
+              :clave => clave,
+              :perfil_id => 2,     # Padre
+              :persona_vinculada_id => idperv,
+              :correo => correo,
+              :notificado => notificado,
+              :created_at => Time.now
+            )
+            if !@usuario.save
+              flash[:notice] = 'Ocurrio un error al registrar los usuarios'
+              format.html { render action: "crear_masivo" }
+            else
+              if notificado == 1
+                @usuario.enviar_credenciales   ## Envio de credenciales a los usuarios para el acceso al sistema
+              end
+              
+              if @guardados.nil?
+                @guardados = [@usuario.id]
+              else
+                @guardados.push(@usuario)
+              end
+            end
+          end
+        end
+      end
+      
+    end
+    
+    if opcion == 3    # solo notificar por correo
+      @usuarios_notificacion = Usuario.pendientenotificar
+      if @usuarios_notificacion.nil?
+        flash[:notice] = 'No existen usuarios pendientes de notificacion de credenciales'
+        render :crear_masivo
+      else
+        # @usuario.enviar_credenciales   ## Envio de credenciales a los usuarios para el acceso al sistema
+        @usuarios_notificacion.each do |usuariopendiente|
+          @usuario = Usuario.find(usuariopendiente.id)
+          if !@usuario.correo.nil?
+            # Actualizar estado de notificado
+            sql = 'update usuarios set notificado = 1 where id = '+ @usuario.id.to_s
+            registros = Usuario.connection.update(sql)
+            
+            @usuario.enviar_credenciales   ## Envio de credenciales a los usuarios para el acceso al sistema
           end
         end
       end
@@ -165,6 +196,7 @@ class UsuariosController < ApplicationController
     
     redirect_to :controller => 'usuarios', :action => 'crear_masivo'
   end
+  
   
   rescue_from CanCan::AccessDenied do |exception|
     if current_user.nil?

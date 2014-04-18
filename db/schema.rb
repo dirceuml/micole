@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140301204748) do
+ActiveRecord::Schema.define(:version => 20140414013800) do
 
   create_table "actividades", :force => true do |t|
     t.integer  "anio_escolar_id",                                           :null => false
@@ -84,12 +84,13 @@ ActiveRecord::Schema.define(:version => 20140301204748) do
   add_index "alumnos_personas_vinculadas", ["persona_vinculada_id"], :name => "fk_alumnospersonas_personas"
 
   create_table "anios_alumnos", :force => true do |t|
-    t.integer  "anio_escolar_id", :null => false
-    t.integer  "alumno_id",       :null => false
-    t.string   "usuario",         :null => false
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
-    t.integer  "seccion_id",      :null => false
+    t.integer  "anio_escolar_id",                :null => false
+    t.integer  "alumno_id",                      :null => false
+    t.string   "usuario",                        :null => false
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
+    t.integer  "seccion_id",                     :null => false
+    t.integer  "estado",          :default => 1, :null => false
   end
 
   add_index "anios_alumnos", ["alumno_id"], :name => "fk_aniosalumnos_alumno"
@@ -398,6 +399,7 @@ ActiveRecord::Schema.define(:version => 20140301204748) do
     t.datetime "created_at",                                :null => false
     t.datetime "updated_at",                                :null => false
     t.string   "clave_salt",           :default => "clave", :null => false
+    t.integer  "notificado",           :default => 0,       :null => false
   end
 
   add_index "usuarios", ["colegio_id", "usuario"], :name => "ak_usuarios", :unique => true

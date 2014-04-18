@@ -1,5 +1,10 @@
 class AlumnosPersonasVinculadasController < ApplicationController
   load_and_authorize_resource
+  
+  # usandovincularpersona = 1  si se usa la url vincularpersona/:id para asociar nuevas personas vinculadas o eliminar vinculos.
+  # usandovincularpersona = 0  si se usa la url alumnos/:id para asociar nuevas personas vinculadas o eliminar vinculos (programa original).
+  usandovincularpersona = 0
+  
   # GET /alumnos_personas_vinculadas
   # GET /alumnos_personas_vinculadas.json
   def index
@@ -81,17 +86,27 @@ class AlumnosPersonasVinculadasController < ApplicationController
 
     @alumno = Alumno.find(params[:alumno_id])
     @alumno_persona_vinculada = @alumno.alumnos_personas_vinculadas.create(params[:alumno_persona_vinculada])
-     
-#    redirect_to alumno_path(@alumno)
+    
     respond_to do |format|
       if @alumno_persona_vinculada.save
-        format.html { redirect_to @alumno }
-        format.json { render json: @alumno, status: :created, location: @alumno }
+        if usandovincularpersona == 1
+          format.html { redirect_to :controller => 'alumnos', :action => 'alumnopersona' , :id => @alumno.id}
+        else
+          format.html { redirect_to @alumno }
+          format.json { render json: @alumno, status: :created, location: @alumno }
+        end
       else
         @alumno_persona_vinculada.persona_vinculada_id = ""
-        format.html { render 'alumnos/show' } 
-#        format.html { redirect_to @alumno }
-        format.json { render json: @alumno.errors, status: :unprocessable_entity }
+        if usandovincularpersona == 1
+          # Esta parte es lo unico que no funciona. debido a que cuando ocurre una inconsistencia en el registro, el sistema lo direcciona a alumnos/1/alumnos_personas_vinculadas.
+          
+#         format.html { render :controller => 'alumnos', :action => 'alumnopersona' , :id => @alumno.id }
+          redirect_to :controller => 'alumnos', :action => 'alumnopersona' , :id => @alumno.id
+          format.json { render json: @alumno.errors, status: :unprocessable_entity }
+        else
+          format.html { render 'alumnos/show' }
+          format.json { render json: @alumno.errors, status: :unprocessable_entity }
+        end
       end
     end
     
@@ -140,7 +155,11 @@ class AlumnosPersonasVinculadasController < ApplicationController
     @alumno_persona_vinculada = @alumno.alumnos_personas_vinculadas.find(params[:id])
     @alumno_persona_vinculada.destroy
     
-    redirect_to alumno_path(@alumno)
+    if usandovincularpersona == 1
+      redirect_to :controller => 'alumnos', :action => 'alumnopersona' , :id => @alumno.id
+    else
+      redirect_to alumno_path(@alumno)      
+    end
   end
   
   rescue_from CanCan::AccessDenied do |exception|
