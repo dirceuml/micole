@@ -5,7 +5,7 @@
                 <div class="block">                                                           
                     
                                         
-<%= form_tag({:controller => "archivos", :action => "cargar_alumnos"}, :method => "post", :multipart => true) do %>
+<%= form_tag({:controller => "archivos", :action => "cargar_alumnos"}, :method => "post", :multipart => true, "data-ajax" => "false") do %>
    <%= file_field_tag "archivo", :required => "required" %>
    <%= submit_tag "Cargar alumnos" %>
 <% end %>
@@ -14,8 +14,25 @@
      <p> El formato ingresado es incorrecto. Usted sólo puede subir archivos .txt </p>
   </div>
 <% end %>                                       
-                                        
-			
+              
+<% if !params[:res].nil? %>                   
+  <% if params[:res] == "1" %>
+    <div>
+       <p> Archivo cargado satisfactoriamente </p>
+    </div>
+  <% else %>
+    <% if params[:res] == "0" %>
+      <div>
+         <p> No se pudo cargar el archivo </p>
+      </div>
+    <% else %>
+      <div>
+         <p> Ocurrieron errores al cargar el archivo. </p>
+         <p> <%= link_to "Ver el reporte de errores", "/logs/log.txt", :target => "_blank" %>  </p>
+      </div>         
+    <% end %>
+  <% end %> 
+<% end %>                  
                     
                 </div>
             </div>

@@ -1,0 +1,21 @@
+﻿<div class="box round first grid">
+                <h2>
+                    Cargar padres
+                </h2>
+                <div class="block">                                                           
+                    
+                                        
+<%= form_tag({:controller => "archivos", :action => "cargar_padres"}, :method => "post", :multipart => true) do %>
+   <%= file_field_tag "archivo", :required => "required" %>
+   <%= submit_tag "Cargar padres" %>
+<% end %>
+<% if @formato_erroneo %>
+  <div>
+     <p> El formato ingresado es incorrecto. Usted sólo puede subir archivos .txt </p>
+  </div>
+<% end %>                                       
+                                        
+			
+                    
+                </div>
+            </div>

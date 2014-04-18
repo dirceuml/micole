@@ -1,3 +1,2 @@
-sssss
-
-eeee
+Linea 1: Estructura incorrecta.
+Linea 2: Estructura incorrecta.

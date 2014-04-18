@@ -1,0 +1,34 @@
+<div class="box round first grid">
+  <h2>
+      Archivos cargados
+  </h2>
+  <div class="block">      
+    <% if @mensaje %>
+      <!-- Mensaje enviado de la anterior página-->
+      <div>
+         <div class="message info"> <%= @mensaje %> </div>
+      </div>
+    <% end %>
+
+    <table class="data display datatable" id="example">
+      <thead>
+        <tr>
+          <th>Archivo</th>
+          <th>Ver</th>
+          <th>Borrar</th>
+        </tr>
+      </thead>
+      <tbody>                                          
+         <% @archivos.each do |a| %>
+         <% if a == "." or a == ".." then next end; %>
+         <tr class="odd gradeX">
+            <td> <%= a %> </td>
+            <td><a target="_blank" href="/archivos/<%= a %>"> Ver archivo </a></td> 
+            <td><%= link_to "Borrar archivo", {:controller => "archivos", :action => "borrar_archivos", :archivo_a_borrar => a}, {:method => "post", :confirm => "Seguro?"} %></td>
+         </tr>
+         <% end %>
+      </tbody>
+    </table>  
+  </div>
+</div>
+

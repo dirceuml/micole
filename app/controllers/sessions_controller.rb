@@ -8,7 +8,12 @@ class SessionsController < ApplicationController
     user = Usuario.authenticate(params[:usuario], params[:clave])
     if user
       session[:usuario_id] = user.id
-      redirect_to "/menu" #, :notice => "Logueado!"
+      
+      if dias_restantes_expiracion_clave <= dias_aviso_expiracion_clave
+        redirect_to expiracion_clave_path(:id => user.id) 
+      else
+        redirect_to menu_path
+      end
     else
       flash.now.alert = "Usuario o clave invalidos"
       render "new"

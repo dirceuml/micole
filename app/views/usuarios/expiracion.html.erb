@@ -1,0 +1,25 @@
+<div id='Usuario' data-role="header">
+  <h1>Expiración de clave</h1>  
+</div>
+
+
+<div data-role="content" style="clear: left">
+  <b>Usuario:</b> <%= "#{@usuario.usuario} (#{@usuario.nombre})" %> <p>
+  <% dias = dias_restantes_expiracion_clave %>
+  <% if dias <= 0 %>
+    Su clave ya expiro, debe cambiarla ahora.
+  <% else %>
+    Su clave expirara en <b><%= dias %> dias</b>. <p>
+    ¿Desea cambiarla ahora?
+  <% end %>
+</div>
+
+
+<div data-role="footer">
+  <% if dias <= 0 %>
+    <%= link_to 'Cambiar clave', cambiar_clave_path(@usuario.id), "class" => "ui-btn-left", "data-inline" => "true", "data-theme" => "a", "data-icon" => "check", "data-mini" => "true" %>
+  <% else %>
+    <%= link_to 'Si', cambiar_clave_path(@usuario.id), "class" => "ui-btn-left", "data-inline" => "true", "data-theme" => "a", "data-icon" => "check", "data-mini" => "true" %>
+    <%= link_to 'No', menu_path, "class" => "ui-btn-right", "data-inline" => "true", "data-theme" => "a", "data-icon" => "back", "data-mini" => "true"  %>
+  <% end %>
+</div>

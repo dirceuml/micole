@@ -1,0 +1,30 @@
+﻿<div>
+  <h2>
+      Restaurar clave
+  </h2>
+  <div class="block">                                                           
+                    
+  <% if params[:res].nil? || params[:res]=="0" %>  
+    <div>
+      Por favor, ingrese su nombre de usuario:      
+    </div>
+    <br/>
+    <%= form_tag({:controller => "usuarios", :action => "restaurar_clave"}, :method => "post", :multipart => true, "data-ajax" => "false") do %>
+       <%= text_field_tag "usuario", "", :required => "required" %>
+       <%= submit_tag "Restaurar clave" %>
+    <% end %>                                    
+  <% else %>
+    <% if params[:res] == "1" %>
+      <div>
+         <p> Se le ha enviado un correo con su nueva contraseña. </p>
+         <p> <%= link_to("Iniciar sesión", "log_in") %>  </p>
+      </div>
+    <% else %>
+      <div>
+         <p> El usuario no existe. </p>
+         <p> Por favor, <%= link_to(" vuelva a intentarlo", :controller => "usuarios", :action => "restaurar_clave", :res => "0") %> </p>
+      </div>
+    <% end %> 			
+  <% end %>                  
+  </div>
+</div>

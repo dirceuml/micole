@@ -12,5 +12,8 @@
       <%= password_field_tag :clave, "",  "data-mini" => "true", "style" => "width:250px" %>
     </p>
     <p class="button"><%= submit_tag "Iniciar sesión", "data-inline" => "true", "data-theme" => "a", "data-icon" => "check", "data-mini" => "true" %></p>
+    <p>
+      <%= link_to "¿Olvidaste tu contraseña?", :controller => "usuarios", :action => "restaurar_clave", :res => "0" %>
+    </p>
   </div>  
 <% end %>

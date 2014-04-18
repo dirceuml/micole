@@ -217,8 +217,10 @@ ActiveRecord::Schema.define(:version => 20140414013800) do
     t.string   "usuario",     :null => false
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
+    t.string   "abreviatura"
   end
 
+  add_index "cursos", ["abreviatura"], :name => "idx_curso_abreviatura"
   add_index "cursos", ["descripcion"], :name => "ak_cursos_descripcion", :unique => true
 
   create_table "delayed_jobs", :force => true do |t|
@@ -373,8 +375,10 @@ ActiveRecord::Schema.define(:version => 20140414013800) do
     t.string   "usuario",         :null => false
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
+    t.string   "abreviatura"
   end
 
+  add_index "tipos_notas", ["abreviatura"], :name => "idx_tiponota_abreviatura"
   add_index "tipos_notas", ["anio_escolar_id", "descripcion"], :name => "idx_tiposeventos_descripcion", :unique => true
   add_index "tipos_notas", ["anio_escolar_id"], :name => "fk_tiposnotas_anioescolar"
 
@@ -399,6 +403,7 @@ ActiveRecord::Schema.define(:version => 20140414013800) do
     t.datetime "created_at",                                :null => false
     t.datetime "updated_at",                                :null => false
     t.string   "clave_salt",           :default => "clave", :null => false
+    t.date     "fecha_clave"
     t.integer  "notificado",           :default => 0,       :null => false
   end
 

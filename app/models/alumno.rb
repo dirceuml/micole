@@ -1,4 +1,6 @@
 class Alumno < ActiveRecord::Base
+  #extend Validaciones
+  
   has_many :cuaderno_controles_eventos
   has_many :cuadernos_controles_revisiones
   has_many :autorizaciones
@@ -6,14 +8,21 @@ class Alumno < ActiveRecord::Base
   has_many :personas_vinculadas, :through => :alumnos_personas_vinculadas
   has_many :anios_alumnos
   has_many :anios_escolares, :through => :anios_alumnos
+  has_many :secciones, :through => :anios_alumnos
   
   has_many :asistencias, :through => :anios_alumnos
   
   validates :nombres, :apellido_paterno, :apellido_materno, :usuario, :presence => { :message => ": El campo no puede estar vacio" }
-  validates :dni, :presence => { :message => ": El campo no puede estar vacio" }, :uniqueness => { :message => ": Este DNI esta registrado. Verifique" }, :format => { :with => /\A[+-]?\d+\Z/, :message => ": Solo se permiten numeros"}
+  validate :rango_fecha_nacimiento
+  validate :dni, :presence => { :message => ": El campo no puede estar vacio" }, :uniqueness => { :message => ": Este DNI esta registrado. Verifique" }, :format => { :with => /\A[+-]?\d+\Z/, :message => ": Solo se permiten numeros"}
   
   def apellidos_nombres
     apellido_paterno + " " + apellido_materno + " " + nombres
+  end
+  
+  def grado_seccion
+    secc = AnioAlumno.find_by_anio_escolar_id_and_alumno_id(1, self.id).seccion
+    secc.grado.grado.to_s + " " + secc.seccion
   end
   
   def salida_registrada (alumno_id, fecha)
@@ -23,6 +32,14 @@ class Alumno < ActiveRecord::Base
   def find_asistencia_by_alumno_id_and_fecha (alumno_id, fecha)
     Asistencia.find(:all, :conditions => ["to_char(fecha_hora, 'dd/mm/yyyy') = '#{fecha}' and anio_alumno_id = #{alumno_id}"]).first
     # creo que se debe revisar la parte de la condicion: anio_alumno_id = #{alumno_id
+  end
+  
+  def rango_fecha_nacimiento
+    if fecha_nacimiento.present?
+      if !fecha_nacimiento.between?(Date.parse(18.years.ago.to_s), Date.parse(4.years.ago.to_s)) then
+        errors.add(:clave, "La fecha de nacimiento esta fuera del rango permitido.")
+      end
+    end
   end
   
   scope :hijos_de, lambda { |padre| joins(:alumno_persona_vinculada).where("apoderado = 1 and persona_vinculada_id = ?", padre) }

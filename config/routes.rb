@@ -11,7 +11,7 @@ Micole::Application.routes.draw do
   get "admin/archivos/listar" => "archivos#listar_archivos", :as => "listar_archivos"
   post "admin/archivos/borrar_archivos" => "archivos#borrar_archivos", :as => "borrar_archivos"
   get "admin/archivos/guardar_log" => "archivos#guardar_log", :as => "guardar_log"
-  post "admin/archivos/guardar_log" => "archivos#guardar_log", :as => "guardar_log"
+  post "admin/archivos/guardar_log" => "archivos#guardar_log", :as => "guardar_log"   
 
   resources :perfiles_permisos
 
@@ -44,6 +44,8 @@ Micole::Application.routes.draw do
   resources :autorizaciones
   
   resources :notas
+  get "cargar_notas" => "notas#cargar", :as => "cargar_notas"
+  post "cargar_notas" => "notas#cargar", :as => "cargar_notas"
 
   resources :menus
   
@@ -62,12 +64,16 @@ Micole::Application.routes.draw do
   #get "sessions/new"
   get "log_out" => "sessions#destroy", :as => "log_out"
   get "log_in" => "sessions#new", :as => "log_in"  
-  get "sign_up" => "usuarios#new", :as => "sign_up"
-
+  
   resources :usuarios
   
   get "crearusuarios" => "usuarios#crear_masivo", :as => "crearusuarios"
-  post "grabarusuarios" => "usuarios#grabar_masivo", :as => "grabarusuarios"
+  post "grabarusuarios" => "usuarios#grabar_masivo", :as => "grabarusuarios" 
+  get "sign_up" => "usuarios#new", :as => "sign_up"
+  get "restaurar_clave" => "usuarios#restaurar_clave", :as => "restaurar_clave"
+  post "restaurar_clave" => "usuarios#restaurar_clave", :as => "restaurar_clave"
+  get "usuarios/:id/cambiar_clave" => "usuarios#cambiar_clave", :as => "cambiar_clave"
+  get "usuarios/:id/expiracion" => "usuarios#expiracion", :as => "expiracion_clave"
   
   resources :sessions
   
