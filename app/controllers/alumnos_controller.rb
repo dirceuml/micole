@@ -7,7 +7,7 @@ class AlumnosController < ApplicationController
     seccion = params[:seccion_id]
     
     if !seccion.nil?
-      @alumnos = Alumno.pertenecen_a_seccion(seccion)
+      @alumnos = Alumno.pertenecen_a_seccion(anio_escolar.id, seccion)
     else
       @alumnos = Alumno.all
     end
@@ -24,7 +24,7 @@ class AlumnosController < ApplicationController
     seccion = params[:seccion_id]
     
     if !seccion.nil?
-      @alumnos = Alumno.pertenecen_a_seccion(seccion)
+      @alumnos = Alumno.pertenecen_a_seccion(anio_escolar.id, seccion)
     else
       @alumnos = Alumno.all
     end

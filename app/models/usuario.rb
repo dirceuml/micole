@@ -16,7 +16,7 @@ class Usuario < ActiveRecord::Base
   validate :clave_actual_ok, on: :update
   validate :clave_diferente, on: :update
   
-  scope :pendientenotificar, where("notificado = 0 and colegio_id = ?", 1)
+  scope :pendientenotificar, lambda { |colegio| where("notificado = 0 and colegio_id = ?", colegio)}
   
   
   def self.authenticate(usuario, password)

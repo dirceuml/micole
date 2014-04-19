@@ -5,7 +5,7 @@
   <% else %>
     <% alumno_id = params[:alumno_persona_vinculada][:alumno_id] %>
   <% end %>
-  <% seccion = AnioAlumno.find_by_anio_escolar_id_and_alumno_id(1, alumno_id).seccion_id %>
+  <% seccion = AnioAlumno.find_by_anio_escolar_id_and_alumno_id(anio_escolar.id, alumno_id).seccion_id %>
   <%= link_to 'Regresar', {:action => "alumnoseccion", :seccion_id => seccion}, "data-icon" => "back", "class" => "ui-btn-left", "data-mini" => "true" %>
 </div>
 

@@ -46,7 +46,7 @@
       <% if !codigoregistrado.empty? %>
         <div class="ui-block-b" style="text-align: center;">
           <div data-role="content" style="color: #06c; text-align: center">
-            <% alumnoanio = AnioAlumno.find_by_anio_escolar_id_and_alumno_id(1, codigoregistrado) %>
+            <% alumnoanio = AnioAlumno.find_by_anio_escolar_id_and_alumno_id(anio_escolar.id, codigoregistrado) %>
             <% if !alumnoanio.nil? %>
               <%= image_tag(alumnoanio.alumno.foto) %> <br/>
               Código: <%= codigoregistrado %> <br/>

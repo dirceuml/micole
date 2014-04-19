@@ -7,7 +7,7 @@
 
 <div data-role="content">
   <ul data-role="listview" data-filter="true">
-    <% @grados.por_anio_escolar.each do |grado| %>
+    <% @grados.por_anio_escolar(anio_escolar.id).each do |grado| %>
     <li data-filtertext="<%= "#{grado.grado}" %>" >
       <% if can? :update, grado %>
         <% link_opcion = edit_grado_path(grado) %>

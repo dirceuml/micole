@@ -18,7 +18,7 @@
     </div>
     <div class="field">
         <%= f.label :seccion_id %><br />
-        <%= collection_select(:anio_alumno, :seccion_id, Seccion.por_anioescolar.order('grados.grado','seccion'), :id, :grado_seccion, { :prompt => ':: Seleccione ::'}, {"data-mini" => "true"}) %>
+        <%= collection_select(:anio_alumno, :seccion_id, Seccion.por_anioescolar(anio_escolar.id).order('grados.grado','seccion'), :id, :grado_seccion, { :prompt => ':: Seleccione ::'}, {"data-mini" => "true"}) %>
     </div>
     <div class="field">
     Estado<br />
@@ -28,7 +28,7 @@
     </select>
   </div>
     <div class="field">
-        <%= f.hidden_field :anio_escolar_id, :value => "1" %>
+        <%= f.hidden_field :anio_escolar_id, :value => anio_escolar.id %>
     </div>
     <div class="field">
         <%= f.hidden_field :usuario, :value => current_user.usuario%>

@@ -13,7 +13,7 @@
   
   <div data-role="fieldcontain">
     <div class="field">
-        <%= f.hidden_field :anio_escolar_id, :value => 1 %>
+        <%= f.hidden_field :anio_escolar_id, :value => anio_escolar.id %>
     </div>
     <div class="field">
         <!--%= f.label :tipo_evento_id %><br /-->
@@ -34,7 +34,7 @@
     
     <div class="field">
         <%= f.label :fecha_hora_inicio, "for" => "name" %><br />
-        <%= f.text_field :fecha_inicio, "data-mini" => "true", "data-role" => "datebox", "type" => "date", "style" => "width:120px" %>
+        <%= f.text_field :fecha_inicio, "data-mini" => "true", "data-role" => "datebox", "type" => "date", "style" => "width:130px" %>
         <!--%= f.text_field :hora_min_inicio, :size => 5, :maxlength => 5, "style" => "width:60px", "data-mini" => "true" %-->
         <!--%= f.text_field :hora_min_inicio, "type" => "time", :size => 5, :maxlength => 5, "style" => "width:60px", "data-mini" => "true" %-->
         <%= f.number_field :hora_inicio, "type" => "number", "min" => "00", "max" => "23", "data-mini" => "true", "style" => "width:50px", "required" => "required" %>
@@ -44,7 +44,7 @@
 
     <div class="field">
         <%= f.label :fecha_hora_fin, "for" => "name" %><br />
-        <%= f.text_field :fecha_fin, "data-mini" => "true", "data-role" => "datebox", "type" => "date", "style" => "width:120px" %>
+        <%= f.text_field :fecha_fin, "data-mini" => "true", "data-role" => "datebox", "type" => "date", "style" => "width:130px" %>
         <%= f.number_field :hora_fin, "type" => "number", "min" => "00", "max" => "23", "data-mini" => "true", "style" => "width:50px", "required" => "required" %>
         :
         <%= f.number_field :min_fin, "type" => "number", "min" => "00", "max" => "59", "data-mini" => "true", "style" => "width:50px", "required" => "required" %>        
@@ -58,16 +58,16 @@
     <div class="field">
         Ultimo dia para autorizacion<br />
         <!--%= f.label :limite_autorizacion, "for" => "name" %><br /-->
-        <%= f.text_field :limite_autorizacion, "data-mini" => "true", "data-role" => "datebox", "type" => "date", "style" => "width:120px" %>
+        <%= f.text_field :limite_autorizacion, "data-mini" => "true", "data-role" => "datebox", "type" => "date", "style" => "width:130px" %>
     </div>
     <!--/fieldset-->
     <div class="field">
         <%= f.label :inicio_notificacion, "for" => "name" %><br />
-        <%= f.text_field :inicio_notificacion, "data-mini" => "true", "data-role" => "datebox", "type" => "date", "style" => "width:120px" %>
+        <%= f.text_field :inicio_notificacion, "data-mini" => "true", "data-role" => "datebox", "type" => "date", "style" => "width:130px" %>
     </div>
     <div class="field">
         <%= f.label :fin_notificacion, "for" => "name" %><br />
-        <%= f.text_field :fin_notificacion, "data-mini" => "true", "data-role" => "datebox", "type" => "date", "style" => "width:120px" %>
+        <%= f.text_field :fin_notificacion, "data-mini" => "true", "data-role" => "datebox", "type" => "date", "style" => "width:130px" %>
     </div>
     <div class="field">
         <!--%= f.label :frecuencia_dias_notificacion, "for" => "Slider" %><br /-->

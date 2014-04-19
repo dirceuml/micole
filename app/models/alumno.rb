@@ -20,8 +20,8 @@ class Alumno < ActiveRecord::Base
     apellido_paterno + " " + apellido_materno + " " + nombres
   end
   
-  def grado_seccion
-    secc = AnioAlumno.find_by_anio_escolar_id_and_alumno_id(1, self.id).seccion
+  def grado_seccion(anioescolar)
+    secc = AnioAlumno.find_by_anio_escolar_id_and_alumno_id(anioescolar, self.id).seccion
     secc.grado.grado.to_s + " " + secc.seccion
   end
   
@@ -29,9 +29,9 @@ class Alumno < ActiveRecord::Base
     Alumno.joins(:anios_alumnos => :asistencias).where("to_char(fecha_hora, 'dd/mm/yyyy') = ? and alumnos.id = ?", fecha.strftime('%d/%m/%Y'), alumno_id).count
   end
   
-  def find_asistencia_by_alumno_id_and_fecha (alumno_id, fecha)
-    Asistencia.find(:all, :conditions => ["to_char(fecha_hora, 'dd/mm/yyyy') = '#{fecha}' and anio_alumno_id = #{alumno_id}"]).first
-    # creo que se debe revisar la parte de la condicion: anio_alumno_id = #{alumno_id
+  def find_asistencia_by_anio_escolar_id_and_alumno_id_and_fecha (anioescolar, alumno_id, fecha)
+    anioalumno_id = AnioAlumno.find_by_anio_escolar_id_and_alumno_id(anioescolar, alumno_id).id
+    Asistencia.find(:all, :conditions => ["to_char(fecha_hora, 'dd/mm/yyyy') = '#{fecha}' and anio_alumno_id = #{anioalumno_id}"]).first
   end
   
   def rango_fecha_nacimiento
@@ -44,5 +44,5 @@ class Alumno < ActiveRecord::Base
   
   scope :hijos_de, lambda { |padre| joins(:alumno_persona_vinculada).where("apoderado = 1 and persona_vinculada_id = ?", padre) }
   scope :se_revisan_por, lambda { |padre| joins(:alumno_persona_vinculada).where("revisa_control = 1 and persona_vinculada_id = ?", padre) }
-  scope :pertenecen_a_seccion, lambda { |seccion| joins(:anios_alumnos).where("anios_alumnos.anio_escolar_id = ? and anios_alumnos.seccion_id = ?", 1, seccion)}
+  scope :pertenecen_a_seccion, lambda { |anioescolar, seccion| joins(:anios_alumnos).where("anios_alumnos.anio_escolar_id = ? and anios_alumnos.seccion_id = ?", anioescolar, seccion)}
 end

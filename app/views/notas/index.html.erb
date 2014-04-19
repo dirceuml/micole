@@ -32,7 +32,7 @@
           <% if !alumno.nil? %>
             <%= alumno.apellidos_nombres %>
             <br/>
-            <%= alumno.grado_seccion %>
+            <%= alumno.grado_seccion(anio_escolar.id) %>
           <% end %>
         </div>
       <% end %>

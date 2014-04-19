@@ -57,11 +57,11 @@ class Actividad < ActiveRecord::Base
     end
   end
     
-  scope :pendiente, lambda { |fecha| where("actividades.anio_escolar_id = 1 and to_char(fecha_hora_fin, 'yyyymmdd') >= ?", fecha.strftime('%Y%m%d'))}
-  scope :realizada, lambda { |fecha| where("actividades.anio_escolar_id = 1 and to_char(fecha_hora_fin, 'yyyymmdd') < ?", fecha.strftime('%Y%m%d'))}
+  scope :pendiente, lambda { |anioescolar, fecha| where("actividades.anio_escolar_id = ? and to_char(fecha_hora_fin, 'yyyymmdd') >= ?", anioescolar, fecha.strftime('%Y%m%d'))}
+  scope :realizada, lambda { |anioescolar, fecha| where("actividades.anio_escolar_id = ? and to_char(fecha_hora_fin, 'yyyymmdd') < ?", anioescolar, fecha.strftime('%Y%m%d'))}
   
-  scope :por_fecha_inicio, lambda { |fecha| where("anio_escolar_id = 1 and to_char(fecha_hora_inicio, 'dd/mm/yyyy') = ?", fecha.strftime('%d/%m/%Y'))}
-  scope :por_seccion, lambda { |seccion| joins(:actividades_secciones).where("anio_escolar_id = 1 and actividades_secciones.seccion_id = ?", seccion)}
+  scope :por_fecha_inicio, lambda { |anioescolar, fecha| where("anio_escolar_id = ? and to_char(fecha_hora_inicio, 'dd/mm/yyyy') = ?", anioescolar, fecha.strftime('%d/%m/%Y'))}
+  scope :por_seccion, lambda { |anioescolar, seccion| joins(:actividades_secciones).where("anio_escolar_id = ? and actividades_secciones.seccion_id = ?", anioescolar, seccion)}
   scope :por_persona, lambda { |persona| joins(:secciones => {:anios_alumnos => :personas_vinculadas}).uniq.where("personas_vinculadas.id = ?", persona)}
   scope :por_persona_y_fecha, lambda { |persona,fecha| por_persona(persona).where("to_char(fecha_hora_inicio, 'dd/mm/yyyy') = ?", fecha.strftime('%d/%m/%Y'))}
   scope :apoderados, lambda { |actividad| joins(:personas_vinculadas).where("actividades.id = ? and alumnos_personas_vinculadas.apoderado = 1", actividad)}
