@@ -148,7 +148,7 @@ class NotasController < ApplicationController
                 if !nota.nil?
                   nota.update_attributes!(
                     :nota => calificacion,
-                    :usuario => :current_user
+                    :usuario => current_user.usuario
                   )
                 else
                   Nota.create!(
@@ -156,7 +156,7 @@ class NotasController < ApplicationController
                     :curso_id => curso_id,
                     :tipo_nota_id => tipo_nota_id,
                     :nota => calificacion,
-                    :usuario => :current_user
+                    :usuario => current_user.usuario
                   )
                 end
               rescue => e

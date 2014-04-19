@@ -37,7 +37,7 @@ class Alumno < ActiveRecord::Base
   def rango_fecha_nacimiento
     if fecha_nacimiento.present?
       if !fecha_nacimiento.between?(Date.parse(18.years.ago.to_s), Date.parse(4.years.ago.to_s)) then
-        errors.add(:clave, "La fecha de nacimiento esta fuera del rango permitido.")
+        errors.add(:fecha_nacimiento, "La fecha de nacimiento esta fuera del rango permitido.")
       end
     end
   end

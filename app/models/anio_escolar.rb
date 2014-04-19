@@ -17,5 +17,15 @@ class AnioEscolar < ActiveRecord::Base
       errors[:base] << "No esta dentro del tiempo permitido para aperturar"
     end
   end
+  
+  def self.id_activo
+    anio = AnioEscolar.find_by_activo(1)
+    
+    if !anio.nil?
+      anio.id
+    else
+      nil
+    end
+  end
 
 end

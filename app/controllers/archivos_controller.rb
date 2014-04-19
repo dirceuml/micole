@@ -82,7 +82,7 @@ class ArchivosController < ApplicationController
                     :telefono_movil => telefono_movil,
                     :direccion => direccion,
                     :correo => correo,
-                    :usuario => :current_user
+                    :usuario => current_user.usuario
                   )
                 else
                   Alumno.create!(
@@ -95,7 +95,7 @@ class ArchivosController < ApplicationController
                     :telefono_movil => telefono_movil,
                     :direccion => direccion,
                     :correo => correo,
-                    :usuario => :current_user
+                    :usuario => current_user.usuario
                   )
                 end    
               rescue => e
@@ -176,7 +176,7 @@ class ArchivosController < ApplicationController
                     :telefono_fijo => telefono_fijo,
                     :telefono_movil => telefono_movil,
                     :correo => correo,
-                    :user => :current_user
+                    :user => current_user.usuario
                   )
                 else
                   PersonaVinculada.create!(
@@ -189,7 +189,7 @@ class ArchivosController < ApplicationController
                     :telefono_movil => telefono_movil,
                     :correo => correo,
                     :foto => "foto.jpg",
-                    :user => :current_user,
+                    :user => current_user.usuario,
                     :origen => "carga"
                   )
 
@@ -274,7 +274,7 @@ class ArchivosController < ApplicationController
                     :persona_vinculada_id => padre.id,
                     :alumno_id => alumno.id,
                     :inicio_vigencia => inicio_vigencia,
-                    :usuario => :current_user
+                    :usuario => current_user.usuario
                   )
                 else
                   AlumnoPersonaVinculada.create!(
@@ -286,7 +286,7 @@ class ArchivosController < ApplicationController
                     :apoderado => 1,
                     :autoriza_actividad => 1,
                     :revisa_control => 1,
-                    :usuario => :current_user
+                    :usuario => current_user.usuario
                   )
                 end
               rescue => e

@@ -39,7 +39,11 @@
         <%= link_to "Menu", "/menu" %>
         <%= current_user.usuario %>
         <%= link_to "Salir", log_out_path %>
-      <% end %>    
+      <% end %>   
+      
+      <% if colegio %>
+        <%= "#{colegio.nombre} - #{anio_escolar.anio}" %>
+      <% end %>
     
     <% flash.each do |name, msg| %>
       <%= content_tag :div, msg, :id => "flash_#{name}" %>

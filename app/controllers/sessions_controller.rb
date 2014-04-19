@@ -8,6 +8,8 @@ class SessionsController < ApplicationController
     user = Usuario.authenticate(params[:usuario], params[:clave])
     if user
       session[:usuario_id] = user.id
+      session[:colegio_id] = user.colegio_id
+      session[:anio_escolar_id] = AnioEscolar.id_activo
       
       if dias_restantes_expiracion_clave <= dias_aviso_expiracion_clave
         redirect_to expiracion_clave_path(:id => user.id) 

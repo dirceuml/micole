@@ -55,12 +55,5 @@ class Usuario < ActiveRecord::Base
       end
     end
   end
-  
-#  def self.dias_restantes_expiracion_clave(usuario)
-#    user = Usuario.find_by_usuario(usuario)
-#    
-#    fecha_expiracion = user.fecha_clave + :dias_expiracion_clave
-#    (Date.current - fecha_expiracion).to_i      
-#  end
 
 end
