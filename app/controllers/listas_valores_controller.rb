@@ -4,7 +4,7 @@ class ListasValoresController < ApplicationController
   # GET /listas_valores
   # GET /listas_valores.json
   def index
-    @listas_valores = ListaValor.order("descripcion") # ListaValor.all
+    @listas_valores = ListaValor.order("item") # ListaValor.all
     
 
     respond_to do |format|

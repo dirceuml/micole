@@ -17,11 +17,12 @@
         <% link_opcion = colegio %>
       <% end %>
       <%= link_to link_opcion do %>
-        <p> <%= simple_format("#{colegio.nombre}") %> </p>
+        <h3> <%= "#{colegio.nombre}" %> </h3>
+        <p> <%= simple_format("#{colegio.direccion}") %> </p>
         <% if colegio.estado == 1 %>
-          <p class="ui-li-aside ui-li-desc"> Activo </p>
+          <p class="ui-li-aside"> Activo </p>
         <% else %>
-          <p class="ui-li-aside ui-li-desc"> Baja </p>
+          <p class="ui-li-aside"> Baja </p>
         <% end %>
         
       <% end %>

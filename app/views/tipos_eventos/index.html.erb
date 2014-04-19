@@ -7,7 +7,7 @@
 
 <div data-role="content">
   <ul data-role="listview" data-filter="true">
-    <% @tipos_eventos.each do |tipo_evento| %>
+    <% @tipos_eventos.por_colegio.each do |tipo_evento| %>
     <li data-filtertext="<%= "#{tipo_evento.descripcion} #{ListaValor.find_by_tabla_and_item(1, tipo_evento.alcance).descripcion}" %>" >
       <% if can? :update, tipo_evento %>
         <% link_opcion = edit_tipo_evento_path(tipo_evento) %>

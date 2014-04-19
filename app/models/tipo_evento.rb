@@ -4,4 +4,5 @@ class TipoEvento < ActiveRecord::Base
   
   validates :descripcion, :alcance, :presence => { :message => ": El campo no puede estar vacio" }
   
+  scope :por_colegio, where("colegio_id = ?", 1)
 end

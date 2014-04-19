@@ -15,7 +15,7 @@
   <div data-role="fieldcontain">
     <div class="field">
         <%= "Tipo de variable" %><br />
-        <%= collection_select(:lista_valor, :tabla, ListaValor.where("tabla=0"), :item, :descripcion, {:prompt => ':: Seleccione ::'}, {"data-mini" => "true"}) %>
+        <%= collection_select(:lista_valor, :tabla, ListaValor.where("tabla=0").order("descripcion"), :item, :descripcion, {:prompt => ':: Seleccione ::'}, {"data-mini" => "true"}) %>
     </div>
     <div class="field">
         <%= f.label :item %><br />

@@ -3,7 +3,7 @@ class AlumnosPersonasVinculadasController < ApplicationController
   
   # usandovincularpersona = 1  si se usa la url vincularpersona/:id para asociar nuevas personas vinculadas o eliminar vinculos.
   # usandovincularpersona = 0  si se usa la url alumnos/:id para asociar nuevas personas vinculadas o eliminar vinculos (programa original).
-  usandovincularpersona = 0
+  usandovincularpersona = 1
   
   # GET /alumnos_personas_vinculadas
   # GET /alumnos_personas_vinculadas.json
