@@ -11,7 +11,7 @@ class AsistenciasController < ApplicationController
       fecha = params[:fecha].to_date
     end
     
-    @asistencias = Asistencia.por_seccion_fecha(seccion, fecha).salida
+    @asistencias = Asistencia.por_seccion_fecha(anio_escolar.id, seccion, fecha).salida
 
     respond_to do |format|
       format.html # index.html.erb
@@ -30,7 +30,7 @@ class AsistenciasController < ApplicationController
       codigo = params[:codigo_alumno].to_i
     end
     
-    @asistencias = Asistencia.por_alumno_fecha(codigo, Date.current)
+    @asistencias = Asistencia.por_alumno_fecha(anio_escolar.id, codigo, Date.current)
     
     respond_to do |format|
       format.html # index.html.erb
@@ -49,9 +49,9 @@ class AsistenciasController < ApplicationController
       fechaF = params[:fechaF].to_date
     end
     
-#    @asistencias = Asistencia.por_seccion_fecha(seccion, fecha).movimiento(2)
+#    @asistencias = Asistencia.por_seccion_fecha(anio_escolar.id, seccion, fecha).movimiento(2)
 
-    @asistencias = Asistencia.por_seccion_rango_fechas(seccion, fechaI, fechaF)
+    @asistencias = Asistencia.por_seccion_rango_fechas(anio_escolar.id, seccion, fechaI, fechaF)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -85,7 +85,7 @@ class AsistenciasController < ApplicationController
       codigo = params[:codigo_alumno].to_i
     end
     
-    @asistencias = Asistencia.por_alumno_fecha(codigo, Date.current)    
+    @asistencias = Asistencia.por_alumno_fecha(anio_escolar.id, codigo, Date.current)    
 
     respond_to do |format|
       format.html # new.html.erb
@@ -112,7 +112,7 @@ class AsistenciasController < ApplicationController
         redirect_to(:new_asistencia) and return
       end
         
-      @asistencias = Asistencia.por_alumno_fecha(codigo, Date.current)
+      @asistencias = Asistencia.por_alumno_fecha(anio_escolar.id, codigo, Date.current)
 
         ingreso = 0
         fecha_hora = Time.now
@@ -145,7 +145,7 @@ class AsistenciasController < ApplicationController
           render :new
         else
           @asistencia = Asistencia.new(
-              :anio_alumno_id => AnioAlumno.find_by_anio_escolar_id_and_alumno_id(1, codigo).id,
+              :anio_alumno_id => AnioAlumno.find_by_anio_escolar_id_and_alumno_id(anio_escolar.id, codigo).id,
               :fecha_hora => Time.now,
               :usuario => current_user.usuario,
               :tipo_movimiento => movimiento
@@ -175,7 +175,7 @@ class AsistenciasController < ApplicationController
     ActiveRecord::Base.transaction do
       params[:alumno_id].each do |alumno|   
         @asistencia_alumno_persona_vinculada = Asistencia.new(
-          :anio_alumno_id => AnioAlumno.find_by_anio_escolar_id_and_alumno_id(1, alumno).id,
+          :anio_alumno_id => AnioAlumno.find_by_anio_escolar_id_and_alumno_id(anio_escolar.id, alumno).id,
           :fecha_hora => Time.now,
           :persona_vinculada_id => params[:persona_vinculada_id],
           :usuario => current_user.usuario,

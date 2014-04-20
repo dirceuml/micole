@@ -67,8 +67,8 @@
                   <% end %>
                 <% else %>
                 <div style="color: #00f; font-size: 11px;">
-                  Recogido por <%= alumno_persona_vinculada.alumno.find_asistencia_by_alumno_id_and_fecha(alumno_persona_vinculada.alumno.id, Date.current.strftime('%d/%m/%Y')).persona_vinculada.apellidos_nombres %><br/>
-                  <%= alumno_persona_vinculada.alumno.find_asistencia_by_alumno_id_and_fecha(alumno_persona_vinculada.alumno.id, Date.current.strftime('%d/%m/%Y')).fecha_hora.strftime('%d/%m/%Y %H:%M') %>
+                  Recogido por <%= alumno_persona_vinculada.alumno.find_asistencia_by_anio_escolar_id_and_alumno_id_and_fecha(anio_escolar.id, alumno_persona_vinculada.alumno.id, Date.current.strftime('%d/%m/%Y')).persona_vinculada.apellidos_nombres %><br/>
+                  <%= alumno_persona_vinculada.alumno.find_asistencia_by_anio_escolar_id_and_alumno_id_and_fecha(anio_escolar.id, alumno_persona_vinculada.alumno.id, Date.current.strftime('%d/%m/%Y')).fecha_hora.strftime('%d/%m/%Y %H:%M') %>
                 </div>
                 <% end %>
               </p>

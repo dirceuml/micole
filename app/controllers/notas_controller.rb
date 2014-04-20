@@ -122,7 +122,6 @@ class NotasController < ApplicationController
                 raise StandardError, "Debe especificar un tipo de nota." if tipo_nota_abr.nil? || tipo_nota_abr.strip == ""
                 raise StandardError, "Debe especificar una calificacion." if calificacion.nil? || calificacion.strip == ""
               
-                anio_id = 1
                 
                 #raise ActiveRecord::RecordNotFound para generar error, por defecto, si no se encuentra un objeto, la variable tiene valor nil
                 
@@ -130,7 +129,7 @@ class NotasController < ApplicationController
                 raise ActiveRecord::RecordNotFound, "Alumno no encontrado" if alumno.nil?
                 alumno_id = alumno.id
                 
-                anio_alumno = AnioAlumno.find_by_anio_escolar_id_and_alumno_id(anio_id, alumno_id)
+                anio_alumno = AnioAlumno.find_by_anio_escolar_id_and_alumno_id(anio_escolar.id, alumno_id)
                 raise ActiveRecord::RecordNotFound, "Alumno no registrado en periodo escolar" if anio_alumno.nil?
                 anio_alumno_id = anio_alumno.id
                 

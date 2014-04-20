@@ -7,7 +7,7 @@ class AniosAlumnosController < ApplicationController
     seccion = params[:seccion_id]
     
     if !seccion.nil?
-      @anios_alumnos = AnioAlumno.pertenecen_a_seccion(seccion)
+      @anios_alumnos = AnioAlumno.pertenecen_a_seccion(anio_escolar.id, seccion)
     else
       @anios_alumnos = AnioAlumno.all
     end

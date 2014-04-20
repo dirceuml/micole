@@ -16,7 +16,7 @@ class AutorizacionesController < ApplicationController
         seccion = params[:seccion_id]
       end
 
-      @autorizaciones = Autorizacion.por_actividad(actividad).por_seccion(seccion)
+      @autorizaciones = Autorizacion.por_actividad(actividad).por_seccion(anio_escolar.id, seccion)
       
       respond_to do |format|
         format.html # index.html.erb

@@ -18,7 +18,7 @@
     
   </div>
   <div class="field">
-    Alumno:<br/><%= collection_select(:cuaderno_control_evento, :alumno_id, Alumno.pertenecen_a_seccion(@cuaderno_control.seccion_id), :id, :apellidos_nombres, {:prompt => ':: Seleccione un alumno ::' }, {"data-mini" => "true"}) %>
+    Alumno:<br/><%= collection_select(:cuaderno_control_evento, :alumno_id, Alumno.pertenecen_a_seccion(anio_escolar.id, @cuaderno_control.seccion_id), :id, :apellidos_nombres, {:prompt => ':: Seleccione un alumno ::' }, {"data-mini" => "true"}) %>
   </div>
   <div class="field">
     Descripción:<br/><%= f.text_area :descripcion %>

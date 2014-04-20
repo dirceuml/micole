@@ -11,7 +11,7 @@
       <%= simple_format("Sección:") %>
     </div>
     <div style="width: 160px; clear: left; float: left">
-      <%= collection_select(:seccion, :id, Seccion.por_anioescolar.order('grados.grado','seccion'), :id, :grado_seccion, {:selected => seccion}, {"data-mini" => "true", :name => "seccion_id"}) %>
+      <%= collection_select(:seccion, :id, Seccion.por_anioescolar(anio_escolar.id).order('grados.grado','seccion'), :id, :grado_seccion, {:selected => seccion}, {"data-mini" => "true", :name => "seccion_id"}) %>
     </div>
     <div style="float: left">  
       <%= submit_tag "", "data-inline" => "true", "data-theme" => "a", "data-icon" => "search", "data-mini" => "true", "data-iconpos" => "notext", :name => nil %>

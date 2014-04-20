@@ -33,7 +33,7 @@
     <div class="ui-block-b" style="text-align: center;">
        <% if !codigo.empty? %>
         <div data-role="content" style="color: #06c; text-align: center">
-          <% alumnoanio = AnioAlumno.find_by_anio_escolar_id_and_alumno_id(1, codigo) %>
+          <% alumnoanio = AnioAlumno.find_by_anio_escolar_id_and_alumno_id(anio_escolar.id, codigo) %>
           <% if !alumnoanio.nil? %>
             
             <% operacion = "ingreso" %>

@@ -13,5 +13,5 @@ class Autorizacion < ActiveRecord::Base
   scope :pasado, lambda { joins(:actividad).where("to_char(actividades.limite_autorizacion, 'yyyymmdd') < ?", Time.now.strftime('%Y%m%d'))}
   scope :persona_autorizada, lambda { |persona| joins(:alumno => :alumnos_personas_vinculadas).where("autoriza_actividad = 1 and alumnos_personas_vinculadas.persona_vinculada_id = ?", persona) }
   scope :por_actividad, lambda { |actividad| where("autorizaciones.actividad_id = ?", actividad)}
-  scope :por_seccion, lambda { |seccion| joins(:alumno => :anios_alumnos).where("anio_escolar_id = 1 and anios_alumnos.seccion_id = ?", seccion) unless seccion.empty?}
+  scope :por_seccion, lambda { |anioescolar, seccion| joins(:alumno => :anios_alumnos).where("anio_escolar_id = ? and anios_alumnos.seccion_id = ?", anioescolar, seccion) unless seccion.empty?}
 end

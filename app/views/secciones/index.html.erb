@@ -7,7 +7,7 @@
 
 <div data-role="content">
   <ul data-role="listview" data-filter="true">
-    <% @secciones.por_anioescolar.each do |seccion| %>
+    <% @secciones.por_anioescolar(anio_escolar.id).each do |seccion| %>
     <li data-filtertext="<%= "#{Grado.find(seccion.grado_id).grado} - #{seccion.seccion}" %>" >
       <% if can? :update, seccion %>
         <% link_opcion = edit_seccion_path(seccion) %>

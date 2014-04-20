@@ -7,7 +7,7 @@
 
 <div data-role="content">
   <ul data-role="listview" data-filter="true">
-    <% @anios_escolares.anioescolarcolegio.each do |anio_escolar| %>
+    <% @anios_escolares.anioescolarcolegio(colegio.id).each do |anio_escolar| %>
     <li data-filtertext="<%= "#{anio_escolar.anio}" %>" >
       <% if can? :update, anio_escolar %>
         <% link_opcion = edit_anio_escolar_path(anio_escolar) %>

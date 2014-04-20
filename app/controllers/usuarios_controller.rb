@@ -115,9 +115,9 @@ class UsuariosController < ApplicationController
     
     if opcion == 1 || opcion == 2    # crear usuarios y notificar por correo  o solo crear usuarios
       @nuevos_usuarios = PersonaVinculada.connection.select_rows("Select id, nombres, apellido_paterno, apellido_materno, correo From personas_vinculadas 
-              Where id not in (Select persona_vinculada_id from usuarios where colegio_id= 1 and persona_vinculada_id <> 0) and id in (Select persona_vinculada_id From alumnos_personas_vinculadas 
+              Where id not in (Select persona_vinculada_id from usuarios where colegio_id= "+ colegio.id.to_s+ "and persona_vinculada_id <> 0) and id in (Select persona_vinculada_id From alumnos_personas_vinculadas 
               Join anios_alumnos on anios_alumnos.alumno_id = alumnos_personas_vinculadas.alumno_id join anios_escolares on anios_escolares.id = anios_alumnos.anio_escolar_id
-              Where vigencia_vinculo= 2 And (apoderado= 1 Or autoriza_actividad = 1 Or revisa_control= 1) and anios_alumnos.anio_escolar_id = 1 and anios_escolares.colegio_id= 1)")
+              Where vigencia_vinculo= 2 And (apoderado= 1 Or autoriza_actividad = 1 Or revisa_control= 1) and anios_alumnos.anio_escolar_id = "+ anio_escolar.id.to_s+ " and anios_escolares.colegio_id= "+ colegio.id.to_s+ ")")
       
       if @nuevos_usuarios.nil?
         flash[:notice] = 'No existen personas vinculadas sin usuario'
@@ -157,7 +157,7 @@ class UsuariosController < ApplicationController
               notificado = 0
             end
             @usuario = Usuario.new(
-              :colegio_id => 1,
+              :colegio_id => colegio.id,
               :usuario => nomusu,
               :nombre  => nombre+ " "+ apepat+ " "+ apemat,
               :clave => clave,
@@ -189,7 +189,7 @@ class UsuariosController < ApplicationController
     end
     
     if opcion == 3    # solo notificar por correo
-      @usuarios_notificacion = Usuario.pendientenotificar
+      @usuarios_notificacion = Usuario.pendientenotificar(colegio.id)
       if @usuarios_notificacion.nil?
         flash[:notice] = 'No existen usuarios pendientes de notificacion de credenciales'
         render :crear_masivo
