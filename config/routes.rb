@@ -89,7 +89,7 @@ Micole::Application.routes.draw do
   end
   
 
-  get "vincularpersona" => "alumnos#alumnoseccion", :as => "vincularpersonas"
+  get "vincularpersonas" => "alumnos#alumnoseccion", :as => "vincularpersonas"
   get "vincularpersona/:id" => "alumnos#alumnopersona", :as => "vincularpersona"
   
   

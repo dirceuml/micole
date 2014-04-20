@@ -6,7 +6,7 @@
     <% alumno_id = params[:alumno_persona_vinculada][:alumno_id] %>
   <% end %>
   <% seccion = AnioAlumno.find_by_anio_escolar_id_and_alumno_id(1, alumno_id).seccion_id %>
-  <%= link_to 'Regresar', {:action => "alumnoseccion", :seccion_id => seccion}, "data-icon" => "back", "class" => "ui-btn-left", "data-mini" => "true" %>
+  <%= link_to 'Regresar', {:controller => "alumnos", :action => "alumnoseccion", :seccion_id => seccion}, "data-icon" => "back", "class" => "ui-btn-left", "data-mini" => "true" %>
 </div>
 
 <div data-role="header" style="text-align: center" data-theme="c">

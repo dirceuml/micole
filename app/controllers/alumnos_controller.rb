@@ -4,6 +4,10 @@ class AlumnosController < ApplicationController
   # GET /alumnos
   # GET /alumnos.json
   def index
+    if current_user.nil?
+      redirect_to(log_in_path) and return
+    end
+    
     seccion = params[:seccion_id]
     
     if !seccion.nil?
@@ -21,6 +25,9 @@ class AlumnosController < ApplicationController
   # GET /vincularpersona
   # GET /vincularpersona.json
   def alumnoseccion
+    if current_user.nil?
+      redirect_to(log_in_path) and return
+    end
     seccion = params[:seccion_id]
     
     if !seccion.nil?

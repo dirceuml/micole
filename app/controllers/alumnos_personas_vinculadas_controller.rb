@@ -3,7 +3,7 @@ class AlumnosPersonasVinculadasController < ApplicationController
   
   # usandovincularpersona = 1  si se usa la url vincularpersona/:id para asociar nuevas personas vinculadas o eliminar vinculos.
   # usandovincularpersona = 0  si se usa la url alumnos/:id para asociar nuevas personas vinculadas o eliminar vinculos (programa original).
-  usandovincularpersona = 1
+  Usandovincularpersona = 1
   
   # GET /alumnos_personas_vinculadas
   # GET /alumnos_personas_vinculadas.json
@@ -89,7 +89,7 @@ class AlumnosPersonasVinculadasController < ApplicationController
     
     respond_to do |format|
       if @alumno_persona_vinculada.save
-        if usandovincularpersona == 1
+        if Usandovincularpersona == 1
           format.html { redirect_to :controller => 'alumnos', :action => 'alumnopersona' , :id => @alumno.id}
         else
           format.html { redirect_to @alumno }
@@ -97,11 +97,12 @@ class AlumnosPersonasVinculadasController < ApplicationController
         end
       else
         @alumno_persona_vinculada.persona_vinculada_id = ""
-        if usandovincularpersona == 1
+        if Usandovincularpersona == 1
           # Esta parte es lo unico que no funciona. debido a que cuando ocurre una inconsistencia en el registro, el sistema lo direcciona a alumnos/1/alumnos_personas_vinculadas.
           
-#         format.html { render :controller => 'alumnos', :action => 'alumnopersona' , :id => @alumno.id }
-          redirect_to :controller => 'alumnos', :action => 'alumnopersona' , :id => @alumno.id
+#         format.html { render :controller => 'alumnos', :action => 'alumnopersona' }
+          #redirect_to :controller => 'alumnos', :action => 'alumnopersona' , :id => @alumno.id and return
+          format.html { render 'alumnos/alumnopersona' }
           format.json { render json: @alumno.errors, status: :unprocessable_entity }
         else
           format.html { render 'alumnos/show' }
@@ -155,7 +156,7 @@ class AlumnosPersonasVinculadasController < ApplicationController
     @alumno_persona_vinculada = @alumno.alumnos_personas_vinculadas.find(params[:id])
     @alumno_persona_vinculada.destroy
     
-    if usandovincularpersona == 1
+    if Usandovincularpersona == 1
       redirect_to :controller => 'alumnos', :action => 'alumnopersona' , :id => @alumno.id
     else
       redirect_to alumno_path(@alumno)      
