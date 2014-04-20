@@ -10,7 +10,8 @@ class AnioAlumno < ActiveRecord::Base
   validates :anio_escolar_id, :alumno_id, :usuario, :seccion_id, :presence => { :message => ": El campo no puede estar vacio" }
   validates :alumno_id, :uniqueness => {:scope => :anio_escolar_id, :message => ": Este alumno esta matriculado. Verifique" }
   
-  scope :inasistencia_fecha, lambda { |anioescolar, fecha| where("anio_escolar_id = ? and id not in (Select anio_alumno_id from asistencias where tipo_movimiento = 2 and to_char(fecha_hora, 'dd/mm/yyyy') = ?)", fecha.strftime('%d/%m/%Y'), anioescolar)}
+  # se ha modificado inasistencia_fecha: se ha retirado "tipo_movimiento = 2" del where a la tabla asistencias. tambien se está considerando a los años activos de todos los colegios.
+  scope :inasistencia_fecha, lambda { |fecha| joins(:anio_escolar).where("anios_escolares.activo = 1 and anios_alumnos.id not in (Select anio_alumno_id from asistencias where to_char(fecha_hora, 'dd/mm/yyyy') = ?)", fecha.strftime('%d/%m/%Y'))}
   scope :pertenecen_a_seccion, lambda { |anioescolar, seccion| where("anios_alumnos.anio_escolar_id = ? and anios_alumnos.seccion_id = ?", anioescolar, seccion)}
   
   def enviar_inasistencia
