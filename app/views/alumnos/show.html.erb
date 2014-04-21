@@ -1,38 +1,19 @@
-<div data-role="header">
-  <h1>Personas vinculadas</h1>
-  <% if !params[:id].nil? %>
-    <% alumno_id = params[:id] %>
-  <% else %>
-    <% alumno_id = params[:alumno_persona_vinculada][:alumno_id] %>
+<div id='alumno' data-role="header">
+  <h1>Detalles</h1>
+  <%= link_to 'Aceptar', alumnos_path, "data-icon" => "check", "data-mini" => "true"  %>
+</div>
+
+<div data-role="content" style="clear: left">
+    <%= image_tag(@alumno.foto_url.to_s) %> <p>
+    <b>Apellidos y nombres:</b> <%= @alumno.apellidos_nombres %><p>
+    <b>DNI:</b> <%= @alumno.dni %><p>
+    <b>Correo:</b> <%= @alumno.correo %><p>
+    <b>Telefono fijo:</b> <%= @alumno.telefono_fijo %><p>
+    <b>Telefono móvil:</b> <%= @alumno.telefono_movil %><p>
+</div>
+
+<div data-role="footer">
+  <% if (can? :update, @alumno) %>
+    <%= link_to 'Editar', edit_alumno_path(@alumno), "class" => "ui-btn-left", "data-inline" => "true", "data-theme" => "a", "data-icon" => "gear", "data-mini" => "true" %>
   <% end %>
-  <% seccion = AnioAlumno.find_by_anio_escolar_id_and_alumno_id(anio_escolar.id, alumno_id).seccion_id %>
-  <%= link_to 'Regresar', alumnos_path(:seccion_id => seccion), "data-icon" => "back", "class" => "ui-btn-left", "data-mini" => "true" %>
 </div>
-
-<div data-role="header" style="text-align: center" data-theme="c">
-  Alumno: <%= @alumno.apellidos_nombres %>
-</div>
-<div data-role="content">
-  <ul id='alumnos_personas_vinculadas' data-role="listview">
-  <% @alumno.alumnos_personas_vinculadas.each do |alumno_persona_vinculada| %>
-    <% if !alumno_persona_vinculada.persona_vinculada_id.nil? %> 
-    <li>
-      <% if can? :read, alumno_persona_vinculada %>
-        <%= link_to simple_format(alumno_persona_vinculada.apellidos_nombres + " ("+ ListaValor.find_by_tabla_and_item(3, alumno_persona_vinculada.tipo_vinculo).descripcion+ ")"), [@alumno, alumno_persona_vinculada] %>
-      <% end %>
-      
-      <% if can? :destroy, alumno_persona_vinculada %>
-        <%= link_to 'Eliminar vínculo', [alumno_persona_vinculada.alumno, alumno_persona_vinculada], confirm: '¿Seguro que desea eliminar el registro?', method: :delete, "data-icon" => "delete" %>
-      <% end %>
-    </li>
-    <% end %>
-  <% end %>
-  </ul>
-</div>
-
-<% if can? :create, AlumnoPersonaVinculada %>
-  <br/>
-  Agregar personas vinculadas:
-
-  <%= render "alumnos_personas_vinculadas/form" %>
-<% end %>

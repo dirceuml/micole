@@ -8,14 +8,8 @@ class AlumnosController < ApplicationController
       redirect_to(log_in_path) and return
     end
     
-    seccion = params[:seccion_id]
+    @alumnos = Alumno.all
     
-    if !seccion.nil?
-      @alumnos = Alumno.pertenecen_a_seccion(anio_escolar.id, seccion)
-    else
-      @alumnos = Alumno.all
-    end
-
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @alumnos }

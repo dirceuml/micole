@@ -19,7 +19,7 @@ class CuadernoControlesRevisionesController < ApplicationController
       @cuaderno_controles_revisiones = CuadernoControlRevision.verificar(seccion, fecha)
     else
       if params[:accion] == "revisar"
-        @cuaderno_controles_revisiones = CuadernoControlRevision.cerrado.se_revisan_por(PersonaVinculada.logueado(params[:usuario]).pluck("personas_vinculadas.id"))
+        @cuaderno_controles_revisiones = CuadernoControlRevision.cerrado(anio_escolar.id).se_revisan_por(PersonaVinculada.logueado(params[:usuario]).pluck("personas_vinculadas.id"))
       end
     end
      

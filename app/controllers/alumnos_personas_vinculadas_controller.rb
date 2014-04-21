@@ -98,10 +98,7 @@ class AlumnosPersonasVinculadasController < ApplicationController
       else
         @alumno_persona_vinculada.persona_vinculada_id = ""
         if Usandovincularpersona == 1
-          # Esta parte es lo unico que no funciona. debido a que cuando ocurre una inconsistencia en el registro, el sistema lo direcciona a alumnos/1/alumnos_personas_vinculadas.
-          
-#         format.html { render :controller => 'alumnos', :action => 'alumnopersona' }
-          #redirect_to :controller => 'alumnos', :action => 'alumnopersona' , :id => @alumno.id and return
+          # para mostrar los errores en pantalla usar render, no redirect_to. Al usar render no es necesario enviar el id
           format.html { render 'alumnos/alumnopersona' }
           format.json { render json: @alumno.errors, status: :unprocessable_entity }
         else

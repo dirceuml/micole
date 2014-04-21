@@ -1,31 +1,28 @@
 <div data-role="header">
   <h1>Alumnos</h1>
-  <% if can? :create, Alumno %>
+  
+  <% if (can? :create, Alumno) %>
     <%= link_to 'Registrar', new_alumno_path, "data-icon" => "plus", "class" => "ui-btn-right" %>
   <% end %>
 </div>
-<% if !params[:seccion_id].nil? %>  
-  <% seccion = params[:seccion_id] %>
-<% end %>
 
-<div data-role="content" class="content-primary">
-  <%= form_tag(alumnos_path, {:method => :get, "data-ajax" => "false"}) do %>
-    <div style="float: left">
-      <%= simple_format("Sección:") %>
-    </div>
-    <div style="width: 160px; clear: left; float: left">
-      <%= collection_select(:seccion, :id, Seccion.por_anioescolar(anio_escolar.id).order('grados.grado','seccion'), :id, :grado_seccion, {:selected => seccion}, {"data-mini" => "true", :name => "seccion_id"}) %>      
-    </div>
-    <div style="float: left">  
-      <%= submit_tag "", "data-inline" => "true", "data-theme" => "a", "data-icon" => "search", "data-mini" => "true", "data-iconpos" => "notext", :name => nil %>
-    </div>
-  <% end %>
 
+<div data-role="content">
   <ul data-role="listview" data-filter="true">
     <% @alumnos.each do |alumno| %>
-    <li data-filtertext="<%= alumno.apellidos_nombres %>" >
+    <li data-filtertext="<%= "#{alumno.apellidos_nombres} #{alumno.dni} #{alumno.correo} #{alumno.telefono_fijo} #{alumno.telefono_movil}" %>" >
       <%= link_to alumno do %>
-        <%= simple_format(alumno.apellidos_nombres) %>         
+        <h3><%= "#{alumno.apellidos_nombres} - DNI #{alumno.dni}" %></h3>
+        <p class="ui-li-desc"> <%= "Correo: #{alumno.correo}" %></p>
+        <p class="ui-li-desc"> <%= "Teléfonos: #{alumno.telefono_fijo} / #{alumno.telefono_movil}" %></p>
+      <% end %>
+        
+      <% if (can? :update, alumno) %>
+        <%= link_to 'Editar', edit_alumno_path(alumno), "data-inline" => "true", "data-role" => "button", "data-mini" => "true" %>
+      <% end %>     
+        
+      <% if (can? :destroy, alumno) %>
+        <%= link_to 'Eliminar', alumno, confirm: '¿Seguro que desea eliminar el registro?', method: :delete, "data-icon" => "delete" %>
       <% end %>
     </li>
     <% end  %>

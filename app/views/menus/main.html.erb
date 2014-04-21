@@ -43,11 +43,7 @@
         <% end %>
 
         <% if [1,3].include? current_user.perfil_id %>
-          <li><a href="<%= alumnos_path(:seccion_id => 0) %>">Vincular personas</a></li>
-        <% end %>
-
-        <% if [1,3].include? current_user.perfil_id %>
-          <li><a href="<%= vincularpersonas_path(:seccion_id => 0) %>">Vincular personas (nueva version)</a></li>
+          <li><a href="<%= vincularpersonas_path(:seccion_id => 0) %>">Vincular personas</a></li>
         <% end %>
 
         <% if [1,3].include? current_user.perfil_id %>
@@ -123,11 +119,12 @@
         <li><%= link_to "Cargar alumnos", :controller => "archivos", :action => "cargar_alumnos" %> </li>
         <li><%= link_to "Cargar padres", :controller => "archivos", :action => "cargar_padres" %> </li>
         <li><%= link_to "Cargar vínculos", :controller => "archivos", :action => "cargar_vinculos" %> </li>
+        <li><a href="<%= anios_escolares_path %>">Años escolares</a></li>
         <li><a href="<%= listas_valores_path %>">Variables del sistema</a></li>
+        <li><a href="<%= colegios_path %>">Colegios</a></li>
         <li><a href="<%= grados_path %>">Grados</a></li>
         <li><a href="<%= secciones_path %>">Secciones</a></li>
-        <li><a href="<%= colegios_path %>">Colegios</a></li>
-        <li><a href="<%= anios_escolares_path %>">Años escolares</a></li>
+        <li><a href="<%= alumnos_path %>">Alumnos</a></li>
         <li><a href="<%= anios_alumnos_path(:seccion_id => 0) %>">Asignar alumnos a secciones</a></li>
       <% end %>
     </ul>
