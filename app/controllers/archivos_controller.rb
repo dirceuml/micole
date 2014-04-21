@@ -176,7 +176,8 @@ class ArchivosController < ApplicationController
                     :telefono_fijo => telefono_fijo,
                     :telefono_movil => telefono_movil,
                     :correo => correo,
-                    :user => current_user.usuario
+                    :user => current_user.usuario,
+                    :foto => File.open("#{Rails.root.to_s}/public/foto.jpg")
                   )
                 else
                   PersonaVinculada.create!(
@@ -190,6 +191,7 @@ class ArchivosController < ApplicationController
                     :correo => correo,
                     :foto => "foto.jpg",
                     :user => current_user.usuario,
+                    :foto => File.open("#{Rails.root.to_s}/public/foto.jpg"),
                     :origen => "carga"
                   )
 
@@ -215,8 +217,8 @@ class ArchivosController < ApplicationController
           res = "2";
         end
         
-         #Redirige al controlador "archivos", a la acci�n "lista_archivos" y con la variable de tipo GET "subir_archivos" con el valor "ok" si se subi� el archivo y "error" si no se pudo.
-         redirect_to :controller => "archivos", :action => "listar_archivos", :res => res;
+         #Redirige al controlador "archivos", a la accion "lista_archivos" y con la variable de tipo GET "subir_archivos" con el valor "ok" si se subi� el archivo y "error" si no se pudo.
+         redirect_to :controller => "archivos", :action => "cargar_padres", :res => res;
       else
          @formato_erroneo = true;
       end
@@ -311,7 +313,7 @@ class ArchivosController < ApplicationController
         end
         
          #Redirige al controlador "archivos", a la acci�n "lista_archivos" y con la variable de tipo GET "subir_archivos" con el valor "ok" si se subi� el archivo y "error" si no se pudo.
-         redirect_to :controller => "archivos", :action => "listar_archivos", :res => res;
+         redirect_to :controller => "archivos", :action => "cargar_vinculos", :res => res;
       else
          @formato_erroneo = true;
       end
