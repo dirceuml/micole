@@ -60,15 +60,17 @@ class ArchivosController < ApplicationController
             File.open("#{Ruta_directorio_archivos}#{nombre}", "r").each_line do |line|                           
               begin
                 count += 1
-                raise StandardError, "Estructura incorrecta." if line.count("|") != 8
+                raise StandardError, "Estructura incorrecta." if line.count("|") != 11
                 
-                dni, nombres, apellido_paterno, apellido_materno, fecha_nacimiento, telefono_fijo, telefono_movil, direccion, correo = line.split("|")
+                dni, nombres, apellido_paterno, apellido_materno, fecha_nacimiento, telefono_fijo, telefono_movil, direccion, correo, grado_desc, seccion_desc = line.split("|")
                 
                 raise StandardError, "Debe especificar un DNI." if dni.nil? || dni.strip == ""
                 raise StandardError, "Debe especificar los nombres." if nombres.nil? || nombres.strip == ""
                 raise StandardError, "Debe especificar el apellido paterno." if apellido_paterno.nil? || apellido_paterno.strip == ""
                 raise StandardError, "Debe especificar el apellido materno." if apellido_materno.nil? || apellido_materno.strip == ""
                 raise StandardError, "Debe especificar la fecha de nacimiento." if fecha_nacimiento.nil? || fecha_nacimiento.strip == ""
+                raise StandardError, "Debe especificar el grado." if grado_desc.nil? || grado_desc.strip == ""
+                raise StandardError, "Debe especificar la seccion." if seccion_desc.nil? || seccion_desc.strip == ""
                 
                 alumno = Alumno.find_by_dni(dni)
 
@@ -85,7 +87,7 @@ class ArchivosController < ApplicationController
                     :usuario => current_user.usuario
                   )
                 else
-                  Alumno.create!(
+                  alumno = Alumno.create!(
                     :dni => dni,
                     :nombres => nombres,
                     :apellido_paterno => apellido_paterno,
@@ -98,6 +100,28 @@ class ArchivosController < ApplicationController
                     :usuario => current_user.usuario
                   )
                 end    
+                
+                grado = Grado.find_by_grado(grado_desc)
+                raise ActiveRecord::RecordNotFound, "Grado no encontrado" if grado.nil?
+                
+                seccion = Seccion.find_by_grado_id_and_seccion(grado.id, seccion_desc)
+                raise ActiveRecord::RecordNotFound, "Seccion no encontrada" if seccion.nil?
+                
+                anio_alumno = AnioAlumno.find_by_anio_escolar_id_and_alumno_id(anio_escolar.id, alumno.id)
+                
+                if anio_alumno.nil?
+                  AnioAlumno.create!(
+                    :anio_escolar_id => anio_escolar.id,
+                    :alumno_id => alumno.id,
+                    :seccion_id => seccion.id,
+                    :usuario => current_user.usuario
+                  )
+                else
+                  anio_alumno.update_attributes!(
+                    :seccion_id => seccion.id,
+                    :usuario => current_user.usuario
+                  )
+                end
               rescue => e
                 errores.push "Linea #{count}: #{e.message}"                    
               end
@@ -155,7 +179,7 @@ class ArchivosController < ApplicationController
             File.open("#{Ruta_directorio_archivos}#{nombre}", "r").each_line do |line|
               begin
                 count += 1
-                raise StandardError, "Estructura incorrecta." if line.count("|") != 7
+                raise StandardError, "Estructura incorrecta." if line.count("|") != 8
                 
                 tipo_documento, numero_documento, nombres, apellido_paterno, apellido_materno, telefono_fijo, telefono_movil, correo = line.split("|")
 
@@ -254,7 +278,7 @@ class ArchivosController < ApplicationController
             File.open("#{Ruta_directorio_archivos}#{nombre}", "r").each_line do |line|
               begin
                 count += 1
-                raise StandardError, "Estructura incorrecta." if line.count("|") != 3
+                raise StandardError, "Estructura incorrecta." if line.count("|") != 4
                 
                 dni_alumno, tipo_documento_padre, numero_documento_padre, inicio_vigencia = line.split("|")
                 
@@ -319,6 +343,94 @@ class ArchivosController < ApplicationController
       end
     end
  end
+ 
+  
+  def cargar_grados_secciones
+   @formato_erroneo = false;
+   errores = Array.new;
+   
+   if request.post?
+      #Archivo subido por el usuario.
+      archivo = params[:archivo];
+      #Nombre original del archivo.
+      nombre = archivo.original_filename;
+      #Directorio donde se va a guardar.
+      directorio = Ruta_directorio_archivos;
+      #Extensi�n del archivo.
+      extension = nombre.slice(nombre.rindex("."), nombre.length).downcase;
+      #Verifica que el archivo tenga una extensi�n correcta.
+      if extension == ".txt" or extension == ".xls" or extension == ".xlsx"
+         #Ruta del archivo.
+         path = File.join(directorio, nombre);
+         #Crear en el archivo en el directorio. Guardamos el resultado en una variable, ser� true si el archivo se ha guardado correctamente.
+         resultado = File.open(path, "wb") { |f| f.write(archivo.read) };
+         #Verifica si el archivo se subi� correctamente.
+         if resultado
+            res = "1";            
+            count = 0;
+            
+            File.open("#{Ruta_directorio_archivos}#{nombre}", "r").each_line do |line|
+              begin
+                count += 1
+                raise StandardError, "Estructura incorrecta." if line.count("|") != 3
+                
+                periodo_desc, grado_desc, seccion_desc = line.split("|")
+
+                raise StandardError, "Debe especificar el periodo escolar." if periodo_desc.nil? || periodo_desc.strip == ""
+                raise StandardError, "Debe especificar el grado." if grado_desc.nil? || grado_desc.strip == ""
+                raise StandardError, "Debe especificar la seccion." if seccion_desc.nil? || seccion_desc.strip == ""
+                
+                anio_escolar = AnioEscolar.find_by_anio(periodo_desc)
+                raise ActiveRecord::RecordNotFound, "Periodo escolar no creado" if anio_escolar.nil?
+                
+                grado = Grado.find_by_grado(grado_desc)
+                
+                if grado.nil?
+                  grado = Grado.create!(
+                    :anio_escolar_id => anio_escolar.id,
+                    :grado => grado_desc,
+                    :usuario => current_user.usuario
+                  )
+                end
+                
+                seccion = Seccion.find_by_grado_id_and_seccion(grado.id, seccion_desc)
+                
+                if seccion.nil?
+                  seccion = Seccion.create!(
+                    :grado_id => grado.id,
+                    :seccion => seccion_desc,
+                    :usuario => current_user.usuario
+                  )
+                end
+              rescue => e
+                errores.push "Linea #{count}: #{e.message}"
+              end
+            end
+         else
+            res = "0";
+         end
+         
+          #Abre el archivo de logs, Si no existe lo crea, si existe lo sobrescribe
+        File.open(Ruta_archivo_logs, "w"){
+          |f|;
+          errores.each do |e|
+            f.puts(e);
+          end
+          f.close();
+        };
+        
+        if File.size?(Ruta_archivo_logs)
+          res = "2";
+        end
+        
+         #Redirige al controlador "archivos", a la accion "lista_archivos" y con la variable de tipo GET "subir_archivos" con el valor "ok" si se subi� el archivo y "error" si no se pudo.
+         redirect_to :controller => "archivos", :action => "cargar_grados_secciones", :res => res;
+      else
+         @formato_erroneo = true;
+      end
+    end
+ end
+ 
 
   def listar_archivos
    #Guardamos la lista de archivos de la carpeta "archivos".

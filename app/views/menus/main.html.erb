@@ -116,9 +116,10 @@
         <li data-role="list-divider" data-icon="false" data-mini="true">
           Administracion
         </li>
-        <li><%= link_to "Cargar alumnos", :controller => "archivos", :action => "cargar_alumnos" %> </li>
-        <li><%= link_to "Cargar padres", :controller => "archivos", :action => "cargar_padres" %> </li>
-        <li><%= link_to "Cargar vínculos", :controller => "archivos", :action => "cargar_vinculos" %> </li>
+        <li><a href="<%= cargar_alumnos_path %>">Cargar alumnos</a></li>
+        <li><a href="<%= cargar_padres_path %>">Cargar padres</a></li>
+        <li><a href="<%= cargar_vinculos_path %>">Cargar vínculos</a></li>
+        <li><a href="<%= cargar_grados_secciones_path %>">Cargar grados y secciones</a></li>
         <li><a href="<%= anios_escolares_path %>">Años escolares</a></li>
         <li><a href="<%= listas_valores_path %>">Variables del sistema</a></li>
         <li><a href="<%= colegios_path %>">Colegios</a></li>

@@ -113,7 +113,7 @@ class NotasController < ApplicationController
             File.open("#{Ruta_directorio_archivos}#{nombre}", "r").each_line do |line|                            
               begin
                 count += 1
-                raise StandardError, "Estructura incorrecta." if line.count("|") != 3
+                raise StandardError, "Estructura incorrecta." if line.count("|") != 4
                 
                 dni, curso_abr, tipo_nota_abr, calificacion = line.split("|")
                 
