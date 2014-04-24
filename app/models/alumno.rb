@@ -14,7 +14,7 @@ class Alumno < ActiveRecord::Base
   
   attr_accessor :origen
   
-  mount_uploader :foto, FotoUploader if :origen != "carga"
+  mount_uploader :foto, FotoUploader
   
   validates :nombres, :apellido_paterno, :apellido_materno, :usuario, :presence => { :message => ": El campo no puede estar vacio" }
   validate :rango_fecha_nacimiento
