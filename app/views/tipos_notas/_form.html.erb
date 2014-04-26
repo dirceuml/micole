@@ -1,7 +1,7 @@
 <%= form_for(@tipo_nota) do |f| %>
   <% if @tipo_nota.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@tipo_nota.errors.count, "error") %> prohibited this tipo_nota from being saved:</h2>
+    <div id="error_explanation" data-role="header" data-theme="e">
+      <h2><%= pluralize(@tipo_nota.errors.count, "error") %> impidieron que se grabe el registro:</h2>
 
       <ul>
       <% @tipo_nota.errors.full_messages.each do |msg| %>
@@ -11,19 +11,23 @@
     </div>
   <% end %>
 
+<div data-role="fieldcontain">
   <div class="field">
-    <%= f.label :anio_escolar_id %><br />
-    <%= f.number_field :anio_escolar_id %>
+    <%= f.hidden_field :anio_escolar_id, :value => anio_escolar.id %>
   </div>
   <div class="field">
     <%= f.label :descripcion %><br />
     <%= f.text_field :descripcion %>
   </div>
   <div class="field">
-    <%= f.label :usuario %><br />
-    <%= f.text_field :usuario %>
+    <%= f.label :abreviatura %><br />
+    <%= f.text_field :abreviatura %>
   </div>
-  <div class="actions">
-    <%= f.submit %>
+  <div class="field">
+    <%= f.hidden_field :usuario, :value => current_user.usuario %>
   </div>
+</div>
+<div class="actions">
+    <%= f.submit "Grabar", "data-inline" => "true", "data-theme" => "a", "data-icon" => "check", "data-mini" => "true" %>
+</div>
 <% end %>

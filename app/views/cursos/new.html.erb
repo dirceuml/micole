@@ -1,5 +1,6 @@
-<h1>New curso</h1>
+<div data-role="header">
+  <h1>Crear curso</h1>
+  <%= link_to 'Regresar', cursos_path, "data-icon" => "back", "class" => "ui-btn-left", "data-mini" => "true" %>
+</div>
 
 <%= render 'form' %>
-
-<%= link_to 'Back', cursos_path %>
