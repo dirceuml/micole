@@ -1,20 +1,15 @@
-<p id="notice"><%= notice %></p>
+<div id='Grado' data-role="header">
+  <h1>Detalles</h1>
+  <%= link_to 'Aceptar', tipos_notas_path, "data-icon" => "check", "data-mini" => "true"  %>
+</div>
 
-<p>
-  <b>Anio escolar:</b>
-  <%= @tipo_nota.anio_escolar_id %>
-</p>
+<div data-role="content" style="clear: left">
+  <b>Descripcion:</b> <%= @tipo_nota.descripcion %> <p>
+  <b>Abreviatura:</b> <%= @tipo_nota.abreviatura %> <p>
+</div>
 
-<p>
-  <b>Descripcion:</b>
-  <%= @tipo_nota.descripcion %>
-</p>
-
-<p>
-  <b>Usuario:</b>
-  <%= @tipo_nota.usuario %>
-</p>
-
-
-<%= link_to 'Edit', edit_tipo_nota_path(@tipo_nota) %> |
-<%= link_to 'Back', tipos_notas_path %>
+<div data-role="footer">
+  <% if can? :update, @tipo_nota %>
+    <%= link_to 'Editar', edit_tipo_nota_path(@tipo_nota), "class" => "ui-btn-left", "data-inline" => "true", "data-theme" => "a", "data-icon" => "gear", "data-mini" => "true" %>
+  <% end %>
+</div>

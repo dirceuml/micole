@@ -1,25 +1,27 @@
-<h1>Listing cursos</h1>
+<div data-role="header">
+  <h1>Cursos</h1>
+  <% if can? :create, Curso %>
+    <%= link_to 'Registrar', new_curso_path, "data-icon" => "plus", "class" => "ui-btn-right" %>
+  <% end %>
+</div>
 
-<table>
-  <tr>
-    <th>Descripcion</th>
-    <th>Usuario</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
-<% @cursos.each do |curso| %>
-  <tr>
-    <td><%= curso.descripcion %></td>
-    <td><%= curso.usuario %></td>
-    <td><%= link_to 'Show', curso %></td>
-    <td><%= link_to 'Edit', edit_curso_path(curso) %></td>
-    <td><%= link_to 'Destroy', curso, confirm: 'Are you sure?', method: :delete %></td>
-  </tr>
-<% end %>
-</table>
-
-<br />
-
-<%= link_to 'New Curso', new_curso_path %>
+<div data-role="content">
+  <ul data-role="listview" data-filter="true">
+    <% @cursos.each do |curso| %>
+    <li data-filtertext="<%= "#{curso.descripcion} #{curso.abreviatura}}" %>" >
+      <% if can? :update, curso %>
+        <% link_opcion = edit_curso_path(curso) %>
+      <% else %>
+        <% link_opcion = curso %>
+      <% end %>
+      <%= link_to link_opcion do %>
+        <%= simple_format("#{curso.descripcion} - #{curso.abreviatura}") %>
+      <% end %>
+      
+      <% if can? :destroy, curso %>
+        <%= link_to 'Eliminar', curso, confirm: '¿Seguro que desea eliminar el registro?', method: :delete, "data-icon" => "delete" %>
+      <% end %>
+    </li>
+    <% end %>
+  </ul>
+</div>

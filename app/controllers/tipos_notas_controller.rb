@@ -4,7 +4,7 @@ class TiposNotasController < ApplicationController
   # GET /tipos_notas
   # GET /tipos_notas.json
   def index
-    @tipos_notas = TipoNota.all
+    @tipos_notas = TipoNota.por_anio_escolar(anio_escolar.id)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -46,7 +46,7 @@ class TiposNotasController < ApplicationController
 
     respond_to do |format|
       if @tipo_nota.save
-        format.html { redirect_to @tipo_nota, notice: 'Tipo nota was successfully created.' }
+        format.html { redirect_to @tipo_nota, notice: 'El tipo de nota fue creado satisfactoriamente.' }
         format.json { render json: @tipo_nota, status: :created, location: @tipo_nota }
       else
         format.html { render action: "new" }
@@ -62,7 +62,7 @@ class TiposNotasController < ApplicationController
 
     respond_to do |format|
       if @tipo_nota.update_attributes(params[:tipo_nota])
-        format.html { redirect_to @tipo_nota, notice: 'Tipo nota was successfully updated.' }
+        format.html { redirect_to @tipo_nota, notice: 'El tipo de nota fue actualizado satisfactoriamente.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
