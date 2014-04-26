@@ -13,6 +13,7 @@
     <li data-filtertext="<%= "#{alumno.apellidos_nombres} #{alumno.dni} #{alumno.correo} #{alumno.telefono_fijo} #{alumno.telefono_movil}" %>" >
       <%= link_to alumno do %>
         <h3><%= "#{alumno.apellidos_nombres} - DNI #{alumno.dni}" %></h3>
+        <p class="ui-li-desc"> <%= "Grado y sección: #{alumno.grado_seccion(anio_escolar.id)}" %></p>
         <p class="ui-li-desc"> <%= "Correo: #{alumno.correo}" %></p>
         <p class="ui-li-desc"> <%= "Teléfonos: #{alumno.telefono_fijo} / #{alumno.telefono_movil}" %></p>
       <% end %>

@@ -7,9 +7,10 @@
     <%= image_tag(@alumno.foto_url.to_s) %> <p>
     <b>Apellidos y nombres:</b> <%= @alumno.apellidos_nombres %><p>
     <b>DNI:</b> <%= @alumno.dni %><p>
+    <b>Grado y sección:</b><%= @alumno.grado_seccion(anio_escolar.id) %><p>
     <b>Correo:</b> <%= @alumno.correo %><p>
-    <b>Telefono fijo:</b> <%= @alumno.telefono_fijo %><p>
-    <b>Telefono móvil:</b> <%= @alumno.telefono_movil %><p>
+    <b>Teléfono fijo:</b> <%= @alumno.telefono_fijo %><p>
+    <b>Teléfono móvil:</b> <%= @alumno.telefono_movil %><p>
 </div>
 
 <div data-role="footer">

@@ -291,7 +291,7 @@ class ArchivosController < ApplicationController
                 raise ActiveRecord::RecordNotFound, "Alumno no encontrado" if alumno.nil?
                 
                 padre = PersonaVinculada.find_by_tipo_documento_and_numero_documento(tipo_documento_padre, numero_documento_padre)
-                raise ActiveRecord::RecordNotFound, "Padre no encontrado" if alumno.nil?
+                raise ActiveRecord::RecordNotFound, "Padre no encontrado" if padre.nil?
 
                 vinculo = AlumnoPersonaVinculada.find_by_persona_vinculada_id_and_alumno_id(padre.id, alumno.id)
 
