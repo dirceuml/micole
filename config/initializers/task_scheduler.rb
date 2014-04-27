@@ -4,8 +4,8 @@ scheduler.every("36h") do
 #scheduler.cron '0 10 * * * Etc/GMT-5' do
 #scheduler.cron '0 15 * * *' do
   # todos los días a las 10:00 en GMT-5
-  # se ha creado pendiente_all para seleccionar las actividades pendientes en los años escolares activos de todos los colegios
-  Actividad.pendiente_all(Date.current).find_each do |a|
+  # se ha creado pendiente_colegios para seleccionar las actividades pendientes en los años escolares activos de todos los colegios
+  Actividad.pendiente_colegios(Date.current).find_each do |a|
     a.enviar_recordatorio
 #    puts "Funciona..."
   end
