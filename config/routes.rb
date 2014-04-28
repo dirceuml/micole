@@ -70,7 +70,8 @@ Micole::Application.routes.draw do
   resources :usuarios
   
   get "crearusuarios" => "usuarios#crear_masivo", :as => "crearusuarios"
-  post "grabarusuarios" => "usuarios#grabar_masivo", :as => "grabarusuarios" 
+  post "crearusuarios" => "usuarios#grabar_masivo", :as => "crearusuarios" 
+  #post "grabarusuarios" => "usuarios#grabar_masivo", :as => "grabarusuarios" 
   get "sign_up" => "usuarios#new", :as => "sign_up"
   get "restaurar_clave" => "usuarios#restaurar_clave", :as => "restaurar_clave"
   post "restaurar_clave" => "usuarios#restaurar_clave", :as => "restaurar_clave"

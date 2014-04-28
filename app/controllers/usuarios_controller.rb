@@ -4,7 +4,7 @@ class UsuariosController < ApplicationController
   # GET /usuarios
   # GET /usuarios.json
   def index
-    @usuarios = Usuario.all
+    @usuarios = Usuario.order("nombre")
 
     respond_to do |format|
       format.html # index.html.erb
@@ -112,6 +112,7 @@ class UsuariosController < ApplicationController
   
   def grabar_masivo
     opcion = params[:creausuarios].to_i
+    error  = 0
     
     if opcion == 1 || opcion == 2    # crear usuarios y notificar por correo  o solo crear usuarios
       @nuevos_usuarios = PersonaVinculada.connection.select_rows("Select id, nombres, apellido_paterno, apellido_materno, correo From personas_vinculadas 
@@ -119,8 +120,9 @@ class UsuariosController < ApplicationController
               Join anios_alumnos on anios_alumnos.alumno_id = alumnos_personas_vinculadas.alumno_id join anios_escolares on anios_escolares.id = anios_alumnos.anio_escolar_id
               Where vigencia_vinculo= 2 And (apoderado= 1 Or autoriza_actividad = 1 Or revisa_control= 1) and anios_alumnos.anio_escolar_id = "+ anio_escolar.id.to_s+ " and anios_escolares.colegio_id= "+ colegio.id.to_s+ ")")
       
-      if @nuevos_usuarios.nil?
-        flash[:notice] = 'No existen personas vinculadas sin usuario'
+      if @nuevos_usuarios.empty?
+        flash[:notice] = 'No existen personas vinculadas sin credenciales de acceso'
+        error  = 1
         render :crear_masivo
       else
         ActiveRecord::Base.transaction do
@@ -169,6 +171,7 @@ class UsuariosController < ApplicationController
             )
             if !@usuario.save
               flash[:notice] = 'Ocurrio un error al registrar los usuarios'
+              error  = 1
               format.html { render action: "crear_masivo" }
             else
               if notificado == 1
@@ -190,8 +193,9 @@ class UsuariosController < ApplicationController
     
     if opcion == 3    # solo notificar por correo
       @usuarios_notificacion = Usuario.pendientenotificar(colegio.id)
-      if @usuarios_notificacion.nil?
+      if @usuarios_notificacion.empty?
         flash[:notice] = 'No existen usuarios pendientes de notificacion de credenciales'
+        error  = 1
         render :crear_masivo
       else
         # @usuario.enviar_credenciales   ## Envio de credenciales a los usuarios para el acceso al sistema
@@ -200,7 +204,7 @@ class UsuariosController < ApplicationController
           if !@usuario.correo.nil?
             # Actualizar estado de notificado y se crea nueva contraseña
             nueva_clave = SecureRandom.urlsafe_base64
-
+            
             # sql = 'update usuarios set notificado = 1 where id = '+ @usuario.id.to_s
             # registros = Usuario.connection.update(sql)            
             @usuario.update_attributes(
@@ -214,8 +218,10 @@ class UsuariosController < ApplicationController
         end
       end
     end
-    
-    redirect_to :controller => 'usuarios', :action => 'crear_masivo'
+    if error == 0
+      flash[:notice] = 'El proceso se ha realizado satisfactoriamente'
+      redirect_to :controller => 'usuarios', :action => 'crear_masivo'      
+    end
   end
   
   def restaurar_clave

@@ -1,10 +1,8 @@
-
 <div data-role="header">
   <h1>Crear masivamente usuarios</h1>
 </div>
 
-
-<%= form_tag(grabarusuarios_path, {"data-ajax" => "false", "name" => "crearusuarios"}) do %>
+<%= form_tag(crearusuarios_path, {"data-ajax" => "false", "name" => "crearusuarios"}) do %>
   <div data-role="fieldcontain">
     <fieldset data-role="controlgroup" >
       <legend>Seleccione:</legend>
@@ -21,5 +19,4 @@
     <%= submit_tag "Procesar", "data-inline" => "true", "data-theme" => "a", "data-icon" => "check", "data-mini" => "true" %>
   </div>
 <% end %>
-
 <!--% end % -->
