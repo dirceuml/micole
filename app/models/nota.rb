@@ -8,4 +8,5 @@ class Nota < ActiveRecord::Base
   validates :nota, :presence => true, :numericality => true
   
   scope :por_dni, lambda { |dni| joins(:alumno).where("dni = ?", dni)}  
+  scope :por_padre, lambda { |padre| joins(:alumno => :alumnos_personas_vinculadas).where("revisa_control = 1 and alumnos_personas_vinculadas.persona_vinculada_id = ?", padre) }
 end

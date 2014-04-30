@@ -24,6 +24,9 @@ class SessionsController < ApplicationController
 
   def destroy
     session[:usuario_id] = nil
+    session[:colegio_id] = nil
+    session[:anio_escolar_id] = nil
+        
     redirect_to root_url #, :notice => "Cerro sesion!"
   end
   

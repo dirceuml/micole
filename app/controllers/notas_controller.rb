@@ -9,6 +9,8 @@ class NotasController < ApplicationController
     dni = params[:dni]
     
     @notas = Nota.por_dni(dni)
+    #@notas = Nota.por_padre(PersonaVinculada.logueado(params[:usuario]).pluck("personas_vinculadas.id"))
+    #@notas = Nota.por_padre(PersonaVinculada.logueado(params[:usuario])
     @cursos = @notas.uniq.pluck(:curso_id)
 
     respond_to do |format|
