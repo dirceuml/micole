@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140414013800) do
+ActiveRecord::Schema.define(:version => 20140501211850) do
 
   create_table "actividades", :force => true do |t|
     t.integer  "anio_escolar_id",                                           :null => false
@@ -158,6 +158,44 @@ ActiveRecord::Schema.define(:version => 20140414013800) do
 
   add_index "colegios", ["nombre"], :name => "ui_colegios_nombre", :unique => true
 
+  create_table "cuaderno_control_alumnos", :force => true do |t|
+    t.integer  "CodigoColegio"
+    t.date     "Fecha"
+    t.string   "Seccion"
+    t.integer  "CodigoAlumno"
+    t.integer  "TipoEvento"
+    t.text     "Detalle"
+    t.string   "CodigoUsuario"
+    t.datetime "FechaUsuario"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
+
+  create_table "cuaderno_control_revisions", :force => true do |t|
+    t.integer  "CodigoColegio"
+    t.date     "Fecha"
+    t.string   "Seccion"
+    t.integer  "CodigoAlumno"
+    t.integer  "Revisado"
+    t.text     "Observaciones"
+    t.string   "CodigoUsuario"
+    t.datetime "FechaUsuario"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
+
+  create_table "cuaderno_control_seccions", :force => true do |t|
+    t.integer  "CodigoColegio"
+    t.date     "Fecha"
+    t.string   "Seccion"
+    t.integer  "TipoEvento"
+    t.text     "Detalle"
+    t.string   "CodigoUsuario"
+    t.datetime "FechaUsuario"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
+
   create_table "cuaderno_controles_eventos", :force => true do |t|
     t.integer  "cuaderno_control_id", :null => false
     t.integer  "tipo_evento_id",      :null => false
@@ -188,6 +226,17 @@ ActiveRecord::Schema.define(:version => 20140414013800) do
   add_index "cuaderno_controles_revisiones", ["cuaderno_control_id", "alumno_id"], :name => "ak_cuaderno_controles_revision", :unique => true
   add_index "cuaderno_controles_revisiones", ["cuaderno_control_id"], :name => "fk_cuacontrolrevis_cuacontrol"
   add_index "cuaderno_controles_revisiones", ["persona_vinculada_id"], :name => "fk_cuacontrolrevision_pervincu"
+
+  create_table "cuaderno_controls", :force => true do |t|
+    t.integer  "CodigoColegio"
+    t.date     "Fecha"
+    t.string   "Seccion"
+    t.integer  "Estado"
+    t.string   "CodigoUsuario"
+    t.datetime "FechaUsuario"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
 
   create_table "cuadernos_controles", :force => true do |t|
     t.integer  "seccion_id", :null => false
@@ -240,14 +289,15 @@ ActiveRecord::Schema.define(:version => 20140414013800) do
   add_index "delayed_jobs", ["priority", "run_at"], :name => "delayed_jobs_priority"
 
   create_table "grados", :force => true do |t|
-    t.integer  "anio_escolar_id", :null => false
-    t.integer  "grado",           :null => false
-    t.string   "usuario",         :null => false
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
+    t.integer  "anio_escolar_id",                :null => false
+    t.integer  "grado",                          :null => false
+    t.string   "usuario",                        :null => false
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
+    t.integer  "nivel",           :default => 1, :null => false
   end
 
-  add_index "grados", ["anio_escolar_id", "grado"], :name => "ak_grados", :unique => true
+  add_index "grados", ["anio_escolar_id", "grado", "nivel"], :name => "index_grados_on_anio_escolar_id_and_grado_and_nivel", :unique => true
   add_index "grados", ["anio_escolar_id"], :name => "fk_grados_aniosescolares"
 
   create_table "listas_valores", :force => true do |t|
@@ -325,6 +375,20 @@ ActiveRecord::Schema.define(:version => 20140414013800) do
     t.integer  "subject_id"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
+  end
+
+  create_table "persona_autorizada_recojos", :force => true do |t|
+    t.integer  "CodigoPersonaAutorizada"
+    t.integer  "CodigoColegio"
+    t.integer  "TipoDocumento"
+    t.string   "NumeroDocumento"
+    t.string   "Nombres"
+    t.string   "ApellidoPaterno"
+    t.string   "ApellidoMaterno"
+    t.string   "Foto"
+    t.datetime "created_at",              :null => false
+    t.datetime "updated_at",              :null => false
+    t.text     "Observaciones"
   end
 
   create_table "personas_vinculadas", :force => true do |t|

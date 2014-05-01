@@ -15,7 +15,7 @@
         <% link_opcion = grado %>
       <% end %>
       <%= link_to link_opcion do %>
-        <%= simple_format("Grado : #{grado.grado}") %>
+        <%= simple_format("Grado : #{grado.grado} #{grado.nivel_desc}") %>
       <% end %>
       
       <% if can? :destroy, grado %>

@@ -4,7 +4,8 @@
 </div>
 
 <div data-role="content" style="clear: left">
-  <b>Grado:</b> <%= Grado.find(@seccion.grado_id).grado %> <p>
+  <% grado = Grado.find(@seccion.grado_id) %>
+  <b>Grado:</b> <%= "#{grado.grado} #{grado.nivel_desc}" %> <p>
   <b>Seccion:</b> <%= @seccion.seccion %> <p>
 </div>
 

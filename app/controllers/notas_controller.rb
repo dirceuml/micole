@@ -6,11 +6,9 @@ class NotasController < ApplicationController
   # GET /notas
   # GET /notas.json
   def index
-    dni = params[:dni]
+    alumno_id = params[:alumno_id]
     
-    @notas = Nota.por_dni(dni)
-    #@notas = Nota.por_padre(PersonaVinculada.logueado(params[:usuario]).pluck("personas_vinculadas.id"))
-    #@notas = Nota.por_padre(PersonaVinculada.logueado(params[:usuario])
+    @notas = Nota.por_alumno_id(alumno_id)
     @cursos = @notas.uniq.pluck(:curso_id)
 
     respond_to do |format|
