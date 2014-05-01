@@ -1,8 +1,8 @@
 11111111|Jose|Gonzales|Rivera|19/07/2008|3432345|989876765|Jr. Puno 233 - Pueblo Libre|jgr@gmail.com|1|A|
 22222222|Maria|Gonzales|Rivera|01/03/2008|7676545|999987876|La Victoria|rgr@gmail.com|1|B|
 33333333|Rosa|Benavides|Del Mar|22/05/2008|6765654|987676856|Cercado de Lima|rbd@gmail.com|1|A|
-40587533|Dirceu|Marquina|Lazarte|09/08/2008|5662743|996798682|San Miguel|dirceu.ml@gmail.com|1|A|
-90232122|Edgar|Gutierrez|Guizado|11/01/2005|3343454|991090990|Av. Los Gatos 199 - San Luis|edgar.gutierrez100@gmail.com|4|A|
+49587533|Hector|Martinez|Lazarte|09/08/2008|5662743|996798682|San Miguel|hector.martinez@gmail.com|1|A|
+90232122|Edgar|Fuentes|Guizado|11/01/2005|3343454|991090990|Av. Los Gatos 199 - San Luis|edgar.fuentes@gmail.com|4|A|
 90232123|Horacio|Del Aguila|Martinez|22/04/2005|5343454|988090990|Av. El Sol 199 - San Luis|hdm@gmail.com|4|A|
 90232124|Alejandra|Casalino|Motta|01/09/2008|5664567|986575737|San Borja|alejandra.cm@gmail.com|1|B|
 90232125|Eduardo|Gutierrez|Vela|11/01/2005|3343454|991090990|Av. Los Claveles 199 - San Luis|eduardo.gutierrez@gmail.com|4|A|
@@ -25,3 +25,5 @@
 90232142|Ariana|Lopez|Bermudez|11/11/2006|3343454|991090990|Av. Los Gatos 199 - San Luis|alopez@gmail.com|3|A|
 90232143|Fernando|Berrios|Murillo|01/03/2006|5664567|986575737|San Borja|fernando@gmail.com|3|A|
 90232144|Antonio|Tagle|Montes|01/01/2006|5664567|986575737|San Borja|atm@gmail.com|3|B|
+90232145|Hector|Marquina|Rosales|01/06/2008|5664567|986575737|San Miguel|hmarquinar@gmail.com|1|B|
+90232146|Rosa|Marquina|Rosales|21/04/2006|5664567|986575737|San Miguel|rmarquinar@gmail.com|3|A|
