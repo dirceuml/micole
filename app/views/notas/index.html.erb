@@ -15,7 +15,7 @@
       <%= form_tag(notas_path, {:method => :get, "onSubmit" => "return validarBusquedaXDocumento();", "data-ajax" => "false", "name" => "buscar"}) do %>            
          <div data-role="fieldcontain">
             <div style="text-align: left;">
-              Alumno: <%= collection_select(:alumno, :id, Alumno.hijos_de(23).order('nombres'), :id, :nombres, {:selected => alumno_id}, {"data-mini" => "true", :name => "alumno_id"}) %>
+              Alumno: <%= collection_select(:alumno, :id, Alumno.hijos_de(PersonaVinculada.logueado(current_user.usuario)).order('nombres'), :id, :nombres, {:selected => alumno_id}, {"data-mini" => "true", :name => "alumno_id"}) %>
               <%= submit_tag "Buscar", "data-inline" => "true", "data-theme" => "a", "data-icon" => "search", "data-mini" => "true", :name => nil %>
             </div>
           </div>         

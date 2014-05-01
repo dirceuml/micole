@@ -10,6 +10,6 @@ class Seccion < ActiveRecord::Base
   scope :por_anioescolar, lambda { |anioescolar| joins(:grado).where("grados.anio_escolar_id = ?", anioescolar)}
   
   def grado_seccion
-    grado.grado.to_s + " " + seccion
+    grado.grado.to_s + " " + seccion + " " + grado.nivel_desc
   end
 end
