@@ -25,10 +25,10 @@ class Alumno < ActiveRecord::Base
   end
   
   def grado_seccion(anioescolar)
-    anioalumno = AnioAlumno.find_by_anio_escolar_id_and_alumno_id(anioescolar, self.id)
+    anioalumno = AnioAlumno.find_by_anio_escolar_id_and_alumno_id(anioescolar, id)
     if !anioalumno.nil?
       secc = anioalumno.seccion
-      secc.grado.grado.to_s + " " + secc.seccion
+      secc.grado.grado.to_s + " " + secc.seccion + " " + ListaValor.find_by_tabla_and_item(9, secc.grado.nivel).descripcion
     else
       "SIN SECCION"
     end
