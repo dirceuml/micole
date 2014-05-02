@@ -21,6 +21,11 @@
   </div>
   
   <div class="field">
+    <%= f.label :nivel %><br />
+    <%= collection_select(:grado, :nivel, ListaValor.where("tabla=9").order("item"), :item, :descripcion, {:prompt => ':: Seleccione ::'}, {"data-mini" => "true"}) %>
+  </div>
+  
+  <div class="field">
     <%= f.hidden_field :usuario, :value => current_user.usuario %>
   </div>
 </div>

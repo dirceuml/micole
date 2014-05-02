@@ -12,41 +12,55 @@ class Alumno < ActiveRecord::Base
   
   has_many :asistencias, :through => :anios_alumnos
   
-<<<<<<< HEAD
+  attr_accessor :origen
+  
+  mount_uploader :foto, FotoUploader
+  
   validates :nombres, :apellido_paterno, :apellido_materno, :usuario, :presence => { :message => ": El campo no puede estar vacio" }
-  validates :dni, :presence => { :message => ": El campo no puede estar vacio" }, :uniqueness => { :message => ": Este DNI esta registrado. Verifique" }, :format => { :with => /\A[+-]?\d+\Z/, :message => ": Solo se permiten numeros"}
-=======
-  validates :nombres, :apellido_paterno, :apellido_materno, :usuario, :presence => true
   validate :rango_fecha_nacimiento
->>>>>>> 6fedc23bcc8c58ed923a03af6ba15e3f82347622
+  validates :dni, :presence => { :message => ": El campo no puede estar vacio" }, :uniqueness => { :message => ": Este DNI esta registrado. Verifique" }, :format => { :with => /\A[+-]?\d+\Z/, :message => ": Solo se permiten numeros"}
   
   def apellidos_nombres
     apellido_paterno + " " + apellido_materno + " " + nombres
   end
   
-  def grado_seccion
-    secc = AnioAlumno.find_by_anio_escolar_id_and_alumno_id(1, self.id).seccion
-    secc.grado.grado.to_s + " " + secc.seccion
+  def grado_seccion(anioescolar)
+<<<<<<< HEAD
+    anioalumno = AnioAlumno.find_by_anio_escolar_id_and_alumno_id(anioescolar, self.id)
+    if !anioalumno.nil?
+      secc = anioalumno.seccion
+      secc.grado.grado.to_s + " " + secc.seccion
+    else
+      "SIN SECCION"
+    end
+=======
+    secc = AnioAlumno.find_by_anio_escolar_id_and_alumno_id(anioescolar, self.id).seccion
+    secc.grado.grado.to_s + " " + secc.seccion + " " + ListaValor.find_by_tabla_and_item(9, secc.grado.nivel).descripcion
+>>>>>>> 26ae3a19a99ce30da47276145a234918c8ceb348
   end
   
   def salida_registrada (alumno_id, fecha)
     Alumno.joins(:anios_alumnos => :asistencias).where("to_char(fecha_hora, 'dd/mm/yyyy') = ? and alumnos.id = ?", fecha.strftime('%d/%m/%Y'), alumno_id).count
   end
   
-  def find_asistencia_by_alumno_id_and_fecha (alumno_id, fecha)
-    Asistencia.find(:all, :conditions => ["to_char(fecha_hora, 'dd/mm/yyyy') = '#{fecha}' and anio_alumno_id = #{alumno_id}"]).first
-    # creo que se debe revisar la parte de la condicion: anio_alumno_id = #{alumno_id
+  def find_asistencia_by_anio_escolar_id_and_alumno_id_and_fecha (anioescolar, alumno_id, fecha)
+    anioalumno_id = AnioAlumno.find_by_anio_escolar_id_and_alumno_id(anioescolar, alumno_id).id
+    Asistencia.find(:all, :conditions => ["to_char(fecha_hora, 'dd/mm/yyyy') = '#{fecha}' and anio_alumno_id = #{anioalumno_id}"]).first
   end
   
   def rango_fecha_nacimiento
     if fecha_nacimiento.present?
       if !fecha_nacimiento.between?(Date.parse(18.years.ago.to_s), Date.parse(4.years.ago.to_s)) then
-        errors.add(:clave, "La fecha de nacimiento esta fuera del rango permitido.")
+        errors.add(:fecha_nacimiento, "La fecha de nacimiento esta fuera del rango permitido.")
       end
     end
   end
   
-  scope :hijos_de, lambda { |padre| joins(:alumno_persona_vinculada).where("apoderado = 1 and persona_vinculada_id = ?", padre) }
+  scope :hijos_de, lambda { |padre| joins(:alumnos_personas_vinculadas).where("apoderado = 1 and persona_vinculada_id = ?", padre) }
+<<<<<<< HEAD
+  scope :se_revisan_por, lambda { |padre| joins(:alumnos_personas_vinculadas).where("revisa_control = 1 and persona_vinculada_id = ?", padre) }
+=======
   scope :se_revisan_por, lambda { |padre| joins(:alumno_persona_vinculada).where("revisa_control = 1 and persona_vinculada_id = ?", padre) }
-  scope :pertenecen_a_seccion, lambda { |seccion| joins(:anios_alumnos).where("anios_alumnos.seccion_id = ?", seccion)}
+>>>>>>> 26ae3a19a99ce30da47276145a234918c8ceb348
+  scope :pertenecen_a_seccion, lambda { |anioescolar, seccion| joins(:anios_alumnos).where("anios_alumnos.anio_escolar_id = ? and anios_alumnos.seccion_id = ?", anioescolar, seccion)}
 end

@@ -1,27 +1,30 @@
-11111111|Jose|Gonzales|Rivera|19/07/2008|3432345|989876765|Jr. Puno 233 - Pueblo Libre|jgr@gmail.com|1|A|
-22222222|Maria|Gonzales|Rivera|01/03/2008|7676545|999987876|La Victoria|rgr@gmail.com|1|B|
-33333333|Rosa|Benavides|Del Mar|22/05/2008|6765654|987676856|Cercado de Lima|rbd@gmail.com|1|A|
-40587533|Dirceu|Marquina|Lazarte|09/08/2008|5662743|996798682|San Miguel|dirceu.ml@gmail.com|1|A|
-90232122|Edgar|Gutierrez|Guizado|11/01/2005|3343454|991090990|Av. Los Gatos 199 - San Luis|edgar.gutierrez100@gmail.com|4|A|
-90232123|Horacio|Del Aguila|Martinez|22/04/2005|5343454|988090990|Av. El Sol 199 - San Luis|hdm@gmail.com|4|A|
-90232124|Alejandra|Casalino|Motta|01/09/2008|5664567|986575737|San Borja|alejandra.cm@gmail.com|1|B|
-90232125|Eduardo|Gutierrez|Vela|11/01/2005|3343454|991090990|Av. Los Claveles 199 - San Luis|eduardo.gutierrez@gmail.com|4|A|
-90232126|Alejandro|Casas|Moran|01/08/2008|2664567|996575737|San Isidro|alejandro.cm@gmail.com|1|B|
-90232127|Alexander|Rojas|Coran|21/05/2008|4664567|998895737|San Isidro|alex.cm@gmail.com|1|B|
-90232128|Elena|Bordo|Guizado|11/01/2005|3343454|991090990|Av. Los Eucaliptos 199 - Surco|elena.bordo@gmail.com|4|A|
-90232129|Arturo|Quiroga|Dolores|09/09/2007|7664567|999975737|San Borja|arturo.cm@gmail.com|2|B|
-90232130|Norma|Tafur|Ramos|31/01/2007|2343454|984090990|Av. Del Ejercito 344|norma.tafur@gmail.com|2|B|
-90232131|Rodrigo|Huamani|Motta|01/06/2007|5664567|986575737|San Borja|rhm@gmail.com|2|B|
-90232132|Mateo|Perez|Guizado|11/05/2007|3343454|991090990|Av. Los Gatos 199 - San Luis|mpg@gmail.com|2|A|
-90232133|Camila|Marquez|Colina|21/09/2007|5664567|986575737|San Borja|cmc@gmail.com|2|B|
-90232134|Felix|Mendoza|Bermudez|11/11/2007|3343454|991090990|Av. Los Gatos 199 - San Luis|fmend@gmail.com|2|A|
-90232135|Fernanda|Castro|Murillo|01/03/2007|5664567|986575737|San Borja|fer.cm@gmail.com|2|A|
-90232136|Andrea|Torre|Motta|01/01/2007|5664567|986575737|San Borja|an.cm@gmail.com|2|B|
-90232137|Carlos|Quiroga|Dolores|09/09/2006|7664567|999975737|San Borja|arturo.cm@gmail.com|3|B|
-90232138|Fiorella|Escalante|Ramos|31/01/2006|2343454|984090990|Av. Del Ejercito 344|fiorella.escalante@gmail.com|3|B|
-90232139|Rosa|Huamani|Motta|01/06/2006|5664567|986575737|San Borja|rosahm@gmail.com|3|B|
-90232140|Paulo|Quijandria|Solis|11/05/2006|3343454|991090990|Av. Los Gatos 199 - San Luis|quij@gmail.com|3|A|
-90232141|Briana|Uribe|Gomez|21/09/2006|5664567|986575737|San Borja|brugo@gmail.com|3|B|
-90232142|Ariana|Lopez|Bermudez|11/11/2006|3343454|991090990|Av. Los Gatos 199 - San Luis|alopez@gmail.com|3|A|
-90232143|Fernando|Berrios|Murillo|01/03/2006|5664567|986575737|San Borja|fernando@gmail.com|3|A|
-90232144|Antonio|Tagle|Montes|01/01/2006|5664567|986575737|San Borja|atm@gmail.com|3|B|
+11111111|Jose|Gonzales|Rivera|19/07/2008|3432345|989876765|Jr. Puno 233 - Pueblo Libre|jgr@gmail.com|1|A|PRI|
+22222222|Maria|Gonzales|Rivera|01/03/2008|7676545|999987876|La Victoria|rgr@gmail.com|1|B|PRI|
+33333333|Rosa|Benavides|Del Mar|22/05/2008|6765654|987676856|Cercado de Lima|rbd@gmail.com|1|A|PRI|
+49587533|Hector|Martinez|Lazarte|09/08/2008|5662743|996798682|San Miguel|hector.martinez@gmail.com|1|A|PRI|
+90232122|Edgar|Fuentes|Guizado|11/01/2005|3343454|991090990|Av. Los Gatos 199 - San Luis|edgar.fuentes@gmail.com|4|A|PRI|
+90232123|Horacio|Del Aguila|Martinez|22/04/2005|5343454|988090990|Av. El Sol 199 - San Luis|hdm@gmail.com|4|A|PRI|
+90232124|Alejandra|Casalino|Motta|01/09/2008|5664567|986575737|San Borja|alejandra.cm@gmail.com|1|B|PRI|
+90232125|Eduardo|Gutierrez|Vela|11/01/2005|3343454|991090990|Av. Los Claveles 199 - San Luis|eduardo.gutierrez@gmail.com|4|A|PRI|
+90232126|Alejandro|Casas|Moran|01/08/2008|2664567|996575737|San Isidro|alejandro.cm@gmail.com|1|B|PRI|
+90232127|Alexander|Rojas|Coran|21/05/2008|4664567|998895737|San Isidro|alex.cm@gmail.com|1|B|PRI|
+90232128|Elena|Bordo|Guizado|11/01/2005|3343454|991090990|Av. Los Eucaliptos 199 - Surco|elena.bordo@gmail.com|4|A|PRI|
+90232129|Arturo|Quiroga|Dolores|09/09/2007|7664567|999975737|San Borja|arturo.cm@gmail.com|2|B|PRI|
+90232130|Norma|Tafur|Ramos|31/01/2007|2343454|984090990|Av. Del Ejercito 344|norma.tafur@gmail.com|2|B|PRI|
+90232131|Rodrigo|Huamani|Motta|01/06/2007|5664567|986575737|San Borja|rhm@gmail.com|2|B|PRI|
+90232132|Mateo|Perez|Guizado|11/05/2007|3343454|991090990|Av. Los Gatos 199 - San Luis|mpg@gmail.com|2|A|PRI|
+90232133|Camila|Marquez|Colina|21/09/2007|5664567|986575737|San Borja|cmc@gmail.com|2|B|PRI|
+90232134|Felix|Mendoza|Bermudez|11/11/2007|3343454|991090990|Av. Los Gatos 199 - San Luis|fmend@gmail.com|2|A|PRI|
+90232135|Fernanda|Castro|Murillo|01/03/2007|5664567|986575737|San Borja|fer.cm@gmail.com|2|A|PRI|
+90232136|Andrea|Torre|Motta|01/01/2007|5664567|986575737|San Borja|an.cm@gmail.com|2|B|PRI|
+90232137|Carlos|Quiroga|Dolores|09/09/2006|7664567|999975737|San Borja|arturo.cm@gmail.com|3|B|PRI|
+90232138|Fiorella|Escalante|Ramos|31/01/2006|2343454|984090990|Av. Del Ejercito 344|fiorella.escalante@gmail.com|3|B|PRI|
+90232139|Rosa|Huamani|Motta|01/06/2006|5664567|986575737|San Borja|rosahm@gmail.com|3|B|PRI|
+90232140|Paulo|Quijandria|Solis|11/05/2006|3343454|991090990|Av. Los Gatos 199 - San Luis|quij@gmail.com|3|A|PRI|
+90232141|Briana|Uribe|Gomez|21/09/2006|5664567|986575737|San Borja|brugo@gmail.com|3|B|PRI|
+90232142|Ariana|Lopez|Bermudez|11/11/2006|3343454|991090990|Av. Los Gatos 199 - San Luis|alopez@gmail.com|3|A|PRI|
+90232143|Fernando|Berrios|Murillo|01/03/2006|5664567|986575737|San Borja|fernando@gmail.com|3|A|PRI|
+90232144|Antonio|Tagle|Montes|01/01/2006|5664567|986575737|San Borja|atm@gmail.com|3|B|PRI|
+90232145|Hector|Marquina|Rosales|01/06/2008|5664567|986575737|San Miguel|hmarquinar@gmail.com|1|B|PRI|
+90232146|Rosa|Marquina|Rosales|21/04/2006|5664567|986575737|San Miguel|rmarquinar@gmail.com|3|A|PRI|
+90232147|Rosario|Tevez|Esquerre|29/04/2000|5664567|986575737|San Miguel|rte@gmail.com|3|A|SEC|

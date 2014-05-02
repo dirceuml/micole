@@ -2,10 +2,10 @@
   <h1>Consulta de notas</h1>
 </div>
 
-<% if params[:dni] == "0" %>
-  <% dni = "" %>
+<% if params[:alumno_id] == "0" %>
+  <% alumno_id = "" %>
 <% else %>
-  <% dni = params[:dni] %>
+  <% alumno_id = params[:alumno_id] %>
 <% end %>
 
 <div data-role="content">    
@@ -15,8 +15,7 @@
       <%= form_tag(notas_path, {:method => :get, "onSubmit" => "return validarBusquedaXDocumento();", "data-ajax" => "false", "name" => "buscar"}) do %>            
          <div data-role="fieldcontain">
             <div style="text-align: left;">
-              N° DNI:  <%= text_field_tag(:dni, dni, "data-mini" => "true") %>
-            
+              Alumno: <%= collection_select(:alumno, :id, Alumno.hijos_de(PersonaVinculada.logueado(current_user.usuario)).order('nombres'), :id, :nombres, {:selected => alumno_id}, {"data-mini" => "true", :name => "alumno_id"}) %>
               <%= submit_tag "Buscar", "data-inline" => "true", "data-theme" => "a", "data-icon" => "search", "data-mini" => "true", :name => nil %>
             </div>
           </div>         
@@ -24,11 +23,11 @@
       <hr>
     </div>
 
-    <% if params[:dni] != "0" %>
+    <% if params[:alumno_id] != "0" %>
     <div style="text-align: center;">
-       <% if dni != "" %>
+       <% if !alumno_id.nil? %>
         <div data-role="content" style="color: #06c; text-align: center">
-          <% alumno = Alumno.find_by_dni(dni) %>
+          <% alumno = Alumno.find(alumno_id) %>
           <% if !alumno.nil? %>
             <%= alumno.apellidos_nombres %>
             <br/>

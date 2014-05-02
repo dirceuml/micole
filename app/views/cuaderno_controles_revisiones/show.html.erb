@@ -8,7 +8,7 @@
 
 <div data-role="content">
   <ul id='cuaderno_controles_revisiones' data-role="listview" data-filter="true">
-    <% @cuaderno_control_revision.cuaderno_control.cuaderno_controles_eventos.where("alumno_id is null or alumno_id=?", params[@cuaderno_control_revision.alumno.id]).each do |cuaderno_control_evento| %>      
+    <% @cuaderno_control_revision.cuaderno_control.cuaderno_controles_eventos.where("alumno_id is null or alumno_id=?", @cuaderno_control_revision.alumno.id).each do |cuaderno_control_evento| %>      
       <li>
         <h3><%= TipoEvento.find(cuaderno_control_evento.tipo_evento_id).descripcion %></h3>
         <p><%= simple_format(cuaderno_control_evento.descripcion) %></p>

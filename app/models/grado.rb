@@ -15,4 +15,11 @@ class Grado < ActiveRecord::Base
   
   scope :por_anio_escolar, lambda { |anioescolar| where("grados.anio_escolar_id = ?", anioescolar)}
   
+  def nivel_desc
+    ListaValor.find_by_tabla_and_item(9, nivel).descripcion
+  end
+  
+  def grado_nivel
+    grado.to_s + " " + nivel_desc
+  end
 end

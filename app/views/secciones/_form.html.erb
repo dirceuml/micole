@@ -14,7 +14,7 @@
 <div data-role="fieldcontain">
   <div class="field">
     <%= f.label :Grado, "for" => "name" %><br />
-    <%= collection_select(:seccion, :grado_id, Grado.where("anio_escolar_id= ?", anio_escolar.id).order("grado"), :id, :grado, {:prompt => ':: Seleccione ::'}, {"data-mini" => "true"}) %>
+    <%= collection_select(:seccion, :grado_id, Grado.where("anio_escolar_id= ?", anio_escolar.id).order("grado"), :id, :grado_nivel, {:prompt => ':: Seleccione ::'}, {"data-mini" => "true"}) %>
   </div>
   
   <div class="field">

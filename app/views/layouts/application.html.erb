@@ -45,10 +45,13 @@
         <%= "#{colegio.nombre} - #{anio_escolar.anio}" %>
       <% end %>
     
-    <% flash.each do |name, msg| %>
-      <%= content_tag :div, msg, :id => "flash_#{name}" %>
-    <% end %>
+    
    </div> 
+    <% flash.each do |name, msg| %>
+      <div data-role="footer" data-theme="e">
+      <%= content_tag :div, msg, :id => "flash_#{name}" %>
+      </div>
+    <% end %>
     <%= yield %>
   </div>
 

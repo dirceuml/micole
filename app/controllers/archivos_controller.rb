@@ -60,9 +60,9 @@ class ArchivosController < ApplicationController
             File.open("#{Ruta_directorio_archivos}#{nombre}", "r").each_line do |line|                           
               begin
                 count += 1
-                raise StandardError, "Estructura incorrecta." if line.count("|") != 11
+                raise StandardError, "Estructura incorrecta." if line.count("|") != 12
                 
-                dni, nombres, apellido_paterno, apellido_materno, fecha_nacimiento, telefono_fijo, telefono_movil, direccion, correo, grado_desc, seccion_desc = line.split("|")
+                dni, nombres, apellido_paterno, apellido_materno, fecha_nacimiento, telefono_fijo, telefono_movil, direccion, correo, grado_desc, seccion_desc, nivel_abr = line.split("|")
                 
                 raise StandardError, "Debe especificar un DNI." if dni.nil? || dni.strip == ""
                 raise StandardError, "Debe especificar los nombres." if nombres.nil? || nombres.strip == ""
@@ -71,6 +71,7 @@ class ArchivosController < ApplicationController
                 raise StandardError, "Debe especificar la fecha de nacimiento." if fecha_nacimiento.nil? || fecha_nacimiento.strip == ""
                 raise StandardError, "Debe especificar el grado." if grado_desc.nil? || grado_desc.strip == ""
                 raise StandardError, "Debe especificar la seccion." if seccion_desc.nil? || seccion_desc.strip == ""
+                raise StandardError, "Debe especificar el nivel." if nivel_abr.nil? || nivel_abr.strip == ""
                 
                 alumno = Alumno.find_by_dni(dni)
 
@@ -101,7 +102,12 @@ class ArchivosController < ApplicationController
                   )
                 end    
                 
-                grado = Grado.find_by_grado(grado_desc)
+                nivel = ListaValor.find_by_tabla_and_abreviatura(9, nivel_abr)
+                raise ActiveRecord::RecordNotFound, "Nivel no existe." if nivel.nil?
+              
+                nivel_cod = nivel.item
+              
+                grado = Grado.find_by_anio_escolar_id_and_grado_and_nivel(anio_escolar.id, grado_desc, nivel_cod)
                 raise ActiveRecord::RecordNotFound, "Grado no encontrado" if grado.nil?
                 
                 seccion = Seccion.find_by_grado_id_and_seccion(grado.id, seccion_desc)
@@ -372,23 +378,29 @@ class ArchivosController < ApplicationController
             File.open("#{Ruta_directorio_archivos}#{nombre}", "r").each_line do |line|
               begin
                 count += 1
-                raise StandardError, "Estructura incorrecta." if line.count("|") != 3
+                raise StandardError, "Estructura incorrecta." if line.count("|") != 4
                 
-                periodo_desc, grado_desc, seccion_desc = line.split("|")
+                periodo_desc, grado_desc, seccion_desc, nivel_abr = line.split("|")
 
                 raise StandardError, "Debe especificar el periodo escolar." if periodo_desc.nil? || periodo_desc.strip == ""
                 raise StandardError, "Debe especificar el grado." if grado_desc.nil? || grado_desc.strip == ""
                 raise StandardError, "Debe especificar la seccion." if seccion_desc.nil? || seccion_desc.strip == ""
+                raise StandardError, "Debe especificar el nivel." if nivel_abr.nil? || nivel_abr.strip == ""
                 
                 anio_escolar = AnioEscolar.find_by_anio(periodo_desc)
-                raise ActiveRecord::RecordNotFound, "Periodo escolar no creado" if anio_escolar.nil?
+                raise ActiveRecord::RecordNotFound, "Periodo escolar no creado." if anio_escolar.nil?
                 
-                grado = Grado.find_by_grado(grado_desc)
+                nivel = ListaValor.find_by_tabla_and_abreviatura(9, nivel_abr)
+                raise ActiveRecord::RecordNotFound, "Nivel no existe." if nivel.nil?
+              
+                cod_nivel = nivel.item
+                grado = Grado.find_by_anio_escolar_id_and_grado_and_nivel(anio_escolar.id, grado_desc, cod_nivel)
                 
                 if grado.nil?
                   grado = Grado.create!(
                     :anio_escolar_id => anio_escolar.id,
                     :grado => grado_desc,
+                    :nivel => cod_nivel,
                     :usuario => current_user.usuario
                   )
                 end

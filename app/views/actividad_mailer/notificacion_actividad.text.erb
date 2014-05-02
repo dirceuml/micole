@@ -6,8 +6,13 @@ en la que participará la sección de su hijo(a) <%= @alumno.apellidos_nombres %
 <%= @actividad.nombre %>
 
 <%= @actividad.detalle %>
+<%= @alumno.id %>
+<% autorizacion = @actividad.autorizaciones.find_by_alumno_id(@alumno.id) %>
+<% if !autorizacion.nil? %>
+<%    respuesta = autorizacion.respuesta %>
+<% end %>
 
-<% if @actividad.requiere_autorizacion == 1 and @actividad.autorizaciones.find_by_alumno_id(@alumno.id).respuesta.nil? %>
+<% if @actividad.requiere_autorizacion == 1 and respuesta.nil? %>
   Además, se le recuerda que debe indicar si autoriza la participación de su hijo, para lo cual tiene plazo hasta el 
   <%= @actividad.limite_autorizacion.strftime('%d/%m/%Y %H:%M') %>.
 <% end %>
