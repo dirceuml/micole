@@ -1,0 +1,75 @@
+<div data-role="header">
+  <h1>Consultar asistencia</h1>
+</div>
+
+<% if params[:alumno_id].nil? %>
+  <% alumno = "" %>
+  <% fechaI = "" %>
+  <% fechaF = "" %>
+<% else %>
+  <% alumno = params[:alumno_id] %>
+  <% fechaI = params[:fechaI] %>
+  <% fechaF = params[:fechaF] %>
+<% end %>
+
+<% persona = PersonaVinculada.logueado(current_user.usuario).first %>
+
+<div data-role="content">
+  <%= form_tag(consulta_asistencia_alumno_path, {"onSubmit" => "return validarBusquedaXRangoFechas();", "data-ajax" => "false", "name" => "buscar", :method => :get}) do %>
+    <div data-role="fieldcontain">
+      <li data-role="fieldcontain">
+        Alumno: <%= collection_select(:alumno, :id, Alumno.hijos_de(persona.id).order("apellido_paterno", "apellido_materno", "nombres"), :id, :apellidos_nombres, {:selected => alumno}, {"data-mini" => "true", :name => "alumno_id"}) %><br/>
+      </li>
+      <li data-role="fieldcontain">
+        Del: <%= text_field_tag(:fechaI, fechaI, "data-mini" => "true", "data-role" => "datebox", "type" => "date", "style" => "width:135px") %>
+        Al: <%= text_field_tag(:fechaF, fechaF, "data-mini" => "true", "data-role" => "datebox", "type" => "date", "style" => "width:135px") %><br/>
+      </li>
+      <li data-role="fieldcontain">
+        <%= submit_tag "Buscar", "data-inline" => "true", "data-theme" => "a", "data-icon" => "search", "data-mini" => "true", :name => nil %>
+      </li>
+    </div>
+  <% end %>
+  
+  <ul data-role="listview" data-filter="true">
+    <% fechaproc = "" %>
+    <% fechaver = "" %>
+    <% horaingver = "--:--" %>
+    <% horasalver = "--:--" %>
+    <% personaver = "" %>
+    <% @asistencias.each do |asistencia| %>
+      <% if fechaproc < asistencia.fecha_hora.strftime('%Y%m%d') %>
+        <% if !fechaproc.empty? %>
+          <li data-filtertext="<%= fechaver %>" >
+            <h3> <%= fechaver %> </h3>
+            <p class="ui-li-desc"> Ingreso: <%= horaingver%> </p>
+            <p class="ui-li-desc"> Salida: <%= horasalver%> 
+            <% if !personaver.empty? %> con <%= personaver%> <% end %>
+            </p>
+            <% horaingver = "--:--" %>
+            <% horasalver = "--:--" %>
+            <% personaver = "" %>
+          </li>
+        <% end %>
+        <% fechaproc = asistencia.fecha_hora.strftime('%Y%m%d') %>
+        <% fechaver  = asistencia.fecha %>
+      <% end %>
+      <% if asistencia.tipo_movimiento== 1 %> 
+        <% horaingver = asistencia.hora %> 
+      <% else %> 
+        <% horasalver = asistencia.hora %>
+        <% if !asistencia.persona_vinculada_id.nil? %>
+          <% personaver = asistencia.persona_vinculada.apellidos_nombres %>
+        <% end %>
+      <% end %>
+    <% end %>
+    <% if !fechaproc.empty? %>
+      <li data-filtertext="<%= fechaver %>" >
+        <h3> <%= fechaver %> </h3>
+        <p class="ui-li-desc"> Ingreso: <%= horaingver%> </p>
+        <p class="ui-li-desc"> Salida: <%= horasalver%> 
+        <% if !personaver.empty? %> con <%= personaver%> <% end %>
+        </p>
+      </li>
+    <% end %>    
+  </ul>
+</div>

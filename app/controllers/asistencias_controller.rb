@@ -40,7 +40,6 @@ class AsistenciasController < ApplicationController
   
   def consultar
     seccion = params[:seccion_id]
-    tipomovimiento = params[:tipomovimiento_id]
     if params[:seccion_id].nil?
       fechaI = Date.current
       fechaF = Date.current
@@ -49,7 +48,6 @@ class AsistenciasController < ApplicationController
       fechaF = params[:fechaF].to_date
     end
     
-#    @asistencias = Asistencia.por_seccion_fecha(anio_escolar.id, seccion, fecha).movimiento(2)
 
     @asistencias = Asistencia.por_seccion_rango_fechas(anio_escolar.id, seccion, fechaI, fechaF)
 
@@ -58,6 +56,24 @@ class AsistenciasController < ApplicationController
       format.json { render json: @asistencias }
     end
   end  
+  
+  def consultar_alumno
+    alumno = params[:alumno_id]
+    if params[:alumno_id].nil?
+      fechaI = Date.current
+      fechaF = Date.current
+    else
+      fechaI = params[:fechaI].to_date
+      fechaF = params[:fechaF].to_date
+    end
+    
+    @asistencias = Asistencia.por_alumno_rango_fechas(anio_escolar.id, alumno, fechaI, fechaF).order("fecha_hora", "tipo_movimiento")
+    
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: @asistencias }
+    end
+  end
   
   # GET /asistencias/1
   # GET /asistencias/1.json

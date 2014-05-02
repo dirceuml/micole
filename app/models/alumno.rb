@@ -25,8 +25,13 @@ class Alumno < ActiveRecord::Base
   end
   
   def grado_seccion(anioescolar)
-    secc = AnioAlumno.find_by_anio_escolar_id_and_alumno_id(anioescolar, self.id).seccion
-    secc.grado.grado.to_s + " " + secc.seccion
+    anioalumno = AnioAlumno.find_by_anio_escolar_id_and_alumno_id(anioescolar, self.id)
+    if !anioalumno.nil?
+      secc = anioalumno.seccion
+      secc.grado.grado.to_s + " " + secc.seccion
+    else
+      "SIN SECCION"
+    end
   end
   
   def salida_registrada (alumno_id, fecha)
@@ -46,7 +51,7 @@ class Alumno < ActiveRecord::Base
     end
   end
   
-  scope :hijos_de, lambda { |padre| joins(:alumno_persona_vinculada).where("apoderado = 1 and persona_vinculada_id = ?", padre) }
-  scope :se_revisan_por, lambda { |padre| joins(:alumno_persona_vinculada).where("revisa_control = 1 and persona_vinculada_id = ?", padre) }
+  scope :hijos_de, lambda { |padre| joins(:alumnos_personas_vinculadas).where("apoderado = 1 and persona_vinculada_id = ?", padre) }
+  scope :se_revisan_por, lambda { |padre| joins(:alumnos_personas_vinculadas).where("revisa_control = 1 and persona_vinculada_id = ?", padre) }
   scope :pertenecen_a_seccion, lambda { |anioescolar, seccion| joins(:anios_alumnos).where("anios_alumnos.anio_escolar_id = ? and anios_alumnos.seccion_id = ?", anioescolar, seccion)}
 end
