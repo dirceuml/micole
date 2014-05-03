@@ -47,7 +47,7 @@ class ListasValoresController < ApplicationController
 
     respond_to do |format|
       if @lista_valor.save
-        format.html { redirect_to @lista_valor, notice: 'Lista valor was successfully created.' }
+        format.html { redirect_to @lista_valor, notice: 'El valor de la variable fue creado satisfactoriamente.' }
         format.json { render json: @lista_valor, status: :created, location: @lista_valor }
       else
         format.html { render action: "new" }
@@ -63,7 +63,7 @@ class ListasValoresController < ApplicationController
 
     respond_to do |format|
       if @lista_valor.update_attributes(params[:lista_valor])
-        format.html { redirect_to @lista_valor, notice: 'Lista valor was successfully updated.' }
+        format.html { redirect_to @lista_valor, notice: 'El valor de la variable fue actualizado satisfactoriamente.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
