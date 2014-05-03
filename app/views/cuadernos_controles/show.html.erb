@@ -23,6 +23,9 @@
           <% end %>   
           <p/>
           <%= simple_format(cuaderno_control_evento.descripcion) %>
+          <% if !cuaderno_control_evento.fecha_evento.nil? %>
+            <%= simple_format("Para el #{cuaderno_control_evento.fecha_evento.strftime('%d/%m/%Y')}") %>
+          <% end %>
       
           <%= link_to 'Eliminar', [@cuaderno_control, cuaderno_control_evento], confirm: '¿Seguro que desea eliminar el registro?', method: :delete, "data-icon" => "delete" %>          
         <% end %>

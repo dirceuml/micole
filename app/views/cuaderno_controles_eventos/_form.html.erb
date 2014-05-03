@@ -24,6 +24,9 @@
     Descripción:<br/><%= f.text_area :descripcion %>
   </div>
   <div class="field">
+    Para la fecha:<br/><%= f.text_field :fecha_evento, "data-mini" => "true", "data-role" => "datebox", "type" => "date", "style" => "width:130px" %>
+  </div>
+  <div class="field">
     <%= f.hidden_field :usuario, :value => current_user.usuario %>
   </div>
 <br/>

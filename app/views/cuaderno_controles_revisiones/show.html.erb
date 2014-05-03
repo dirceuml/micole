@@ -12,6 +12,11 @@
       <li>
         <h3><%= TipoEvento.find(cuaderno_control_evento.tipo_evento_id).descripcion %></h3>
         <p><%= simple_format(cuaderno_control_evento.descripcion) %></p>
+        <p>
+          <% if !cuaderno_control_evento.fecha_evento.nil? %>
+            <%= simple_format("Para el #{cuaderno_control_evento.fecha_evento.strftime('%d/%m/%Y')}") %>
+          <% end %>
+        </p>
       </li>             
     <% end %>
   </ul>      

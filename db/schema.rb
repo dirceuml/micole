@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140501211850) do
+ActiveRecord::Schema.define(:version => 20140503051216) do
 
   create_table "actividades", :force => true do |t|
     t.integer  "anio_escolar_id",                                           :null => false
@@ -166,6 +166,7 @@ ActiveRecord::Schema.define(:version => 20140501211850) do
     t.string   "usuario",             :null => false
     t.datetime "created_at",          :null => false
     t.datetime "updated_at",          :null => false
+    t.date     "fecha_evento"
   end
 
   add_index "cuaderno_controles_eventos", ["cuaderno_control_id", "tipo_evento_id"], :name => "idx_cuadcontrolevento_evento"
