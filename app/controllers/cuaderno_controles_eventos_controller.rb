@@ -1,7 +1,7 @@
 class CuadernoControlesEventosController < ApplicationController
   load_and_authorize_resource
   
-  before_filter :find_cuaderno_control
+  before_filter :find_cuaderno_control, :except => [:index]
   
   before_filter :find_cuaderno_control_evento, :only => [:show,
                                                           :edit,
