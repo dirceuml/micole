@@ -96,6 +96,8 @@ Micole::Application.routes.draw do
   get "vincularpersonas" => "alumnos#alumnoseccion", :as => "vincularpersonas"
   get "vincularpersona/:id" => "alumnos#alumnopersona", :as => "vincularpersona"
   
+  get "cuaderno_controles_eventos" => "cuaderno_controles_eventos#index", :as => "cuaderno_controles_eventos"
+  #get "consultar_eventos" => "cuaderno_controles_eventos#consultar_eventos", :as => "consultar_eventos"
   
   resources :cuadernos_controles do
     resources :cuaderno_controles_eventos
