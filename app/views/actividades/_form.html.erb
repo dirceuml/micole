@@ -34,22 +34,22 @@
     
     <div class="field">
         <%= f.label :fecha_hora_inicio, "for" => "name" %><br />
-        <%= f.text_field :fecha_inicio, "data-mini" => "true", "data-role" => "datebox", "type" => "date", "style" => "width:130px" %>
-        <!--%= f.text_field :hora_min_inicio, :size => 5, :maxlength => 5, "style" => "width:60px", "data-mini" => "true" %-->
-        <!--%= f.text_field :hora_min_inicio, "type" => "time", :size => 5, :maxlength => 5, "style" => "width:60px", "data-mini" => "true" %-->
-        <%= f.number_field :hora_inicio, "type" => "number", "min" => "00", "max" => "23", "data-mini" => "true", "style" => "width:50px", "required" => "required" %>
-        :
-        <%= f.number_field :min_inicio, "type" => "number", "min" => "00", "max" => "59", "data-mini" => "true", "style" => "width:50px", "required" => "required" %>
+        <%= f.text_field :fecha_hora_inicio, "data-mini" => "true", "data-role" => "datebox", "type" => "datetime-local" %>
+        <!-- %= f.text_field :fecha_inicio, "data-mini" => "true", "data-role" => "datebox", "type" => "date", "style" => "width:130px" % -->
+        <!-- %= f.number_field :hora_inicio, "type" => "number", "min" => "00", "max" => "23", "data-mini" => "true", "style" => "width:50px", "required" => "required" %-->
+        <!-- %= ":" %-->
+        <!-- %= f.number_field :min_inicio, "type" => "number", "min" => "00", "max" => "59", "data-mini" => "true", "style" => "width:50px", "required" => "required" %-->
     </div>
 
     <div class="field">
         <%= f.label :fecha_hora_fin, "for" => "name" %><br />
-        <%= f.text_field :fecha_fin, "data-mini" => "true", "data-role" => "datebox", "type" => "date", "style" => "width:130px" %>
-        <%= f.number_field :hora_fin, "type" => "number", "min" => "00", "max" => "23", "data-mini" => "true", "style" => "width:50px", "required" => "required" %>
-        :
-        <%= f.number_field :min_fin, "type" => "number", "min" => "00", "max" => "59", "data-mini" => "true", "style" => "width:50px", "required" => "required" %>        
+        <%= f.text_field :fecha_hora_fin, "data-mini" => "true", "data-role" => "datebox", "type" => "datetime-local" %>
+        <!-- %= f.text_field :fecha_fin, "data-mini" => "true", "data-role" => "datebox", "type" => "date", "style" => "width:130px" % -->
+        <!-- %= f.number_field :hora_fin, "type" => "number", "min" => "00", "max" => "23", "data-mini" => "true", "style" => "width:50px", "required" => "required" %-->
+        <!-- %= ":" %-->
+        <!-- %= f.number_field :min_fin, "type" => "number", "min" => "00", "max" => "59", "data-mini" => "true", "style" => "width:50px", "required" => "required" %-->        
     </div>
-
+    
     <!--fieldset data-role="controlgroup"-->
     <div class="field">
         <%= f.check_box :requiere_autorizacion, "class" => "custom", "data-mini" => "true" %>

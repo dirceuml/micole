@@ -16,7 +16,7 @@
   <div data-role="fieldcontain">
     <%= f.hidden_field :actividad_id %>
     <%= f.hidden_field :usuario, :value => current_user.usuario %>
-    <div style="width: 160px; clear: left; float: left">
+    <div style="width: 300px; clear: left; float: left">
       <%= collection_select(:actividad_seccion, :seccion_id, Seccion.por_anioescolar(anio_escolar.id).order('grados.grado','seccion'), :id, :grado_seccion, {:prompt => ':: Seleccione ::' }, {"data-mini" => "true"}) %>
     </div>
     <div style="float: left">

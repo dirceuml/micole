@@ -10,4 +10,7 @@ class CuadernoControlEvento < ActiveRecord::Base
   scope :cerrado, lambda { |anioescolar| joins(:cuaderno_control => {:seccion => :grado}).where("grados.anio_escolar_id = ? and cuadernos_controles.estado = 2", anioescolar)}
   scope :abierto, lambda { |anioescolar| joins(:cuaderno_control => {:seccion => :grado}).where("grados.anio_escolar_id = ? and cuadernos_controles.estado = 1", anioescolar)}
   
+  scope :pendiente, lambda { |fecha| joins(:cuaderno_control => {:seccion => :grado}).where("fecha_evento is not null and to_char(fecha_evento, 'yyyymmdd') >= ?", fecha.strftime('%Y%m%d'))}
+  scope :pasado, lambda { |fecha| joins(:cuaderno_control => {:seccion => :grado}).where("fecha_evento is not null and to_char(fecha_evento, 'yyyymmdd') < ?", fecha.strftime('%Y%m%d'))}
+  scope :por_seccion, lambda { |anioescolar, seccion| joins(:cuaderno_control => {:seccion => :grado}).where("grados.anio_escolar_id = ? and secciones.id = ? and cuadernos_controles.estado = 2", anioescolar, seccion)}
 end

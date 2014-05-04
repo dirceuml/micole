@@ -67,35 +67,34 @@ class Actividad < ActiveRecord::Base
   scope :por_persona_y_fecha, lambda { |persona,fecha| por_persona(persona).where("to_char(fecha_hora_inicio, 'dd/mm/yyyy') = ?", fecha.strftime('%d/%m/%Y'))}
   scope :apoderados, lambda { |actividad| joins(:personas_vinculadas).where("actividades.id = ? and alumnos_personas_vinculadas.apoderado = 1", actividad)}
   
-  attr_accessor :fecha_inicio, :hora_inicio, :min_inicio, :fecha_fin, :hora_fin, :min_fin
+  #attr_accessor :fecha_inicio, :hora_inicio, :min_inicio, :fecha_fin, :hora_fin, :min_fin
   
-  after_initialize :get_datetime_inicio, :get_datetime_fin
-  before_validation :set_datetime_inicio, :set_datetime_fin
+  #after_initialize :get_datetime_inicio, :get_datetime_fin
+  #before_validation :set_datetime_inicio, :set_datetime_fin
   
-  def get_datetime_inicio
-    if !self.fecha_hora_inicio.nil?
-      self.fecha_inicio ||= self.fecha_hora_inicio.to_date.to_s(:db)
-      #self.hora_min_inicio  ||= "#{'%02d' % self.fecha_hora_inicio.hour}:#{'%02d' % self.fecha_hora_inicio.min}"
-      self.hora_inicio ||= self.fecha_hora_inicio.hour
-      self.min_inicio  ||= self.fecha_hora_inicio.min
-    end
-  end
+  #def get_datetime_inicio
+  #  if !self.fecha_hora_inicio.nil?
+  #    self.fecha_inicio ||= self.fecha_hora_inicio.to_date.to_s(:db)
+  #    self.hora_inicio ||= self.fecha_hora_inicio.hour
+  #    self.min_inicio  ||= self.fecha_hora_inicio.min
+  #  end
+  #end
   
-  def get_datetime_fin
-    if !self.fecha_hora_fin.nil?
-      self.fecha_fin ||= self.fecha_hora_fin.to_date.to_s(:db)
-      self.hora_fin  ||= self.fecha_hora_fin.hour
-      self.min_fin   ||= self.fecha_hora_fin.min
-    end
-  end
+  #def get_datetime_fin
+  #  if !self.fecha_hora_fin.nil?
+  #    self.fecha_fin ||= self.fecha_hora_fin.to_date.to_s(:db)
+  #    self.hora_fin  ||= self.fecha_hora_fin.hour
+  #    self.min_fin   ||= self.fecha_hora_fin.min
+  #  end
+  #end
   
-  def set_datetime_inicio
-    self.fecha_hora_inicio = "#{self.fecha_inicio} #{'%02d' % self.hora_inicio}:#{'%02d' % self.min_inicio}:00"
-  end
+  #def set_datetime_inicio
+  #  self.fecha_hora_inicio = "#{self.fecha_inicio} #{'%02d' % self.hora_inicio}:#{'%02d' % self.min_inicio}:00"
+  #end
   
-  def set_datetime_fin
-    self.fecha_hora_fin = "#{self.fecha_fin} #{'%02d' % self.hora_fin}:#{'%02d' % self.min_fin}:00"
-  end
+  #def set_datetime_fin
+  #  self.fecha_hora_fin = "#{self.fecha_fin} #{'%02d' % self.hora_fin}:#{'%02d' % self.min_fin}:00"
+  #end
   
   def nombre_fecha
      nombre+ " el "+ fecha_hora_inicio.strftime('%d/%m/%Y')
