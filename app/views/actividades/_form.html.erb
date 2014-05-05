@@ -11,6 +11,15 @@
     </div>
   <% end %>
   
+  <!-- El parametro value de datetime-local trabaja con este formato: %Y-%m-%dT%H:%M, sino no se visualiza el dato al editarlo  -->
+  <% if @actividad.fecha_hora_inicio.nil? || @actividad.fecha_hora_fin.nil? %>
+    <% valor_fhi = "" %>
+    <% valor_fhf = "" %>
+  <% else %>
+    <% valor_fhi = @actividad.fecha_hora_inicio.strftime("%Y-%m-%dT%H:%M") %>
+    <% valor_fhf = @actividad.fecha_hora_fin.strftime("%Y-%m-%dT%H:%M") %>
+  <% end %>
+  
   <div data-role="fieldcontain">
     <div class="field">
         <%= f.hidden_field :anio_escolar_id, :value => anio_escolar.id %>
@@ -31,10 +40,10 @@
         <%= f.label :detalle, "for" => "Textarea" %><br />
         <%= f.text_area :detalle, "data-mini" => "true" %>
     </div>
-    
     <div class="field">
-        <%= f.label :fecha_hora_inicio, "for" => "name" %><br />
-        <%= f.text_field :fecha_hora_inicio, "data-mini" => "true", "data-role" => "datebox", "type" => "datetime-local" %>
+        <%= f.label :fecha_hora_inicio, "for" => "name" %><br /> 
+        <input name = "actividad[fecha_hora_inicio]" data-mini="true" data-role="datebox" type = "datetime-local" id="actividad_fecha_hora_inicio" value = "<%="#{valor_fhi}"%>"  required = "required">
+        <!-- %= f.text_field :fecha_hora_inicio, "data-mini" => "true", "data-role" => "datebox", "type" => "datetime-local" % -->
         <!-- %= f.text_field :fecha_inicio, "data-mini" => "true", "data-role" => "datebox", "type" => "date", "style" => "width:130px" % -->
         <!-- %= f.number_field :hora_inicio, "type" => "number", "min" => "00", "max" => "23", "data-mini" => "true", "style" => "width:50px", "required" => "required" %-->
         <!-- %= ":" %-->
@@ -43,7 +52,8 @@
 
     <div class="field">
         <%= f.label :fecha_hora_fin, "for" => "name" %><br />
-        <%= f.text_field :fecha_hora_fin, "data-mini" => "true", "data-role" => "datebox", "type" => "datetime-local" %>
+        <input name = "actividad[fecha_hora_fin]" data-mini="true" data-role="datebox" type = "datetime-local" id="actividad_fecha_hora_fin" value = "<%="#{valor_fhf}"%>"  required = "required">
+        <!--%= f.text_field :fecha_hora_fin, "data-mini" => "true", "data-role" => "datebox", "type" => "datetime-local" %-->
         <!-- %= f.text_field :fecha_fin, "data-mini" => "true", "data-role" => "datebox", "type" => "date", "style" => "width:130px" % -->
         <!-- %= f.number_field :hora_fin, "type" => "number", "min" => "00", "max" => "23", "data-mini" => "true", "style" => "width:50px", "required" => "required" %-->
         <!-- %= ":" %-->

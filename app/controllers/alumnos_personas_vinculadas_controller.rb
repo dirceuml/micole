@@ -30,7 +30,16 @@ class AlumnosPersonasVinculadasController < ApplicationController
     tipo = params[:tipo_documento]
     numero = params[:numero_documento]
     
-    @alumnos_personas_vinculadas = AlumnoPersonaVinculada.por_documento(tipo,numero)
+    if !numero.nil?
+      if !PersonaVinculada.find_by_tipo_documento_and_numero_documento(tipo,numero)
+        flash[:notice] = "El numero de documento #{numero} no existe"
+      else
+        @alumnos_personas_vinculadas = AlumnoPersonaVinculada.por_documento(tipo,numero)
+        if @alumnos_personas_vinculadas.empty?
+          flash[:notice] = "La persona no tiene ningun alumno encargado"
+        end
+      end
+    end
 
     respond_to do |format|
       format.html # index.html.erb

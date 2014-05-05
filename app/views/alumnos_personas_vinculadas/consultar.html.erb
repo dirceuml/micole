@@ -17,7 +17,7 @@
        <hr>
        <%= form_tag(salida_path, {:method => :get, "onSubmit" => "return validarBusquedaXDocumento();", "data-ajax" => "false", "name" => "buscar"}) do %>            
          <div data-role="fieldcontain">
-            <div style="text-align: left;">
+            <div style="width: 300px; text-align: left;">
               Tipo documento:<br/>
               <%= collection_select(:persona_vinculada, :tipo_documento, ListaValor.where("tabla=2"), :item, :descripcion, {}, {"data-mini" => "true", :name => "tipo_documento"}) %>
             </div>
@@ -77,10 +77,12 @@
             
             <%= hidden_field_tag 'persona_vinculada_id', persona.id %>
             
-            <% if can? :crear_en_bloque, Asistencia %>
-              <div>
-                <%= submit_tag "Registrar salida", "data-inline" => "true", "data-theme" => "a", "data-icon" => "check", "data-mini" => "true" %>
-              </div>
+            <% if !@alumnos_personas_vinculadas.empty? %>
+              <% if can? :crear_en_bloque, Asistencia %>
+                <div>
+                  <%= submit_tag "Registrar salida", "data-inline" => "true", "data-theme" => "a", "data-icon" => "check", "data-mini" => "true" %>
+                </div>
+              <% end %>
             <% end %>
           </div>
         <% end %>

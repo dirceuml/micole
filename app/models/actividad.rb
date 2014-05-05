@@ -23,7 +23,7 @@ class Actividad < ActiveRecord::Base
     if a.limite_autorizacion.nil?
       errors[:base] << "Falta ingresar la fecha limite para autorizacion"
     else
-      if (a.limite_autorizacion > a.fecha_hora_inicio.to_date)  # || a.limite_autorizacion < a.fecha_hora_inicio.to_date 
+      if !a.fecha_hora_inicio.nil? && (a.limite_autorizacion > a.fecha_hora_inicio.to_date)  # || a.limite_autorizacion < a.fecha_hora_inicio.to_date 
         errors[:base] << "Error en la fecha limite para autorizacion"
       end
     end
@@ -40,7 +40,7 @@ class Actividad < ActiveRecord::Base
            if a.inicio_notificacion > a.fin_notificacion
              errors[:base] << "Error en rango de fechas de notificacion"
            else
-             if a.fin_notificacion > a.fecha_hora_inicio.to_date
+             if !a.fecha_hora_inicio.nil? && a.fin_notificacion > a.fecha_hora_inicio.to_date
                errors[:base] << "La fecha fin de notificacion no puede ser posterior al inicio de la actividad"
              else
                if a.frecuencia_dias_notificacion.nil?

@@ -51,18 +51,20 @@
               <%= image_tag(alumnoanio.alumno.foto) %> <br/>
               Código: <%= codigoregistrado %> <br/>
               <%= alumnoanio.alumno.apellidos_nombres %>
-              <% asistenciaeliminar = @asistencias.each %>
-              <% @asistencias.each do |asistencia| %>
-                <br/>
-                <% if asistencia.tipo_movimiento == 1 %>
-                  Ingreso: <%= asistencia.hora %>
+              <% if !@asistencias.empty? %>
+                <% asistenciaeliminar = @asistencias.each %>
+                <% @asistencias.each do |asistencia| %>
+                    <br/>
+                    <% if asistencia.tipo_movimiento == 1 %>
+                        Ingreso: <%= asistencia.hora %>
+                    <% end %>
+                    <% if asistencia.tipo_movimiento == 2 %>
+                        Salida: <%= asistencia.hora %>
+                    <% end %>
+                    <% asistenciaeliminar = asistencia %>
                 <% end %>
-                <% if asistencia.tipo_movimiento == 2 %>
-                  Salida: <%= asistencia.hora %>
-                <% end %>
-                <% asistenciaeliminar = asistencia %>
+                <%= link_to 'Eliminar', asistenciaeliminar, confirm: '¿Seguro que desea eliminar el registro?', method: :delete, "data-icon" => "delete" %>
               <% end %>
-              <%= link_to 'Eliminar', asistenciaeliminar, confirm: '¿Seguro que desea eliminar el registro?', method: :delete, "data-icon" => "delete" %>
             <% end %>
           </div>
         </div>
