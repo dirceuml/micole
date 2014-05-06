@@ -133,3 +133,19 @@ function validarCodigoAlumno()
     }
     return true;
 }
+
+function PreviewImage(input) 
+{
+    if (input.files && input.files[0]) {
+      var oFReader = new FileReader();
+      oFReader.readAsDataURL(input.files[0]);
+
+      oFReader.onload = function (oFREvent) {
+          document.getElementById("preview").src = oFREvent.target.result;
+      };
+    }
+    else
+    {
+      preview.setAttribute('src', '/assets/blank.gif');
+    }
+};
