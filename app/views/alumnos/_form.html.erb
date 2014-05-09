@@ -29,15 +29,15 @@
     </div>
     <div class="field">
         <%= f.label :dni %><br />
-        <%= f.text_field :dni ,"style" => "width:150px", :placeholder => "99999999" %>
+        <%= f.text_field :dni ,"style" => "width:150px", :placeholder => "99999999", :pattern => "\d{8}" %>
     </div>
     <div class="field">
         <%= f.label :telefono_fijo %><br />
-        <%= f.telephone_field :telefono_fijo, "style" => "width:150px", :placeholder => "444-4444" %>
+        <%= f.telephone_field :telefono_fijo, "style" => "width:150px", :placeholder => "444-4444", :pattern => "\d{3}[\-]*\d{4}" %>
     </div>
     <div class="field">
         <%= f.label :telefono_movil %><br />
-        <%= f.telephone_field :telefono_movil, "style" => "width:150px", :placeholder => "999999999" %>
+        <%= f.telephone_field :telefono_movil, "style" => "width:150px", :placeholder => "999999999", :pattern => "\d{9}" %>
     </div>
     <div class="field">
         <%= f.label :direccion %><br />
