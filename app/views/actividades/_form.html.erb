@@ -11,7 +11,7 @@
     </div>
   <% end %>
   
-  <!-- El parametro value de datetime-local trabaja con este formato: %Y-%m-%dT%H:%M, sino no se visualiza el dato al editarlo  -->
+  <!-- El parametro value de datetime-local trabaja con este formato: %Y-%m-%dT%H:%M, si no, no se visualiza el dato al editarlo  -->
   <% if @actividad.fecha_hora_inicio.nil? || @actividad.fecha_hora_fin.nil? %>
     <% valor_fhi = "" %>
     <% valor_fhf = "" %>
@@ -57,16 +57,16 @@
     </div>
     <div class="field">
         Ultimo dia para autorizacion<br />
-        <%= f.date_field :limite_autorizacion, "data-mini" => "true", "data-role" => "datebox", "type" => "date", "style" => "width:130px" %>
+        <%= f.text_field :limite_autorizacion, "data-mini" => "true", "data-role" => "datebox", "type" => "date", "style" => "width:130px" %>
     </div>
     <!--/fieldset-->
     <div class="field">
         <%= f.label :inicio_notificacion, "for" => "name" %><br />
-        <%= f.date_field :inicio_notificacion, "data-mini" => "true", "data-role" => "datebox", "type" => "date", "style" => "width:130px" %>
+        <%= f.text_field :inicio_notificacion, "data-mini" => "true", "data-role" => "datebox", "type" => "date", "style" => "width:130px" %>
     </div>
     <div class="field">
         <%= f.label :fin_notificacion, "for" => "name" %><br />
-        <%= f.date_field :fin_notificacion, "data-mini" => "true", "data-role" => "datebox", "type" => "date", "style" => "width:130px" %>
+        <%= f.text_field :fin_notificacion, "data-mini" => "true", "data-role" => "datebox", "type" => "date", "style" => "width:130px" %>
     </div>
     <div class="field">
         Frecuencia de notificacion<br />
