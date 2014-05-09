@@ -45,7 +45,8 @@
     </div>
     <div class="field">
       <%= f.label :foto %><br />
-      <%= f.file_field :foto %>
+      <%= f.file_field :foto, :onchange => "PreviewImage(this);" %><br />
+      <%= image_tag("blank.gif", :id => "preview") %>
     </div>
     <div class="field">
       <%= f.hidden_field :user, :value => current_user.usuario %>
