@@ -11,7 +11,7 @@
     </div>
   <% end %>
   
-  <!-- El parametro value de datetime-local trabaja con este formato: %Y-%m-%dT%H:%M, sino no se visualiza el dato al editarlo  -->
+  <!-- El parametro value de datetime-local trabaja con este formato: %Y-%m-%dT%H:%M, si no, no se visualiza el dato al editarlo  -->
   <% if @actividad.fecha_hora_inicio.nil? || @actividad.fecha_hora_fin.nil? %>
     <% valor_fhi = "" %>
     <% valor_fhf = "" %>
@@ -42,22 +42,12 @@
     </div>
     <div class="field">
         <%= f.label :fecha_hora_inicio, "for" => "name" %><br /> 
-        <input name = "actividad[fecha_hora_inicio]" data-mini="true" data-role="datebox" type = "datetime-local" id="actividad_fecha_hora_inicio" value = "<%="#{valor_fhi}"%>"  required = "required">
-        <!-- %= f.text_field :fecha_hora_inicio, "data-mini" => "true", "data-role" => "datebox", "type" => "datetime-local" % -->
-        <!-- %= f.text_field :fecha_inicio, "data-mini" => "true", "data-role" => "datebox", "type" => "date", "style" => "width:130px" % -->
-        <!-- %= f.number_field :hora_inicio, "type" => "number", "min" => "00", "max" => "23", "data-mini" => "true", "style" => "width:50px", "required" => "required" %-->
-        <!-- %= ":" %-->
-        <!-- %= f.number_field :min_inicio, "type" => "number", "min" => "00", "max" => "59", "data-mini" => "true", "style" => "width:50px", "required" => "required" %-->
+        <input name = "actividad[fecha_hora_inicio]" data-mini="true" data-role="datebox" type = "datetime-local" id="actividad_fecha_hora_inicio" value = "<%="#{valor_fhi}"%>"  required = "required">        
     </div>
 
     <div class="field">
         <%= f.label :fecha_hora_fin, "for" => "name" %><br />
-        <input name = "actividad[fecha_hora_fin]" data-mini="true" data-role="datebox" type = "datetime-local" id="actividad_fecha_hora_fin" value = "<%="#{valor_fhf}"%>"  required = "required">
-        <!--%= f.text_field :fecha_hora_fin, "data-mini" => "true", "data-role" => "datebox", "type" => "datetime-local" %-->
-        <!-- %= f.text_field :fecha_fin, "data-mini" => "true", "data-role" => "datebox", "type" => "date", "style" => "width:130px" % -->
-        <!-- %= f.number_field :hora_fin, "type" => "number", "min" => "00", "max" => "23", "data-mini" => "true", "style" => "width:50px", "required" => "required" %-->
-        <!-- %= ":" %-->
-        <!-- %= f.number_field :min_fin, "type" => "number", "min" => "00", "max" => "59", "data-mini" => "true", "style" => "width:50px", "required" => "required" %-->        
+        <input name = "actividad[fecha_hora_fin]" data-mini="true" data-role="datebox" type = "datetime-local" id="actividad_fecha_hora_fin" value = "<%="#{valor_fhf}"%>"  required = "required">        
     </div>
     
     <!--fieldset data-role="controlgroup"-->
@@ -67,7 +57,6 @@
     </div>
     <div class="field">
         Ultimo dia para autorizacion<br />
-        <!--%= f.label :limite_autorizacion, "for" => "name" %><br /-->
         <%= f.text_field :limite_autorizacion, "data-mini" => "true", "data-role" => "datebox", "type" => "date", "style" => "width:130px" %>
     </div>
     <!--/fieldset-->
@@ -80,8 +69,6 @@
         <%= f.text_field :fin_notificacion, "data-mini" => "true", "data-role" => "datebox", "type" => "date", "style" => "width:130px" %>
     </div>
     <div class="field">
-        <!--%= f.label :frecuencia_dias_notificacion, "for" => "Slider" %><br /-->
-        <!--%= f.number_field :frecuencia_dias_notificacion, "type" => "range", "min" => "1", "max" => "10", "data-highlight" => "true", "data-mini" => "true" %-->
         Frecuencia de notificacion<br />
         Cada <%= f.number_field :frecuencia_dias_notificacion, "type" => "number", "min" => "1", "max" => "30", "data-mini" => "true", "style" => "width:50px"  %> dia(s)
     </div>
