@@ -7,7 +7,7 @@
 
 <div data-role="content">
   <ul data-role="listview" data-filter="true">
-    <% @tipos_eventos.por_colegio(colegio.id).each do |tipo_evento| %>
+    <% @tipos_eventos.each do |tipo_evento| %>
     <li data-filtertext="<%= "#{tipo_evento.descripcion} #{ListaValor.find_by_tabla_and_item(1, tipo_evento.alcance).descripcion}" %>" >
       <% if can? :update, tipo_evento %>
         <% link_opcion = edit_tipo_evento_path(tipo_evento) %>
@@ -15,7 +15,11 @@
         <% link_opcion = tipo_evento %>
       <% end %>
       <%= link_to link_opcion do %>
-        <%= simple_format("#{tipo_evento.descripcion}") %>
+        <% if tipo_evento.cuaderno_control == 1%> 
+          <%= simple_format("Cuaderno de control : #{tipo_evento.descripcion}") %>
+        <% else %>
+          <%= simple_format("Evento : #{tipo_evento.descripcion}") %>
+        <% end %>
         <!-- #{ListaValor.find_by_tabla_and_item(1, tipo_evento.alcance).descripcion} -->
       <% end %>
       

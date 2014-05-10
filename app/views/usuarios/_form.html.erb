@@ -16,24 +16,35 @@
     <%= f.hidden_field :colegio_id, :value => colegio.id %>
   </div>
  <div class="field">
-    <%= f.label :nombre %><br />
-    <%= f.text_field :nombre %>
+    Nombre (*)<br />
+    <%= f.text_field :nombre, :required => "required", :pattern => "^[a-zA-ZñÑ]*$", :title => "No están permitidos números" %>
   </div>
   <div class="field">
-    <%= f.label :usuario %><br />
-    <%= f.text_field :usuario %>
+    Usuario (*)<br />
+    <%= f.text_field :usuario, :required => "required" %>
   </div>
+  <% if @usuario.id.nil? %>
+    <div class="field">
+        Clave (*)<br />
+        <%= f.password_field :clave, :required => "required" %>
+    </div>
+    <div class="field">
+        Clave confirmacion (*)<br />
+        <%= f.password_field :clave_confirmation, :required => "required" %>
+    </div>
+  <% else %>
+    <div class="field">
+        Clave<br />
+        <%= f.password_field :clave %>
+    </div>
+    <div class="field">
+        Clave confirmacion<br />
+        <%= f.password_field :clave_confirmation %>
+    </div>
+  <% end %>
   <div class="field">
-    <%= f.label :clave %><br />
-    <%= f.password_field :clave %>
-  </div>
-  <div class="field">
-    <%= f.label :clave_confirmation %><br />
-    <%= f.password_field :clave_confirmation %>
-  </div>
-  <div class="field">
-    <%= f.label :perfil_id %><br />
-    <%= collection_select(:usuario, :perfil_id, Perfil.all, :id, :descripcion, { :prompt => ':: Seleccione ::'}, {"data-mini" => "true"}) %>
+    Perfil (*)<br />
+    <%= collection_select(:usuario, :perfil_id, Perfil.all, :id, :descripcion, { :prompt => ':: Seleccione ::'}, {"data-mini" => "true", :required => "required"}) %>
   </div>
   <div class="field">
     <%= f.label :persona_vinculada_id %><br />
@@ -43,7 +54,7 @@
     <%= f.label :correo %><br />
     <%= f.email_field :correo, :placeholder => "dirceu@example.com" %>
   </div>
-
+  
   Notificado por correo:<br />
   <select <%= f.number_field :notificado, "data-role" => "slider", "data-mini" => "true" %> >
               <option value = 0 <% if @usuario.notificado == 0 %> selected <%end%> >No</option>

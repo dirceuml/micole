@@ -16,12 +16,12 @@
     <%= f.hidden_field :anio_escolar_id, :value => anio_escolar.id %>
   </div>
   <div class="field">
-    <%= f.label :descripcion %><br />
-    <%= f.text_field :descripcion %>
+    Descripcion (*)<br />
+    <%= f.text_field :descripcion, :required => "required" %>
   </div>
   <div class="field">
-    <%= f.label :abreviatura %><br />
-    <%= f.text_field :abreviatura %>
+    Abreviatura (*)<br />
+    <%= f.text_field :abreviatura, :required => "required" %>
   </div>
   <div class="field">
     <%= f.hidden_field :usuario, :value => current_user.usuario %>

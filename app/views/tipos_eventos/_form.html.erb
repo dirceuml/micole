@@ -16,10 +16,13 @@
     <%= f.hidden_field :colegio_id, :value => colegio.id %>
   </div>
  <div class="field">
-    <%= f.label :descripcion %><br />
-    <%= f.text_field :descripcion %>
+    Descripcion (*)<br />
+    <%= f.text_field :descripcion, :required => "required" %>
   </div>
-
+  <div class="field">
+    Alcance (*)<br />
+    <%= collection_select(:tipo_evento, :alcance, ListaValor.where("tabla=1"), :item, :descripcion, {:prompt => ':: Seleccione ::'}, {"data-mini" => "true", :required => "required"}) %>
+  </div>
   <div data-role="fieldcontain">
     Notificacion inmediata:<br />
     <select <%= f.number_field :notificacion_inmediata, "data-role" => "slider", "data-mini" => "true" %> >
@@ -27,10 +30,7 @@
                 <option value = 1 <% if @tipo_evento.notificacion_inmediata == 1 %> selected <%end%> >Si</option>
     </select>
   </div>
-  <div class="field">
-    <%= f.label :alcance, "for" => "name" %><br />
-    <%= collection_select(:tipo_evento, :alcance, ListaValor.where("tabla=1"), :item, :descripcion, {:prompt => ':: Seleccione ::'}, {"data-mini" => "true"}) %>
-  </div>
+
   <div data-role="fieldcontain">
     En cuaderno de control:<br />
     <select <%= f.number_field :cuaderno_control, "data-role" => "slider", "data-mini" => "true" %> >

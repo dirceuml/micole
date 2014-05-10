@@ -13,13 +13,13 @@
   
 <div data-role="fieldcontain">
   <div class="field">
-    <%= f.label :Grado, "for" => "name" %><br />
-    <%= collection_select(:seccion, :grado_id, Grado.where("anio_escolar_id= ?", anio_escolar.id).order("grado"), :id, :grado_nivel, {:prompt => ':: Seleccione ::'}, {"data-mini" => "true"}) %>
+    Grado (*)<br />
+    <%= collection_select(:seccion, :grado_id, Grado.where("anio_escolar_id= ?", anio_escolar.id).order("grado"), :id, :grado_nivel, {:prompt => ':: Seleccione ::'}, {"data-mini" => "true", :required => "required"}) %>
   </div>
   
   <div class="field">
-    <%= f.label :seccion %><br />
-    <%= f.text_field :seccion %>
+    Seccion (*)<br />
+    <%= f.text_field :seccion, :required => "required", :pattern => "^[A-Z]", :title => "Solo esta permitido una letra en mayuscula" %>
   </div>
   
   <div class="field">

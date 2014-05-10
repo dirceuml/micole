@@ -4,7 +4,7 @@ class TiposEventosController < ApplicationController
   # GET /tipos_eventos
   # GET /tipos_eventos.json
   def index
-    @tipos_eventos = TipoEvento.order("colegio_id")
+    @tipos_eventos = TipoEvento.por_colegio(colegio.id).order("cuaderno_control DESC", "descripcion")
 
     respond_to do |format|
       format.html # index.html.erb

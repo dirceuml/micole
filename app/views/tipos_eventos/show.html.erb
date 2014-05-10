@@ -5,15 +5,15 @@
 
 <div data-role="content" style="clear: left">
   <b>Descripcion:</b> <%= @tipo_evento.descripcion %> <p>
+  <b>Alcance:</b> 
+      <%= "#{ListaValor.find_by_tabla_and_item(1, @tipo_evento.alcance).descripcion}" %>
+      <p>
   <b>Notificacion inmediata:</b>
       <% if @tipo_evento.notificacion_inmediata == 1 %>
         Si
       <% else %>
         No
       <% end %>
-      <p>
-  <b>Alcance:</b> 
-      <%= "#{ListaValor.find_by_tabla_and_item(1, @tipo_evento.alcance).descripcion}" %>
       <p>
   <b>En cuaderno de control:</b>
       <% if @tipo_evento.cuaderno_control == 1 %>

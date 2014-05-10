@@ -14,16 +14,16 @@
   
   <div data-role="fieldcontain">
     <div class="field">
-        <%= "Tipo de variable" %><br />
-        <%= collection_select(:lista_valor, :tabla, ListaValor.where("tabla=0").order("descripcion"), :item, :descripcion, {:prompt => ':: Seleccione ::'}, {"data-mini" => "true"}) %>
+        <%= "Variable (*)" %><br />
+        <%= collection_select(:lista_valor, :tabla, ListaValor.where("tabla=0").order("descripcion"), :item, :descripcion, {:prompt => ':: Seleccione ::'}, {"data-mini" => "true", :required => "required"}) %>
     </div>
     <div class="field">
-        <%= f.label :item %><br />
-        <%= f.number_field :item %>
+        <%= "Item (*)" %><br />
+        <%= f.number_field :item, :required => "required", :min => 0 %>
     </div>
     <div class="field">
-        <%= f.label :descripcion %><br />
-        <%= f.text_field :descripcion %>
+        <%= "Descripcion (*)" %><br />
+        <%= f.text_field :descripcion, :required => "required", :pattern => "^[a-zA-ZñÑ]*$", :title => "No están permitidos números" %>
     </div>
     <div class="field">
         <%= f.label :abreviatura %><br />

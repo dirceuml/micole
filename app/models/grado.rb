@@ -4,8 +4,9 @@ class Grado < ActiveRecord::Base
   has_many :curriculos
   has_many :cursos, :through => :curriculos
   
-  validates :grado, :usuario, :presence => { :message => ": El campo no puede estar vacio" }
+  validates :grado, :usuario, :nivel, :presence => { :message => ": El campo no puede estar vacio" }
   validates :grado, :numericality => { :only_integer => true, :message => ": El campo no es un numero" }
+  validates :grado, :uniqueness => { :scope => :anio_escolar_id, :scope => :nivel, :message => ": Este grado ya esta registrado para ese nivel" }
 
   validate :if => "grado < 0" do |a|
     if a.grado < 0

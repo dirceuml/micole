@@ -16,13 +16,13 @@
     <%= f.hidden_field :anio_escolar_id, :value => anio_escolar.id %>
   </div>
  <div class="field">
-    <%= f.label :grado %><br />
-    <%= f.number_field :grado %>
+    Grado (*)<br />
+    <%= f.number_field :grado, :required =>"required", :min => 1, :max => 6%>
   </div>
   
   <div class="field">
-    <%= f.label :nivel %><br />
-    <%= collection_select(:grado, :nivel, ListaValor.where("tabla=9").order("item"), :item, :descripcion, {:prompt => ':: Seleccione ::'}, {"data-mini" => "true"}) %>
+    Nivel (*)<br />
+    <%= collection_select(:grado, :nivel, ListaValor.where("tabla=9").order("item"), :item, :descripcion, {:prompt => ':: Seleccione ::'}, {"data-mini" => "true", :required => "required"}) %>
   </div>
   
   <div class="field">

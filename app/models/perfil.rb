@@ -4,4 +4,5 @@ class Perfil < ActiveRecord::Base
   has_many :permisos, :through => :perfiles_permisos
   
   validates :descripcion, :presence => { :message => ": El campo no puede estar vacio" }
+  validates :descripcion, :uniqueness => {:message => ": Este perfil ya esta registrado" }
 end

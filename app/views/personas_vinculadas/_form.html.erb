@@ -12,40 +12,40 @@
   <% end %>
   <div data-role="fieldcontain">
     <div class="field">
-      <%= f.label :tipo_documento %><br />
-      <%= collection_select(:persona_vinculada, :tipo_documento, ListaValor.where("tabla=2"), :item, :descripcion, {}, {"data-mini" => "true"}) %>
+      Tipo documento (*)<br />
+      <%= collection_select(:persona_vinculada, :tipo_documento, ListaValor.where("tabla=2"), :item, :descripcion, {}, {"data-mini" => "true", :required => "required"}) %>
     </div>
     <div class="field">
-      <%= f.label :numero_documento %><br />
-      <%= f.text_field :numero_documento %>
+      Numero documento (*)<br />
+      <%= f.text_field :numero_documento, :required => "required", :pattern => "\\d{8}", :title => "Ingrese 8 digitos" %>
     </div>
     <div class="field">
-      <%= f.label :nombres %><br />
-      <%= f.text_field :nombres %>
+      Nombres (*)<br />
+      <%= f.text_field :nombres, :required => "required", :pattern => "^[a-zA-ZñÑ]*$", :title => "No están permitidos números" %>
     </div>
     <div class="field">
-      <%= f.label :apellido_paterno %><br />
-      <%= f.text_field :apellido_paterno %>
+      Apellido paterno (*)<br />
+      <%= f.text_field :apellido_paterno, :required => "required", :pattern => "^[a-zA-ZñÑ]*$", :title => "No están permitidos números" %>
     </div>
     <div class="field">
-      <%= f.label :apellido_materno %><br />
-      <%= f.text_field :apellido_materno %>
+      Apellido materno (*)<br />
+      <%= f.text_field :apellido_materno, :required => "required", :pattern => "^[a-zA-ZñÑ]*$", :title => "No están permitidos números" %>
     </div>
     <div class="field">
-      <%= f.label :telefono_fijo %><br />
-      <%= f.telephone_field :telefono_fijo, :placeholder => "444-4444" %>
+      Telefono fijo<br />
+      <%= f.telephone_field :telefono_fijo, :placeholder => "444-4444", :pattern => "\\d{3}[\\-]*\\d{4}" %>
     </div>
     <div class="field">
-      <%= f.label :telefono_movil %><br />
-      <%= f.telephone_field :telefono_movil, :placeholder => "999999999" %>
+      Telefono movil<br />
+      <%= f.telephone_field :telefono_movil, :placeholder => "999999999", :pattern => "9\\d{8}" %>
     </div>
     <div class="field">
       <%= f.label :correo %><br />
       <%= f.email_field :correo, :placeholder => "dirceu@example.com" %>
     </div>
     <div class="field">
-      <%= f.label :foto %><br />
-      <%= f.file_field :foto, :onchange => "PreviewImage(this);" %><br />
+      Foto (*)<br />
+      <%= f.file_field :foto, :onchange => "PreviewImage(this);", :required => "required" %><br />
       <%= image_tag("blank.gif", :id => "preview") %>
     </div>
     <div class="field">
