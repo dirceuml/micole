@@ -19,12 +19,12 @@
          <div data-role="fieldcontain">
             <div style="width: 300px; text-align: left;">
               Tipo documento:<br/>
-              <%= collection_select(:persona_vinculada, :tipo_documento, ListaValor.where("tabla=2"), :item, :descripcion, {}, {"data-mini" => "true", :name => "tipo_documento"}) %>
+              <%= collection_select(:persona_vinculada, :tipo_documento, ListaValor.where("tabla=2"), :item, :descripcion, {}, {"data-mini" => "true", :name => "tipo_documento", :required => "required"}) %>
             </div>
 <br/>
             <div style="text-align: left;">
               N° documento:<br/>
-              <%= text_field_tag(:numero_documento, numero, "data-mini" => "true") %>
+              <%= text_field_tag(:numero_documento, numero, "data-mini" => "true", :pattern => "\\d{8}"), :title => "Ingrese 8 dígitos" %>
             </div>
 <br/>
             <div>

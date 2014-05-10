@@ -16,15 +16,15 @@
     <%= f.hidden_field :colegio_id, :value => colegio.id %>
   </div>
   <div class="field">
-    <%= f.label :año %><br />
-    <%= f.number_field :anio, "data-mini" => "true", "style" => "width:135px", :readonly => true %>
+    Año (*)<br />
+    <%= f.number_field :anio, "data-mini" => "true", :min => "2014", :max => "2040", "style" => "width:135px", :readonly => true, :required => "required" %>
   </div>
   <div class="field">
-    <%= f.label :inicio_de_clases %><br />
+    Inicio de clases<br />
     <%= f.text_field :inicio_clases, "data-mini" => "true", "data-role" => "datebox", "type" => "date", "style" => "width:135px" %>        
   </div>
   <div class="field">
-    <%= f.label :fin_de_clases %><br />
+    Fin de clases<br />
     <%= f.text_field :fin_clases, "data-mini" => "true", "data-role" => "datebox", "type" => "date", "style" => "width:135px" %>    
   </div>
   <div class="field">

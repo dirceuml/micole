@@ -28,14 +28,8 @@
           <!-- No llama a la funcion validarCodigoAlumno() -->
           <div data-role="fieldcontain">
             <div style="text-align: left;">
-              Código:<br/>
-              <%= text_field_tag(:codigo_alumno, codigo, "data-mini" => "true", "autofocus" => "true") %>
-              <!--div class="field"-->
-                <!--%= f.hidden_field :fecha_hora, :value => Time.now %-->
-              <!--/div-->
-              <!--div class="field"-->
-                <!--%= f.hidden_field :usuario, :value => current_user.usuario %-->
-              <!--/div-->
+              Código: (*)<br/>
+              <%= number_field_tag(:codigo_alumno, codigo, "data-mini" => "true", :min => "1", :max => "9999999", "autofocus" => "true", :required => "required") %>
               <%= submit_tag "Registrar", "data-inline" => "true", "data-theme" => "a", "data-icon" => "check", "data-mini" => "true", :name => nil %>
             </div>
           </div>

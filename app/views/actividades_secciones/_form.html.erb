@@ -18,7 +18,7 @@
     <%= f.hidden_field :actividad_id %>
     <%= f.hidden_field :usuario, :value => current_user.usuario %>
     <div style="width: 200px; clear: left; float: left">
-      <%= collection_select(:actividad_seccion, :seccion_id, Seccion.por_anioescolar(anio_escolar.id).order('grados.grado','seccion'), :id, :grado_seccion, {:prompt => ':: Seleccione ::' }, {"data-mini" => "true"}) %>
+      <%= collection_select(:actividad_seccion, :seccion_id, Seccion.por_anioescolar(anio_escolar.id).order('grados.grado','seccion'), :id, :grado_seccion, {:prompt => ':: Seleccione ::' }, {"data-mini" => "true", :required => "required"}) %>
     </div>
     <div style="float: left">
       <%= f.submit "", "data-inline" => "true", "data-theme" => "a", "data-icon" => "plus", "data-mini" => "true", "data-iconpos" => "notext" %>    

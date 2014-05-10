@@ -13,12 +13,12 @@
 
   <div data-role="fieldcontain">
     <div class="field">
-        <%= f.label :alumno_id %><br />
-        <%= f.number_field :alumno_id, "style" => "width:150px"%>
+        Código de alumno (*)<br />
+        <%= f.number_field :alumno_id, "style" => "width:150px", :min => "1", :max => "9999999", :required => "required" %>
     </div>
     <div class="field">
-        <%= f.label :seccion_id %><br />
-        <%= collection_select(:anio_alumno, :seccion_id, Seccion.por_anioescolar(anio_escolar.id).order('grados.grado','seccion'), :id, :grado_seccion, { :prompt => ':: Seleccione ::'}, {"data-mini" => "true"}) %>
+        Sección (*)<br />
+        <%= collection_select(:anio_alumno, :seccion_id, Seccion.por_anioescolar(anio_escolar.id).order('grados.grado','seccion'), :id, :grado_seccion, { :prompt => ':: Seleccione ::'}, {"data-mini" => "true", :required => "required"}) %>
     </div>
     <div class="field">
     Estado<br />

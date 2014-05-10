@@ -19,7 +19,7 @@
   </div>
   <div class="field">
     Sección: <br/>
-    <%= collection_select(:cuaderno_control, :seccion_id, Seccion.por_anioescolar(anio_escolar.id).order('grados.grado','seccion'), :id, :grado_seccion, {}, {"data-mini" => "true"}) %>
+    <%= collection_select(:cuaderno_control, :seccion_id, Seccion.por_anioescolar(anio_escolar.id).order('grados.grado','seccion'), :id, :grado_seccion, {}, {"data-mini" => "true", :required => "required"}) %>
   </div>
   <div class="field">
     <!--%= f.label :estado %-->

@@ -12,44 +12,44 @@
   <% end %>
   <div data-role="fieldcontain">
     <div class="field">
-        <%= f.label :nombres %><br />
-        <%= f.text_field :nombres %>
+        Nombres (*)<br />
+        <%= f.text_field :nombres, :required => "required", :pattern => "^[a-zA-ZñÑ]*$", :title => "No están permitidos números" %>
     </div>
     <div class="field">
-        <%= f.label :apellido_paterno %><br />
-        <%= f.text_field :apellido_paterno %>
+        Apellido paterno (*)<br />
+        <%= f.text_field :apellido_paterno, :required => "required", :pattern => "^[a-zA-ZñÑ]*$", :title => "No están permitidos números" %>
     </div>
     <div class="field">
-        <%= f.label :apellido_materno %><br />
-        <%= f.text_field :apellido_materno %>
+        Apellido materno<br />
+        <%= f.text_field :apellido_materno, :pattern => "^[a-zA-ZñÑ]*$", :title => "No están permitidos números" %>
     </div>
     <div class="field">
-        <%= f.label :fecha_nacimiento %><br />
+        Fecha de nacimiento<br />
         <%= f.text_field :fecha_nacimiento, "data-role" => "datebox", "type" => "date", "style" => "width:150px" %>
     </div>
     <div class="field">
-        <%= f.label :dni %><br />
-        <%= f.text_field :dni ,"style" => "width:150px", :placeholder => "99999999", :pattern => "\\d{8}" %>
+        N° Doc. de identidad (*)<br />
+        <%= f.text_field :dni ,"style" => "width:150px", :required => "required", :placeholder => "99999999", :pattern => "\\d{8}", :title => "Ingrese 8 dígitos" %>
     </div>
     <div class="field">
-        <%= f.label :telefono_fijo %><br />
-        <%= f.telephone_field :telefono_fijo, "style" => "width:150px", :placeholder => "444-4444", :pattern => "\\d{3}[\\-]*\\d{4}" %>
+        Teléfono fijo<br />
+        <%= f.telephone_field :telefono_fijo, "style" => "width:150px", :placeholder => "444-4444", :pattern => "\\d{3}[\\-]*\\d{4}", :title => "Ingrese 7 dígitos" %>
     </div>
     <div class="field">
-        <%= f.label :telefono_movil %><br />
-        <%= f.telephone_field :telefono_movil, "style" => "width:150px", :placeholder => "999999999", :pattern => "9\\d{8}" %>
+        Celular<br />
+        <%= f.telephone_field :telefono_movil, "style" => "width:150px", :placeholder => "999999999", :pattern => "9\\d{8}", :title => "Ingrese 9 dígitos" %>
     </div>
     <div class="field">
-        <%= f.label :direccion %><br />
+        Dirección<br />
         <%= f.text_area :direccion %>
     </div>
     <div class="field">
-        <%= f.label :correo %><br />
+        Correo electrónico<br />
         <%= f.email_field :correo, :placeholder => "nombre@dominio.com" %>
     </div>
     <div class="field">
-        <%= f.label :foto %><br />
-        <%= f.file_field :foto, :onchange => "PreviewImage(this);" %><br />
+        Foto (*)<br />
+        <%= f.file_field :foto, :onchange => "PreviewImage(this);", :required => "required" %><br />
         <%= image_tag("blank.gif", :id => "preview") %>
 
     </div>
