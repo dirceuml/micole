@@ -16,7 +16,7 @@
 
 function toggleElement(origen, destino, valorDeshabilita)
 {
-    //if (alcance == 3)
+    //if (alcance == 3)    
     if (origen.value != valorDeshabilita)
     {
         //document.getElementById("cuaderno_control_evento_alumno_id").disabled = false;
