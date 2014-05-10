@@ -160,9 +160,10 @@ class AsistenciasController < ApplicationController
           end
           render :new
         else
+          regmarcacion = Time.now
           @asistencia = Asistencia.new(
               :anio_alumno_id => AnioAlumno.find_by_anio_escolar_id_and_alumno_id(anio_escolar.id, codigo).id,
-              :fecha_hora => Time.now,
+              :fecha_hora => regmarcacion,
               :usuario => current_user.usuario,
               :tipo_movimiento => movimiento
             )
@@ -174,6 +175,19 @@ class AsistenciasController < ApplicationController
                 @guardados = [@asistencia.id]
               else
                 @guardados.push(@asistencia)
+              end
+              
+              if movimiento == 1
+                @notificar = AlumnoPersonaVinculada.notificar_ingreso(codigo)
+              else
+                @notificar = AlumnoPersonaVinculada.notificar_salida(codigo)
+              end
+              if !@notificar.empty?
+                @notificar.each do |alumnopersona|
+                  @persona = PersonaVinculada.find(alumnopersona.persona_vinculada_id)
+                  @alumno  = Alumno.find(codigo)
+                  AsistenciaMailer.delay.notificar_asistencia(movimiento, @alumno, regmarcacion, @persona)   ## Asincrono
+                end
               end
           end
           redirect_to :controller => 'asistencias', :action => 'new' , :codigo_alumno => codigo
@@ -189,10 +203,11 @@ class AsistenciasController < ApplicationController
     end
 
     ActiveRecord::Base.transaction do
-      params[:alumno_id].each do |alumno|   
+      params[:alumno_id].each do |alumno|
+        regmarcacion = Time.now
         @asistencia_alumno_persona_vinculada = Asistencia.new(
           :anio_alumno_id => AnioAlumno.find_by_anio_escolar_id_and_alumno_id(anio_escolar.id, alumno).id,
-          :fecha_hora => Time.now,
+          :fecha_hora => regmarcacion,
           :persona_vinculada_id => params[:persona_vinculada_id],
           :usuario => current_user.usuario,
           :tipo_movimiento => 2
@@ -206,6 +221,15 @@ class AsistenciasController < ApplicationController
             @guardados = [@asistencia_alumno_persona_vinculada.id]
           else
             @guardados.push(@asistencia_alumno_persona_vinculada)
+          end
+          
+          @notificar = AlumnoPersonaVinculada.notificar_salida(alumno)
+          if !@notificar.empty?
+            @notificar.each do |alumnopersona|
+              @persona = PersonaVinculada.find(alumnopersona.persona_vinculada_id)
+              @alumno  = Alumno.find(alumno)
+              AsistenciaMailer.delay.notificar_asistencia(2, @alumno, regmarcacion, @persona)   ## Asincrono
+            end
           end
         end
       end

@@ -1,0 +1,11 @@
+# encoding: utf-8
+
+Estimado(a) señor(a) <%= @persona.nombres %>:
+
+<% if @movimiento == 1 %>
+    Su hijo(a) <%= @alumno.apellidos_nombres %> ha registrado su ingreso al colegio a las <% @marcacion.strftime('%H:%M')%>
+<% else %>
+    Su hijo(a) <%= @alumno.apellidos_nombres %> ha registrado su salida del colegio a las <% @marcacion.strftime('%H:%M')%>
+<% end %>
+
+MiCole.com

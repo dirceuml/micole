@@ -1,0 +1,13 @@
+# encoding: utf-8
+
+<p>Estimado(a) señor(a) <%= @persona.nombres %>:</p>
+<% if @movimiento == 1 %>
+    <p>Su hijo(a) <%= @alumno.apellidos_nombres %> ha registrado su ingreso al colegio a las <% @marcacion.strftime('%H:%M')%>  </p>
+<% else %>
+    <p>Su hijo(a) <%= @alumno.apellidos_nombres %> ha registrado su salida del colegio a las <% @marcacion.strftime('%H:%M')%> </p>
+<% end %>
+
+<p>
+
+    <%= image_tag attachments['logo_small.jpg'].url -%>
+</p>

@@ -12,7 +12,10 @@ class AlumnoPersonaVinculada < ActiveRecord::Base
     self.persona_vinculada.apellidos_nombres
   end
   
-  scope :por_documento, lambda { |tipo_documento, numero_documento| joins(:persona_vinculada).where("tipo_documento = ? and numero_documento = ?", tipo_documento, numero_documento)}  
+  scope :por_documento, lambda { |tipo_documento, numero_documento| joins(:persona_vinculada).where("tipo_documento = ? and numero_documento = ?", tipo_documento, numero_documento)}
+  scope :notificar_ingreso, lambda { |alumno| where("alumno_id = ? and notificar_ingreso = 1", alumno)}
+  scope :notificar_salida, lambda { |alumno| where("alumno_id = ? and notificar_salida = 1", alumno)}
+  
 end
 
 
