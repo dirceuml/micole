@@ -14,20 +14,20 @@
 <div data-role="fieldcontain">
   
   <div class="field">
-    <%= f.label :nombre %><br />
-    <%= f.text_field :nombre %>
+    Nombre (*)<br />
+    <%= f.text_field :nombre, :required => "required" %>
   </div>
   <div class="field">
-    <%= f.label :ruc %><br />
-    <%= f.text_field :ruc %>
+    RUC<br />
+    <%= f.text_field :ruc, :pattern => "20\\d{9}", :title => "Ingrese 11 dígitos (debe empezar con 20)" %>
   </div>
   <div class="field">
-    <%= f.label :direccion %><br />
+    Dirección<br />
     <%= f.text_area :direccion %>
   </div>
   <div class="field">
-    <%= f.label :telefono %><br />
-    <%= f.telephone_field :telefono, :placeholder => "999999999" %>
+    Teléfono<br />
+    <%= f.telephone_field :telefono, :placeholder => "333-4444", :pattern => "\\d{3}[\\-]*\\d{4}" %>
   </div>
   <div class="field">
     <%= f.label :correo %><br />
@@ -38,7 +38,7 @@
     <!-- %= f.text_field :logo % -->
   <!-- /div -->
   <div class="field">
-    <%= f.label :director %><br />
+    Director<br />
     <%= f.text_field :director %>
   </div>
   <div class="field">

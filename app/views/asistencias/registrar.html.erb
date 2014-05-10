@@ -18,9 +18,9 @@
             <div style="text-align: left;">
               Código:<br/>
               <%if codigo == ""%>
-                <%= text_field_tag(:codigo_alumno, codigo, "data-mini" => "true", "autofocus" => "true") %>
+                <%= number_field_tag(:codigo_alumno, codigo, "data-mini" => "true", :min => "1", :max => "9999999", "autofocus" => "true", :required => "required") %>
               <%else%>
-                <%= text_field_tag(:codigo_alumno, codigo, "data-mini" => "true") %>
+                <%= number_field_tag(:codigo_alumno, codigo, "data-mini" => "true", :min => "1", :max => "9999999", :required => "required") %>
               <%end%>
               <%= submit_tag "Buscar", "data-inline" => "true", "data-theme" => "a", "data-icon" => "search", "data-mini" => "true", :name => nil %>
             </div>
