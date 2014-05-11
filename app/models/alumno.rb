@@ -35,12 +35,12 @@ class Alumno < ActiveRecord::Base
   end
   
   def salida_registrada (alumno_id, fecha)
-    Alumno.joins(:anios_alumnos => :asistencias).where("to_char(fecha_hora, 'dd/mm/yyyy') = ? and alumnos.id = ?", fecha.strftime('%d/%m/%Y'), alumno_id).count
+    Alumno.joins(:anios_alumnos => :asistencias).where("to_char(fecha_hora, 'dd/mm/yyyy') = ? and alumnos.id = ? and tipo_movimiento = 2", fecha.strftime('%d/%m/%Y'), alumno_id).count
   end
   
-  def find_asistencia_by_anio_escolar_id_and_alumno_id_and_fecha (anioescolar, alumno_id, fecha)
+  def find_asistencia_by_anio_escolar_id_and_alumno_id_and_fecha (anioescolar, alumno_id, fecha, movimiento)
     anioalumno_id = AnioAlumno.find_by_anio_escolar_id_and_alumno_id(anioescolar, alumno_id).id
-    Asistencia.find(:all, :conditions => ["to_char(fecha_hora, 'dd/mm/yyyy') = '#{fecha}' and anio_alumno_id = #{anioalumno_id}"]).first
+    Asistencia.find(:all, :conditions => ["to_char(fecha_hora, 'dd/mm/yyyy') = '#{fecha.strftime('%d/%m/%Y')}' and anio_alumno_id = #{anioalumno_id} and tipo_movimiento = #{movimiento}"]).first
   end
   
   def rango_fecha_nacimiento

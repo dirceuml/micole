@@ -18,7 +18,7 @@
         <% if tipo_evento.cuaderno_control == 1%> 
           <%= simple_format("Cuaderno de control : #{tipo_evento.descripcion}") %>
         <% else %>
-          <%= simple_format("Evento : #{tipo_evento.descripcion}") %>
+          <%= simple_format("Actividad : #{tipo_evento.descripcion}") %>
         <% end %>
         <!-- #{ListaValor.find_by_tabla_and_item(1, tipo_evento.alcance).descripcion} -->
       <% end %>

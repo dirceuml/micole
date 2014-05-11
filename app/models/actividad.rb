@@ -15,6 +15,10 @@ class Actividad < ActiveRecord::Base
     if !a.fecha_hora_inicio.nil? && !a.fecha_hora_fin.nil?
       if a.fecha_hora_inicio >= a.fecha_hora_fin
         errors[:base] << "Error en rango de fechas de la actividad"
+      else
+        if a.fecha_hora_inicio < Time.now
+          errors[:base] << "No puede colocar una fecha pasada para la actividad"
+        end
       end
     end
   end
@@ -25,6 +29,10 @@ class Actividad < ActiveRecord::Base
     else
       if !a.fecha_hora_inicio.nil? && (a.limite_autorizacion > a.fecha_hora_inicio.to_date)  # || a.limite_autorizacion < a.fecha_hora_inicio.to_date 
         errors[:base] << "Error en la fecha limite para autorizacion"
+      else
+        if  a.limite_autorizacion < Time.now.to_date
+          errors[:base] << "No puede colocar fecha pasada para el ultimo dia de autorizacion"
+        end
       end
     end
   end
@@ -37,17 +45,25 @@ class Actividad < ActiveRecord::Base
          if a.fin_notificacion.nil?
            errors[:base] << "Falta ingresar la fecha fin de notificacion"
          else
-           if a.inicio_notificacion > a.fin_notificacion
-             errors[:base] << "Error en rango de fechas de notificacion"
+           if a.inicio_notificacion < Time.now.to_date
+             errors[:base] << "No puede colocar fecha pasada para la fecha de inicio de notificacion"
            else
-             if !a.fecha_hora_inicio.nil? && a.fin_notificacion > a.fecha_hora_inicio.to_date
-               errors[:base] << "La fecha fin de notificacion no puede ser posterior al inicio de la actividad"
+             if a.inicio_notificacion > a.fin_notificacion
+               errors[:base] << "Error en rango de fechas de notificacion"
              else
-               if a.frecuencia_dias_notificacion.nil?
-                 errors[:base] << "Falta ingresar la frecuencia de notificacion"
+               if !a.fecha_hora_inicio.nil? && a.fin_notificacion > a.fecha_hora_inicio.to_date
+                 errors[:base] << "La fecha fin de notificacion no puede ser posterior al inicio de la actividad"
                else
-                 if a.frecuencia_dias_notificacion < 1 || a.frecuencia_dias_notificacion > 30
-                   errors[:base] << "Error en la frecuencia de notificacion (Rango de 1 a 30 dias)"
+                 if a.frecuencia_dias_notificacion.nil?
+                   errors[:base] << "Falta ingresar la frecuencia de notificacion"
+                 else
+                   if a.frecuencia_dias_notificacion < 1 || a.frecuencia_dias_notificacion > 30
+                     errors[:base] << "Error en la frecuencia de notificacion (Rango de 1 a 30 dias)"
+                   else
+                     if a.frecuencia_dias_notificacion > (a.fin_notificacion - a.inicio_notificacion)+ 1
+                       errors[:base] << "La frecuencia de notificacion excede el rango de dias de notificacion"
+                     end
+                   end
                  end
                end
              end
