@@ -17,7 +17,7 @@
   </div>
  <div class="field">
     Nombre (*)<br />
-    <%= f.text_field :nombre, :required => "required", :pattern => "^[a-zA-ZñÑ]*$", :title => "No están permitidos números" %>
+    <%= f.text_field :nombre, :required => "required", :pattern => "^[a-zA-ZñÑ ]*$", :title => "Solo estan permitidos letras" %>
   </div>
   <div class="field">
     Usuario (*)<br />

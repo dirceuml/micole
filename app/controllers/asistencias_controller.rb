@@ -226,9 +226,11 @@ class AsistenciasController < ApplicationController
           @notificar = AlumnoPersonaVinculada.notificar_salida(alumno)
           if !@notificar.empty?
             @notificar.each do |alumnopersona|
-              @persona = PersonaVinculada.find(alumnopersona.persona_vinculada_id)
-              @alumno  = Alumno.find(alumno)
-              AsistenciaMailer.delay.notificar_asistencia(2, @alumno, regmarcacion, @persona)   ## Asincrono
+              if alumnopersona.persona_vinculada_id != params[:persona_vinculada_id]
+                @persona = PersonaVinculada.find(alumnopersona.persona_vinculada_id)
+                @alumno  = Alumno.find(alumno)
+                AsistenciaMailer.delay.notificar_asistencia(2, @alumno, regmarcacion, @persona)   ## Asincrono
+              end
             end
           end
         end

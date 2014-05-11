@@ -1,6 +1,6 @@
 # encoding: utf-8
 class AsistenciaMailer < ActionMailer::Base
-  default :from => "Administrador MiCole <micole.sistema@gmail.com>"
+  default :from => "Administrador MiCole <micole.sistema@gmail.com>"  
 
   def notificar_asistencia(movimiento, alumno, marcacion, persona)
     @movimiento = movimiento     # movimiento = 1 ingreso. movimiento = 2 salida
@@ -14,6 +14,6 @@ class AsistenciaMailer < ActionMailer::Base
     end
     attachments.inline["logo_small.jpg"] = File.read("#{Rails.root}/public/logo_small.jpg")
     
-    mail(:to => "#{persona.nombres} <#{persona.correo}>", :subject => asunto)
+    mail(:to => "#{persona.apellidos_nombres} <#{persona.correo}>", :subject => asunto)
   end 
 end

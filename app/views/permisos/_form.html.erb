@@ -14,11 +14,11 @@
 <div data-role="fieldcontain">
   <div class="field">
     Clase de sujeto (*)<br/>
-    <%= f.text_field :subject_class, :required => "required", :pattern => "^[a-zA-ZñÑ]*$", :title => "No están permitidos números" %>
+    <%= f.text_field :subject_class, :required => "required", :pattern => "^[a-zA-ZñÑ]*$", :title => "Solo estan permitidos letras sin espacios" %>
   </div>
   <div class="field">
     Acción (*)<br/>
-    <%= f.text_field :action, :required => "required", :pattern => "^[a-zA-ZñÑ]*$", :title => "No están permitidos números" %>
+    <%= f.text_field :action, :required => "required", :pattern => "^[a-zA-ZñÑ]*$", :title => "Solo estan permitidos letras sin espacios" %>
   </div>
   <div class="actions">
     <%= f.submit "Grabar", "data-inline" => "true", "data-theme" => "a", "data-icon" => "check", "data-mini" => "true" %>

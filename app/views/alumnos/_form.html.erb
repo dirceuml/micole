@@ -13,15 +13,15 @@
   <div data-role="fieldcontain">
     <div class="field">
         Nombres (*)<br />
-        <%= f.text_field :nombres, :required => "required", :pattern => "^[a-zA-ZñÑ]*$", :title => "No están permitidos números" %>
+        <%= f.text_field :nombres, :required => "required", :pattern => "^[a-zA-ZñÑ ]*$", :title => "Solo estan permitidos letras" %>
     </div>
     <div class="field">
         Apellido paterno (*)<br />
-        <%= f.text_field :apellido_paterno, :required => "required", :pattern => "^[a-zA-ZñÑ]*$", :title => "No están permitidos números" %>
+        <%= f.text_field :apellido_paterno, :required => "required", :pattern => "^[a-zA-ZñÑ ]*$", :title => "Solo estan permitidos letras" %>
     </div>
     <div class="field">
         Apellido materno<br />
-        <%= f.text_field :apellido_materno, :pattern => "^[a-zA-ZñÑ]*$", :title => "No están permitidos números" %>
+        <%= f.text_field :apellido_materno, :pattern => "^[a-zA-ZñÑ ]*$", :title => "Solo estan permitidos letras" %>
     </div>
     <div class="field">
         Fecha de nacimiento<br />

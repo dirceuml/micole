@@ -138,7 +138,7 @@ class UsuariosController < ApplicationController
             
             # hallando la ultima secuencia de nombre de usuario
             @usuariosregistrados = Usuario.connection.select_rows("Select usuario from usuarios where usuario like '"+ nomusu+ "%'")
-            if !@usuariosregistrados.nil?
+            if !@usuariosregistrados.empty?
               ultsec = -1
               @usuariosregistrados.each do |registrado|
                 #secact= nombre.gsub(nomusu, '').to_i
