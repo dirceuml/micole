@@ -43,7 +43,7 @@
           <li data-filtertext="<%= "#{cuaderno_control_revision.cuaderno_control.fecha.strftime('%d/%m/%Y')} #{cuaderno_control_revision.alumno.apellidos_nombres}" %>" >
             <% if params[:accion] == "revisar" %>
               <%= link_to cuaderno_control_revision do %>
-                <strong><%= cuaderno_control_revision.alumno.nombres %></strong>
+                <strong><%= "#{cuaderno_control_revision.alumno.nombres} #{cuaderno_control_revision.alumno.apellido_paterno}" %></strong>
                 <p class="ui-li-aside"><%= cuaderno_control_revision.cuaderno_control.fecha.strftime('%d/%m/%Y') %></p>
               <% end %>
             <% else %>
@@ -68,7 +68,7 @@
           <li data-filtertext="<%= "#{cuaderno_control_revision.cuaderno_control.fecha.strftime('%d/%m/%Y')} #{cuaderno_control_revision.alumno.apellidos_nombres}" %>" >
             <% if params[:accion] == "revisar" %>
               <%= link_to cuaderno_control_revision do %>
-                <strong><%= cuaderno_control_revision.alumno.nombres %></strong>
+                <strong><%= "#{cuaderno_control_revision.alumno.nombres} #{cuaderno_control_revision.alumno.apellido_paterno}" %></strong>
                 <p class="ui-li-aside"><%= cuaderno_control_revision.cuaderno_control.fecha.strftime('%d/%m/%Y') %></p>
               <% end %>
             <% else %>

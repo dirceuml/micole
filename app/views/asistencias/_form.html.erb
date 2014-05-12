@@ -15,7 +15,7 @@
   <% if params[:codigo_alumno].nil? %>
     <% codigoregistrado = "" %>
   <% else %>
-    <% codigoregistrado = params[:codigo_alumno] %>  
+    <% codigoregistrado = params[:codigo_alumno] %>
   <% end %>
 
   <div data-role="content">
@@ -28,7 +28,7 @@
           <!-- No llama a la funcion validarCodigoAlumno() -->
           <div data-role="fieldcontain">
             <div style="text-align: left;">
-              Código: (*)<br/>
+              Código (*)<br/>
               <%= number_field_tag(:codigo_alumno, codigo, "data-mini" => "true", :min => "1", :max => "9999999", "autofocus" => "true", :required => "required") %>
               <%= submit_tag "Registrar", "data-inline" => "true", "data-theme" => "a", "data-icon" => "check", "data-mini" => "true", :name => nil %>
             </div>

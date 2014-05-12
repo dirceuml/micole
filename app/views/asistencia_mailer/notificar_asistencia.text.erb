@@ -3,9 +3,12 @@
 Estimado(a) señor(a) <%= @persona.nombres %>:
 
 <% if @movimiento == 1 %>
-    Su hijo(a) <%= @alumno.apellidos_nombres %> ha registrado su ingreso al colegio a las <% @marcacion.strftime('%H:%M')%>
+    Su hijo(a) <%= @alumno.apellidos_nombres %> ha registrado su ingreso al colegio a las <%= @marcacion.fecha_hora.strftime('%H:%M')%>
 <% else %>
-    Su hijo(a) <%= @alumno.apellidos_nombres %> ha registrado su salida del colegio a las <% @marcacion.strftime('%H:%M')%>
+    Su hijo(a) <%= @alumno.apellidos_nombres %> ha registrado su salida del colegio a las <%= @marcacion.fecha_hora.strftime('%H:%M')%>
+    <% if !@marcacion.persona_vinculada_id.nil? %>
+        con la persona <%= PersonaVinculada.find(@marcacion.persona_vinculada_id).apellidos_nombres %>
+    <% end %>
 <% end %>
 
 MiCole.com

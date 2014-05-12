@@ -47,6 +47,13 @@
         Correo electrónico<br />
         <%= f.email_field :correo, :placeholder => "nombre@dominio.com" %>
     </div>
+    <div data-role="fieldcontain">
+        Salida del colegio con persona vinculada:<br />
+        <select <%= f.number_field :salida_con_persona, "data-role" => "slider", "data-mini" => "true" %> >
+                <option value = 0 <% if @alumno.salida_con_persona == 0 %> selected <%end%> >No</option>
+                <option value = 1 <% if @alumno.salida_con_persona == 1 %> selected <%end%> >Si</option>
+        </select>
+    </div>
     <div class="field">
         Foto (*)<br />
         <%= f.file_field :foto, :onchange => "PreviewImage(this);", :required => "required" %><br />

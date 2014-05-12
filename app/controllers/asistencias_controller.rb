@@ -121,77 +121,75 @@ class AsistenciasController < ApplicationController
     if codigo == 0
       flash[:notice] = 'Ingrese el codigo del alumno'
       render :new
-    else    
-      
+    else
       if !AnioAlumno.find_by_anio_escolar_id_and_alumno_id(anio_escolar.id, codigo)
         flash[:notice] = "El codigo #{codigo} no existe"
         redirect_to(:new_asistencia) and return
       end
-        
+      
       @asistencias = Asistencia.por_alumno_fecha(anio_escolar.id, codigo, Date.current)
-
-        ingreso = 0
-        fecha_hora = Time.now
-        salida  = 0
-        @asistencias.each do |asistencia|
-          if asistencia.tipo_movimiento == 1
-            ingreso = 1
-            fecha_hora = asistencia.fecha_hora
-          end
-          if asistencia.tipo_movimiento == 2
-            salida = 1
-          end      
+      
+      ingreso = 0
+      fecha_hora = Time.now
+      salida  = 0
+      @asistencias.each do |asistencia|
+        if asistencia.tipo_movimiento == 1
+          ingreso = 1
+          fecha_hora = asistencia.fecha_hora
         end
-        movimiento = 0
+        if asistencia.tipo_movimiento == 2
+          salida = 1
+        end      
+      end
+      movimiento = 0
         if ingreso == 0 && salida  == 0
-          movimiento = 1
+      movimiento = 1
+      end
+      if ingreso == 1 && salida  == 0
+        if (Time.now- fecha_hora) > 60
+          movimiento = 2
         end
-        if ingreso == 1 && salida  == 0
-          if (Time.now- fecha_hora) > 60
-            movimiento = 2
-          end
-        end
-
-        if movimiento == 0
-          if salida  == 0
-            flash[:notice] = 'Ha intentado registrar dos veces el ingreso'
-          else
-            flash[:notice] = 'Ha intentado registrar dos veces la salida'
-          end
-          render :new
+      end
+      
+      if movimiento == 0
+        if salida  == 0
+          flash[:notice] = 'Ha intentado registrar dos veces el ingreso'
         else
-          regmarcacion = Time.now
-          @asistencia = Asistencia.new(
-              :anio_alumno_id => AnioAlumno.find_by_anio_escolar_id_and_alumno_id(anio_escolar.id, codigo).id,
-              :fecha_hora => regmarcacion,
-              :usuario => current_user.usuario,
-              :tipo_movimiento => movimiento
-            )
-          if !@asistencia.save
-              flash[:notice] = 'Ocurrio un error al registrar la asistencia'
-              format.html { render action: "new" }
-          else
-              if @guardados.nil?
-                @guardados = [@asistencia.id]
-              else
-                @guardados.push(@asistencia)
-              end
-              
-              if movimiento == 1
-                @notificar = AlumnoPersonaVinculada.notificar_ingreso(codigo)
-              else
-                @notificar = AlumnoPersonaVinculada.notificar_salida(codigo)
-              end
-              if !@notificar.empty?
-                @notificar.each do |alumnopersona|
-                  @persona = PersonaVinculada.find(alumnopersona.persona_vinculada_id)
-                  @alumno  = Alumno.find(codigo)
-                  AsistenciaMailer.delay.notificar_asistencia(movimiento, @alumno, regmarcacion, @persona)   ## Asincrono
-                end
-              end
-          end
-          redirect_to :controller => 'asistencias', :action => 'new' , :codigo_alumno => codigo
+          flash[:notice] = 'Ha intentado registrar dos veces la salida'
         end
+        render :new
+      else
+        @asistencia = Asistencia.new(
+            :anio_alumno_id => AnioAlumno.find_by_anio_escolar_id_and_alumno_id(anio_escolar.id, codigo).id,
+            :fecha_hora => Time.now,
+            :usuario => current_user.usuario,
+            :tipo_movimiento => movimiento
+        )
+        if !@asistencia.save
+          flash[:notice] = 'Ocurrio un error al registrar la asistencia'
+          format.html { render action: "new" }
+        else
+          if @guardados.nil?
+            @guardados = [@asistencia.id]
+          else
+            @guardados.push(@asistencia)
+          end
+          
+          if movimiento == 1
+            @notificar = AlumnoPersonaVinculada.notificar_ingreso(codigo)
+          else
+            @notificar = AlumnoPersonaVinculada.notificar_salida(codigo)
+          end
+          if !@notificar.empty?
+            @notificar.each do |alumnopersona|
+              @persona = PersonaVinculada.find(alumnopersona.persona_vinculada_id)
+              @alumno  = Alumno.find(codigo)
+              AsistenciaMailer.delay.notificar_asistencia(movimiento, @alumno, @asistencia, @persona)   ## Asincrono
+            end
+          end
+        end
+        redirect_to :controller => 'asistencias', :action => 'new' , :codigo_alumno => codigo
+      end
     end
   end
 
@@ -204,10 +202,9 @@ class AsistenciasController < ApplicationController
 
     ActiveRecord::Base.transaction do
       params[:alumno_id].each do |alumno|
-        regmarcacion = Time.now
         @asistencia_alumno_persona_vinculada = Asistencia.new(
           :anio_alumno_id => AnioAlumno.find_by_anio_escolar_id_and_alumno_id(anio_escolar.id, alumno).id,
-          :fecha_hora => regmarcacion,
+          :fecha_hora => Time.now,
           :persona_vinculada_id => params[:persona_vinculada_id],
           :usuario => current_user.usuario,
           :tipo_movimiento => 2
@@ -229,7 +226,7 @@ class AsistenciasController < ApplicationController
               if alumnopersona.persona_vinculada_id != params[:persona_vinculada_id]
                 @persona = PersonaVinculada.find(alumnopersona.persona_vinculada_id)
                 @alumno  = Alumno.find(alumno)
-                AsistenciaMailer.delay.notificar_asistencia(2, @alumno, regmarcacion, @persona)   ## Asincrono
+                AsistenciaMailer.delay.notificar_asistencia(2, @alumno, @asistencia_alumno_persona_vinculada, @persona)   ## Asincrono
               end
             end
           end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140510215042) do
+ActiveRecord::Schema.define(:version => 20140511212412) do
 
   create_table "actividades", :force => true do |t|
     t.integer  "anio_escolar_id",                                           :null => false
@@ -49,8 +49,8 @@ ActiveRecord::Schema.define(:version => 20140510215042) do
   add_index "actividades_secciones", ["seccion_id"], :name => "fk_activsecciones_secciones"
 
   create_table "alumnos", :force => true do |t|
-    t.string   "nombres",          :null => false
-    t.string   "apellido_paterno", :null => false
+    t.string   "nombres",                           :null => false
+    t.string   "apellido_paterno",                  :null => false
     t.string   "apellido_materno"
     t.date     "fecha_nacimiento"
     t.string   "telefono_fijo"
@@ -58,10 +58,11 @@ ActiveRecord::Schema.define(:version => 20140510215042) do
     t.text     "direccion"
     t.string   "correo"
     t.string   "foto"
-    t.string   "usuario",          :null => false
-    t.datetime "created_at",       :null => false
-    t.datetime "updated_at",       :null => false
+    t.string   "usuario",                           :null => false
+    t.datetime "created_at",                        :null => false
+    t.datetime "updated_at",                        :null => false
     t.string   "dni"
+    t.integer  "salida_con_persona", :default => 0, :null => false
   end
 
   create_table "alumnos_personas_vinculadas", :force => true do |t|

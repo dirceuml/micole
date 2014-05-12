@@ -11,6 +11,13 @@
     <b>Correo:</b> <%= @alumno.correo %><p>
     <b>Teléfono fijo:</b> <%= @alumno.telefono_fijo %><p>
     <b>Teléfono móvil:</b> <%= @alumno.telefono_movil %><p>
+    <b>Salida con persona vinculada:</b>
+      <% if @alumno.salida_con_persona == 1 %>
+        Si
+      <% else %>
+        No
+      <% end %>
+      <p>
 </div>
 
 <div data-role="footer">

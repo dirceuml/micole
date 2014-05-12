@@ -21,6 +21,7 @@ class PersonaVinculada < ActiveRecord::Base
   
   scope :logueado, lambda { |usuario| joins(:usuario).where("usuarios.usuario = ?", usuario) }
   scope :revisores_de, lambda { |alumno| joins(:alumnos_personas_vinculadas).where("revisa_control = 1 and alumno_id = ?", alumno)}
-  scope :padres_de, lambda { |alumno| joins(:alumnos_personas_vinculadas).where("apoderado = 1 and alumno_id = ?", alumno)}  
+  scope :padres_de, lambda { |alumno| joins(:alumnos_personas_vinculadas).where("apoderado = 1 and alumno_id = ?", alumno)}
   scope :receptores_notificacion_evento, lambda { |evento_id| joins(:alumnos_personas_vinculadas => :cuaderno_controles_eventos).where("alumnos_personas_vinculadas.apoderado = 1 and cuaderno_controles_eventos.id = ?", evento_id)}
+  scope :vinculados_de, lambda { |alumno| joins(:alumnos_personas_vinculadas).where("alumno_id = ?", alumno)}
 end
