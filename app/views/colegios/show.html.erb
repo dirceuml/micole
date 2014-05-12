@@ -10,6 +10,9 @@
   <b>Telefono:</b> <%= @colegio.telefono %> <p>
   <b>Correo:</b> <%= @colegio.correo %> <p>
   <b>Director:</b> <%= @colegio.director %> <p>
+  <b>Notificar inasistencia:</b> 
+      <%= "#{ListaValor.find_by_tabla_and_item(10, @colegio.notificar_inasistencia).descripcion}" %>
+      <p>
   <b>Activo:</b>
   <% if @colegio.estado == 1 %>
     Si
