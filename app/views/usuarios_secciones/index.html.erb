@@ -1,0 +1,35 @@
+<h1>Listing usuarios_secciones</h1>
+
+<table>
+  <tr>
+    <th>Usuario</th>
+    <th>Seccion</th>
+    <th>Verifica cuaderno control</th>
+    <th>Asigna actividad</th>
+    <th>Revisa autorizacion</th>
+    <th>Revisa asistencia,</th>
+    <th>Usuario</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @usuarios_secciones.each do |usuario_seccion| %>
+  <tr>
+    <td><%= usuario_seccion.usuario_id %></td>
+    <td><%= usuario_seccion.seccion_id %></td>
+    <td><%= usuario_seccion.verifica_cuaderno_control %></td>
+    <td><%= usuario_seccion.asigna_actividad %></td>
+    <td><%= usuario_seccion.revisa_autorizacion %></td>
+    <td><%= usuario_seccion.revisa_asistencia, %></td>
+    <td><%= usuario_seccion.usuario %></td>
+    <td><%= link_to 'Show', usuario_seccion %></td>
+    <td><%= link_to 'Edit', edit_usuario_seccion_path(usuario_seccion) %></td>
+    <td><%= link_to 'Destroy', usuario_seccion, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Usuario seccion', new_usuario_seccion_path %>

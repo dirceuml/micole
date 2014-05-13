@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140512035331) do
+ActiveRecord::Schema.define(:version => 20140513204245) do
 
   create_table "actividades", :force => true do |t|
     t.integer  "anio_escolar_id",                                           :null => false
@@ -409,13 +409,29 @@ ActiveRecord::Schema.define(:version => 20140512035331) do
     t.datetime "created_at",                                :null => false
     t.datetime "updated_at",                                :null => false
     t.string   "clave_salt",           :default => "clave", :null => false
-    t.integer  "notificado",           :default => 0,       :null => false
     t.date     "fecha_clave"
+    t.integer  "notificado",           :default => 0,       :null => false
   end
 
   add_index "usuarios", ["colegio_id", "usuario"], :name => "ak_usuarios", :unique => true
   add_index "usuarios", ["colegio_id"], :name => "fk_usuarios_colegios"
   add_index "usuarios", ["perfil_id"], :name => "fk_usuarios_perfiles"
   add_index "usuarios", ["persona_vinculada_id"], :name => "fk_usuarios_personas"
+
+  create_table "usuarios_secciones", :force => true do |t|
+    t.integer  "usuario_id",                               :null => false
+    t.integer  "seccion_id",                               :null => false
+    t.integer  "verifica_cuaderno_control", :default => 0, :null => false
+    t.integer  "asigna_actividad",          :default => 0, :null => false
+    t.integer  "revisa_autorizacion",       :default => 0, :null => false
+    t.integer  "revisa_asistencia",         :default => 0, :null => false
+    t.string   "usuario_nom",                              :null => false
+    t.datetime "created_at",                               :null => false
+    t.datetime "updated_at",                               :null => false
+  end
+
+  add_index "usuarios_secciones", ["seccion_id"], :name => "fk_usuariossecciones_seccion"
+  add_index "usuarios_secciones", ["usuario_id", "seccion_id"], :name => "ak_usuarios_secciones", :unique => true
+  add_index "usuarios_secciones", ["usuario_id"], :name => "fk_usuariossecciones_usuario"
 
 end

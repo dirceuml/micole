@@ -8,6 +8,9 @@ class Usuario < ActiveRecord::Base
   belongs_to :colegio
   belongs_to :perfil
   
+  has_many :usuarios_secciones
+  has_many :secciones, :through => :usuarios_secciones
+  
   validates :usuario, :nombre, :perfil_id, :presence => { :message => ": El campo no puede estar vacio" }
   validates :clave, :confirmation => { :message => ": No ha confirmado correctamente la clave" }
   validates :clave, :presence => { :message => ": El campo no puede estar vacio" }, :on => :create
@@ -16,8 +19,8 @@ class Usuario < ActiveRecord::Base
   validate :clave_actual_ok, on: :update
   validate :clave_diferente, on: :update
   
-  scope :pendientenotificar, lambda { |colegio| where("notificado = 0 and colegio_id = ?", colegio)}
-  
+  scope :por_colegio, lambda { |colegio| where("colegio_id = ?", colegio) }
+  scope :pendientenotificar, lambda { |colegio| self.por_colegio(colegio).where("notificado = 0", 0) }
   
   def self.authenticate(usuario, password)
     user = find_by_usuario(usuario)

@@ -4,7 +4,7 @@ class UsuariosController < ApplicationController
   # GET /usuarios
   # GET /usuarios.json
   def index
-    @usuarios = Usuario.order("nombre")
+    @usuarios = Usuario.por_colegio(colegio.id).order("nombre")
 
     respond_to do |format|
       format.html # index.html.erb

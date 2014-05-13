@@ -1,0 +1,49 @@
+<%= form_for([@usuario, @usuario.usuarios_secciones.build], :html => { :class => "ui-body ui-body-c", "data-ajax" => "false" }) do |f| %>
+  <% if !@usuario_seccion.nil? %>
+    <% if @usuario_seccion.errors.any? %>
+      <div id="error_explanation" data-role="header" data-theme="e">
+        <h2><%= pluralize(@usuario_seccion.errors.count, "error") %> impidieron la grabacion:</h2>
+
+        <ul>
+        <% @usuario_seccion.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+  <% end %>
+
+  <% if @usuario.perfil_id == 3 %>
+    <div data-role="content" class="content-primary">
+      <%= f.hidden_field :usuario_id %>
+      <%= f.hidden_field :usuario_nom, :value => current_user.usuario %>
+      <div class="field">
+        <%= collection_select(:usuario_seccion, :seccion_id, Seccion.por_anioescolar(anio_escolar.id).order('grados.grado','seccion'), :id, :grado_seccion, {:prompt => ':: Seleccione ::' }, {"data-mini" => "true", :required => "required"}) %>
+      </div>
+      <br />
+      <fieldset data-role="controlgroup">
+        <div class="field">
+          <%= f.check_box :verifica_cuaderno_control, "class" => "custom", "data-mini" => "true" %>
+          <%= f.label :verifica_cuaderno_control, "Verifica cuaderno de control" %> 
+        </div>
+        <div class="field">
+          <%= f.check_box :asigna_actividad, "class" => "custom", "data-mini" => "true" %>
+          <%= f.label :asigna_actividad, "Asigna actividades" %> 
+        </div>
+        <div class="field">
+          <%= f.check_box :revisa_autorizacion, "class" => "custom", "data-mini" => "true" %>
+          <%= f.label :revisa_autorizacion, "Revisa autorización a actividades" %> 
+        </div>
+        <div class="field">
+          <%= f.check_box :revisa_asistencia, "class" => "custom", "data-mini" => "true" %>
+          <%= f.label :revisa_asistencia %> 
+        </div>
+      </fieldset>
+
+      <div class="actions">
+        <%= f.submit "Agregar sección", "data-inline" => "true", "data-theme" => "a", "data-icon" => "check", "data-mini" => "true" %>
+      </div>
+    </div>
+  <% end %>
+
+<% end %>

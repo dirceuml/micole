@@ -8,6 +8,8 @@ class Seccion < ActiveRecord::Base
   validates :grado_id, :seccion, :usuario, :presence => { :message => ": El campo no puede estar vacio" }
   
   scope :por_anioescolar, lambda { |anioescolar| joins(:grado).where("grados.anio_escolar_id = ?", anioescolar)}
+  #scope :por_anio_y_colegio, lambda { |anio, colegio| self.por_anioescolar(anio).joins(:anios_alumnos)}
+  #scope :no_asignadas_usuario
   
   def grado_seccion
     grado.grado.to_s + " " + seccion + " " + grado.nivel_desc

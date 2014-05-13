@@ -1,5 +1,12 @@
 Micole::Application.routes.draw do 
 
+  resources :usuarios_secciones
+  
+  resources :usuarios do
+    resources :usuarios_secciones
+  end
+
+
   get "admin/archivos/subir_archivos" => "archivos#subir_archivos", :as => "subir_archivos"
   post "admin/archivos/subir_archivos" => "archivos#subir_archivos", :as => "subir_archivos"
   get "admin/archivos/cargar_alumnos" => "archivos#cargar_alumnos", :as => "cargar_alumnos"

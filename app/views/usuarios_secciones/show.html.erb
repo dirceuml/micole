@@ -1,0 +1,40 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Usuario:</b>
+  <%= @usuario_seccion.usuario_id %>
+</p>
+
+<p>
+  <b>Seccion:</b>
+  <%= @usuario_seccion.seccion_id %>
+</p>
+
+<p>
+  <b>Verifica cuaderno control:</b>
+  <%= @usuario_seccion.verifica_cuaderno_control %>
+</p>
+
+<p>
+  <b>Asigna actividad:</b>
+  <%= @usuario_seccion.asigna_actividad %>
+</p>
+
+<p>
+  <b>Revisa autorizacion:</b>
+  <%= @usuario_seccion.revisa_autorizacion %>
+</p>
+
+<p>
+  <b>Revisa asistencia,:</b>
+  <%= @usuario_seccion.revisa_asistencia, %>
+</p>
+
+<p>
+  <b>Usuario:</b>
+  <%= @usuario_seccion.usuario %>
+</p>
+
+
+<%= link_to 'Edit', edit_usuario_seccion_path(@usuario_seccion) %> |
+<%= link_to 'Back', usuarios_secciones_path %>

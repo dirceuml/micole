@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  usuario_id: 
+  seccion_id: 
+  verifica_cuaderno_control: 
+  asigna_actividad: 
+  revisa_autorizacion: 
+  revisa_asistencia,: MyString
+  usuario: MyString
+
+two:
+  usuario_id: 
+  seccion_id: 
+  verifica_cuaderno_control: 
+  asigna_actividad: 
+  revisa_autorizacion: 
+  revisa_asistencia,: MyString
+  usuario: MyString

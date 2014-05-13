@@ -5,21 +5,20 @@
   <% end %>
 </div>
 
-<div data-role="content">
+<div data-role="content">  
   <ul data-role="listview" data-filter="true">
     <% @usuarios.each do |usuario| %>
     <li data-filtertext="<%= "#{usuario.usuario} #{usuario.nombre} #{Perfil.find(usuario.perfil_id)}" %>" >
-      <% if can? :update, usuario %>
-        <% link_opcion = edit_usuario_path(usuario) %>
-      <% else %>
-        <% link_opcion = usuario %>
-      <% end %>
-      <%= link_to link_opcion do %>
+      <%= link_to usuario do %>  
         <%= simple_format("#{usuario.nombre} (#{usuario.usuario} - #{Perfil.find(usuario.perfil_id).descripcion})") %>
-      <% end %>
-      
-      <% if can? :destroy, usuario %>
-        <%= link_to 'Eliminar', usuario, confirm: '¿Seguro que desea eliminar el registro?', method: :delete, "data-icon" => "delete" %>
+
+        <% if (can? :update, usuario) %>
+          <%= link_to 'Editar', edit_usuario_path(usuario), "data-inline" => "true", "data-role" => "button", "data-mini" => "true" %>
+        <% end %>
+
+        <% if can? :destroy, usuario %>
+          <%= link_to 'Eliminar', usuario, confirm: '¿Seguro que desea eliminar el registro?', method: :delete, "data-icon" => "delete" %>
+        <% end %>
       <% end %>
     </li>
     <% end %>

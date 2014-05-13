@@ -1,9 +1,13 @@
 <div id='Usuario' data-role="header">
   <h1>Detalles</h1>
-  <% if @usuario.perfil_id == 1 %>
+  <% if current_user.perfil_id == 1 %>
     <%= link_to 'Aceptar', usuarios_path, "data-icon" => "check", "data-mini" => "true"  %>
   <%  else %>
-    <%= link_to 'Aceptar', menu_path, "data-icon" => "check", "data-mini" => "true"  %>
+    <%= link_to 'Aceptar', menu_path, "data-icon" => "check", "data-mini" => "true", "class" => "ui-btn-left"  %>
+  <% end %>
+  
+  <% if can? :update, @usuario && @usuario.perfil_id == 1 %>
+    <%= link_to 'Editar', edit_usuario_path(@usuario), "class" => "ui-btn-right", "data-inline" => "true", "data-theme" => "a", "data-icon" => "gear", "data-mini" => "true" %>
   <% end %>
 </div>
 
@@ -17,9 +21,55 @@
   <% end %>
 </div>
 
+<!-- ************************************************************************************** -->
+<% if can? :create, UsuarioSeccion %>
+  <%= render "usuarios_secciones/form" %>
+<% end %>
 
-<div data-role="footer">
-  <% if can? :update, @usuario && @usuario.perfil_id == 1 %>
-    <%= link_to 'Editar', edit_usuario_path(@usuario), "class" => "ui-btn-left", "data-inline" => "true", "data-theme" => "a", "data-icon" => "gear", "data-mini" => "true" %>
+<div data-role="content">
+  <ul id='usuarios_secciones' data-role="listview">
+  <% @usuario.usuarios_secciones.each do |usuario_seccion| %>
+    <% if !usuario_seccion.seccion_id.nil? %> 
+      <% if can? :read, usuario_seccion %>
+        <li>
+          <% if usuario_seccion.verifica_cuaderno_control == 1 %>
+            <% verifica_cc = "Verifica cuaderno control" %>
+          <% else %>
+            <% verifica_cc = "" %>
+          <% end %>
+          
+          <% if usuario_seccion.asigna_actividad == 1 %>
+            <% asigna_ac = "Asigna actividad" %>
+          <% else %>
+            <% asigna_ac = "" %>
+          <% end %>
+          
+          <% if usuario_seccion.revisa_autorizacion == 1 %>
+            <% revisa_ac = "Revisa autorización actividad" %>
+          <% else %>
+            <% revisa_ac = "" %>
+          <% end %>
+          
+          <% if usuario_seccion.revisa_asistencia == 1 %>
+            <% revisa_asis = "Revis asistencia" %>
+          <% else %>
+            <% revisa_asis = "" %>
+          <% end %>
+          
+          <%#= link_to usuario_seccion.grado_seccion, [@usuario, usuario_seccion] %>
+          <%= link_to usuario_seccion.grado_seccion, "#" %>
+          <div style="margin: 15px">
+            <%= simple_format(verifica_cc) %>
+            <%= simple_format(asigna_ac) %>
+            <%= simple_format(revisa_ac) %>
+            <%= simple_format(revisa_asis) %>
+          </div>
+          <% if can? :destroy, usuario_seccion %>
+             <%= link_to 'Eliminar vínculo', [usuario_seccion.usuario, usuario_seccion], confirm: '¿Seguro que desea eliminar el registro?', method: :delete, "data-icon" => "delete" %>
+          <% end %>
+        </li>
+      <% end %>
+    <% end %>
   <% end %>
+  </ul>
 </div>
