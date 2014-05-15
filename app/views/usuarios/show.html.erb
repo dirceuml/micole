@@ -57,13 +57,13 @@
           <% end %>
           
           <%#= link_to usuario_seccion.grado_seccion, [@usuario, usuario_seccion] %>
-          <%= link_to usuario_seccion.grado_seccion, "#" %>
-          <div style="margin: 15px">
-            <%= simple_format(verifica_cc) %>
-            <%= simple_format(asigna_ac) %>
-            <%= simple_format(revisa_ac) %>
-            <%= simple_format(revisa_asis) %>
-          </div>
+          <%= link_to simple_format(usuario_seccion.grado_seccion), "#" %>
+          <!-- div style="margin: 15px" -->
+            <!-- %= simple_format(verifica_cc) % -->
+            <!--%= simple_format(asigna_ac) %-->
+            <!--%= simple_format(revisa_ac) %-->
+            <!--%= simple_format(revisa_asis) %-->
+          <!--/div -->
           <% if can? :destroy, usuario_seccion %>
              <%= link_to 'Eliminar vínculo', [usuario_seccion.usuario, usuario_seccion], confirm: '¿Seguro que desea eliminar el registro?', method: :delete, "data-icon" => "delete" %>
           <% end %>

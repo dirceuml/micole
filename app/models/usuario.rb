@@ -15,9 +15,16 @@ class Usuario < ActiveRecord::Base
   validates :clave, :confirmation => { :message => ": No ha confirmado correctamente la clave" }
   validates :clave, :presence => { :message => ": El campo no puede estar vacio" }, :on => :create
   validates :usuario, :uniqueness => { :message => "El usuario ya esta registrado" }
-  #validates :usuario, :uniqueness => { :scope => :colegio_id, :message => "El usuario ya esta registrado" }
+  #validates :usuario, :uniqueness => { :scope => :colegio_id, :message => "El usuario ya esta registrado" }  
   validate :clave_actual_ok, on: :update
   validate :clave_diferente, on: :update
+  
+  #validates :alcance_colegio, :presence => {:if => :perfil_id == 3, :message => ": Para este perfil seleccione el nivel de acceso" } 
+  validate :if => "perfil_id == 3" do |a|
+    if a.alcance_colegio.nil?
+      errors[:base] << "Seleccione el nivel de acceso para este perfil de usuario"
+    end
+  end
   
   scope :por_colegio, lambda { |colegio| where("colegio_id = ?", colegio) }
   scope :pendientenotificar, lambda { |colegio| self.por_colegio(colegio).where("notificado = 0", 0) }

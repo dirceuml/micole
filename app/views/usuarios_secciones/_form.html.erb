@@ -13,35 +13,41 @@
     <% end %>
   <% end %>
 
-  <% if @usuario.perfil_id == 3 %>
+  <% if @usuario.perfil_id == 3 && @usuario.alcance_colegio == 0 %>
+      <%= "Asignar secciones:" %><br />    
     <div data-role="content" class="content-primary">
       <%= f.hidden_field :usuario_id %>
       <%= f.hidden_field :usuario_nom, :value => current_user.usuario %>
-      <div class="field">
-        <%= collection_select(:usuario_seccion, :seccion_id, Seccion.por_anioescolar(anio_escolar.id).order('grados.grado','seccion'), :id, :grado_seccion, {:prompt => ':: Seleccione ::' }, {"data-mini" => "true", :required => "required"}) %>
+      <div style="width: 200px; clear: left; float: left">
+      <!-- div class="field" -->
+        <%= collection_select(:usuario_seccion, :seccion_id, Seccion.por_anioescolar(anio_escolar.id).order('grados.nivel','grados.grado','seccion'), :id, :grado_seccion, {:prompt => ':: Seleccione ::' }, {"data-mini" => "true", :required => "required"}) %>
       </div>
-      <br />
-      <fieldset data-role="controlgroup">
-        <div class="field">
-          <%= f.check_box :verifica_cuaderno_control, "class" => "custom", "data-mini" => "true" %>
-          <%= f.label :verifica_cuaderno_control, "Verifica cuaderno de control" %> 
-        </div>
-        <div class="field">
-          <%= f.check_box :asigna_actividad, "class" => "custom", "data-mini" => "true" %>
-          <%= f.label :asigna_actividad, "Asigna actividades" %> 
-        </div>
-        <div class="field">
-          <%= f.check_box :revisa_autorizacion, "class" => "custom", "data-mini" => "true" %>
-          <%= f.label :revisa_autorizacion, "Revisa autorización a actividades" %> 
-        </div>
-        <div class="field">
-          <%= f.check_box :revisa_asistencia, "class" => "custom", "data-mini" => "true" %>
-          <%= f.label :revisa_asistencia %> 
-        </div>
-      </fieldset>
+      <!-- br / -->
+      
+      <!-- fieldset data-role="controlgroup" -->
+        <!-- div class="field" -->
+          <!-- %= f.check_box :verifica_cuaderno_control, "class" => "custom", "data-mini" => "true" % -->
+          <!-- %= f.label :verifica_cuaderno_control, "Verifica cuaderno de control" % --> 
+        <!-- /div -->
+        <!-- div class="field" -->
+          <!-- %= f.check_box :asigna_actividad, "class" => "custom", "data-mini" => "true" % -->
+          <!-- %= f.label :asigna_actividad, "Asigna actividades" % --> 
+        <!-- /div -->
+        <!-- div class="field" -->
+          <!-- %= f.check_box :revisa_autorizacion, "class" => "custom", "data-mini" => "true" % -->
+          <!-- %= f.label :revisa_autorizacion, "Revisa autorización a actividades" % --> 
+        <!-- /div -->
+        <!-- div class="field" -->
+          <!-- %= f.check_box :revisa_asistencia, "class" => "custom", "data-mini" => "true" % -->
+          <!-- %= f.label :revisa_asistencia % --> 
+        <!-- /div -->
+      <!-- /fieldset -->
 
-      <div class="actions">
-        <%= f.submit "Agregar sección", "data-inline" => "true", "data-theme" => "a", "data-icon" => "check", "data-mini" => "true" %>
+      <!-- div class="actions" -->
+        <!-- %= f.submit "Agregar sección", "data-inline" => "true", "data-theme" => "a", "data-icon" => "check", "data-mini" => "true" % -->
+      <!-- /div -->
+      <div class="actions" style="float: left">
+        <%= f.submit "", "data-inline" => "true", "data-theme" => "a", "data-icon" => "plus", "data-mini" => "true", "data-iconpos" => "notext" %>
       </div>
     </div>
   <% end %>
