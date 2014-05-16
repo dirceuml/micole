@@ -75,6 +75,27 @@
     </div>
 
     <div class="field">
+      Alcance:<br />
+      <fieldset data-role = "controlgroup" data-type  = "horizontal"  data-mini = "true" >
+        <% if @actividad.alcance_colegio == 0 %>
+            <%= f.number_field :alcance_colegio, "type" => "radio", "id" => "radio-opc1", "value" => 0, "checked" =>"checked" %>
+        <% else%>
+            <%= f.number_field :alcance_colegio, "type" => "radio", "id" => "radio-opc1", "value" => 0 %>
+        <% end %>
+        <label for="radio-opc1">Grados y Secciones</label>
+        <% if @actividad.alcance_colegio == 1 %>
+            <%= f.number_field :alcance_colegio, "type" => "radio", "id" => "radio-opc2", "value" => 1, "checked" =>"checked" %>
+        <% else%>
+            <%= f.number_field :alcance_colegio, "type" => "radio", "id" => "radio-opc2", "value" => 1 %>
+        <% end %>
+        <label for="radio-opc2">Colegio</label>
+      </fieldset>
+    </div>
+
+    <div class="field">
+        <%= f.hidden_field :usuario, :value => current_user.usuario %>
+    </div>
+    <div class="field">
         <%= f.hidden_field :usuario, :value => current_user.usuario %>
     </div>
     <br />

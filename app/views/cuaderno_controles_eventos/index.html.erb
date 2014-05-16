@@ -1,5 +1,5 @@
 <div data-role="header">
-  <h1>Consultar eventos</h1>
+  <h1>Consultar eventos programados</h1>
 </div>
 
 <% if params[:alumno_id].nil? %>
@@ -14,7 +14,7 @@
   <%= form_tag(cuaderno_controles_eventos_path, {"data-ajax" => "false", "name" => "buscar", :method => :get}) do %>
     <div data-role="fieldcontain">
       <li data-role="fieldcontain">
-        Alumno: <%= collection_select(:alumno, :id, Alumno.hijos_de(persona.id).order("apellido_paterno", "apellido_materno", "nombres"), :id, :apellidos_nombres, {:selected => alumno}, {"data-mini" => "true", :name => "alumno_id"}) %><br/>
+        Alumno: <%= collection_select(:alumno, :id, Alumno.hijos_de(persona.id).order("nombres", "apellido_paterno"), :id, :nombres_apellido_paterno, {:selected => alumno}, {"data-mini" => "true", :name => "alumno_id"}) %><br/>
       </li>
       <li data-role="fieldcontain">
         <%= submit_tag "Buscar", "data-inline" => "true", "data-theme" => "a", "data-icon" => "search", "data-mini" => "true", :name => nil %>

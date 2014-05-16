@@ -8,6 +8,8 @@ class CuadernoControl < ActiveRecord::Base
   
   scope :cerrado, lambda { |anioescolar| joins(:seccion => :grado).where("grados.anio_escolar_id = ? and estado = 2", anioescolar)}
   scope :abierto, lambda { |anioescolar| joins(:seccion => :grado).where("grados.anio_escolar_id = ? and estado = 1", anioescolar)}
+  scope :cerrado_usuario, lambda { |anioescolar, usuarioadm| joins(:seccion =>:usuarios_secciones).joins(:seccion =>:grado).where("grados.anio_escolar_id = ? and estado = 2 and usuarios_secciones.usuario_id = ?", anioescolar, usuarioadm)}
+  scope :abierto_usuario, lambda { |anioescolar, usuarioadm| joins(:seccion =>:usuarios_secciones).joins(:seccion =>:grado).where("grados.anio_escolar_id = ? and estado = 1 and usuarios_secciones.usuario_id = ?", anioescolar, usuarioadm)}
   #scope :cerrado, where(:estado => 2)
   #scope :abierto, where(:estado => 1)
 end

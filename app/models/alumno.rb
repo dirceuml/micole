@@ -24,6 +24,10 @@ class Alumno < ActiveRecord::Base
     apellido_paterno + " " + apellido_materno + " " + nombres
   end
   
+  def nombres_apellido_paterno
+    nombres+ "  "+ apellido_paterno
+  end
+  
   def grado_seccion(anioescolar)
     anioalumno = AnioAlumno.find_by_anio_escolar_id_and_alumno_id(anioescolar, id)
     if !anioalumno.nil?

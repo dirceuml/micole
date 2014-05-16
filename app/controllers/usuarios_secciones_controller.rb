@@ -96,7 +96,7 @@ class UsuariosSeccionesController < ApplicationController
     @usuario_seccion = @usuario.usuarios_secciones.find(params[:id])
     @usuario_seccion.destroy
     
-    redirect_to actividad_path(@usuario)
+    redirect_to usuario_path(@usuario)
   end
   
   rescue_from CanCan::AccessDenied do |exception|

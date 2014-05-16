@@ -9,6 +9,7 @@ class Actividad < ActiveRecord::Base
   
   validates :anio_escolar_id, :tipo_evento_id, :fecha_hora_inicio, :fecha_hora_fin, :presence => { :message => ": El campo no puede estar vacio" }
   validates :tipo_actividad, :nombre, :detalle, :requiere_autorizacion, :usuario, :presence => { :message => ": El campo no puede estar vacio" }
+  validates :alcance_colegio, :presence => { :message => ": Seleccione el alcance de la actividad" }
   #validates_format_of :hora_min_inicio, :with => /\d{1,2}:\d{2}/, :message => "invalido"
   
   validate :if => "!fecha_hora_inicio.nil? && !fecha_hora_fin.nil?" do |a|
@@ -72,6 +73,12 @@ class Actividad < ActiveRecord::Base
       end
     end
   end
+  
+  validate :if => "alcance_colegio == 1" do |a|
+    if Usuario.find_by_usuario(a.usuario).alcance_colegio == 0
+      errors[:base] << "Ud. no tiene acceso a programar una actividad para todo el colegio"
+    end
+  end
     
   scope :pendiente, lambda { |anioescolar, fecha| where("actividades.anio_escolar_id = ? and to_char(fecha_hora_fin, 'yyyymmdd') >= ?", anioescolar, fecha.strftime('%Y%m%d'))}
   scope :realizada, lambda { |anioescolar, fecha| where("actividades.anio_escolar_id = ? and to_char(fecha_hora_fin, 'yyyymmdd') < ?", anioescolar, fecha.strftime('%Y%m%d'))}
@@ -82,7 +89,7 @@ class Actividad < ActiveRecord::Base
   scope :por_persona, lambda { |persona| joins(:secciones => {:anios_alumnos => :personas_vinculadas}).uniq.where("personas_vinculadas.id = ?", persona)}
   scope :por_persona_y_fecha, lambda { |persona,fecha| por_persona(persona).where("to_char(fecha_hora_inicio, 'dd/mm/yyyy') = ?", fecha.strftime('%d/%m/%Y'))}
   scope :apoderados, lambda { |actividad| joins(:personas_vinculadas).where("actividades.id = ? and alumnos_personas_vinculadas.apoderado = 1", actividad)}
-  
+  scope :por_secciones_usuario, lambda { |anioescolar, usuarioadm| joins(:actividades_secciones => {:seccion => :usuarios_secciones}).where("anio_escolar_id = ? and requiere_autorizacion = 1 and usuarios_secciones.usuario_id = ?", anioescolar, usuarioadm)}  
   #attr_accessor :fecha_inicio, :hora_inicio, :min_inicio, :fecha_fin, :hora_fin, :min_fin
   
   #after_initialize :get_datetime_inicio, :get_datetime_fin
