@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140515013619) do
+ActiveRecord::Schema.define(:version => 20140516052025) do
 
   create_table "actividades", :force => true do |t|
     t.integer  "anio_escolar_id",                                           :null => false
@@ -31,6 +31,7 @@ ActiveRecord::Schema.define(:version => 20140515013619) do
     t.date     "limite_autorizacion"
     t.integer  "estado",                                     :default => 1, :null => false
     t.string   "observacion",                  :limit => 50
+    t.integer  "alcance_colegio"
   end
 
   add_index "actividades", ["anio_escolar_id"], :name => "fk_actividades_aniosescolares"

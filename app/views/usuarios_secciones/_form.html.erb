@@ -14,7 +14,7 @@
   <% end %>
 
   <% if @usuario.perfil_id == 3 && @usuario.alcance_colegio == 0 %>
-      <%= "Asignar secciones:" %><br />    
+    <%= "Asignar secciones:" %><br />
     <div data-role="content" class="content-primary">
       <%= f.hidden_field :usuario_id %>
       <%= f.hidden_field :usuario_nom, :value => current_user.usuario %>

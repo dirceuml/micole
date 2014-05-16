@@ -4,6 +4,9 @@
     <%= link_to 'Registrar', new_cuaderno_control_path, "data-icon" => "plus", "class" => "ui-btn-right" %>
   <% end %>
 </div>
+
+<% usuario = Usuario.find_by_usuario(current_user.usuario) %>
+
 <div data-role="content" class="ui-content" role="main">
   
   <div data-role="collapsible-set" data-theme="b" data-content-theme="d" data-inset="false">
@@ -11,7 +14,12 @@
     <div data-role="collapsible" data-collapsed="false">
       <h2>Abiertos</h2>
       <ul data-role="listview" data-filter="true">
-        <% @cuadernos_controles.abierto(anio_escolar.id).each do |cuaderno_control| %>    
+        <% if usuario.perfil_id == 3 && usuario.alcance_colegio == 0%>
+            <% @abiertos = @cuadernos_controles.abierto_usuario(anio_escolar.id, usuario.id) %>
+        <% else %>
+            <% @abiertos = @cuadernos_controles.abierto(anio_escolar.id) %>
+        <% end %>
+        <% @abiertos.each do |cuaderno_control| %>
           <li data-filtertext="<%= "#{cuaderno_control.fecha.strftime('%d/%m/%Y')} #{Seccion.find(cuaderno_control.seccion_id).grado_seccion} #{ListaValor.find_by_tabla_and_item(5, cuaderno_control.estado).descripcion}" %>" >
             <%= link_to cuaderno_control do %>
               <!--%= image_tag("open_icon.jpg", :class => "ui-li-icon", :alt => "Abierto") %-->
@@ -29,7 +37,12 @@
     <div data-role="collapsible">
       <h2>Cerrados</h2>
       <ul data-role="listview" data-filter="true">
-        <% @cuadernos_controles.cerrado(anio_escolar.id).each do |cuaderno_control| %>    
+        <% if usuario.perfil_id == 3 && usuario.alcance_colegio == 0%>
+            <% @cerrados = @cuadernos_controles.cerrado_usuario(anio_escolar.id, usuario.id) %>
+        <% else %>
+            <% @cerrados = @cuadernos_controles.cerrado(anio_escolar.id) %>
+        <% end %>
+        <% @cerrados.each do |cuaderno_control| %>
           <li data-filtertext="<%= "#{cuaderno_control.fecha.strftime('%d/%m/%Y')} #{Seccion.find(cuaderno_control.seccion_id).grado_seccion} #{ListaValor.find_by_tabla_and_item(5, cuaderno_control.estado).descripcion}" %>" >
             <%= link_to cuaderno_control do %>
               <!--%= image_tag("close_icon.jpg", :class => "ui-li-icon", :alt => "Cerrado") %-->

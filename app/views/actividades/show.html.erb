@@ -25,6 +25,13 @@
     <% end %>
     </b>
     <p>
+    <b> Alcance:</b> 
+    <% if @actividad.alcance_colegio == 1 %>
+      Colegio
+    <% else %>
+      Secciones
+    <% end %>
+    <p>
 </div>
 
 <% if can? :create, ActividadSeccion %>

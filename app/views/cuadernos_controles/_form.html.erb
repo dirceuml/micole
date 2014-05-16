@@ -19,7 +19,13 @@
   </div>
   <div class="field">
     Sección: <br/>
-    <%= collection_select(:cuaderno_control, :seccion_id, Seccion.por_anioescolar(anio_escolar.id).order('grados.grado','seccion'), :id, :grado_seccion, {}, {"data-mini" => "true", :required => "required"}) %>
+    <% usuario = Usuario.find_by_usuario(current_user.usuario) %>
+    <% if usuario.perfil_id == 3 && usuario.alcance_colegio == 0%>
+      <% @secciones = Seccion.por_anioescolar_usuario(anio_escolar.id, usuario.id).order('grados.nivel','grados.grado','seccion') %>
+    <% else %>
+      <% @secciones = Seccion.por_anioescolar(anio_escolar.id).order('grados.nivel','grados.grado','seccion') %>
+    <% end %>
+    <%= collection_select(:cuaderno_control, :seccion_id, @secciones, :id, :grado_seccion, {}, {"data-mini" => "true", :required => "required"}) %>
   </div>
   <div class="field">
     <!--%= f.label :estado %-->
