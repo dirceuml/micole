@@ -409,8 +409,8 @@ ActiveRecord::Schema.define(:version => 20140515013619) do
     t.datetime "created_at",                                :null => false
     t.datetime "updated_at",                                :null => false
     t.string   "clave_salt",           :default => "clave", :null => false
-    t.integer  "notificado",           :default => 0,       :null => false
     t.date     "fecha_clave"
+    t.integer  "notificado",           :default => 0,       :null => false
     t.integer  "alcance_colegio"
   end
 
