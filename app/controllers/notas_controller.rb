@@ -6,6 +6,10 @@ class NotasController < ApplicationController
   # GET /notas
   # GET /notas.json
   def index
+    if current_user.nil?
+      redirect_to(log_in_path) and return
+    end
+    
     alumno_id = params[:alumno_id]
     
     @notas = Nota.por_alumno_id(alumno_id)

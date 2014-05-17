@@ -11,7 +11,7 @@
 <div data-role="content">    
   <div>
     <div style="text-align: center;">
-      <%= form_tag(notas_path, {:method => :get, "onSubmit" => "return validarBusquedaXDocumento();", "data-ajax" => "false", "name" => "buscar"}) do %>            
+      <%= form_tag(notas_path, {:method => :get, "data-ajax" => "false", "name" => "buscar"}) do %>            
          <div data-role="fieldcontain">
             <div style="text-align: left;">
               Alumno: <%= collection_select(:alumno, :id, Alumno.hijos_de(PersonaVinculada.logueado(current_user.usuario)).order('nombres'), :id, :nombres_apellido_paterno, {:selected => alumno_id}, {"data-mini" => "true", :name => "alumno_id"}) %>
