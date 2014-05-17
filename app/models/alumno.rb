@@ -9,8 +9,8 @@ class Alumno < ActiveRecord::Base
   has_many :anios_alumnos
   has_many :anios_escolares, :through => :anios_alumnos
   has_many :secciones, :through => :anios_alumnos
-  
   has_many :asistencias, :through => :anios_alumnos
+  has_one  :usuario
   
   attr_accessor :origen
   

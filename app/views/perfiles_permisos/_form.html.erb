@@ -14,14 +14,15 @@
   <% end %>
 
 Permisos:
-<div data-role="fieldcontain">
+<!-- div data-role="fieldcontain" -->
+<div data-role="content" class="content-primary">
   <%#*<div class="field">%>
     <%#*Perfil: <br/>%>
     <%#= collection_select(:perfil_permiso, :perfil_id, Perfil.all, :id, :descripcion, {:prompt => ':: Seleccione ::' }, {"data-mini" => "true"}) %>
   <%#*</div>%>
   <%= f.hidden_field :perfil_id %>
   
-  <div style="width: 250px; clear: left; float: left">
+  <div style="width: 310px; clear: left; float: left">
     <%= collection_select(:perfil_permiso, :permiso_id, Permiso.order("subject_class, action"), :id, :detalle, {:prompt => ':: Seleccione ::' }, {"data-mini" => "true"}) %>
   </div>
   <div style="float: left">

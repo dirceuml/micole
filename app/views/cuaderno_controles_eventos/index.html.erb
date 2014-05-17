@@ -2,24 +2,29 @@
   <h1>Consultar eventos programados</h1>
 </div>
 
-<% if params[:alumno_id].nil? %>
-  <% alumno = "" %>
-<% else %>
-  <% alumno = params[:alumno_id] %>
-<% end %>
-
-<% persona = PersonaVinculada.logueado(current_user.usuario).first %>
-
 <div data-role="content" class="ui-content" role="main">
-  <%= form_tag(cuaderno_controles_eventos_path, {"data-ajax" => "false", "name" => "buscar", :method => :get}) do %>
-    <div data-role="fieldcontain">
-      <li data-role="fieldcontain">
-        Alumno: <%= collection_select(:alumno, :id, Alumno.hijos_de(persona.id).order("nombres", "apellido_paterno"), :id, :nombres_apellido_paterno, {:selected => alumno}, {"data-mini" => "true", :name => "alumno_id"}) %><br/>
-      </li>
-      <li data-role="fieldcontain">
-        <%= submit_tag "Buscar", "data-inline" => "true", "data-theme" => "a", "data-icon" => "search", "data-mini" => "true", :name => nil %>
-      </li>
-    </div>
+
+  <% usuario = Usuario.find_by_usuario(current_user.usuario) %>
+  <% if usuario.perfil_id == 4%>
+    <% alumno = usuario.alumno_id.to_s %>
+  <% else %>
+    <% if params[:alumno_id].nil? %>
+      <% alumno = "" %>
+    <% else %>
+      <% alumno = params[:alumno_id] %>
+    <% end %>
+
+    <% persona = PersonaVinculada.logueado(current_user.usuario).first %>
+    <%= form_tag(cuaderno_controles_eventos_path, {"data-ajax" => "false", "name" => "buscar", :method => :get}) do %>
+      <div data-role="fieldcontain">
+        <li data-role="fieldcontain">
+          Alumno: <%= collection_select(:alumno, :id, Alumno.hijos_de(persona.id).order("nombres", "apellido_paterno"), :id, :nombres_apellido_paterno, {:selected => alumno}, {"data-mini" => "true", :name => "alumno_id"}) %><br/>
+        </li>
+        <li data-role="fieldcontain">
+          <%= submit_tag "Buscar", "data-inline" => "true", "data-theme" => "a", "data-icon" => "search", "data-mini" => "true", :name => nil %>
+        </li>
+      </div>
+    <% end %>
   <% end %>
   
   <div data-role="collapsible-set" data-theme="b" data-content-theme="d" data-inset="false">

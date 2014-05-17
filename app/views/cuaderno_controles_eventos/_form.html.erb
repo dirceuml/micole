@@ -12,18 +12,18 @@
   <% end %>
 <div data-role="fieldcontain">
   <div class="field">
-    Tipo de evento: (*)<br />
+    Tipo de evento (*)<br />
     <% funcion = "toggleElement(this, document.getElementById('cuaderno_control_evento_alumno_id'), 1)" %>
     <%= collection_select(:cuaderno_control_evento, :tipo_evento_id, TipoEvento.where("cuaderno_control = 1"), :id, :descripcion, {:prompt => ':: Seleccione un tipo de evento ::'}, {"data-mini" => "true", :onchange => funcion, :required => "required"}) %>    
   </div>
   <div class="field">
-    Alumno: (*)<br/><%= collection_select(:cuaderno_control_evento, :alumno_id, Alumno.pertenecen_a_seccion(anio_escolar.id, @cuaderno_control.seccion_id), :id, :apellidos_nombres, {:prompt => ':: Seleccione un alumno ::' }, {"data-mini" => "true", :required => "required"}) %>    
+    Alumno (*)<br/><%= collection_select(:cuaderno_control_evento, :alumno_id, Alumno.pertenecen_a_seccion(anio_escolar.id, @cuaderno_control.seccion_id), :id, :apellidos_nombres, {:prompt => ':: Seleccione un alumno ::' }, {"data-mini" => "true", :required => "required"}) %>    
   </div>
   <div class="field">
-    Descripción: (*)<br/><%= f.text_area :descripcion, :required => "required" %>
+    Descripción (*)<br/><%= f.text_area :descripcion, :required => "required" %>
   </div>
   <div class="field">
-    Para la fecha:<br/><%= f.text_field :fecha_evento, "data-mini" => "true", "data-role" => "datebox", "type" => "date", "style" => "width:130px" %>
+    Para la fecha<br/><%= f.text_field :fecha_evento, "data-mini" => "true", "data-role" => "datebox", "type" => "date", "style" => "width:130px" %>
   </div>
   <div class="field">
     <%= f.hidden_field :usuario, :value => current_user.usuario %>

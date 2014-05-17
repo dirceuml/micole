@@ -5,6 +5,7 @@ class Usuario < ActiveRecord::Base
   before_save :encrypt_password
   
   belongs_to :persona_vinculada
+  belongs_to :alumno
   belongs_to :colegio
   belongs_to :perfil
   

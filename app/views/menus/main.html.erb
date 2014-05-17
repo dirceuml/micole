@@ -10,7 +10,7 @@
         Cuaderno de control
       </li>
 
-      <% if [1,2,3].include? current_user.perfil_id %>
+      <% if [1,2,3,4].include? current_user.perfil_id %>
         <% if [1,3].include? current_user.perfil_id %>
           <li><a href="<%= tipos_eventos_path %>">Configurar</a></li>
         <% end %>
@@ -19,7 +19,7 @@
           <li><a href="<%= cuadernos_controles_path %>">Registrar</a></li>
         <% end %>
 
-        <% if [1,2].include? current_user.perfil_id %>
+        <% if [1,2,4].include? current_user.perfil_id %>
           <li>
             <a href="<%= cuaderno_controles_revisiones_path(:accion => :revisar, :usuario => current_user.usuario) %>">
               Revisar
@@ -30,7 +30,7 @@
         <% if [1,3].include? current_user.perfil_id %>
           <li><a href="<%= cuaderno_controles_revisiones_path(:accion => :verificar) %>">Verificar</a></li>
         <% end %>
-        <% if [1,2].include? current_user.perfil_id %>
+        <% if [1,2,4].include? current_user.perfil_id %>
           <li><a href="<%= cuaderno_controles_eventos_path %>">Consultar eventos programados</a></li>
         <% end %>
       <% end %>
@@ -67,7 +67,7 @@
       <% end %>
 
 
-      <% if [1,2,3].include? current_user.perfil_id %>
+      <% if [1,2,3,4].include? current_user.perfil_id %>
         <li data-role="list-divider" data-icon="false" data-mini="true">
           Actividades del colegio
         </li>
@@ -84,7 +84,7 @@
           <li><a href="<%= autorizaciones_path(:accion => :consultar) %>" >Consultar autorizaciones</a></li>
         <% end %>
 
-        <% if [1,2].include? current_user.perfil_id %>
+        <% if [1,2,4].include? current_user.perfil_id %>
           <li><a href="<%= calendario_actividades_path(Date.current.year, Date.current.month, Date.current.strftime('%d')) %>">Calendario</a></li>
         <% end %>
       <% end %>
