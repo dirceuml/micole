@@ -85,7 +85,7 @@ class ArchivosController < ApplicationController
                     :telefono_movil => telefono_movil,
                     :direccion => direccion,
                     :correo => correo,
-                    :usuario => current_user.usuario
+                    :usuario_nom => current_user.usuario
                   )
                 else
                   alumno = Alumno.create!(
@@ -98,7 +98,7 @@ class ArchivosController < ApplicationController
                     :telefono_movil => telefono_movil,
                     :direccion => direccion,
                     :correo => correo,
-                    :usuario => current_user.usuario
+                    :usuario_nom => current_user.usuario
                   )
                 end    
                 
