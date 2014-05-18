@@ -4,9 +4,8 @@
 
 <div data-role="content" class="ui-content" role="main">
 
-  <% usuario = Usuario.find_by_usuario(current_user.usuario) %>
-  <% if usuario.perfil_id == 4%>
-    <% alumno = usuario.alumno_id.to_s %>
+  <% if current_user.perfil_id == 4%>
+    <% alumno = current_user.alumno_id.to_s %>
   <% else %>
     <% if params[:alumno_id].nil? %>
       <% alumno = "" %>

@@ -14,9 +14,9 @@ class CuadernoControlesEventosController < ApplicationController
     if current_user.nil?
       redirect_to(log_in_path) and return
     end
-    usuario = Usuario.find_by_usuario(current_user.usuario)
-    if usuario.perfil_id == 4   # Es un alumno
-      alumno  = Alumno.find(usuario.alumno_id).id
+    
+    if current_user.perfil_id == 4   # Es un alumno
+      alumno  = Alumno.find(current_user.alumno_id).id
       seccion = AnioAlumno.find_by_anio_escolar_id_and_alumno_id(anio_escolar.id, alumno).seccion_id
     else
       alumno = params[:alumno_id]

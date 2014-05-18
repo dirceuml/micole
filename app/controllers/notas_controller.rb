@@ -6,7 +6,11 @@ class NotasController < ApplicationController
   # GET /notas
   # GET /notas.json
   def index
-    alumno_id = params[:alumno_id]
+    if current_user.perfil_id == 4
+      alumno_id = current_user.alumno_id
+    else
+      alumno_id = params[:alumno_id]  
+    end
     
     @notas = Nota.por_alumno_id(alumno_id)
     @cursos = @notas.uniq.pluck(:curso_id)
