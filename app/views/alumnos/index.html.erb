@@ -13,7 +13,7 @@
 <% end %>
 
     <div style="text-align: center;">
-      <%= form_tag(alumnos_path, {:method => :get, "data-ajax" => "false", "name" => "buscar"}) do %>            
+      <%= form_tag(alumnos_path, {:method => :get, "data-ajax" => "false", "name" => "buscar"}) do %>                 
          <div data-role="fieldcontain">
             <div style="text-align: left;">
               <%= collection_select(:seccion, :id, Seccion.por_anioescolar(anio_escolar.id).order('grado_id, seccion'), :id, :grado_seccion, { :prompt => ':: Todas las secciones ::', :selected => seccion_id}, {"data-mini" => "true", :name => "seccion_id"}) %>

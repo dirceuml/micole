@@ -68,7 +68,8 @@ class AlumnosController < ApplicationController
   # GET /alumnos/new
   # GET /alumnos/new.json
   def new
-    @alumno = Alumno.new    
+    @alumno = Alumno.new   
+    1.times { @alumno.alumnos_personas_vinculadas.build }
 
     respond_to do |format|
       format.html # new.html.erb
@@ -145,6 +146,11 @@ class AlumnosController < ApplicationController
       format.html { redirect_to alumnos_url }
       format.json { head :no_content }
     end
+  end
+  
+  def alumnos_personas_vinculadas
+    @alumnos = Alumno.all
+    @personas_vinculadas = @PersonaVinculada.all
   end
   
   rescue_from CanCan::AccessDenied do |exception|

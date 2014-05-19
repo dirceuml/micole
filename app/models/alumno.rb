@@ -14,6 +14,10 @@ class Alumno < ActiveRecord::Base
   
   attr_accessor :origen
   
+  accepts_nested_attributes_for :alumnos_personas_vinculadas, :allow_destroy => true  
+  attr_accessible :alumnos_personas_vinculadas_attributes
+  attr_accessible :nombres, :apellido_paterno, :apellido_materno, :fecha_nacimiento, :dni, :telefono_fijo, :telefono_movil, :direccion, :correo, :salida_con_persona, :foto, :usuario_nom
+  
   mount_uploader :foto, FotoUploader
   
   validates :nombres, :apellido_paterno, :apellido_materno, :usuario_nom, :presence => { :message => ": El campo no puede estar vacio" }
