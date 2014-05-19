@@ -1,18 +1,26 @@
 <div data-role="header">
-  <h1>Crear masivamente usuarios</h1>
+  <h1>Creacion masiva de usuarios</h1>
 </div>
 
 <%= form_tag(crearusuarios_path, {"data-ajax" => "false", "name" => "crearusuarios"}) do %>
   <div data-role="fieldcontain">
+    Seleccione: <br />
     <fieldset data-role="controlgroup" >
-      <legend>Seleccione:</legend>
-      <input type="radio" name="creausuarios" id="creausuarios-1" value= 1  />
+      <input type="radio" name="creausuarios" id="creausuarios-1" value= 1 checked="checked" />
       <label for="creausuarios-1">Crear usuarios y notificarlos por correo</label>
-      <input type="radio" name="creausuarios" id="creausuarios-2" value= 2 checked="checked" />
-      <label for="creausuarios-2">Solo crear usuarios</label>
+      <input type="radio" name="creausuarios" id="creausuarios-2" value= 2  />
+      <label for="creausuarios-2">Solo crear usuarios (padres y alumnos)</label>
       <input type="radio" name="creausuarios" id="creausuarios-3" value= 3  />
       <label for="creausuarios-3">Solo notificar a los usuarios por correo</label>
     </fieldset>
+    
+    Se crearan usuarios para alumnos a partir del grado:
+    <% cole = Colegio.find(colegio.id) %> 
+    <% if cole.grado_usuario.nil? %>
+      <b>No definido</b> 
+    <% else %>
+      <b><%= "#{cole.grado_usuario} #{ListaValor.find_by_tabla_and_item(9,1).descripcion}" %></b> 
+    <% end %>
   </div>
 
   <div class="actions">

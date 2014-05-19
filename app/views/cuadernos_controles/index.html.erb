@@ -5,8 +5,6 @@
   <% end %>
 </div>
 
-<% usuario = Usuario.find_by_usuario(current_user.usuario) %>
-
 <div data-role="content" class="ui-content" role="main">
   
   <div data-role="collapsible-set" data-theme="b" data-content-theme="d" data-inset="false">
@@ -14,8 +12,8 @@
     <div data-role="collapsible" data-collapsed="false">
       <h2>Abiertos</h2>
       <ul data-role="listview" data-filter="true">
-        <% if usuario.perfil_id == 3 && usuario.alcance_colegio == 0%>
-            <% @abiertos = @cuadernos_controles.abierto_usuario(anio_escolar.id, usuario.id) %>
+        <% if current_user.perfil_id == 3 && current_user.alcance_colegio == 0%>
+            <% @abiertos = @cuadernos_controles.abierto_usuario(anio_escolar.id, current_user.id) %>
         <% else %>
             <% @abiertos = @cuadernos_controles.abierto(anio_escolar.id) %>
         <% end %>
@@ -37,8 +35,8 @@
     <div data-role="collapsible">
       <h2>Cerrados</h2>
       <ul data-role="listview" data-filter="true">
-        <% if usuario.perfil_id == 3 && usuario.alcance_colegio == 0%>
-            <% @cerrados = @cuadernos_controles.cerrado_usuario(anio_escolar.id, usuario.id) %>
+        <% if current_user.perfil_id == 3 && current_user.alcance_colegio == 0%>
+            <% @cerrados = @cuadernos_controles.cerrado_usuario(anio_escolar.id, current_user.id) %>
         <% else %>
             <% @cerrados = @cuadernos_controles.cerrado(anio_escolar.id) %>
         <% end %>

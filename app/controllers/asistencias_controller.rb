@@ -101,8 +101,10 @@ class AsistenciasController < ApplicationController
       codigo = params[:codigo_alumno].to_i
     end
     
-    @asistencias = Asistencia.por_alumno_fecha(anio_escolar.id, codigo, Date.current)    
-
+    @asistencias = Asistencia.por_alumno_fecha(anio_escolar.id, codigo, Date.current)
+    @personasvinculadas = PersonaVinculada.vinculados_de(0)
+    @nuevo = 1
+    
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @asistencia }
@@ -118,6 +120,7 @@ class AsistenciasController < ApplicationController
   # POST /asistencias.json
   def create
     codigo = params[:codigo_alumno].to_i
+    personavinculada = params[:asistencia][:persona_vinculada_id].to_i
     if codigo == 0
       flash[:notice] = 'Ingrese el codigo del alumno'
       render :new
@@ -139,15 +142,39 @@ class AsistenciasController < ApplicationController
         end
         if asistencia.tipo_movimiento == 2
           salida = 1
-        end      
+        end
       end
       movimiento = 0
-        if ingreso == 0 && salida  == 0
-      movimiento = 1
+      if ingreso == 0 && salida  == 0
+        movimiento = 1
       end
       if ingreso == 1 && salida  == 0
         if (Time.now- fecha_hora) > 60
           movimiento = 2
+        end
+      end
+      
+      if movimiento == 2
+        if Alumno.find(codigo).salida_con_persona == 1
+          cargarpersonasvinculadas = 0
+          if personavinculada == 0
+            if @personasvinculadas.nil?
+              cargarpersonasvinculadas = 1
+            else
+              cargarpersonasvinculadas = 1
+            end
+          else
+            if AlumnoPersonaVinculada.find_by_alumno_id_and_persona_vinculada_id(codigo, personavinculada).nil?
+              cargarpersonasvinculadas = 1
+            end
+          end
+          if cargarpersonasvinculadas == 1
+            @personasvinculadas = PersonaVinculada.vinculados_de(codigo)
+            flash[:notice] = 'Seleccione la persona que recoge al alumno'
+            @nuevo = 0
+            render :new
+            return
+          end
         end
       end
       
@@ -158,11 +185,16 @@ class AsistenciasController < ApplicationController
           flash[:notice] = 'Ha intentado registrar dos veces la salida'
         end
         render :new
+        @nuevo = 1
       else
+        if personavinculada == 0
+          personavinculada = nil
+        end
         @asistencia = Asistencia.new(
             :anio_alumno_id => AnioAlumno.find_by_anio_escolar_id_and_alumno_id(anio_escolar.id, codigo).id,
             :fecha_hora => Time.now,
             :usuario => current_user.usuario,
+            :persona_vinculada_id => personavinculada,
             :tipo_movimiento => movimiento
         )
         if !@asistencia.save

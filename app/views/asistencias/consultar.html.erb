@@ -12,9 +12,8 @@
   <% fechaF = params[:fechaF] %>
 <% end %>
 
-<% usuario = Usuario.find_by_usuario(current_user.usuario) %>
-<% if usuario.perfil_id == 3 && usuario.alcance_colegio == 0%>
-  <% @secciones = Seccion.por_anioescolar_usuario(anio_escolar.id, usuario.id).order('grados.nivel','grados.grado','seccion') %>
+<% if current_user.perfil_id == 3 && current_user.alcance_colegio == 0%>
+  <% @secciones = Seccion.por_anioescolar_usuario(anio_escolar.id, current_user.id).order('grados.nivel','grados.grado','seccion') %>
 <% else %>
   <% @secciones = Seccion.por_anioescolar(anio_escolar.id).order('grados.nivel','grados.grado','seccion') %>
 <% end %>

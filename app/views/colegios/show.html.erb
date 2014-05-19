@@ -13,6 +13,13 @@
   <b>Notificar inasistencia:</b> 
       <%= "#{ListaValor.find_by_tabla_and_item(10, @colegio.notificar_inasistencia).descripcion}" %>
       <p>
+  <b>Crear usuarios para alumnos a partir del grado:</b> 
+    <% if @colegio.grado_usuario.nil? %>
+      No definido
+    <% else %>
+      <%= "#{@colegio.grado_usuario} #{ListaValor.find_by_tabla_and_item(9,1).descripcion}" %>
+    <% end %>
+    <p>
   <b>Activo:</b>
   <% if @colegio.estado == 1 %>
     Si

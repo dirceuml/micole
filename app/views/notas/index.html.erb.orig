@@ -12,13 +12,19 @@
 
 <div data-role="content">    
   <div>
+<<<<<<< HEAD
     <% if current_user.perfil_id == 4 %>
       <% alumno_id = current_user.alumno_id %>
       <% alumnoseleccionado = 1 %>
     <% else %>
       <div style="text-align: center;">
-      <%= form_tag(notas_path, {:method => :get, "data-ajax" => "false", "name" => "buscar"}) do %>            
+        <%= form_tag(notas_path, {:method => :get, "onSubmit" => "return validarBusquedaXDocumento();", "data-ajax" => "false", "name" => "buscar"}) do %>            
           <div data-role="fieldcontain">
+=======
+    <div style="text-align: center;">
+      <%= form_tag(notas_path, {:method => :get, "data-ajax" => "false", "name" => "buscar"}) do %>            
+         <div data-role="fieldcontain">
+>>>>>>> 5aecd2555a66a5c870c548d9b676835bb7fb73ea
             <div style="text-align: left;">
               Alumno: <%= collection_select(:alumno, :id, Alumno.hijos_de(PersonaVinculada.logueado(current_user.usuario)).order('nombres'), :id, :nombres_apellido_paterno, {:selected => alumno_id}, {"data-mini" => "true", :name => "alumno_id"}) %>
               <%= submit_tag "Buscar", "data-inline" => "true", "data-theme" => "a", "data-icon" => "search", "data-mini" => "true", :name => nil %>

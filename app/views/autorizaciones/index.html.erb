@@ -10,10 +10,9 @@
   <% seccion = params[:seccion_id] %>
 <% end %>
 
-<% usuario = Usuario.find_by_usuario(current_user.usuario) %>
-<% if usuario.perfil_id == 3 && usuario.alcance_colegio == 0%>
-  <% @actividades = Actividad.por_secciones_usuario(anio_escolar.id, usuario.id).order("fecha_hora_inicio DESC") %>
-  <% @secciones   = Seccion.por_anioescolar_usuario(anio_escolar.id, usuario.id).order('grados.nivel','grados.grado','seccion') %>
+<% if current_user.perfil_id == 3 && current_user.alcance_colegio == 0%>
+  <% @actividades = Actividad.por_secciones_usuario(anio_escolar.id, current_user.id).order("fecha_hora_inicio DESC") %>
+  <% @secciones   = Seccion.por_anioescolar_usuario(anio_escolar.id, current_user.id).order('grados.nivel','grados.grado','seccion') %>
 <% else %>
   <% @actividades = Actividad.where("anio_escolar_id = ? and requiere_autorizacion = 1", anio_escolar.id).order("fecha_hora_inicio DESC") %>
   <% @secciones   = Seccion.por_anioescolar(anio_escolar.id).order('grados.nivel','grados.grado','seccion') %>

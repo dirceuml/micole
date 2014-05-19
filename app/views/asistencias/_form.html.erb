@@ -11,13 +11,19 @@
     </div>
   <% end %>
 
-  <% codigo = "" %>
+   
   <% if params[:codigo_alumno].nil? %>
-    <% codigoregistrado = "" %>
+    <% codigoregistrado = 0 %>
+    <% codigo = "" %>
   <% else %>
-    <% codigoregistrado = params[:codigo_alumno] %>
+    <% codigoregistrado = params[:codigo_alumno].to_i %>
+    <% if @nuevo == 1 %> 
+      <% codigo = "" %>
+    <% else %>
+      <% codigo = params[:codigo_alumno] %>
+    <%end%>
   <% end %>
-
+  
   <div data-role="content">
     <div class="ui-grid-a">
       <div class="ui-block-a" style="text-align: center;">
@@ -28,16 +34,20 @@
           <!-- No llama a la funcion validarCodigoAlumno() -->
           <div data-role="fieldcontain">
             <div style="text-align: left;">
-              Código (*)<br/>
+              Código (*) <br/>
               <%= number_field_tag(:codigo_alumno, codigo, "data-mini" => "true", :min => "1", :max => "9999999", "autofocus" => "true", :required => "required") %>
+              <div class="field">              
+                Persona Vinculada<br/>
+                <%= collection_select(:asistencia, :persona_vinculada_id, @personasvinculadas, :id, :apellidos_nombres, { :prompt => ''}, {"data-mini" => "true"}) %>
+              </div>
               <%= submit_tag "Registrar", "data-inline" => "true", "data-theme" => "a", "data-icon" => "check", "data-mini" => "true", :name => nil %>
             </div>
           </div>
         <% end %>
         <hr>
       </div>
-
-      <% if !codigoregistrado.empty? %>
+      
+      <% if codigoregistrado != 0 %>
         <div class="ui-block-b" style="text-align: center;">
           <div data-role="content" style="color: #06c; text-align: center">
             <% alumnoanio = AnioAlumno.find_by_anio_escolar_id_and_alumno_id(anio_escolar.id, codigoregistrado) %>

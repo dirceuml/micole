@@ -21,7 +21,19 @@ class Usuario < ActiveRecord::Base
   validate :clave_diferente, on: :update
   
   #validates :alcance_colegio, :presence => {:if => :perfil_id == 3, :message => ": Para este perfil seleccione el nivel de acceso" } 
-  validate :if => "perfil_id == 3" do |a|
+  validate :if => "perfil_id == 2" do |a|   # Padre
+    if a.persona_vinculada_id.nil?
+      errors[:base] << "Seleccione la persona vinculada al usuario"
+    end
+  end
+  
+  validate :if => "perfil_id == 4" do |a|   # Alumno
+    if a.alumno_id.nil?
+      errors[:base] << "Seleccione al alumno vinculado al usuario"
+    end
+  end
+  
+  validate :if => "perfil_id == 3" do |a|   # Personal administrativo
     if a.alcance_colegio.nil?
       errors[:base] << "Seleccione el nivel de acceso para este perfil de usuario"
     end

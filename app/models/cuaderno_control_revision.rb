@@ -11,4 +11,5 @@ class CuadernoControlRevision < ActiveRecord::Base
   scope :abierto, lambda { |anioescolar| joins(:cuaderno_control => {:seccion => :grado}).where("grados.anio_escolar_id = ? and cuadernos_controles.estado = 1", anioescolar)}  
   scope :se_revisan_por, lambda { |padre| joins(:alumno => :alumnos_personas_vinculadas).where("revisa_control = 1 and alumnos_personas_vinculadas.persona_vinculada_id = ?", padre) }
   scope :verificar, lambda { |seccion,fecha| joins(:cuaderno_control).where("estado = 2 and seccion_id = ? and fecha = ?", seccion, fecha)}
+  scope :se_consultan_por, lambda { |alumno| where("alumno_id = ?", alumno)}
 end

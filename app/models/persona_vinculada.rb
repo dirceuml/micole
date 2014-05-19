@@ -24,4 +24,5 @@ class PersonaVinculada < ActiveRecord::Base
   scope :padres_de, lambda { |alumno| joins(:alumnos_personas_vinculadas).where("apoderado = 1 and alumno_id = ?", alumno)}
   scope :receptores_notificacion_evento, lambda { |evento_id| joins(:alumnos_personas_vinculadas => :cuaderno_controles_eventos).where("alumnos_personas_vinculadas.apoderado = 1 and cuaderno_controles_eventos.id = ?", evento_id)}
   scope :vinculados_de, lambda { |alumno| joins(:alumnos_personas_vinculadas).where("alumno_id = ?", alumno)}
+  scope :anioescolar_colegio, lambda { |anioescolar| joins(:alumnos_personas_vinculadas => {:alumno => :anios_alumnos}).uniq.where("(apoderado = 1 or autoriza_actividad = 1 or revisa_control = 1) and anios_alumnos.anio_escolar_id = ? and anios_alumnos.estado = 1", anioescolar)}
 end

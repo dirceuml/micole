@@ -8,18 +8,23 @@ class CuadernoControlesRevisionesController < ApplicationController
       redirect_to(log_in_path) and return
     end
     
-    if params[:accion].nil? || params[:accion] == "verificar"
-      seccion = params[:seccion_id]
-      if params[:seccion_id].nil?
-        fecha = Date.current
-      else
-        fecha = params[:fecha].to_date
-      end    
-
-      @cuaderno_controles_revisiones = CuadernoControlRevision.verificar(seccion, fecha)
+    if current_user.perfil_id == 4   # Es un alumno
+      alumno  = Alumno.find(current_user.alumno_id).id
+      @cuaderno_controles_revisiones = CuadernoControlRevision.cerrado(anio_escolar.id).se_consultan_por(alumno).order("cuadernos_controles.fecha DESC")      
     else
-      if params[:accion] == "revisar"
-        @cuaderno_controles_revisiones = CuadernoControlRevision.cerrado(anio_escolar.id).se_revisan_por(PersonaVinculada.logueado(params[:usuario]).pluck("personas_vinculadas.id")).order("cuadernos_controles.fecha DESC")
+      if params[:accion].nil? || params[:accion] == "verificar"
+        seccion = params[:seccion_id]
+        if params[:seccion_id].nil?
+          fecha = Date.current
+        else
+          fecha = params[:fecha].to_date
+        end    
+        
+        @cuaderno_controles_revisiones = CuadernoControlRevision.verificar(seccion, fecha)
+      else
+        if params[:accion] == "revisar"
+          @cuaderno_controles_revisiones = CuadernoControlRevision.cerrado(anio_escolar.id).se_revisan_por(PersonaVinculada.logueado(params[:usuario]).pluck("personas_vinculadas.id")).order("cuadernos_controles.fecha DESC")
+        end
       end
     end
      

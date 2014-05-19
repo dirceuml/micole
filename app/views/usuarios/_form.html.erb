@@ -44,11 +44,16 @@
   <% end %>
   <div class="field">
     Perfil (*)<br />
-    <%= collection_select(:usuario, :perfil_id, Perfil.all, :id, :descripcion, { :prompt => ':: Seleccione ::'}, {"data-mini" => "true", :required => "required"}) %>
+    <% funcion = "toggleElementPerfil(this)" %>
+    <%= collection_select(:usuario, :perfil_id, Perfil.all, :id, :descripcion, { :prompt => ':: Seleccione ::'}, {"data-mini" => "true", :onchange => funcion, :required => "required"}) %>
   </div>
   <div class="field">
     <%= f.label :persona_vinculada_id %><br />
-    <%= collection_select(:usuario, :persona_vinculada_id, PersonaVinculada.order("apellido_paterno", "apellido_materno", "nombres"), :id, :apellidos_nombres, { :prompt => ''}, {"data-mini" => "true"}) %>
+    <%= collection_select(:usuario, :persona_vinculada_id, @personasvinculadas, :id, :apellidos_nombres, { :prompt => ''}, {"data-mini" => "true"}) %>
+  </div>
+  <div class="field">
+    <%= f.label :alumno_id %><br />
+    <%= collection_select(:usuario, :alumno_id, @alumnoscolegio, :id, :apellidos_nombres, { :prompt => ''}, {"data-mini" => "true"}) %>
   </div>
   <div class="field">
     <%= f.label :correo %><br />

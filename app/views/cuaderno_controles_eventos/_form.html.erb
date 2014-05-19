@@ -10,11 +10,20 @@
       </ul>
     </div>
   <% end %>
+  
+  <% @tiposeventos = TipoEvento.where("cuaderno_control = 1") %> 
+  <% tiposindividual = ""%>
+  <% @tiposeventos.each do |tipoevento| %>
+    <% if tipoevento.alcance == 3%>
+      <% tiposindividual = tiposindividual + tipoevento.id.to_s + "," %>
+    <% end %>
+  <% end %>
+  
 <div data-role="fieldcontain">
   <div class="field">
     Tipo de evento (*)<br />
-    <% funcion = "toggleElement(this, document.getElementById('cuaderno_control_evento_alumno_id'), 1)" %>
-    <%= collection_select(:cuaderno_control_evento, :tipo_evento_id, TipoEvento.where("cuaderno_control = 1"), :id, :descripcion, {:prompt => ':: Seleccione un tipo de evento ::'}, {"data-mini" => "true", :onchange => funcion, :required => "required"}) %>    
+    <% funcion = "toggleElement(this, document.getElementById('cuaderno_control_evento_alumno_id'), '#{tiposindividual}')" %>
+    <%= collection_select(:cuaderno_control_evento, :tipo_evento_id, @tiposeventos, :id, :descripcion, {:prompt => ':: Seleccione un tipo de evento ::'}, {"data-mini" => "true", :onchange => funcion, :required => "required"}) %>    
   </div>
   <div class="field">
     Alumno (*)<br/><%= collection_select(:cuaderno_control_evento, :alumno_id, Alumno.pertenecen_a_seccion(anio_escolar.id, @cuaderno_control.seccion_id), :id, :apellidos_nombres, {:prompt => ':: Seleccione un alumno ::' }, {"data-mini" => "true", :required => "required"}) %>    

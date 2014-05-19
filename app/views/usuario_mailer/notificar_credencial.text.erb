@@ -1,6 +1,6 @@
 # encoding: utf-8
 
-Estimado(a) señor(a) <%= @usuario.nombre %>:
+Estimado(a) <% if @usuario.perfil_id == 4 %>alumno(a)<% else %>señor(a)<% end %> <%= @usuario.nombre %>:
 
 <% if @tipo == 1 %>
 Se ha creado las credenciales para que Ud. pueda ingresar al sistema MiCole

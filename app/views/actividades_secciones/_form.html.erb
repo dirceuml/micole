@@ -22,11 +22,11 @@
       <%= f.hidden_field :actividad_id %>
       <%= f.hidden_field :usuario, :value => current_user.usuario %>
       <div style="width: 200px; clear: left; float: left">
-        <% usuario = Usuario.find_by_usuario(current_user.usuario) %>
-        <% if usuario.perfil_id == 3 && usuario.alcance_colegio == 0%>
-            <% @secciones = Seccion.por_anioescolar_usuario(anio_escolar.id, usuario.id).order('grados.nivel','grados.grado','seccion') %>
+        <% if current_user.perfil_id == 3 && current_user.alcance_colegio == 0%>
+            
+            <% @secciones = Seccion.por_anioescolar_usuario(anio_escolar.id, current_user.id).where("secciones.id not in (select seccion_id from actividades_secciones where actividad_id = ?)", @actividad.id).order('grados.nivel','grados.grado','seccion') %>
         <% else %>
-            <% @secciones = Seccion.por_anioescolar(anio_escolar.id).order('grados.nivel','grados.grado','seccion') %>
+            <% @secciones = Seccion.por_anioescolar(anio_escolar.id).where("secciones.id not in (select seccion_id from actividades_secciones where actividad_id = ?)", @actividad.id).order('grados.nivel','grados.grado','seccion') %>
         <% end %>
         <%= collection_select(:actividad_seccion, :seccion_id, @secciones, :id, :grado_seccion, {:prompt => ':: Seleccione ::' }, {"data-mini" => "true", :required => "required"}) %>
       </div>
