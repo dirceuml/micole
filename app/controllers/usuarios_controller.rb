@@ -27,7 +27,10 @@ class UsuariosController < ApplicationController
   # GET /usuarios/new.json
   def new
     @usuario = Usuario.new
-
+    
+    @personasvinculadas = PersonaVinculada.anioescolar_colegio(anio_escolar.id).where("personas_vinculadas.id not in (select persona_vinculada_id from usuarios where colegio_id = ? and persona_vinculada_id <> 0)", colegio.id).order("apellido_paterno", "apellido_materno", "nombres")
+    @alumnoscolegio     = Alumno.por_anio_colegio(colegio.id, anio_escolar.id).where("alumnos.id not in (select alumno_id from usuarios where colegio_id = ? and alumno_id <> 0)", colegio.id).order("apellido_paterno", "apellido_materno", "nombres")
+    
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @usuario }
@@ -37,6 +40,19 @@ class UsuariosController < ApplicationController
   # GET /usuarios/1/edit
   def edit
     @usuario = Usuario.find(params[:id])
+    
+    if @usuario.persona_vinculada_id.nil?
+      personaedita = 0
+    else
+      personaedita = @usuario.persona_vinculada_id
+    end    
+    if @usuario.alumno_id.nil?
+      alumnoedita = 0
+    else
+      alumnoedita = @usuario.alumno_id
+    end
+    @personasvinculadas = PersonaVinculada.anioescolar_colegio(anio_escolar.id).where("personas_vinculadas.id not in (select persona_vinculada_id from usuarios where colegio_id = ? and persona_vinculada_id <> 0 and persona_vinculada_id <> ?)", colegio.id, personaedita).order("apellido_paterno", "apellido_materno", "nombres")
+    @alumnoscolegio     = Alumno.por_anio_colegio(colegio.id, anio_escolar.id).where("alumnos.id not in (select alumno_id from usuarios where colegio_id = ? and alumno_id <> 0 and alumno_id <> ?)", colegio.id, alumnoedita)
   end
 
   # POST /usuarios
