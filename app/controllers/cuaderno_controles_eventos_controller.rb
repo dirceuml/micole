@@ -15,18 +15,31 @@ class CuadernoControlesEventosController < ApplicationController
       redirect_to(log_in_path) and return
     end
     
-    alumno = params[:alumno_id]
-    if params[:alumno_id].nil?
-      seccion = 0
-    else
+    if current_user.perfil_id == 4   # Es un alumno
+      alumno  = Alumno.find(current_user.alumno_id).id
       seccion = AnioAlumno.find_by_anio_escolar_id_and_alumno_id(anio_escolar.id, alumno).seccion_id
+    else
+      if current_user.perfil_id == 2   # Es un padre
+        alumno = params[:alumno_id]
+        if params[:alumno_id].nil?
+          seccion = 0
+        else
+          seccion = AnioAlumno.find_by_anio_escolar_id_and_alumno_id(anio_escolar.id, alumno).seccion_id
+        end
+      else
+        seccion = params[:seccion_id]    # Para administrativo
+        if params[:seccion_id].nil?
+          seccion = 0
+        end
+      end
     end
+    
     @cuaderno_controles_eventos = CuadernoControlEvento.por_seccion(anio_escolar.id, seccion)
     
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @cuaderno_controles_eventos }
-    end    
+    end
   end
 
   # GET /cuaderno_controles_eventos/1

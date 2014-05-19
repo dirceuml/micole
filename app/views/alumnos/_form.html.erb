@@ -1,4 +1,4 @@
-<%= form_for(@alumno, :html => { :class => "ui-body ui-body-c", :multipart => true, "data-ajax" => "false", "onSubmit" => "return validarFoto(document.personas, alumno[foto]);", "name" => "personas" }) do |f| %>
+<%= nested_form_for(@alumno, :html => { :class => "ui-body ui-body-c", :multipart => true, "data-ajax" => "false", "onSubmit" => "return validarFoto(document.personas, alumno[foto]);", "name" => "personas" }) do |f| %>
   <% if @alumno.errors.any? %>
     <div id="error_explanation" data-role="header" data-theme="e">
       <h2><%= pluralize(@alumno.errors.count, "error") %> impidieron que se grabe el registro:</h2>
@@ -13,15 +13,15 @@
   <div data-role="fieldcontain">
     <div class="field">
         Nombres (*)<br />
-        <%= f.text_field :nombres, :required => "required", :pattern => "^[a-zA-ZñÑ ]*$", :title => "Solo estan permitidos letras" %>
+        <%= f.text_field :nombres, :required => "required", :pattern => "^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s\W]*$", :title => "Solo estan permitidos letras" %>
     </div>
     <div class="field">
         Apellido paterno (*)<br />
-        <%= f.text_field :apellido_paterno, :required => "required", :pattern => "^[a-zA-ZñÑ ]*$", :title => "Solo estan permitidos letras" %>
+        <%= f.text_field :apellido_paterno, :required => "required", :pattern => "^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s\W]*$", :title => "Solo estan permitidos letras" %>
     </div>
     <div class="field">
         Apellido materno<br />
-        <%= f.text_field :apellido_materno, :pattern => "^[a-zA-ZñÑ ]*$", :title => "Solo estan permitidos letras" %>
+        <%= f.text_field :apellido_materno, :pattern => "^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s\W]*$", :title => "Solo estan permitidos letras" %>
     </div>
     <div class="field">
         Fecha de nacimiento<br />
@@ -31,6 +31,15 @@
         N° Doc. de identidad (*)<br />
         <%= f.text_field :dni ,"style" => "width:150px", :required => "required", :placeholder => "99999999", :pattern => "\\d{8}", :title => "Ingrese 8 dígitos" %>
     </div>
+    <div class="field">
+        Sección (*)<br />
+        <% if !@alumno.id.nil? %>
+          <% seccion_id = Alumno.find(@alumno.id).seccion_id(anio_escolar.id) %>          
+          <%= collection_select(:seccion, :id, Seccion.por_anioescolar(anio_escolar.id).order('grado_id, seccion'), :id, :grado_seccion, { :prompt => ':: Seleccione ::', :selected => seccion_id }, {"data-mini" => "true", :name => "seccion_id", :required => "required"}) %>        
+        <% else %>
+          <%= collection_select(:seccion, :id, Seccion.por_anioescolar(anio_escolar.id).order('grado_id, seccion'), :id, :grado_seccion, { :prompt => ':: Seleccione ::' }, {"data-mini" => "true", :name => "seccion_id", :required => "required"}) %>        
+        <% end %>
+    </div>    
     <div class="field">
         Teléfono fijo<br />
         <%= f.telephone_field :telefono_fijo, "style" => "width:150px", :placeholder => "444-4444", :pattern => "\\d{3}[\\-]*\\d{4}", :title => "Ingrese 7 dígitos" %>
@@ -61,9 +70,16 @@
 
     </div>
     <div class="field">
-        <%= f.hidden_field :usuario, :value => current_user.usuario %>
+        <%= f.hidden_field :usuario_nom, :value => current_user.usuario %>
     </div>
   </div>
+
+
+  <%= f.fields_for :alumnos_personas_vinculadas do |apv| %>
+    <%= render "alumnos_personas_vinculadas_fields", :f => apv %>
+  <% end %>
+  <p><%= f.link_to_add "Agregar vínculo con persona", :alumnos_personas_vinculadas %></p>
+
   <div class="actions">
     <%= f.submit "Grabar", "data-inline" => "true", "data-theme" => "a", "data-icon" => "check", "data-mini" => "true" %>
   </div>

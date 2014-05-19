@@ -55,3 +55,5 @@ gem 'cancan'
 #gem "eventmachine", "1.0.0.beta.4.1"
 
 gem "meta_search", '>= 1.1.0.pre'
+
+gem "nested_form"

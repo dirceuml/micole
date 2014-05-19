@@ -3,7 +3,7 @@ class AlumnoPersonaVinculada < ActiveRecord::Base
   belongs_to :alumno 
   has_many :cuaderno_controles_eventos, :through => :alumno
   
-  validates :persona_vinculada_id, :alumno_id, :tipo_vinculo, :vigencia_vinculo, :apoderado, 
+  validates :persona_vinculada_id, :tipo_vinculo, :vigencia_vinculo, :apoderado, 
     :autoriza_actividad, :revisa_control, :inicio_vigencia, :usuario, :presence => { :message => ": El campo no puede estar vacio" }
   validates :fin_vigencia, :presence => true, :if => lambda { |alumno_persona_vinculada| alumno_persona_vinculada.vigencia_vinculo == 1 }
   validates :alumno_id, :uniqueness => { :scope => :persona_vinculada_id, :message => " ya esta vinculado con la persona." }

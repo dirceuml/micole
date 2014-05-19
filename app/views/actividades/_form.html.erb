@@ -75,7 +75,7 @@
     </div>
 
     <div class="field">
-      Alcance:<br />
+      Alcance (*)<br />
       <fieldset data-role = "controlgroup" data-type  = "horizontal"  data-mini = "true" >
         <% if @actividad.alcance_colegio == 0 %>
             <%= f.number_field :alcance_colegio, "type" => "radio", "id" => "radio-opc1", "value" => 0, "checked" =>"checked" %>

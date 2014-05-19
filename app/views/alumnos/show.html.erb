@@ -3,21 +3,40 @@
   <%= link_to 'Aceptar', alumnos_path, "data-icon" => "check", "data-mini" => "true"  %>
 </div>
 
-<div data-role="content" style="clear: left">
-    <%= image_tag(@alumno.foto_url.to_s) %> <p>
-    <b>Apellidos y nombres:</b> <%= @alumno.apellidos_nombres %><p>
+<div data-role="content">
+  <%= image_tag(@alumno.foto_url.to_s) %>
+  
+    <p>   
+    <b>Nombre:</b> <%= @alumno.apellidos_nombres %><p>
     <b>DNI:</b> <%= @alumno.dni %><p>
     <b>Grado y sección:</b><%= @alumno.grado_seccion(anio_escolar.id) %><p>
     <b>Correo:</b> <%= @alumno.correo %><p>
     <b>Teléfono fijo:</b> <%= @alumno.telefono_fijo %><p>
     <b>Teléfono móvil:</b> <%= @alumno.telefono_movil %><p>
-    <b>Salida con persona vinculada:</b>
+    <b>Salida con persona vinculada:
       <% if @alumno.salida_con_persona == 1 %>
         Si
       <% else %>
         No
       <% end %>
-      <p>
+    
+ 
+</div>
+
+<b>Personas vinculadas</b>
+
+<div data-role="content">
+  <ul id='alumnos_personas_vinculadas' data-role="listview">
+  <% @alumno.alumnos_personas_vinculadas.each do |apv| %>
+    <% if !apv.persona_vinculada_id.nil? %> 
+      <% if can? :read, apv %>
+        <li>
+          <%= link_to simple_format(apv.apellidos_nombres), [@alumno, apv] %>          
+        </li>
+      <% end %>
+    <% end %>
+  <% end %>
+  </ul>
 </div>
 
 <div data-role="footer">

@@ -6,6 +6,36 @@
   <% end %>
 </div>
 
+<% if params[:seccion_id] == "0" && !params[:seccion_id].nil? %>
+  <% seccion_id = "" %>
+<% else %>
+  <% seccion_id = params[:seccion_id] %>
+<% end %>
+
+    <div style="text-align: center;">
+      <%= form_tag(alumnos_path, {:method => :get, "data-ajax" => "false", "name" => "buscar"}) do %>                 
+         <div data-role="fieldcontain">
+            <div style="text-align: left;">
+              <%= collection_select(:seccion, :id, Seccion.por_anioescolar(anio_escolar.id).order('grado_id, seccion'), :id, :grado_seccion, { :prompt => ':: Todas las secciones ::', :selected => seccion_id}, {"data-mini" => "true", :name => "seccion_id"}) %>
+              <%= submit_tag "Buscar", "data-inline" => "true", "data-theme" => "a", "data-icon" => "search", "data-mini" => "true", :name => nil %>
+            </div>
+          </div>         
+      <% end %>
+      <hr>
+    </div>
+
+    <% if params[:seccion_id] != "0" && !params[:seccion_id].nil? && params[:seccion_id] != "" %>
+    <div style="text-align: center;">
+       <% if !seccion_id.nil? %>
+        <div data-role="content" style="color: #06c; text-align: center">
+          <% seccion = Seccion.find(seccion_id) %>
+          <% if !seccion.nil? %>
+            <%= seccion.grado_seccion %>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+    <% end %>
 
 <div data-role="content">
   <ul data-role="listview" data-filter="true">

@@ -1,0 +1,88 @@
+<div data-role="header">
+  <h1>Consulta de notas</h1>
+</div>
+
+<% if params[:alumno_id] == "0" %>
+  <% alumno_id = "" %>
+  <% alumnoseleccionado = 0 %>
+<% else %>
+  <% alumno_id = params[:alumno_id] %>
+  <% alumnoseleccionado = 1 %>
+<% end %>
+
+<div data-role="content">    
+  <div>
+<<<<<<< HEAD
+    <% if current_user.perfil_id == 4 %>
+      <% alumno_id = current_user.alumno_id %>
+      <% alumnoseleccionado = 1 %>
+    <% else %>
+      <div style="text-align: center;">
+        <%= form_tag(notas_path, {:method => :get, "onSubmit" => "return validarBusquedaXDocumento();", "data-ajax" => "false", "name" => "buscar"}) do %>            
+          <div data-role="fieldcontain">
+=======
+    <div style="text-align: center;">
+      <%= form_tag(notas_path, {:method => :get, "data-ajax" => "false", "name" => "buscar"}) do %>            
+         <div data-role="fieldcontain">
+>>>>>>> 5aecd2555a66a5c870c548d9b676835bb7fb73ea
+            <div style="text-align: left;">
+              Alumno: <%= collection_select(:alumno, :id, Alumno.hijos_de(PersonaVinculada.logueado(current_user.usuario)).order('nombres'), :id, :nombres_apellido_paterno, {:selected => alumno_id}, {"data-mini" => "true", :name => "alumno_id"}) %>
+              <%= submit_tag "Buscar", "data-inline" => "true", "data-theme" => "a", "data-icon" => "search", "data-mini" => "true", :name => nil %>
+            </div>
+          </div>         
+        <% end %>
+        <hr>
+      </div>
+      
+      <% if params[:alumno_id] != "0" %>
+        <% alumnoseleccionado = 1 %>
+      <% end%>
+    <% end%>
+    
+    <% if alumnoseleccionado == 1 %>
+      <div style="text-align: center;">
+        <% if !alumno_id.nil? %>
+          <div data-role="content" style="color: #06c; text-align: center">
+            <% alumno = Alumno.find(alumno_id) %>
+            <% if !alumno.nil? %>
+              <%= alumno.apellidos_nombres %>
+              <br/>
+              <%= alumno.grado_seccion(anio_escolar.id) %>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+      
+      <div>
+      <% if !alumno.nil? %>
+        <% existennotas = 0 %>
+        <div data-role="content">
+          <ul data-role="listview">
+            <% @cursos.each do |curso| %>
+              <li data-role="list-divider">
+                <%= Curso.find(curso).descripcion %>
+              </li>
+              
+              <% notas_por_curso = @notas.where("curso_id=?", curso) %>
+              <% notas_por_curso.each do |nota| %>
+                <li style="font-family: monospace">
+                  <%= simple_format("#{TipoNota.find(nota.tipo_nota_id).descripcion.ljust(30, ".")} #{nota.nota}") %>
+                  <% existennotas = 1 %>
+                </li>
+              <% end %> 
+              
+            <% end %>
+          </ul>
+        </div>
+        <% if existennotas == 0 %>
+          <div style="color: #06c; text-align: center">
+            NO EXISTEN NOTAS
+          </div>
+        <% end %>
+      <% end %>
+      
+    <% end %>
+    
+  </div><!-- /grid-a --> 
+  
+</div>

@@ -12,12 +12,13 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require jquery_nested_form
 
 
 function toggleElement(origen, destino, valorDeshabilita)
 {
-    //if (alcance == 3)    
-    if (origen.value != valorDeshabilita)
+    //if (alcance == 3)
+    if (valorDeshabilita.indexOf(origen.value.toString()) != -1)
     {
         //document.getElementById("cuaderno_control_evento_alumno_id").disabled = false;
         destino.disabled = false;
@@ -149,3 +150,38 @@ function PreviewImage(input)
       preview.setAttribute('src', '/assets/blank.gif');
     }
 };
+
+function toggleElementPerfil(origen)
+{
+    if (origen.value == 2)   // Padre
+    {
+        document.getElementById('usuario_persona_vinculada_id').disabled = false;
+    }
+    else
+    {
+        document.getElementById('usuario_persona_vinculada_id').value = null;
+        document.getElementById('usuario_persona_vinculada_id').disabled = true;
+    }
+    if (origen.value == 4)  // Alumno
+    {
+        document.getElementById('usuario_alumno_id').disabled = false;
+    }
+    else
+    {
+        document.getElementById('usuario_alumno_id').value = null;
+        document.getElementById('usuario_alumno_id').disabled = true;
+    }
+    
+    if (origen.value == 3)  // Personal administrativo
+    {
+        document.getElementById('radio-opc1').disabled = false;
+        document.getElementById('radio-opc2').disabled = false;
+    }
+    else
+    {
+        document.getElementById('radio-opc1').value = null;
+        document.getElementById('radio-opc1').disabled = true;
+        document.getElementById('radio-opc2').value = null;        
+        document.getElementById('radio-opc2').disabled = true;
+    }
+}

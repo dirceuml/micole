@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140516052025) do
+ActiveRecord::Schema.define(:version => 20140517192224) do
 
   create_table "actividades", :force => true do |t|
     t.integer  "anio_escolar_id",                                           :null => false
@@ -59,7 +59,7 @@ ActiveRecord::Schema.define(:version => 20140516052025) do
     t.text     "direccion"
     t.string   "correo"
     t.string   "foto"
-    t.string   "usuario",                           :null => false
+    t.string   "usuario_nom",                       :null => false
     t.datetime "created_at",                        :null => false
     t.datetime "updated_at",                        :null => false
     t.string   "dni"
@@ -159,6 +159,7 @@ ActiveRecord::Schema.define(:version => 20140516052025) do
     t.datetime "updated_at",                            :null => false
     t.integer  "estado",                 :default => 1, :null => false
     t.integer  "notificar_inasistencia", :default => 0, :null => false
+    t.integer  "grado_usuario"
   end
 
   add_index "colegios", ["nombre"], :name => "ui_colegios_nombre", :unique => true
@@ -413,6 +414,7 @@ ActiveRecord::Schema.define(:version => 20140516052025) do
     t.date     "fecha_clave"
     t.integer  "notificado",           :default => 0,       :null => false
     t.integer  "alcance_colegio"
+    t.integer  "alumno_id"
   end
 
   add_index "usuarios", ["colegio_id", "usuario"], :name => "ak_usuarios", :unique => true

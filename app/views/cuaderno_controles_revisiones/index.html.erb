@@ -4,7 +4,6 @@
   <% else %>
     <h1>Verificar cuaderno de control</h1>
   <% end %>
-  
 </div>
 
 <% if params[:accion].nil? || params[:accion] == "verificar" %>
@@ -19,15 +18,15 @@
   <% end %>
 <% end %>
 
-<% usuario = Usuario.find_by_usuario(current_user.usuario) %>
-<% if usuario.perfil_id == 3 && usuario.alcance_colegio == 0%>
-  <% @secciones = Seccion.por_anioescolar_usuario(anio_escolar.id, usuario.id).order('grados.nivel', 'grados.grado','seccion') %>
-<% else %>
-  <% @secciones = Seccion.por_anioescolar(anio_escolar.id).order('grados.nivel', 'grados.grado','seccion') %>
-<% end %>
-
 <div data-role="content">
   <% if params[:accion].nil? || params[:accion] == "verificar" %>
+    
+    <% if current_user.perfil_id == 3 && current_user.alcance_colegio == 0%>
+      <% @secciones = Seccion.por_anioescolar_usuario(anio_escolar.id, current_user.id).order('grados.nivel', 'grados.grado','seccion') %>
+    <% else %>
+      <% @secciones = Seccion.por_anioescolar(anio_escolar.id).order('grados.nivel', 'grados.grado','seccion') %>
+    <% end %>
+    
     <%= form_tag(cuaderno_controles_revisiones_path, {:method => :get, "onSubmit" => "return validarBusquedaXFecha();", "data-ajax" => "false", "name" => "buscar"}) do %>
       <div data-role="fieldcontain">
         Fecha: <%= text_field_tag(:fecha, fecha, "data-mini" => "true", "data-role" => "datebox", "type" => "date", "style" => "width:130px") %><br />
@@ -37,59 +36,78 @@
     <% end %>
   <% end %>
   
-  <div data-role="collapsible-set" data-theme="b" data-content-theme="d" data-inset="false">       
-    <div data-role="collapsible" data-collapsed="false">
-      <h2>
-        <li class= "ui-li ui-li-has-count">
-          No revisados
-          <span class="ui-li-count ui-btn-up-b ui-btn-corner-all"><%=@cuaderno_controles_revisiones.no_revisado.count%></span>
-        </li>
-      </h2>  
+  <% if current_user.perfil_id == 4%>
       <ul data-role="listview" data-filter="true">
-        <% @cuaderno_controles_revisiones.no_revisado.each do |cuaderno_control_revision| %>
+        <% @cuaderno_controles_revisiones.each do |cuaderno_control_revision| %>
           <li data-filtertext="<%= "#{cuaderno_control_revision.cuaderno_control.fecha.strftime('%d/%m/%Y')} #{cuaderno_control_revision.alumno.apellidos_nombres}" %>" >
-            <% if params[:accion] == "revisar" %>
               <%= link_to cuaderno_control_revision do %>
-                <strong><%= "#{cuaderno_control_revision.alumno.nombres} #{cuaderno_control_revision.alumno.apellido_paterno}" %></strong>
-                <p class="ui-li-aside"><%= cuaderno_control_revision.cuaderno_control.fecha.strftime('%d/%m/%Y') %></p>
-              <% end %>
-            <% else %>
-              <%= link_to "#" do %>
-                <h3><%= cuaderno_control_revision.alumno.apellidos_nombres %></h3>
-              <% end %>
-            <% end %>
-          </li>
-        <% end %>
-      </ul>
-    </div>
-  
-    <div data-role="collapsible">
-      <h2>
-        <li class= "ui-li ui-li-has-count">
-          Revisados
-          <span class="ui-li-count ui-btn-up-b ui-btn-corner-all"><%=@cuaderno_controles_revisiones.revisado.count%></span>
-        </li>
-      </h2>
-      <ul data-role="listview" data-filter="true">
-        <% @cuaderno_controles_revisiones.revisado.each do |cuaderno_control_revision| %>
-          <li data-filtertext="<%= "#{cuaderno_control_revision.cuaderno_control.fecha.strftime('%d/%m/%Y')} #{cuaderno_control_revision.alumno.apellidos_nombres}" %>" >
-            <% if params[:accion] == "revisar" %>
-              <%= link_to cuaderno_control_revision do %>
-                <strong><%= "#{cuaderno_control_revision.alumno.nombres} #{cuaderno_control_revision.alumno.apellido_paterno}" %></strong>
-                <p class="ui-li-aside"><%= cuaderno_control_revision.cuaderno_control.fecha.strftime('%d/%m/%Y') %></p>
-              <% end %>
-            <% else %>
-              <%= link_to "#" do %>
-                <h3><%= cuaderno_control_revision.alumno.apellidos_nombres %></h3>
-                <% if !cuaderno_control_revision.observaciones.empty? %>
-                  <p><strong>Observaciones del padre:</strong></p>
-                  <p><%= simple_format("#{cuaderno_control_revision.observaciones}") %></p>
+                <strong><%= "#{cuaderno_control_revision.cuaderno_control.fecha.strftime('%d/%m/%Y')}" %></strong>
+                <p class="ui-li-aside">
+                <% if cuaderno_control_revision.revisado == 0 %>
+                  No Revisado
+                <% else %>    
+                  Revisado
                 <% end %>
+                </p>
               <% end %>
-            <% end %>
           </li>
         <% end %>
       </ul>
-    </div>
-  </div>
+  <% else %>
+      <div data-role="collapsible-set" data-theme="b" data-content-theme="d" data-inset="false">       
+        <div data-role="collapsible" data-collapsed="false">
+          <h2>
+            <li class= "ui-li ui-li-has-count">
+              No revisados
+              <span class="ui-li-count ui-btn-up-b ui-btn-corner-all"><%=@cuaderno_controles_revisiones.no_revisado.count%></span>
+            </li>
+          </h2>  
+          <ul data-role="listview" data-filter="true">
+            <% @cuaderno_controles_revisiones.no_revisado.each do |cuaderno_control_revision| %>
+              <li data-filtertext="<%= "#{cuaderno_control_revision.cuaderno_control.fecha.strftime('%d/%m/%Y')} #{cuaderno_control_revision.alumno.apellidos_nombres}" %>" >
+                <% if params[:accion] == "revisar" %>
+                  <%= link_to cuaderno_control_revision do %>
+                    <strong><%= "#{cuaderno_control_revision.alumno.nombres} #{cuaderno_control_revision.alumno.apellido_paterno}" %></strong>
+                    <p class="ui-li-aside"><%= cuaderno_control_revision.cuaderno_control.fecha.strftime('%d/%m/%Y') %></p>
+                  <% end %>
+                <% else %>
+                  <%= link_to "#" do %>
+                    <h3><%= cuaderno_control_revision.alumno.apellidos_nombres %></h3>
+                  <% end %>
+                <% end %>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+        
+        <div data-role="collapsible">
+        <h2>
+            <li class= "ui-li ui-li-has-count">
+              Revisados
+              <span class="ui-li-count ui-btn-up-b ui-btn-corner-all"><%=@cuaderno_controles_revisiones.revisado.count%></span>
+            </li>
+          </h2>
+          <ul data-role="listview" data-filter="true">
+            <% @cuaderno_controles_revisiones.revisado.each do |cuaderno_control_revision| %>
+              <li data-filtertext="<%= "#{cuaderno_control_revision.cuaderno_control.fecha.strftime('%d/%m/%Y')} #{cuaderno_control_revision.alumno.apellidos_nombres}" %>" >
+                <% if params[:accion] == "revisar" %>
+                  <%= link_to cuaderno_control_revision do %>
+                    <strong><%= "#{cuaderno_control_revision.alumno.nombres} #{cuaderno_control_revision.alumno.apellido_paterno}" %></strong>
+                    <p class="ui-li-aside"><%= cuaderno_control_revision.cuaderno_control.fecha.strftime('%d/%m/%Y') %></p>
+                  <% end %>
+                <% else %>
+                  <%= link_to "#" do %>
+                    <h3><%= cuaderno_control_revision.alumno.apellidos_nombres %></h3>
+                    <% if !cuaderno_control_revision.observaciones.empty? %>
+                      <p><strong>Observaciones del padre:</strong></p>
+                      <p><%= simple_format("#{cuaderno_control_revision.observaciones}") %></p>
+                    <% end %>
+                  <% end %>
+                <% end %>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+  <% end %>
 </div>
