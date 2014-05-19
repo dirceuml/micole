@@ -33,8 +33,8 @@
     </div>
     <div class="field">
         Sección (*)<br />
-        <% if !@alumno.id.nil? %>
-          <% seccion_id = Alumno.find(@alumno.id).seccion_id(anio_escolar.id) %>          
+        <% if !@seccion_id.nil? %>
+          <% seccion_id = @seccion_id %>          
           <%= collection_select(:seccion, :id, Seccion.por_anioescolar(anio_escolar.id).order('grado_id, seccion'), :id, :grado_seccion, { :prompt => ':: Seleccione ::', :selected => seccion_id }, {"data-mini" => "true", :name => "seccion_id", :required => "required"}) %>        
         <% else %>
           <%= collection_select(:seccion, :id, Seccion.por_anioescolar(anio_escolar.id).order('grado_id, seccion'), :id, :grado_seccion, { :prompt => ':: Seleccione ::' }, {"data-mini" => "true", :name => "seccion_id", :required => "required"}) %>        

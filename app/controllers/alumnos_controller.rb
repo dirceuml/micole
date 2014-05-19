@@ -69,7 +69,7 @@ class AlumnosController < ApplicationController
   # GET /alumnos/new.json
   def new
     @alumno = Alumno.new   
-    1.times { @alumno.alumnos_personas_vinculadas.build }
+    #1.times { @alumno.alumnos_personas_vinculadas.build }
 
     respond_to do |format|
       format.html # new.html.erb
@@ -80,31 +80,37 @@ class AlumnosController < ApplicationController
   # GET /alumnos/1/edit
   def edit
     @alumno = Alumno.find(params[:id])
+    @seccion_id = Alumno.find(@alumno.id).seccion_id(anio_escolar.id)
   end
 
   # POST /alumnos
   # POST /alumnos.json
   def create
-    @alumno = Alumno.new(params[:alumno])    
-    
-    seccion_id = params[:seccion_id]    
-    
-    respond_to do |format|
-      ActiveRecord::Base.transaction do
-        if @alumno.save
-          AnioAlumno.create!(
-            :anio_escolar_id => anio_escolar.id,
-            :alumno_id => @alumno.id,
-            :usuario => current_user.usuario,
-            :seccion_id => seccion_id,
-            :estado => 1
-          )
+    if params[:alumno][:salida_con_persona] == "1" && params[:alumno][:alumnos_personas_vinculadas_attributes].nil?
+      @seccion_id = params[:seccion_id]  
+      flash[:notice] = "Debe vincular una persona"
+      render "new"
+    else
+      @alumno = Alumno.new(params[:alumno])  
+      seccion_id = params[:seccion_id]    
 
-          format.html { redirect_to @alumno, notice: 'El alumno fue creado satisfactoriamente.' }
-          format.json { render json: @alumno, status: :created, location: @alumno }
-        else
-          format.html { render action: "new" }
-          format.json { render json: @alumno.errors, status: :unprocessable_entity }
+      respond_to do |format|
+        ActiveRecord::Base.transaction do
+          if @alumno.save
+            AnioAlumno.create!(
+              :anio_escolar_id => anio_escolar.id,
+              :alumno_id => @alumno.id,
+              :usuario => current_user.usuario,
+              :seccion_id => seccion_id,
+              :estado => 1
+            )
+
+            format.html { redirect_to @alumno, notice: 'El alumno fue creado satisfactoriamente.' }
+            format.json { render json: @alumno, status: :created, location: @alumno }
+          else
+            format.html { render action: "new" }
+            format.json { render json: @alumno.errors, status: :unprocessable_entity }
+          end
         end
       end
     end
@@ -113,24 +119,28 @@ class AlumnosController < ApplicationController
   # PUT /alumnos/1
   # PUT /alumnos/1.json
   def update
-    @alumno = Alumno.find(params[:id])
-    
-    seccion_id = params[:seccion_id] 
+    if params[:alumno][:salida_con_persona] == "1" && params[:alumno][:alumnos_personas_vinculadas_attributes].nil?
+      flash[:notice] = "Debe vincular una persona"
+      render "edit"
+    else
+      @alumno = Alumno.find(params[:id])
+      seccion_id = params[:seccion_id] 
 
-    respond_to do |format|
-      ActiveRecord::Base.transaction do
-        if @alumno.update_attributes(params[:alumno])
-          anio_alumno = AnioAlumno.find_by_anio_escolar_id_and_alumno_id(anio_escolar.id, @alumno.id)
-          anio_alumno.update_attributes!(
-            :usuario => current_user.usuario,
-            :seccion_id => seccion_id
-          )
-          
-          format.html { redirect_to @alumno, notice: 'El alumno fue actualizado satisfactoriamente.' }
-          format.json { head :no_content }
-        else
-          format.html { render action: "edit" }
-          format.json { render json: @alumno.errors, status: :unprocessable_entity }
+      respond_to do |format|
+        ActiveRecord::Base.transaction do
+          if @alumno.update_attributes(params[:alumno])
+            anio_alumno = AnioAlumno.find_by_anio_escolar_id_and_alumno_id(anio_escolar.id, @alumno.id)
+            anio_alumno.update_attributes!(
+              :usuario => current_user.usuario,
+              :seccion_id => seccion_id
+            )
+
+            format.html { redirect_to @alumno, notice: 'El alumno fue actualizado satisfactoriamente.' }
+            format.json { head :no_content }
+          else
+            format.html { render action: "edit" }
+            format.json { render json: @alumno.errors, status: :unprocessable_entity }
+          end
         end
       end
     end
