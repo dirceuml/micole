@@ -78,7 +78,9 @@
   <%= f.fields_for :alumnos_personas_vinculadas do |apv| %>
     <%= render "alumnos_personas_vinculadas_fields", :f => apv %>
   <% end %>
-  <p><%= f.link_to_add "Agregar vínculo con persona", :alumnos_personas_vinculadas %></p>
+  <div>
+    <%= f.link_to_add "Agregar vínculo con persona", :alumnos_personas_vinculadas, "data-role" => "button", "data-inline" => "true", "data-theme" => "b", "data-icon" => "plus", "data-mini" => "true" %>
+  </div>
 
   <div class="actions">
     <%= f.submit "Grabar", "data-inline" => "true", "data-theme" => "a", "data-icon" => "check", "data-mini" => "true" %>

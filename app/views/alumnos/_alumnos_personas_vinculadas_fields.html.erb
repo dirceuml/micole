@@ -55,4 +55,6 @@
         <%= f.hidden_field :usuario, :value => current_user.usuario %>
       </div>
     </div>
-    <%= f.link_to_remove "Eliminar vinculo" %>
+    <div>
+      <%= f.link_to_remove "Eliminar vinculo", "data-role" => "button", "data-inline" => "true", "data-theme" => "b", "data-icon" => "delete", "data-mini" => "true" %>
+    </div>
