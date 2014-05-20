@@ -3,7 +3,7 @@
   <%= link_to 'Aceptar', alumnos_path, "data-icon" => "check", "data-mini" => "true"  %>
 </div>
 
-<div data-role="content">
+<div data-role="content" style="font-size: 12px">
   <%= image_tag(@alumno.foto_url.to_s) %>
   
     <p>   
@@ -13,17 +13,15 @@
     <b>Correo:</b> <%= @alumno.correo %><p>
     <b>Teléfono fijo:</b> <%= @alumno.telefono_fijo %><p>
     <b>Teléfono móvil:</b> <%= @alumno.telefono_movil %><p>
-    <b>Salida con persona vinculada:
+    <b>Salida con persona vinculada:</b>
       <% if @alumno.salida_con_persona == 1 %>
         Si
       <% else %>
         No
       <% end %>
-    
- 
 </div>
 
-<b>Personas vinculadas</b>
+<div data-role="header">Personas vinculadas</div>
 
 <div data-role="content">
   <ul id='alumnos_personas_vinculadas' data-role="listview">

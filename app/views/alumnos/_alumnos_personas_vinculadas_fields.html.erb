@@ -1,22 +1,20 @@
-  <% if !@alumno_persona_vinculada.nil? %>
-    <% if @alumno_persona_vinculada.errors.any? %>
-      <div id="error_explanation" data-role="header" data-theme="e">
-        <h2><%= pluralize(@alumno_persona_vinculada.errors.count, "error") %> impidieron la grabacion:</h2>
-
-        <ul>
-        <% @alumno_persona_vinculada.errors.full_messages.each do |msg| %>
-          <li><%= msg %></li>
-        <% end %>
-        </ul>
-      </div>
-    <% end %>
-  <% end %>
-
     <div data-role="fieldcontain" class="ui-body ui-body-c">
       <div class="field">
         Persona vinculada: (*)<br/>
-        <%= f.collection_select(:persona_vinculada_id, PersonaVinculada.order("apellido_paterno","apellido_materno", "nombres"), :id, :apellidos_nombres, {:prompt => ':: Seleccione ::' }, {"data-mini" => "true", :required => "required"}) %>
+        <%= f.collection_select(:persona_vinculada_id, PersonaVinculada.order("apellido_paterno","apellido_materno", "nombres"), :id, :apellidos_nombres, {:prompt => ':: Seleccione ::' }, {"data-mini" => "true"}) %>
       </div>
+      
+      -------------------
+      
+      <%= f.fields_for :persona_vinculada do |pv| %>
+        <%= render "persona_vinculada_fields", :f => pv %>
+      <% end %>
+      <div>
+        <%= f.link_to_add "Agregar persona", :persona_vinculada, "data-role" => "button", "data-inline" => "true", "data-theme" => "b", "data-icon" => "plus", "data-mini" => "true" %>
+      </div>
+      
+      -------------------
+      
       <div class="field">
         <%= f.hidden_field :alumno_id %>
       </div>

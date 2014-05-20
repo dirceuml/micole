@@ -1,0 +1,49 @@
+  <div data-role="fieldcontain">
+    <div class="field">
+      Tipo documento (*)<br />
+      <%= f.collection_select(:tipo_documento, ListaValor.where("tabla=2"), :item, :descripcion, {}, {"data-mini" => "true", :required => "required"}) %>
+    </div>
+    <div class="field">
+      Numero documento (*)<br />
+      <%= f.text_field :numero_documento, :required => "required", :pattern => "\\d{8}", :title => "Ingrese 8 digitos" %>
+    </div>
+    <div class="field">
+      Nombres (*)<br />
+      <%= f.text_field :nombres, :required => "required", :pattern => "^[a-zA-ZñÑ ]*$", :title => "Solo estan permitidos letras" %>
+    </div>
+    <div class="field">
+      Apellido paterno (*)<br />
+      <%= f.text_field :apellido_paterno, :required => "required", :pattern => "^[a-zA-ZñÑ ]*$", :title => "Solo estan permitidos letras" %>
+    </div>
+    <div class="field">
+      Apellido materno (*)<br />
+      <%= f.text_field :apellido_materno, :required => "required", :pattern => "^[a-zA-ZñÑ ]*$", :title => "Solo estan permitidos letras" %>
+    </div>
+    <div class="field">
+      Telefono fijo<br />
+      <%= f.telephone_field :telefono_fijo, :placeholder => "444-4444", :pattern => "\\d{3}[\\-]*\\d{4}" %>
+    </div>
+    <div class="field">
+      Telefono movil<br />
+      <%= f.telephone_field :telefono_movil, :placeholder => "999999999", :pattern => "9\\d{8}" %>
+    </div>
+    <div class="field">
+      <%= f.label :correo %><br />
+      <%= f.email_field :correo, :placeholder => "dirceu@example.com" %>
+    </div>
+    <div class="field">
+      Foto (*)<br />
+      <%= f.file_field :foto, :onchange => "PreviewImage(this);", :required => "required" %><br />
+      <%= image_tag("blank.gif", :id => "preview") %>
+    </div>
+    <div class="field">
+      <%= f.hidden_field :user, :value => current_user.usuario %>
+    </div>
+    <div class="field">
+      <%= f.hidden_field :origen, :value => "manual" %>
+    </div>
+  </div>
+
+    <div>
+      <%= f.link_to_remove "Eliminar vinculo", "data-role" => "button", "data-inline" => "true", "data-theme" => "b", "data-icon" => "delete", "data-mini" => "true" %>
+    </div>
