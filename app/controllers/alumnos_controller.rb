@@ -69,7 +69,7 @@ class AlumnosController < ApplicationController
   # GET /alumnos/new.json
   def new
     @alumno = Alumno.new   
-    #1.times { @alumno.alumnos_personas_vinculadas.build }
+    1.times { @alumno.alumnos_personas_vinculadas.build }
 
     respond_to do |format|
       format.html # new.html.erb
@@ -86,7 +86,7 @@ class AlumnosController < ApplicationController
   # POST /alumnos
   # POST /alumnos.json
   def create
-    if params[:alumno][:salida_con_persona] == "1" && params[:alumno][:alumnos_personas_vinculadas_attributes].nil?
+    if params[:alumno][:alumnos_personas_vinculadas_attributes].nil?
       @seccion_id = params[:seccion_id]  
       flash[:notice] = "Debe vincular una persona"
       render "new"
@@ -119,7 +119,7 @@ class AlumnosController < ApplicationController
   # PUT /alumnos/1
   # PUT /alumnos/1.json
   def update
-    if params[:alumno][:salida_con_persona] == "1" && params[:alumno][:alumnos_personas_vinculadas_attributes].nil?
+    if params[:alumno][:alumnos_personas_vinculadas_attributes].nil?
       flash[:notice] = "Debe vincular una persona"
       render "edit"
     else
