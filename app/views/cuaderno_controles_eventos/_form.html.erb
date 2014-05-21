@@ -26,7 +26,7 @@
     <%= collection_select(:cuaderno_control_evento, :tipo_evento_id, @tiposeventos, :id, :descripcion, {:prompt => ':: Seleccione un tipo de evento ::'}, {"data-mini" => "true", :onchange => funcion, :required => "required"}) %>    
   </div>
   <div class="field">
-    Alumno (*)<br/><%= collection_select(:cuaderno_control_evento, :alumno_id, Alumno.pertenecen_a_seccion(anio_escolar.id, @cuaderno_control.seccion_id), :id, :apellidos_nombres, {:prompt => ':: Seleccione un alumno ::' }, {"data-mini" => "true", :required => "required"}) %>    
+    Alumno <br/><%= collection_select(:cuaderno_control_evento, :alumno_id, Alumno.pertenecen_a_seccion(anio_escolar.id, @cuaderno_control.seccion_id), :id, :apellidos_nombres, {:prompt => ':: Seleccione un alumno ::' }, {"data-mini" => "true"}) %>    
   </div>
   <div class="field">
     Descripción (*)<br/><%= f.text_area :descripcion, :required => "required" %>

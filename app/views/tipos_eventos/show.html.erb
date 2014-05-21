@@ -22,6 +22,13 @@
         No
       <% end %>
       <p>
+  <b>Ingreso obligatorio de fecha programada:</b>
+      <% if @tipo_evento.obligatorio_fecha == 1 %>
+        Si
+      <% else %>
+        No
+      <% end %>
+      <p>
 </div>
 
 <div data-role="footer">

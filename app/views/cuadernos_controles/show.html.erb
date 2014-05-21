@@ -12,7 +12,7 @@
 
 <div data-role="content">
   <ul id='cuaderno_controles_eventos' data-role="listview" data-filter="true">
-    <% @cuaderno_control.cuaderno_controles_eventos.each do |cuaderno_control_evento| %>    
+    <% @cuaderno_control.cuaderno_controles_eventos.order("tipo_evento_id").each do |cuaderno_control_evento| %>    
     <li>
       <% if (@cuaderno_control.estado == 1) && (can? :manage, cuaderno_control_evento) %>        
         <%= link_to [:edit, @cuaderno_control, cuaderno_control_evento] do %>
@@ -38,6 +38,9 @@
         <% end %>
         <p/>
         <%= simple_format(cuaderno_control_evento.descripcion) %>
+        <% if !cuaderno_control_evento.fecha_evento.nil? %>
+          <%= simple_format("Para el #{cuaderno_control_evento.fecha_evento.strftime('%d/%m/%Y')}") %>
+        <% end %>        
       <% end %>
     </li>
     <% end %>
