@@ -4,7 +4,7 @@ class GradosController < ApplicationController
   # GET /grados
   # GET /grados.json
   def index
-    @grados = Grado.order("grado")
+    @grados = Grado.order("nivel, grado")
 
     respond_to do |format|
       format.html # index.html.erb

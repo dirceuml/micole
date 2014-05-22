@@ -1,4 +1,4 @@
-<%= form_for(@grado) do |f| %>
+<%= form_for(@grado, :html => { :class => "ui-body ui-body-c" }) do |f| %>
   <% if @grado.errors.any? %>
     <div id="error_explanation" data-role="header" data-theme="e">
       <h2><%= pluralize(@grado.errors.count, "error") %> impidieron que se grabe el registro:</h2>

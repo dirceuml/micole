@@ -1,6 +1,6 @@
 <div data-role="header">
-    <h1>Editar seccion</h1>
-    <%= link_to 'Regresar', secciones_path, "data-icon" => "back", "class" => "ui-btn-left", "data-mini" => "true" %>
+  <h1>Editar seccion (<%= "Grado #{@grado.grado_nivel}" %> )</h1>
+  <%= link_to 'Regresar', @grado %>
 </div>
 
 <%= render 'form' %>

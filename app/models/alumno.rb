@@ -52,12 +52,12 @@ class Alumno < ActiveRecord::Base
   end
   
   def salida_registrada (alumno_id, fecha)
-    Alumno.joins(:anios_alumnos => :asistencias).where("to_char(fecha_hora, 'dd/mm/yyyy') = ? and alumnos.id = ? and tipo_movimiento = 2", fecha.strftime('%d/%m/%Y'), alumno_id).count
+    Alumno.joins(:anios_alumnos => :asistencias).where("to_char(fecha_hora::timestamp at time zone 'UTC-5', 'yyyymmdd') = ? and alumnos.id = ? and tipo_movimiento = 2", fecha.strftime('%Y%m%d'), alumno_id).count
   end
   
   def find_asistencia_by_anio_escolar_id_and_alumno_id_and_fecha (anioescolar, alumno_id, fecha, movimiento)
     anioalumno_id = AnioAlumno.find_by_anio_escolar_id_and_alumno_id(anioescolar, alumno_id).id
-    Asistencia.find(:all, :conditions => ["to_char(fecha_hora, 'dd/mm/yyyy') = '#{fecha.strftime('%d/%m/%Y')}' and anio_alumno_id = #{anioalumno_id} and tipo_movimiento = #{movimiento}"]).first
+    Asistencia.find(:all, :conditions => ["to_char(fecha_hora::timestamp at time zone 'UTC-5', 'yyyymmdd') = '#{fecha.strftime('%Y%m%d')}' and anio_alumno_id = #{anioalumno_id} and tipo_movimiento = #{movimiento}"]).first
   end
   
   def rango_fecha_nacimiento
@@ -72,5 +72,5 @@ class Alumno < ActiveRecord::Base
   scope :por_anio_colegio, lambda { |colegio, anio| self.por_colegio(colegio).joins(:anios_alumnos).where("anios_alumnos.anio_escolar_id = ?", anio)}
   scope :hijos_de, lambda { |padre| joins(:alumnos_personas_vinculadas).where("apoderado = 1 and persona_vinculada_id = ?", padre) }
   scope :se_revisan_por, lambda { |padre| joins(:alumnos_personas_vinculadas).where("revisa_control = 1 and persona_vinculada_id = ?", padre) }
-  scope :pertenecen_a_seccion, lambda { |anioescolar, seccion| joins(:anios_alumnos).where("anios_alumnos.anio_escolar_id = ? and anios_alumnos.seccion_id = ?", anioescolar, seccion)}
+  scope :pertenecen_a_seccion, lambda { |anioescolar, seccion| joins(:anios_alumnos).where("anios_alumnos.anio_escolar_id = ? and anios_alumnos.seccion_id = ? and anios_alumnos.estado = 1", anioescolar, seccion)}
 end

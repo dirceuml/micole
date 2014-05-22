@@ -8,14 +8,14 @@
 <div data-role="content">
   <ul data-role="listview" data-filter="true">
     <% @grados.por_anio_escolar(anio_escolar.id).each do |grado| %>
-    <li data-filtertext="<%= "#{grado.grado}" %>" >
-      <% if can? :update, grado %>
-        <% link_opcion = edit_grado_path(grado) %>
-      <% else %>
+    <li data-filtertext="<%= "#{grado.grado_nivel}" %>" >
+      <!-- % if can? :update, grado %-->
+        <!-- % link_opcion = edit_grado_path(grado) % -->
+      <!--% else %-->
         <% link_opcion = grado %>
-      <% end %>
+      <!--% end %-->
       <%= link_to link_opcion do %>
-        <%= simple_format("Grado : #{grado.grado} #{grado.nivel_desc}") %>
+        <%= simple_format("Grado #{grado.grado} - #{grado.nivel_desc}") %>
       <% end %>
       
       <% if can? :destroy, grado %>

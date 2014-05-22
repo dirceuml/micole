@@ -8,7 +8,7 @@ class ActividadesController < ApplicationController
     end
     
     if params[:fecha].nil?
-      @actividades = Actividad.order("fecha_hora_inicio")      
+      @actividades = Actividad.por_anio_escolar(anio_escolar.id)
     else
       if params[:persona].nil?
         @actividades = Actividad.por_fecha_inicio(anio_escolar.id, Date.strptime(params[:fecha], '%d/%m/%Y'))

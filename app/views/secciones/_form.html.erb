@@ -1,7 +1,7 @@
-<%= form_for(@seccion) do |f| %>
+<%= form_for [@grado, @seccion], :html => { :class => "ui-body ui-body-c" } do |f| %>
   <% if @seccion.errors.any? %>
     <div id="error_explanation" data-role="header" data-theme="e">
-      <h2><%= pluralize(@seccion.errors.count, "error") %> impidieron que se grabe el registro:</h2>
+      <%= pluralize(@seccion.errors.count, "error") %> impidieron que el registro se grabe:
 
       <ul>
       <% @seccion.errors.full_messages.each do |msg| %>
@@ -10,12 +10,12 @@
       </ul>
     </div>
   <% end %>
-  
+
 <div data-role="fieldcontain">
-  <div class="field">
-    Grado (*)<br />
-    <%= collection_select(:seccion, :grado_id, Grado.where("anio_escolar_id= ?", anio_escolar.id).order("grado"), :id, :grado_nivel, {:prompt => ':: Seleccione ::'}, {"data-mini" => "true", :required => "required"}) %>
-  </div>
+  <!--div class="field" -->
+  <!--%= "Grado (*)" %-->  <!--br /-->
+    <!--%= collection_select(:seccion, :grado_id, Grado.where("anio_escolar_id= ?", anio_escolar.id).order("grado"), :id, :grado_nivel, {:prompt => ':: Seleccione ::'}, {"data-mini" => "true", :required => "required"}) %-->
+  <!-- /div-->
   
   <div class="field">
     Seccion (*)<br />
