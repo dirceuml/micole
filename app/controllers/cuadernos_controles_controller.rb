@@ -70,7 +70,7 @@ class CuadernosControlesController < ApplicationController
         (Select cc.id, a.alumno_id, \'' + current_user.usuario + '\', current_date, current_date, 0
         From cuadernos_controles cc, anios_alumnos a
         Where cc.id = ' + @cuaderno_control.id.to_s + '
-          And cc.seccion_id = a.seccion_id)
+          And cc.seccion_id = a.seccion_id And a.estado = 1)
         Returning id'
         
         if CuadernoControlRevision.connection.insert(sql)

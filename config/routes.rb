@@ -116,7 +116,9 @@ Micole::Application.routes.draw do
 
   resources :secciones
 
-  resources :grados
+  resources :grados do
+    resources :secciones
+  end 
 
   resources :anios_escolares
 

@@ -142,7 +142,7 @@ class UsuariosController < ApplicationController
       @nuevos_usuarios = PersonaVinculada.connection.select_rows("Select id, nombres, apellido_paterno, apellido_materno, correo From personas_vinculadas 
               Where id not in (Select persona_vinculada_id from usuarios where colegio_id= "+ colegio.id.to_s+ "and persona_vinculada_id <> 0) and id in (Select persona_vinculada_id From alumnos_personas_vinculadas 
               Join anios_alumnos on anios_alumnos.alumno_id = alumnos_personas_vinculadas.alumno_id join anios_escolares on anios_escolares.id = anios_alumnos.anio_escolar_id
-              Where vigencia_vinculo= 2 And (apoderado= 1 Or autoriza_actividad = 1 Or revisa_control= 1) and anios_alumnos.anio_escolar_id = "+ anio_escolar.id.to_s+ " and anios_escolares.colegio_id= "+ colegio.id.to_s+ ")")
+              Where vigencia_vinculo= 2 And (apoderado= 1 Or autoriza_actividad = 1 Or revisa_control= 1) and anios_alumnos.estado = 1 and anios_alumnos.anio_escolar_id = "+ anio_escolar.id.to_s+ " and anios_escolares.colegio_id= "+ colegio.id.to_s+ ")")
       
       if @nuevos_usuarios.empty?
         error  = 2

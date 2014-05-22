@@ -1,16 +1,26 @@
 <div id='Grado' data-role="header">
-  <h1>Detalles</h1>
-  <%= link_to 'Aceptar', grados_path, "data-icon" => "check", "data-mini" => "true"  %>
-</div>
-
-<div data-role="content" style="clear: left">
-  <b>Año escolar:</b> <%= AnioEscolar.find(@grado.anio_escolar_id).anio %> <p>
-  <b>Grado:</b> <%= @grado.grado %> <p>
-  <b>Nivel:</b> <%= @grado.nivel_desc %>
-</div>
-
-<div data-role="footer">
-  <% if can? :update, @grado %>
-    <%= link_to 'Editar', edit_grado_path(@grado), "class" => "ui-btn-left", "data-inline" => "true", "data-theme" => "a", "data-icon" => "gear", "data-mini" => "true" %>
+  <h1> <%= "Grado #{@grado.grado_nivel}" %> </h1>
+  
+  <% if can? :create, Seccion %>
+    <%= link_to 'Agregar seccion', new_grado_seccion_path(@grado), "data-icon" => "plus", "class" => "ui-btn-right", "data-mini" => "true" %>
   <% end %>
+  
+  <%= link_to 'Regresar', grados_path, "data-icon" => "back", "class" => "ui-btn-left", "data-mini" => "true"  %>
+</div>
+
+<div data-role="content">
+  <ul id='secciones' data-role="listview" data-filter="true">
+    <% @grado.secciones.order("seccion").each do |seccion| %>    
+    <li>
+      <% if (can? :manage, seccion) %>        
+        <%= link_to [:edit, @grado, seccion] do %>
+          <%= simple_format("Seccion : #{seccion.seccion}") %>
+          <%= link_to 'Eliminar', [@grado, seccion], confirm: '¿Seguro que desea eliminar el registro?', method: :delete, "data-icon" => "delete" %>
+        <% end %>
+      <% else %>
+        <%= simple_format("Seccion : #{seccion.seccion}") %>
+      <% end %>
+    </li>
+    <% end %>
+  </ul>
 </div>

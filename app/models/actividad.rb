@@ -80,14 +80,15 @@ class Actividad < ActiveRecord::Base
     end
   end
     
-  scope :pendiente, lambda { |anioescolar, fecha| where("actividades.anio_escolar_id = ? and to_char(fecha_hora_fin, 'yyyymmdd') >= ?", anioescolar, fecha.strftime('%Y%m%d'))}
-  scope :realizada, lambda { |anioescolar, fecha| where("actividades.anio_escolar_id = ? and to_char(fecha_hora_fin, 'yyyymmdd') < ?", anioescolar, fecha.strftime('%Y%m%d'))}
-  scope :pendiente_colegios, lambda { |fecha| joins(:anio_escolar).where("anios_escolares.activo = 1 and to_char(fecha_hora_fin, 'yyyymmdd') >= ?", fecha.strftime('%Y%m%d'))}
+  scope :por_anio_escolar, lambda { |anioescolar| where("actividades.anio_escolar_id = ?", anioescolar)}
+  scope :pendiente, lambda { |fecha| where("to_char(fecha_hora_fin::timestamp at time zone 'UTC-5', 'yyyymmdd') >= ?", fecha.strftime('%Y%m%d'))}
+  scope :realizada, lambda { |fecha| where("to_char(fecha_hora_fin::timestamp at time zone 'UTC-5', 'yyyymmdd') < ?", fecha.strftime('%Y%m%d'))}
+  scope :pendiente_colegios, lambda { |fecha| joins(:anio_escolar).where("anios_escolares.activo = 1 and to_char(fecha_hora_fin::timestamp at time zone 'UTC-5', 'yyyymmdd') >= ?", fecha.strftime('%Y%m%d'))}
   
-  scope :por_fecha_inicio, lambda { |anioescolar, fecha| where("anio_escolar_id = ? and to_char(fecha_hora_inicio, 'dd/mm/yyyy') = ?", anioescolar, fecha.strftime('%d/%m/%Y'))}
+  scope :por_fecha_inicio, lambda { |anioescolar, fecha| where("anio_escolar_id = ? and to_char(fecha_hora_inicio::timestamp at time zone 'UTC-5', 'yyyymmdd') = ?", anioescolar, fecha.strftime('%Y%m%d'))}
   scope :por_seccion, lambda { |anioescolar, seccion| joins(:actividades_secciones).where("anio_escolar_id = ? and actividades_secciones.seccion_id = ?", anioescolar, seccion)}
   scope :por_persona, lambda { |persona| joins(:secciones => {:anios_alumnos => :personas_vinculadas}).uniq.where("personas_vinculadas.id = ?", persona)}
-  scope :por_persona_y_fecha, lambda { |persona,fecha| por_persona(persona).where("to_char(fecha_hora_inicio, 'dd/mm/yyyy') = ?", fecha.strftime('%d/%m/%Y'))}
+  scope :por_persona_y_fecha, lambda { |persona,fecha| por_persona(persona).where("to_char(fecha_hora_inicio::timestamp at time zone 'UTC-5', 'yyyymmdd') = ?", fecha.strftime('%Y%m%d'))}
   scope :apoderados, lambda { |actividad| joins(:personas_vinculadas).where("actividades.id = ? and alumnos_personas_vinculadas.apoderado = 1", actividad)}
   scope :por_secciones_usuario, lambda { |anioescolar, usuarioadm| joins(:actividades_secciones => {:seccion => :usuarios_secciones}).where("anio_escolar_id = ? and requiere_autorizacion = 1 and usuarios_secciones.usuario_id = ?", anioescolar, usuarioadm)}  
   #attr_accessor :fecha_inicio, :hora_inicio, :min_inicio, :fecha_fin, :hora_fin, :min_fin
