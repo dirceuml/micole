@@ -1,7 +1,9 @@
     <div data-role="fieldcontain" class="ui-body ui-body-c">
       <div class="field">
         Persona vinculada: (*)<br/>
-        <%= f.collection_select(:persona_vinculada_id, PersonaVinculada.order("apellido_paterno","apellido_materno", "nombres"), :id, :apellidos_nombres, {:prompt => ':: Seleccione ::' }, {"data-mini" => "true"}) %>
+        <%= f.collection_select(:persona_vinculada_id, PersonaVinculada.order("apellido_paterno, apellido_materno, nombres"), :id, :apellidos_nombres, {:prompt => ':: Seleccione ::' }, {"data-mini" => "true"}) %>
+        <%# order("apellido_paterno, apellido_materno, nombres") %>
+        <%# no_vinculadas_a(@alumno.id).sort_by{|e| e[:apellido_paterno] + " " + e[:apellido_materno] + " " + e[:nombres]} %>
       </div>
       
       <div data-role="content" data-theme = "b" >

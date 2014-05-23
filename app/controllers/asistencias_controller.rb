@@ -102,7 +102,7 @@ class AsistenciasController < ApplicationController
     end
     
     @asistencias = Asistencia.por_alumno_fecha(anio_escolar.id, codigo, Date.current)
-    @personasvinculadas = PersonaVinculada.vinculados_de(0)
+    @personasvinculadas = PersonaVinculada.vinculadas_a(0)
     @nuevo = 1
     
     respond_to do |format|
@@ -169,7 +169,7 @@ class AsistenciasController < ApplicationController
             end
           end
           if cargarpersonasvinculadas == 1
-            @personasvinculadas = PersonaVinculada.vinculados_de(codigo)
+            @personasvinculadas = PersonaVinculada.vinculadas_a(codigo)
             flash[:notice] = 'Seleccione la persona que recoge al alumno'
             @nuevo = 0
             render :new
