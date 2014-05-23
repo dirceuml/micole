@@ -5,6 +5,7 @@ class AnioAlumno < ActiveRecord::Base
   has_many :personas_vinculadas, :through => :alumno
   
   has_many :asistencias
+  has_many :controles_asistencias
 #  has_many :personas_vinculadas
   
   validates :anio_escolar_id, :alumno_id, :usuario, :seccion_id, :presence => { :message => ": El campo no puede estar vacio" }

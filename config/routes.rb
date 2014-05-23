@@ -1,5 +1,8 @@
 Micole::Application.routes.draw do 
 
+  resources :controles_asistencias
+
+
   resources :usuarios_secciones
   
   resources :usuarios do

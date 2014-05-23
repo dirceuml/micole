@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Anio alumno:</b>
+  <%= @control_asistencia.anio_alumno_id %>
+</p>
+
+<p>
+  <b>Tipo asistencia:</b>
+  <%= @control_asistencia.tipo_asistencia %>
+</p>
+
+<p>
+  <b>Usuario:</b>
+  <%= @control_asistencia.usuario %>
+</p>
+
+
+<%= link_to 'Edit', edit_control_asistencia_path(@control_asistencia) %> |
+<%= link_to 'Back', controles_asistencias_path %>

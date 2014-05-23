@@ -4,16 +4,15 @@
         <%= f.collection_select(:persona_vinculada_id, PersonaVinculada.order("apellido_paterno","apellido_materno", "nombres"), :id, :apellidos_nombres, {:prompt => ':: Seleccione ::' }, {"data-mini" => "true"}) %>
       </div>
       
-      -------------------
+      <div data-role="content" data-theme = "b" >
+        <%= f.fields_for :persona_vinculada do |pv| %>
+          <%= render "persona_vinculada_fields", :f => pv %>
+        <% end %>
+      </div>
       
-      <%= f.fields_for :persona_vinculada do |pv| %>
-        <%= render "persona_vinculada_fields", :f => pv %>
-      <% end %>
       <div>
         <%= f.link_to_add "Agregar persona", :persona_vinculada, "data-role" => "button", "data-inline" => "true", "data-theme" => "b", "data-icon" => "plus", "data-mini" => "true" %>
       </div>
-      
-      -------------------
       
       <div class="field">
         <%= f.hidden_field :alumno_id %>
