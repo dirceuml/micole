@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140521040847) do
+ActiveRecord::Schema.define(:version => 20140523032056) do
 
   create_table "actividades", :force => true do |t|
     t.integer  "anio_escolar_id",                                           :null => false
@@ -416,6 +416,7 @@ ActiveRecord::Schema.define(:version => 20140521040847) do
     t.date     "fecha_clave"
     t.integer  "alcance_colegio"
     t.integer  "alumno_id"
+    t.integer  "estado",               :default => 1,       :null => false
   end
 
   add_index "usuarios", ["colegio_id", "usuario"], :name => "ak_usuarios", :unique => true

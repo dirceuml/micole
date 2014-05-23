@@ -43,19 +43,21 @@
   </div>
   <div class="field">
     Notificar inasistencia<br />
-    <%= collection_select(:colegio, :notificar_inasistencia, ListaValor.where("tabla=10"), :item, :descripcion, {:prompt => ':: Seleccione ::'}, {"data-mini" => "true", :required => "required"}) %>
+    <%= collection_select(:colegio, :notificar_inasistencia, ListaValor.where("tabla=10").order("item"), :item, :descripcion, {:prompt => ':: Seleccione ::'}, {"data-mini" => "true", :required => "required"}) %>
   </div>
   <div class="field">
     Crear usuarios para alumnos a partir del grado (*)<br />
     <%= collection_select(:colegio, :grado_usuario, Grado.where("anio_escolar_id = ? and nivel = 1", anio_escolar.id).order("grado"), :grado, :grado_nivel, {:prompt => ':: Seleccione ::'}, {"data-mini" => "true", :required => "required"}) %>
   </div>
-  <div class="field">
-    Estado<br />
-    <select <%= f.number_field :estado, "data-role" => "slider", "data-mini" => "true" %> >
-                <option value = 0 <% if @colegio.estado == 0 %> selected <%end%> >Baja</option>
-                <option value = 1 <% if @colegio.estado == 1 %> selected <%end%> >Activo</option>
-    </select>
-  </div>
+  <% if !@colegio.id.nil? %>
+    <div class="field">
+        Estado<br />
+        <select <%= f.number_field :estado, "data-role" => "slider", "data-mini" => "true" %> >
+                    <option value = 0 <% if @colegio.estado == 0 %> selected <%end%> >Baja</option>
+                    <option value = 1 <% if @colegio.estado == 1 %> selected <%end%> >Activo</option>
+        </select>
+    </div>
+  <%end%>
   <div class="field">
     <%= f.hidden_field :usuario, :value => current_user.usuario %>
   </div>

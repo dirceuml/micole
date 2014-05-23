@@ -83,7 +83,17 @@
         <label for="radio-opc2">Colegio</label>
     </fieldset>
   </div>
-
+  
+  <% if !@usuario.id.nil? %>
+    <div class="field">
+        Estado<br />
+        <select <%= f.number_field :estado, "data-role" => "slider", "data-mini" => "true" %> >
+                    <option value = 0 <% if @usuario.estado == 0 %> selected <%end%> >Baja</option>
+                    <option value = 1 <% if @usuario.estado == 1 %> selected <%end%> >Activo</option>
+        </select>
+    </div>
+  <%end%>
+  
 </div>
 <div class="actions">
     <%= f.submit "Grabar", "data-inline" => "true", "data-theme" => "a", "data-icon" => "check", "data-mini" => "true" %>
