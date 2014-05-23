@@ -424,6 +424,7 @@ ActiveRecord::Schema.define(:version => 20140523145907) do
     t.integer  "notificado",           :default => 0,       :null => false
     t.integer  "alcance_colegio"
     t.integer  "alumno_id"
+    t.integer  "estado",               :default => 1,       :null => false
   end
 
   add_index "usuarios", ["colegio_id", "usuario"], :name => "ak_usuarios", :unique => true
