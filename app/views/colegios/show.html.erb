@@ -11,8 +11,20 @@
   <b>Correo:</b> <%= @colegio.correo %> <p>
   <b>Director:</b> <%= @colegio.director %> <p>
   <b>Notificar inasistencia:</b> 
-      <%= "#{ListaValor.find_by_tabla_and_item(10, @colegio.notificar_inasistencia).descripcion}" %>
-      <p>
+  <!--%= "#{ListaValor.find_by_tabla_and_item(10, @colegio.notificar_inasistencia).descripcion}" %-->
+  <% if @colegio.notificar_inasistencia == 0%>
+    No
+  <%else%>
+    Si
+  <%end%>
+  <p>
+  <b>Notificar tardanza:</b> 
+  <% if @colegio.notificar_tardanza == 0%>
+    No
+  <%else%>
+    Si
+  <%end%>
+  <p>
   <b>Crear usuarios para alumnos a partir del grado:</b> 
     <% if @colegio.grado_usuario.nil? %>
       No definido

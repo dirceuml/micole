@@ -18,45 +18,57 @@ class ControlesAsistenciasController < ApplicationController
       redirect_to(log_in_path) and return
     end
     
+    #@registrados = ControlAsistencia.por_anio_escolar_seccion_rango_fechas(anio_escolar.id, params[:seccion_id], Date.current, Date.current).where("tipo_asistencia = 1")
+    
     if params[:alumno_id].nil?
       flash[:notice] = 'Seleccione a los alumnos ausentes'
       render :inasistencias
       return
     end
     
+    registrados = 0
     ActiveRecord::Base.transaction do
       params[:alumno_id].each do |alumno|
-        @controles_alumnos = ControlAsistencia.new(
-          :anio_alumno_id => AnioAlumno.find_by_anio_escolar_id_and_alumno_id(anio_escolar.id, alumno).id,
-          :fecha => Date.current,
-          :tipo_asistencia => 1,
-          :usuario => current_user.usuario
-        )
-        
-        if !@controles_alumnos.save
-          flash[:notice] = 'Ocurrio un error al registrar las inasistencias'
-          format.html { render action: "faltas" }
-        else
-          if @guardados.nil?
-            @guardados = [@controles_alumnos.id]
-          else
-            @guardados.push(@controles_alumnos)
-          end
+        anioalumno_id    = AnioAlumno.find_by_anio_escolar_id_and_alumno_id(anio_escolar.id, alumno).id
+        registroanterior = ControlAsistencia.find_by_anio_alumno_id_and_fecha(anioalumno_id, Date.current)
+        if registroanterior.nil?
+          registrados = 1
+          @controles_alumnos = ControlAsistencia.new(
+            :anio_alumno_id => anioalumno_id,
+            :fecha => Date.current,
+            :tipo_asistencia => 1,
+            :usuario => current_user.usuario
+          )
           
-          #@notificar = AlumnoPersonaVinculada.notificar_salida(alumno)
-          #if !@notificar.empty?
-          #  @notificar.each do |alumnopersona|
-          #    if alumnopersona.persona_vinculada_id != params[:persona_vinculada_id]
-          #      @persona = PersonaVinculada.find(alumnopersona.persona_vinculada_id)
-          #      @alumno  = Alumno.find(alumno)
-          #      AsistenciaMailer.delay.notificar_asistencia(2, @alumno, @asistencia_alumno_persona_vinculada, @persona)   ## Asincrono
-          #    end
-          #  end
-          #end
+          if !@controles_alumnos.save
+            flash[:notice] = 'Ocurrio un error al registrar las inasistencias'
+            format.html { render action: "inasistencias" }
+          else
+            if @guardados.nil?
+              @guardados = [@controles_alumnos.id]
+            else
+              @guardados.push(@controles_alumnos)
+            end
+            
+            if colegio.notificar_inasistencia != 0
+              @notificar = PersonaVinculada.padres_de(alumno)  # apoderado = 1
+              if !@notificar.empty?
+                @notificar.each do |padre|
+                  @alumno  = Alumno.find(alumno)
+                  InasistenciaMailer.delay.notificacion_inasistencia(@alumno, padre, Time.now.strftime('%I:%M %P')) # Asincrono
+                end
+              end
+            end
+          end
         end
       end
     end
-    flash[:notice] = 'Las inasistencias fueron registrados satisfactoriamente'
+    
+    if registrados = 1
+      flash[:notice] = 'Las inasistencias fueron registrados satisfactoriamente'
+    else
+      flash[:notice] = 'No se registraron nuevas inasistencias'
+    end
     redirect_to :controller => 'alumnos', :action => 'inasistencias', :seccion => params[:seccion_id]
   end
   
@@ -91,16 +103,15 @@ class ControlesAsistenciasController < ApplicationController
             @guardados.push(@controles_alumnos)
           end
           
-          #@notificar = AlumnoPersonaVinculada.notificar_salida(alumno)
-          #if !@notificar.empty?
-          #  @notificar.each do |alumnopersona|
-          #    if alumnopersona.persona_vinculada_id != params[:persona_vinculada_id]
-          #      @persona = PersonaVinculada.find(alumnopersona.persona_vinculada_id)
-          #      @alumno  = Alumno.find(alumno)
-          #      AsistenciaMailer.delay.notificar_asistencia(2, @alumno, @asistencia_alumno_persona_vinculada, @persona)   ## Asincrono
-          #    end
-          #  end
-          #end
+          if colegio.notificar_tardanza != 0
+            @notificar = PersonaVinculada.padres_de(alumno)  # apoderado = 1
+            if !@notificar.empty?
+              @notificar.each do |padre|
+                @alumno  = Alumno.find(alumno)
+                TardanzaMailer.delay.notificacion_tardanza(@alumno, padre, Time.now.strftime('%I:%M %P')) # Asincrono
+              end
+            end
+          end
         end
       end
     end

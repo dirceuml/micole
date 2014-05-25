@@ -37,21 +37,25 @@
           <% @alumnos.each do |alumno_colegio| %>
             <% anioalumno = AnioAlumno.find_by_anio_escolar_id_and_alumno_id(anio_escolar.id, alumno_colegio.id).id%>
             <% controlalumno = ControlAsistencia.find_by_anio_alumno_id_and_fecha(anioalumno, Date.current)%>
-            <li data-filtertext="<%= alumno_colegio.apellidos_nombres %>" >
-              <% idcheck = "alumno_id_#{alumno_colegio.id}" %>
-              <% if controlalumno.nil? %>
+            <% idcheck = "alumno_id_#{alumno_colegio.id}" %>
+            <% if controlalumno.nil? %>
+              <li data-filtertext="<%= alumno_colegio.apellidos_nombres %>" >
                 <%= check_box_tag 'alumno_id[]',alumno_colegio.id, false, {:id => idcheck, "class" => "custom", "data-mini" => "true"}  %> 
                 <label for= <%="#{idcheck}"%> ><%= alumno_colegio.apellidos_nombres %></label>
-              <%else%>
-                <% if controlalumno.tipo_asistencia == 1%>
+              </li>
+            <%else%>
+              <% if controlalumno.tipo_asistencia == 1%>
+                <li data-filtertext="<%= "#{alumno_colegio.apellidos_nombres} (INASISTENCIA)"%>" >
                   <%= check_box_tag 'alumno_id[]',alumno_colegio.id, true, {:id => idcheck, "class" => "custom", "data-mini" => "true", disabled: true}  %>
-                  <label for= <%="#{idcheck}"%> ><%= alumno_colegio.apellidos_nombres %></label>
-                <%else%>
+                  <label for= <%="#{idcheck}"%> ><%= "#{alumno_colegio.apellidos_nombres} (INASISTENCIA)"%></label>
+                </li>
+              <%else%>
+                <li data-filtertext="<%= "#{alumno_colegio.apellidos_nombres} (TARDANZA)"%>" >
                   <%= check_box_tag 'alumno_id[]',alumno_colegio.id, false, {:id => idcheck, "class" => "custom", "data-mini" => "true", disabled: true}  %>
                   <label for= <%="#{idcheck}"%> ><%= "#{alumno_colegio.apellidos_nombres} (TARDANZA)"%></label>
-                <%end%>
+                </li>
               <%end%>
-            </li>
+            <%end%>
           <% end  %>
         </ul>
       </div>

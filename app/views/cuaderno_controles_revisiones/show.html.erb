@@ -7,6 +7,18 @@
 </div>
 
 <div data-role="content">
+  <%anio_alumno = AnioAlumno.find_by_anio_escolar_id_and_alumno_id(anio_escolar.id, @cuaderno_control_revision.alumno.id)%>
+  <% controlasistenciaalumno = ControlAsistencia.find_by_anio_alumno_id_and_fecha(anio_alumno, @cuaderno_control_revision.cuaderno_control.fecha)%>
+  <% if !controlasistenciaalumno.nil? %>
+    <div style="color: #cc0012">
+      <% if controlasistenciaalumno.tipo_asistencia == 1 %>
+        <p><%= "INASISTENCIA REGISTRADA" %></p>
+      <% else %>
+        <p><%= "TARDANZA REGISTRADA" %></p>
+      <% end %>
+    </div>
+  <% end %>
+
   <ul id='cuaderno_controles_revisiones' data-role="listview" data-filter="true">
     <% @cuaderno_control_revision.cuaderno_control.cuaderno_controles_eventos.where("alumno_id is null or alumno_id=?", @cuaderno_control_revision.alumno.id).order("tipo_evento_id").each do |cuaderno_control_evento| %>      
       <li>
@@ -19,7 +31,7 @@
         </p>
       </li>             
     <% end %>
-  </ul>      
+  </ul>
 </div>
 
 
