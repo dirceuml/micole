@@ -1,3 +1,22 @@
+<% @tiposeventos = TipoEvento.where("cuaderno_control = 1") %> 
+  <% tiposindividual = "" %>
+  <% obligatorios_fecha = "" %>
+  <% @tiposeventos.each do |tipoevento| %>
+    <% if tipoevento.alcance == 3 %>
+      <% tiposindividual = tiposindividual + tipoevento.id.to_s + "," %>
+    <% end %>
+
+    <% if tipoevento.obligatorio_fecha == 1 %>
+      <% obligatorios_fecha = obligatorios_fecha + tipoevento.id.to_s + "," %>
+    <% end %>
+  <% end %>
+  
+<% funcion = "toggleElement('#{tiposindividual}', '#{obligatorios_fecha}')" %>
+
+<% content_for :onload do %>
+  <%= funcion %>
+<% end %>
+
 <%= form_for [@cuaderno_control, @cuaderno_control_evento], :html => { :class => "ui-body ui-body-c" } do |f| %>
   <% if @cuaderno_control_evento.errors.any? %>
     <div id="error_explanation" data-role="header" data-theme="e">
@@ -11,28 +30,19 @@
     </div>
   <% end %>
   
-  <% @tiposeventos = TipoEvento.where("cuaderno_control = 1") %> 
-  <% tiposindividual = ""%>
-  <% @tiposeventos.each do |tipoevento| %>
-    <% if tipoevento.alcance == 3%>
-      <% tiposindividual = tiposindividual + tipoevento.id.to_s + "," %>
-    <% end %>
-  <% end %>
-  
 <div data-role="fieldcontain">
   <div class="field">
     Tipo de evento (*)<br />
-    <% funcion = "toggleElement(this, document.getElementById('cuaderno_control_evento_alumno_id'), '#{tiposindividual}')" %>
     <%= collection_select(:cuaderno_control_evento, :tipo_evento_id, @tiposeventos, :id, :descripcion, {:prompt => ':: Seleccione un tipo de evento ::'}, {"data-mini" => "true", :onchange => funcion, :required => "required"}) %>    
   </div>
-  <div class="field">
-    Alumno <br/><%= collection_select(:cuaderno_control_evento, :alumno_id, Alumno.pertenecen_a_seccion(anio_escolar.id, @cuaderno_control.seccion_id), :id, :apellidos_nombres, {:prompt => ':: Seleccione un alumno ::' }, {"data-mini" => "true"}) %>    
+  <div class="field" id="alumno">
+    Alumno (*) <br/><%= collection_select(:cuaderno_control_evento, :alumno_id, Alumno.pertenecen_a_seccion(anio_escolar.id, @cuaderno_control.seccion_id), :id, :apellidos_nombres, {:prompt => ':: Seleccione un alumno ::' }, {"data-mini" => "true"}) %>    
   </div>
   <div class="field">
     Descripción (*)<br/><%= f.text_area :descripcion, :required => "required" %>
   </div>
   <div class="field">
-    Para la fecha<br/><%= f.text_field :fecha_evento, "data-mini" => "true", "data-role" => "datebox", "type" => "date", "style" => "width:130px" %>
+    Para la fecha<br/><%= f.text_field :fecha_evento, "data-mini" => "true", "data-role" => "datebox", "type" => "date", "style" => "width:130px", :min => @cuaderno_control.fecha + 1, :max => @cuaderno_control.fecha + 30 %>
   </div>
   <div class="field">
     <%= f.hidden_field :usuario, :value => current_user.usuario %>

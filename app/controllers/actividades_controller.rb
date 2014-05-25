@@ -1,5 +1,6 @@
 class ActividadesController < ApplicationController
   load_and_authorize_resource
+  #include Util
   # GET /actividades
   # GET /actividades.json
   def index
@@ -53,6 +54,13 @@ class ActividadesController < ApplicationController
   # GET /actividades/new.json
   def new
     @actividad = Actividad.new
+    if anio_escolar.fin_clases.nil?
+      @fecha_limite = Date.current.end_of_year # o Date.civil(anio_escolar.anio, -1, -1)
+    else
+      @fecha_limite = anio_escolar.fin_clases
+    end    
+    #@fecha_limite = first_non_nil(Date.current, anio_escolar.fin_clases, Date.civil(anio_escolar.anio, -1, -1))
+    @fecha_limite = "#{@fecha_limite}T23:59:59"
 
     respond_to do |format|
       format.html # new.html.erb
@@ -63,6 +71,13 @@ class ActividadesController < ApplicationController
   # GET /actividades/1/edit
   def edit
     @actividad = Actividad.find(params[:id])
+    if anio_escolar.fin_clases.nil?
+      @fecha_limite = Date.current.end_of_year # o Date.civil(anio_escolar.anio, -1, -1)
+    else
+      @fecha_limite = anio_escolar.fin_clases
+    end
+    #@fecha_limite = first_non_nil(Date.current, anio_escolar.fin_clases, Date.civil(anio_escolar.anio, -1, -1))
+
   end
 
   # POST /actividades

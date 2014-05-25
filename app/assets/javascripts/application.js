@@ -15,18 +15,32 @@
 //= require jquery_nested_form
 
 
-function toggleElement(origen, destino, valorDeshabilita)
+function toggleElement(valorDeshabilita, valorFechaObligatoria)
 {
-    //if (alcance == 3)
+    origen = document.getElementById("cuaderno_control_evento_tipo_evento_id");
+    destino = document.getElementById("cuaderno_control_evento_alumno_id");     
+    alumno = document.getElementById("alumno");     
+    destinoFecha = document.getElementById("cuaderno_control_evento_fecha_evento");         
+    
     if (valorDeshabilita.indexOf(origen.value.toString()) != -1)
     {
-        //document.getElementById("cuaderno_control_evento_alumno_id").disabled = false;
-        destino.disabled = false;
+        destino.required = true;
+        alumno.style.display = "block";
     }
     else
     {
+        alumno.style.display = "none";
         destino.value = null;
-        destino.disabled = true;
+        destino.required = false;
+    }
+    
+    if (valorFechaObligatoria.indexOf(origen.value.toString()) != -1)
+    {
+        destinoFecha.required = true;
+    }
+    else
+    {
+        destinoFecha.required = false;
     }
 }
 
@@ -184,4 +198,77 @@ function toggleElementPerfil(origen)
         document.getElementById('radio-opc2').value = null;        
         document.getElementById('radio-opc2').disabled = true;
     }
+}
+
+
+function habilitaAutorizacion()
+{
+    div_autorizacion = document.getElementById("autorizacion");
+    requiere_autorizacion = document.getElementById("actividad_requiere_autorizacion");
+    limite_autorizacion = document.getElementById("actividad_limite_autorizacion");
+    inicio_notificacion = document.getElementById("actividad_inicio_notificacion");
+    fin_notificacion = document.getElementById("actividad_fin_notificacion");
+    frecuencia_dias_notificacion = document.getElementById("actividad_frecuencia_dias_notificacion");
+    
+    if (requiere_autorizacion.checked)
+    {
+        div_autorizacion.style.display = "block";
+        
+        limite_autorizacion.required = true;
+        inicio_notificacion.required = true;
+        fin_notificacion.required = true;
+        frecuencia_dias_notificacion.required = true;
+    }
+    else
+    {
+        div_autorizacion.style.display = "none";
+        
+        limite_autorizacion.value = "";
+        inicio_notificacion.value = "";
+        fin_notificacion.value = "";
+        frecuencia_dias_notificacion.value = "";
+        
+        limite_autorizacion.required = false;
+        inicio_notificacion.required = false;
+        fin_notificacion.required = false;
+        frecuencia_dias_notificacion.required = false;
+    }
+}
+
+function validarAutorizacion() 
+{
+    sFechaActividad = document.getElementById("actividad_fecha_hora_inicio").value.substring(0, 10);
+    
+    dFechaActividad = new Date(sFechaActividad + " 12:00:00");
+    sFechaActividad = dFechaActividad.getFullYear() + "-" + leftPad(dFechaActividad.getMonth()+1, 2, "0") + "-" + leftPad(dFechaActividad.getDate(), 2, "0");
+    
+    dFechaActividadMenos1 = sumarDias(dFechaActividad, -1);
+    sFechaActividadMenos1 = dFechaActividadMenos1.getFullYear() + "-" + leftPad(dFechaActividadMenos1.getMonth()+1, 2, "0") + "-" + leftPad(dFechaActividadMenos1.getDate(), 2, "0");
+
+    dFechaActividadMenos2 = sumarDias(dFechaActividad, -2);
+    sFechaActividadMenos2 = dFechaActividadMenos2.getFullYear() + "-" + leftPad(dFechaActividadMenos2.getMonth()+1, 2, "0") + "-" + leftPad(dFechaActividadMenos2.getDate(), 2, "0");
+
+    fecha_hora_fin = document.getElementById("actividad_fecha_hora_fin");
+    limite_autorizacion = document.getElementById("actividad_limite_autorizacion");
+    inicio_notificacion = document.getElementById("actividad_inicio_notificacion");
+    fin_notificacion = document.getElementById("actividad_fin_notificacion");
+    
+    fecha_hora_fin.setAttribute("min", sFechaActividad + "T09:00:00");
+     
+    limite_autorizacion.setAttribute("min", sFechaActividadMenos2);
+    limite_autorizacion.setAttribute("max", sFechaActividadMenos1);
+    
+    inicio_notificacion.setAttribute("max", sFechaActividadMenos1);
+    
+    fin_notificacion.setAttribute("max", sFechaActividadMenos1);
+}
+
+function sumarDias(fecha, dias){
+    fecha.setDate(fecha.getDate() + dias); 
+    return fecha;
+}
+
+function leftPad(numero, ancho, relleno) {
+  var zero = ancho - numero.toString().length + 1;
+  return Array(+(zero > 0 && zero)).join(relleno) + numero;
 }

@@ -31,6 +31,7 @@
   </script>
   <!-- Google analytics -->
 </head>   
+<body onload="<%= yield :onload %>">
   <div data-role="page" class="type-interior" data-url="<%= request.path %>">
     <div data-role="footer" data-theme="b">
       <image src="/assets/logo_small.gif" style="vertical-align:bottom" />            
@@ -54,7 +55,7 @@
     <% end %>
     <%= yield %>
   </div>
-
+</body>
   
 
 </html>
