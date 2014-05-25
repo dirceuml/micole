@@ -1,0 +1,43 @@
+<div data-role="header">
+  <h1><%= "Registro de tardanzas - #{Date.current.strftime('%d/%m/%Y')}" %> </h1>
+</div>
+
+<div data-role="content" class="ui-content" role="main">
+<!--div data-role="content" class="content-primary"-->
+    <%= form_tag(tardanzas_path, {"data-ajax" => "false", "name" => "falta"}) do %>
+      <% if can? :grabar_tardanzas, ControlAsistencia %>
+        <div>
+          <%= submit_tag "Grabar", "data-inline" => "true", "data-theme" => "a", "data-icon" => "check", "data-mini" => "true", "class" => "ui-btn-right" %>
+        </div>
+      <% end %>
+      <div data-role="fieldcontain">
+        <ul data-role="listview" data-filter="true">
+          <% @alumnos.each do |alumno_colegio| %>
+            <% anioalumno = AnioAlumno.find_by_anio_escolar_id_and_alumno_id(anio_escolar.id, alumno_colegio.id)%>
+            <% controlalumno = ControlAsistencia.find_by_anio_alumno_id_and_fecha(anioalumno.id, Date.current)%>
+            <li data-filtertext="<%= alumno_colegio.apellidos_nombres %>" >
+              <% idcheck = "alumno_id_#{alumno_colegio.id}" %>
+              <% if controlalumno.nil? %>
+                <%= check_box_tag 'alumno_id[]',alumno_colegio.id, false, {:id => idcheck, "class" => "custom", "data-mini" => "true"}  %> 
+                <label for= <%="#{idcheck}"%> ><%= alumno_colegio.apellidos_nombres %></label>
+                <p class="ui-li-desc"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <%= "Grado y sección: #{Seccion.find(anioalumno.seccion_id).grado_seccion}" %></p>
+              <%else%>
+                <% if controlalumno.tipo_asistencia == 2%>
+                  <%= check_box_tag 'alumno_id[]',alumno_colegio.id, true, {:id => idcheck, "class" => "custom", "data-mini" => "true", disabled: true}  %>
+                  <label for= <%="#{idcheck}"%> ><%= alumno_colegio.apellidos_nombres %></label>
+                  <p class="ui-li-desc"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  <%= "Grado y sección: #{Seccion.find(anioalumno.seccion_id).grado_seccion}" %></p>
+                <%else%>
+                  <%= check_box_tag 'alumno_id[]',alumno_colegio.id, false, {:id => idcheck, "class" => "custom", "data-mini" => "true", disabled: true}  %>
+                  <label for= <%="#{idcheck}"%> ><%= "#{alumno_colegio.apellidos_nombres} (INASISTENCIA)"%></label>
+                  <p class="ui-li-desc"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  <%= "Grado y sección: #{Seccion.find(anioalumno.seccion_id).grado_seccion}" %></p>
+                <%end%>
+              <%end%>
+            </li>
+          <% end  %>
+        </ul>
+      </div>
+    <% end %>
+</div>

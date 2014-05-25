@@ -11,7 +11,7 @@ class AlumnosController < ApplicationController
     seccion_id = params[:seccion_id]
     
     if seccion_id.nil? || seccion_id == ""
-      @alumnos = Alumno.por_anio_colegio(anio_escolar.id, colegio.id)
+      @alumnos = Alumno.por_anio_escolar(anio_escolar.id)
     else
       @alumnos = Alumno.pertenecen_a_seccion(anio_escolar.id, seccion_id)
     end
@@ -162,6 +162,60 @@ class AlumnosController < ApplicationController
     @alumnos = Alumno.all
     @personas_vinculadas = @PersonaVinculada.all
   end
+  
+  def inasistencias
+    if current_user.nil?
+      redirect_to(log_in_path) and return
+    end
+    seccion = params[:seccion_id]
+    if params[:seccion_id].nil?
+      seccion = 0
+    end
+    
+    @alumnos = Alumno.pertenecen_a_seccion(anio_escolar.id, seccion).order("apellido_paterno, apellido_materno, nombres")    
+        
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: @alumnos }
+    end    
+  end
+  
+  def tardanzas
+    if current_user.nil?
+      redirect_to(log_in_path) and return
+    end
+    
+    @alumnos = Alumno.por_anio_escolar(anio_escolar.id).order("apellido_paterno, apellido_materno, nombres")    
+    
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: @alumnos }
+    end    
+  end
+
+  
+  def consultar_inasistencias_tardanzas
+    if current_user.nil?
+      redirect_to(log_in_path) and return
+    end
+    seccion = params[:seccion_id]
+    if params[:seccion_id].nil?
+      seccion = 0
+      fechaI = Date.current
+      fechaF = Date.current
+    else
+      fechaI = params[:fechaI].to_date
+      fechaF = params[:fechaF].to_date
+    end
+    
+    @alumnos = Alumno.pertenecen_a_seccion(anio_escolar.id, seccion).order("apellido_paterno, apellido_materno, nombres")
+    @controles_asistencias = ControlAsistencia.por_anio_escolar_seccion_rango_fechas(anio_escolar.id, seccion, fechaI, fechaF)
+    
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: @alumnos }
+    end    
+  end  
   
   rescue_from CanCan::AccessDenied do |exception|
     if current_user.nil?

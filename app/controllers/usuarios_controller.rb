@@ -29,7 +29,7 @@ class UsuariosController < ApplicationController
     @usuario = Usuario.new
     
     @personasvinculadas = PersonaVinculada.anioescolar_colegio(anio_escolar.id).where("personas_vinculadas.id not in (select persona_vinculada_id from usuarios where colegio_id = ? and persona_vinculada_id <> 0)", colegio.id).order("apellido_paterno", "apellido_materno", "nombres")
-    @alumnoscolegio     = Alumno.por_anio_colegio(colegio.id, anio_escolar.id).where("alumnos.id not in (select alumno_id from usuarios where colegio_id = ? and alumno_id <> 0)", colegio.id).order("apellido_paterno", "apellido_materno", "nombres")
+    @alumnoscolegio     = Alumno.por_anio_escolar(anio_escolar.id).where("alumnos.id not in (select alumno_id from usuarios where colegio_id = ? and alumno_id <> 0)", colegio.id).order("apellido_paterno", "apellido_materno", "nombres")
     
     respond_to do |format|
       format.html # new.html.erb
@@ -52,7 +52,7 @@ class UsuariosController < ApplicationController
       alumnoedita = @usuario.alumno_id
     end
     @personasvinculadas = PersonaVinculada.anioescolar_colegio(anio_escolar.id).where("personas_vinculadas.id not in (select persona_vinculada_id from usuarios where colegio_id = ? and persona_vinculada_id <> 0 and persona_vinculada_id <> ?)", colegio.id, personaedita).order("apellido_paterno", "apellido_materno", "nombres")
-    @alumnoscolegio     = Alumno.por_anio_colegio(colegio.id, anio_escolar.id).where("alumnos.id not in (select alumno_id from usuarios where colegio_id = ? and alumno_id <> 0 and alumno_id <> ?)", colegio.id, alumnoedita)
+    @alumnoscolegio     = Alumno.por_anio_escolar(anio_escolar.id).where("alumnos.id not in (select alumno_id from usuarios where colegio_id = ? and alumno_id <> 0 and alumno_id <> ?)", colegio.id, alumnoedita)
   end
 
   # POST /usuarios

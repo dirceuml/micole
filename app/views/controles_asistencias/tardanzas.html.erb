@@ -1,0 +1,16 @@
+<div data-role="header">
+  <h1>Control de asistencia - Registro de tardanzas</h1>
+</div>
+
+<div data-role="content" class="content-primary">
+  <ul data-role="listview" data-filter="true">
+    <% @alumnos_colegio.each do |alumno_colegio| %>
+      <li data-filtertext="<%= Alumno.find(alumno_colegio.alumno_id).apellidos_nombres %>" >
+        <%= simple_format(Alumno.find(alumno_colegio.alumno_id).apellidos_nombres) %>
+        <p class="ui-li-aside">
+          <%= check_box_tag 'alumno_id[]',alumno_colegio.alumno.id %> 
+        </p>
+      </li
+    <% end  %>
+  </ul>
+</div>

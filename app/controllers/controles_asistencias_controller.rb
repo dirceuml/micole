@@ -1,15 +1,114 @@
 class ControlesAsistenciasController < ApplicationController
+  load_and_authorize_resource  
   # GET /controles_asistencias
   # GET /controles_asistencias.json
+  
   def index
+    
     @controles_asistencias = ControlAsistencia.all
-
+    
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @controles_asistencias }
     end
   end
-
+  
+  def grabar_inasistencias
+    if current_user.nil?
+      redirect_to(log_in_path) and return
+    end
+    
+    if params[:alumno_id].nil?
+      flash[:notice] = 'Seleccione a los alumnos ausentes'
+      render :inasistencias
+      return
+    end
+    
+    ActiveRecord::Base.transaction do
+      params[:alumno_id].each do |alumno|
+        @controles_alumnos = ControlAsistencia.new(
+          :anio_alumno_id => AnioAlumno.find_by_anio_escolar_id_and_alumno_id(anio_escolar.id, alumno).id,
+          :fecha => Date.current,
+          :tipo_asistencia => 1,
+          :usuario => current_user.usuario
+        )
+        
+        if !@controles_alumnos.save
+          flash[:notice] = 'Ocurrio un error al registrar las inasistencias'
+          format.html { render action: "faltas" }
+        else
+          if @guardados.nil?
+            @guardados = [@controles_alumnos.id]
+          else
+            @guardados.push(@controles_alumnos)
+          end
+          
+          #@notificar = AlumnoPersonaVinculada.notificar_salida(alumno)
+          #if !@notificar.empty?
+          #  @notificar.each do |alumnopersona|
+          #    if alumnopersona.persona_vinculada_id != params[:persona_vinculada_id]
+          #      @persona = PersonaVinculada.find(alumnopersona.persona_vinculada_id)
+          #      @alumno  = Alumno.find(alumno)
+          #      AsistenciaMailer.delay.notificar_asistencia(2, @alumno, @asistencia_alumno_persona_vinculada, @persona)   ## Asincrono
+          #    end
+          #  end
+          #end
+        end
+      end
+    end
+    flash[:notice] = 'Las inasistencias fueron registrados satisfactoriamente'
+    redirect_to :controller => 'alumnos', :action => 'inasistencias', :seccion => params[:seccion_id]
+  end
+  
+  
+  def grabar_tardanzas
+    if current_user.nil?
+      redirect_to(log_in_path) and return
+    end
+    
+    if params[:alumno_id].nil?
+      flash[:notice] = 'Seleccione a los alumnos con tardanza'
+      redirect_to :controller => 'alumnos', :action => 'tardanzas'
+      return
+    end
+    
+    ActiveRecord::Base.transaction do
+      params[:alumno_id].each do |alumno|
+        @controles_alumnos = ControlAsistencia.new(
+          :anio_alumno_id => AnioAlumno.find_by_anio_escolar_id_and_alumno_id(anio_escolar.id, alumno).id,
+          :fecha => Date.current,
+          :tipo_asistencia => 2,
+          :usuario => current_user.usuario
+        )
+        
+        if !@controles_alumnos.save
+          flash[:notice] = 'Ocurrio un error al registrar las tardanzas'
+          format.html { render action: "tardanzas" }
+        else
+          if @guardados.nil?
+            @guardados = [@controles_alumnos.id]
+          else
+            @guardados.push(@controles_alumnos)
+          end
+          
+          #@notificar = AlumnoPersonaVinculada.notificar_salida(alumno)
+          #if !@notificar.empty?
+          #  @notificar.each do |alumnopersona|
+          #    if alumnopersona.persona_vinculada_id != params[:persona_vinculada_id]
+          #      @persona = PersonaVinculada.find(alumnopersona.persona_vinculada_id)
+          #      @alumno  = Alumno.find(alumno)
+          #      AsistenciaMailer.delay.notificar_asistencia(2, @alumno, @asistencia_alumno_persona_vinculada, @persona)   ## Asincrono
+          #    end
+          #  end
+          #end
+        end
+      end
+    end
+    flash[:notice] = 'Las tardanzas fueron registrados satisfactoriamente'
+    redirect_to :controller => 'alumnos', :action => 'tardanzas'
+  end  
+  
+  
   # GET /controles_asistencias/1
   # GET /controles_asistencias/1.json
   def show
@@ -80,4 +179,12 @@ class ControlesAsistenciasController < ApplicationController
       format.json { head :no_content }
     end
   end
+  
+  rescue_from CanCan::AccessDenied do |exception|
+    if current_user.nil?
+      redirect_to log_in_url, :alert => exception.message
+    else
+      redirect_to menu_url, :alert => exception.message
+    end
+  end  
 end

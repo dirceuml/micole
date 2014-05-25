@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140523145907) do
+ActiveRecord::Schema.define(:version => 20140524172545) do
 
   create_table "actividades", :force => true do |t|
     t.integer  "anio_escolar_id",                                           :null => false
@@ -170,6 +170,7 @@ ActiveRecord::Schema.define(:version => 20140523145907) do
     t.string   "usuario",         :null => false
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
+    t.date     "fecha",           :null => false
   end
 
   create_table "cuaderno_control_alumnos", :force => true do |t|
@@ -483,8 +484,8 @@ ActiveRecord::Schema.define(:version => 20140523145907) do
     t.datetime "created_at",                                :null => false
     t.datetime "updated_at",                                :null => false
     t.string   "clave_salt",           :default => "clave", :null => false
-    t.date     "fecha_clave"
     t.integer  "notificado",           :default => 0,       :null => false
+    t.date     "fecha_clave"
     t.integer  "alcance_colegio"
     t.integer  "alumno_id"
     t.integer  "estado",               :default => 1,       :null => false

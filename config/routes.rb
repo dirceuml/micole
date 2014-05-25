@@ -1,7 +1,11 @@
 Micole::Application.routes.draw do 
 
   resources :controles_asistencias
-
+  get "tardanzas" => "alumnos#tardanzas", :as => "tardanzas"
+  post "tardanzas" => "controles_asistencias#grabar_tardanzas", :as => "tardanzas"
+  get "inasistencias" => "alumnos#inasistencias", :as => "inasistencias"
+  post "inasistencias" => "controles_asistencias#grabar_inasistencias", :as => "inasistencias"
+  get "consultar_inasistencias_tardanzas" => "alumnos#consultar_inasistencias_tardanzas", :as => "consultar_inasistencias_tardanzas"
 
   resources :usuarios_secciones
   
@@ -117,7 +121,7 @@ Micole::Application.routes.draw do
 
   resources :anios_alumnos
 
-  resources :secciones
+  #resources :secciones
 
   resources :grados do
     resources :secciones
