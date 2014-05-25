@@ -1,0 +1,61 @@
+<div data-role="header">
+  <h1><%= "Registro de inasistencias - #{Date.current.strftime('%d/%m/%Y')}" %> </h1>
+</div>
+
+<% if params[:seccion_id].nil? %>
+    <% seccion = "" %>
+<% else %>
+    <% seccion = params[:seccion_id] %>
+<% end %>
+
+<div data-role="content" class="ui-content" role="main">
+<!--div data-role="content" class="content-primary"-->
+    <% if current_user.perfil_id == 3 && current_user.alcance_colegio == 0%>
+      <% @secciones = Seccion.por_anioescolar_usuario(anio_escolar.id, current_user.id).order('grados.nivel','grados.grado','seccion') %>
+    <% else %>
+      <% @secciones = Seccion.por_anioescolar(anio_escolar.id).order('grados.nivel','grados.grado','seccion') %>
+    <% end %>
+    
+
+    <%= form_tag(inasistencias_path, {:method => :get, "data-ajax" => "false"}) do %>
+      <div data-role="fieldcontain">
+        Sección: <%= collection_select(:seccion, :id, @secciones, :id, :grado_seccion, {:prompt => ':: Seleccione ::', :selected => seccion}, {"data-mini" => "true", :required => "required", :name => "seccion_id"}) %>
+        <%= submit_tag "Buscar", "data-inline" => "true", "data-theme" => "a", "data-icon" => "search", "data-mini" => "true", :name => nil %>
+      </div>
+    <% end %>
+    <hr>
+    <% if !seccion.empty? %>
+    
+    <%= form_tag(inasistencias_path, {:method => :post, "data-ajax" => "false", "name" => "falta"}) do %>
+      <% if can? :grabar_inasistencias, ControlAsistencia %>
+        <div>
+          <%= submit_tag "Grabar", "data-inline" => "true", "data-theme" => "a", "data-icon" => "check", "data-mini" => "true", "class" => "ui-btn-right" %>
+        </div>
+      <% end %>
+      <div data-role="fieldcontain">
+        <ul data-role="listview" data-filter="true">
+          <% @alumnos.each do |alumno_colegio| %>
+            <% anioalumno = AnioAlumno.find_by_anio_escolar_id_and_alumno_id(anio_escolar.id, alumno_colegio.id).id%>
+            <% controlalumno = ControlAsistencia.find_by_anio_alumno_id_and_fecha(anioalumno, Date.current)%>
+            <li data-filtertext="<%= alumno_colegio.apellidos_nombres %>" >
+              <% idcheck = "alumno_id_#{alumno_colegio.id}" %>
+              <% if controlalumno.nil? %>
+                <%= check_box_tag 'alumno_id[]',alumno_colegio.id, false, {:id => idcheck, "class" => "custom", "data-mini" => "true"}  %> 
+                <label for= <%="#{idcheck}"%> ><%= alumno_colegio.apellidos_nombres %></label>
+              <%else%>
+                <% if controlalumno.tipo_asistencia == 1%>
+                  <%= check_box_tag 'alumno_id[]',alumno_colegio.id, true, {:id => idcheck, "class" => "custom", "data-mini" => "true", disabled: true}  %>
+                  <label for= <%="#{idcheck}"%> ><%= alumno_colegio.apellidos_nombres %></label>
+                <%else%>
+                  <%= check_box_tag 'alumno_id[]',alumno_colegio.id, false, {:id => idcheck, "class" => "custom", "data-mini" => "true", disabled: true}  %>
+                  <label for= <%="#{idcheck}"%> ><%= "#{alumno_colegio.apellidos_nombres} (TARDANZA)"%></label>
+                <%end%>
+              <%end%>
+            </li>
+          <% end  %>
+        </ul>
+      </div>
+    <% end %>
+    
+    <% end %>
+</div>

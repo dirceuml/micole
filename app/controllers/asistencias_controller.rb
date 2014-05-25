@@ -119,6 +119,10 @@ class AsistenciasController < ApplicationController
   # POST /asistencias
   # POST /asistencias.json
   def create
+    if current_user.nil?
+      redirect_to(log_in_path) and return
+    end
+    
     codigo = params[:codigo_alumno].to_i
     personavinculada = params[:asistencia][:persona_vinculada_id].to_i
     if codigo == 0

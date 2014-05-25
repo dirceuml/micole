@@ -68,9 +68,11 @@ class Alumno < ActiveRecord::Base
     end
   end
   
-  scope :por_colegio, lambda { |colegio| joins(:anios_escolares).where("anios_escolares.colegio_id = ?", colegio)}
-  scope :por_anio_colegio, lambda { |colegio, anio| self.por_colegio(colegio).joins(:anios_alumnos).where("anios_alumnos.anio_escolar_id = ?", anio)}
+  #scope :por_colegio, lambda { |colegio| joins(:anios_escolares).where("anios_escolares.colegio_id = ?", colegio)}
+  #scope :por_anio_colegio, lambda { |colegio, anio| self.por_colegio(colegio).joins(:anios_alumnos).where("anios_alumnos.anio_escolar_id = ?", anio)}
   scope :hijos_de, lambda { |padre| joins(:alumnos_personas_vinculadas).where("apoderado = 1 and persona_vinculada_id = ?", padre) }
   scope :se_revisan_por, lambda { |padre| joins(:alumnos_personas_vinculadas).where("revisa_control = 1 and persona_vinculada_id = ?", padre) }
   scope :pertenecen_a_seccion, lambda { |anioescolar, seccion| joins(:anios_alumnos).where("anios_alumnos.anio_escolar_id = ? and anios_alumnos.seccion_id = ? and anios_alumnos.estado = 1", anioescolar, seccion)}
+  scope :por_anio_escolar, lambda { |anioescolar| joins(:anios_alumnos).where("anios_alumnos.anio_escolar_id = ? and anios_alumnos.estado = 1", anioescolar)}
+  
 end
