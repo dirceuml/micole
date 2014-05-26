@@ -5,6 +5,7 @@ class EventoMailer < ActionMailer::Base
   def notificacion_evento(evento, persona)
     @evento = evento
     @persona = persona
+    @alumno =  Alumno.find(evento.alumno_id)
     attachments.inline["logo_small.jpg"] = File.read("#{Rails.root}/public/logo_small.jpg")
     
     mail(:to => "#{persona.apellidos_nombres} <#{persona.correo}>", :subject => "Evento: #{TipoEvento.find(evento.tipo_evento_id).descripcion}")

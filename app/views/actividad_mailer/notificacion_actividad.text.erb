@@ -12,9 +12,9 @@ en la que participará la sección de su hijo(a) <%= @alumno.apellidos_nombres %
 <%    respuesta = autorizacion.respuesta %>
 <% end %>
 
-<% if @actividad.requiere_autorizacion == 1 and respuesta.nil? %>
+<% if @actividad.requiere_autorizacion == 1 && respuesta.nil? && @actividad.limite_autorizacion >= Date.current %>
   Además, se le recuerda que debe indicar si autoriza la participación de su hijo, para lo cual tiene plazo hasta el 
-  <%= @actividad.limite_autorizacion.strftime('%d/%m/%Y %H:%M') %>.
+  <%= @actividad.limite_autorizacion.strftime('%d/%m/%Y') %>.
 <% end %>
 
 MiCole.com

@@ -47,12 +47,12 @@
     </div>
     <div class="field">
         Fecha y hora de inicio (*)<br /> 
-        <%= f.text_field :fecha_hora_inicio, "data-mini" => "true", "data-role" => "datebox", "type" => "datetime-local", :required => "required", :value => "#{valor_fhi}", :step => "900", :min => "#{Date.current}T08:00:00", :max => @fecha_limite, :onChange => "validarAutorizacion()" %>        
+        <%= f.text_field :fecha_hora_inicio, "data-mini" => "true", "data-role" => "datebox", "type" => "datetime-local", :required => "required", :value => "#{valor_fhi}", :step => "900", :min => "#{Date.current}T07:00:00", :max => @fecha_limite, :onChange => "validarAutorizacion()" %>        
     </div>
 
     <div class="field">
         Fecha y hora de fin (*)<br />
-        <%= f.text_field :fecha_hora_fin, "data-mini" => "true", "data-role" => "datebox", "type" => "datetime-local", :required => "required", :value => "#{valor_fhf}", :step => "900", :min => "#{Date.current}T09:00:00", :max => @fecha_limite %>
+        <%= f.text_field :fecha_hora_fin, "data-mini" => "true", "data-role" => "datebox", "type" => "datetime-local", :required => "required", :value => "#{valor_fhf}", :step => "900", :min => "#{Date.current}T08:00:00", :max => @fecha_limite %>
     </div>
 
     <div class="field">

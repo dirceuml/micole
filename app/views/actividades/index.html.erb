@@ -16,8 +16,8 @@
         <% @actividades.pendiente(Time.now).order("fecha_hora_inicio").each do |actividad| %>    
           <li data-filtertext="<%= "#{actividad.fecha_hora_inicio.strftime('%d/%m/%Y')} #{TipoEvento.find(actividad.tipo_evento_id).descripcion} #{actividad.nombre}" %>" >
             <%= link_to actividad do %>  
-              <%= simple_format("#{actividad.fecha_hora_inicio.strftime('%d/%m/%Y')} - #{TipoEvento.find(actividad.tipo_evento_id).descripcion} -  #{actividad.nombre}") %>
-                        
+              <strong><%= simple_format("#{actividad.fecha_hora_inicio.strftime('%d/%m/%Y')} - #{TipoEvento.find(actividad.tipo_evento_id).descripcion} -  #{actividad.nombre}") %></strong>
+              <p class="ui-li-aside"><%= ListaValor.find_by_tabla_and_item(8, actividad.estado).descripcion %></p>
               <% if (can? :update, actividad) %>
                 <%= link_to 'Editar', edit_actividad_path(actividad), "data-inline" => "true", "data-role" => "button", "data-mini" => "true" %>
               <% end %>

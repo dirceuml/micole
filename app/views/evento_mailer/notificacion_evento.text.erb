@@ -1,6 +1,6 @@
 Estimado(a) señor(a) <%= @persona.apellidos_nombres %>:
 
-Se le informa que se ha registrado un evento relacionado con su hijo(a):
+Se le informa que se ha registrado un evento relacionado con su hijo(a) <%= @alumno.apellidos_nombres %>:
 
 
 <%= TipoEvento.find(@evento.tipo_evento_id).descripcion %>

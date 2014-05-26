@@ -10,7 +10,7 @@
   <%anio_alumno = AnioAlumno.find_by_anio_escolar_id_and_alumno_id(anio_escolar.id, @cuaderno_control_revision.alumno.id)%>
   <% controlasistenciaalumno = ControlAsistencia.find_by_anio_alumno_id_and_fecha(anio_alumno, @cuaderno_control_revision.cuaderno_control.fecha)%>
   <% if !controlasistenciaalumno.nil? %>
-    <div style="color: #cc0012">
+    <div style="color: #FF0000">
       <% if controlasistenciaalumno.tipo_asistencia == 1 %>
         <p><%= "INASISTENCIA REGISTRADA" %></p>
       <% else %>

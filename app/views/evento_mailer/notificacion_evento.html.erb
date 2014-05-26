@@ -1,5 +1,5 @@
 <p>Estimado(a) señor(a) <%= @persona.apellidos_nombres %>:</p>
-<p>Se le informa que se ha registrado un evento relacionado con su hijo(a):</p>
+<p>Se le informa que se ha registrado un evento relacionado con su hijo(a) <%= @alumno.apellidos_nombres %>:</p>
 
 <p>
   <b><%= TipoEvento.find(@evento.tipo_evento_id).descripcion %></b>

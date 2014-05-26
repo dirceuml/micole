@@ -9,12 +9,32 @@ class ActividadesController < ApplicationController
     end
     
     if params[:fecha].nil?
-      @actividades = Actividad.por_anio_escolar(anio_escolar.id)
-    else
-      if params[:persona].nil?
-        @actividades = Actividad.por_fecha_inicio(anio_escolar.id, Date.strptime(params[:fecha], '%d/%m/%Y'))
+      if current_user.perfil_id == 3 && current_user.alcance_colegio == 0
+        @actividades = Actividad.por_secciones_usuario(anio_escolar.id, current_user.id)
       else
-        @actividades = Actividad.por_persona_y_fecha(params[:persona], Date.strptime(params[:fecha], '%d/%m/%Y'))
+        @actividades = Actividad.por_anio_escolar(anio_escolar.id)
+      end
+    else
+      fechainicio = Date.strptime(params[:fecha], '%d/%m/%Y')
+      if params[:persona].nil?
+        @actividades = Actividad.por_fecha_inicio(anio_escolar.id, fechainicio)
+      else
+        @actividades = Actividad.por_persona_y_fecha(params[:persona], fechainicio)
+        
+#        if current_user.perfil_id == 3 && current_user.alcance_colegio == 0
+#          @actividades = Actividad.por_secciones_usuario(anio_escolar.id, current_user.id).por_fecha_inicio(anio_escolar.id, fechainicio).union(Actividad.por_fecha_inicio(anio_escolar.id, fechainicio).where("alcance_colegio = 1"))
+#        else
+#          if current_user.perfil_id == 2     # Padre
+#            @actividades = Actividad.por_persona_y_fecha(params[:persona], fechainicio).union(Actividad.por_fecha_inicio(anio_escolar.id, fechainicio).where("alcance_colegio = 1"))
+#          else
+#            if current_user.perfil_id == 4     # Alumno
+#              seccion_id = AnioAlumno.find_by_anio_escolar_id_and_alumno_id(anio_escolar.id, params[:persona]).seccion_id
+#              @actividades = Actividad.por_seccion(anio_escolar.id, seccion_id).por_fecha_inicio(anio_escolar.id, fechainicio)
+#            else
+#              @actividades = Actividad.por_fecha_inicio(anio_escolar.id, fechainicio)
+#            end
+#          end
+#        end
       end
     end
 
@@ -115,8 +135,8 @@ class ActividadesController < ApplicationController
             (Select s.actividad_id, a.alumno_id, \'' + current_user.usuario + '\', current_date, current_date
             From actividades_secciones s, anios_alumnos a
             Where s.actividad_id = ' + params[:id].to_s + '
-              And s.seccion_id = a.seccion_id)
-            Returning id'        
+              And s.seccion_id = a.seccion_id and a.estado = 1)
+            Returning id'
 
           if Autorizacion.connection.insert(sql)
             #envío de solicitud de autorización
