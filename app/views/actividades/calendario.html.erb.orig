@@ -1,0 +1,156 @@
+<% width = "13%" %>
+<% height = "25px" %>
+<% font_size = "9px" %>
+<% padding = "2px" %>
+<% anio = params[:anio].to_i %>
+<% mes = params[:mes].to_i %>
+<% dia = params[:dia] %>
+<% dia1anio = Date.strptime("1 1 #{anio}", "%d %m %Y") %>
+<% dia1mes = Date.strptime("1 #{mes} #{anio}", "%d %m %Y") %>
+<% semana_inicial = dia1mes.strftime('%W').to_i %>
+
+<% if dia1anio.strftime('%W').to_i == 0 %>
+  <% if Date.commercial(anio, 1, 1) <= dia1anio %>
+    <% semana_inicial += 1 %>
+  <% end %>
+<% end %>
+
+<% semana_final = semana_inicial + 5 %>
+
+<div data-role="header" style="text-align: center">  
+  <h1><%= "#{MESES[mes.to_i]} #{anio}" %></h1>
+  <% mes_actual = Date.strptime("#{dia} #{mes} #{anio}", "%d %m %Y") %>
+  <% mes_siguiente = mes_actual >> 1 %>
+  <% mes_anterior = mes_actual << 1 %>
+  <%= link_to '', calendario_actividades_path(mes_anterior.year, mes_anterior.month, mes_anterior.strftime("%d")), "data-icon" => "arrow-l", "class" => "ui-btn-left", "data-mini" => "true", "data-iconpos" => "notext" %>
+  <%= link_to '', calendario_actividades_path(mes_siguiente.year, mes_siguiente.month, mes_siguiente.strftime("%d")), "data-icon" => "arrow-r", "class" => "ui-btn-right", "data-mini" => "true", "data-iconpos" => "notext" %>
+</div>
+
+<div data-role="header" style="text-align: center" data-theme="b">
+  <%= "#{dia}/#{mes}/#{anio}" %>
+</div>
+
+<div style="overflow: hidden;">
+  <!-- titulos -->
+  <div style="margin: 0; padding: 0; border: 0; float: left; min-height:1px; width: 9%; clear: left;">
+    <div class="ui-bar ui-bar-a" style="padding: <%= padding %>; height: <%= height %>; font-weight:normal; font-size: <%= font_size %>;">Sem</div>    
+  </div>
+  
+  <% for i in 1..7 do %>
+    <div style="margin: 0; padding: 0; border: 0; float: left; min-height:1px; width: <%= width %>;">
+      <div class="ui-bar ui-bar-a" style="padding: <%= padding %>; height: <%= height %>; font-weight:normal; font-size: <%= font_size %>;">
+        <%= DIAS_SEMANA_ABR_1[i] %>
+      </div>    
+    </div>
+  <% end %>
+  
+  <!-- fechas -->
+  <% for s in semana_inicial..semana_final do %>
+    <div style="margin: 0; padding: 0; border: 0; float: left; min-height:1px; width: 9%; clear: left;">
+      <div class="ui-bar ui-bar-a" style="padding: <%= padding %>; height: <%= height %>; font-weight:normal; font-size: <%= font_size %>;">
+        <%= s %>
+      </div>    
+    </div>
+  
+    <% for i in 1..7 do %>
+      <% begin %>
+        <% fecha = Date.commercial( anio, s, i ) %>
+      <% rescue Exception => exc %>
+        <% if s < 10 %>
+          <% fecha = Date.commercial( anio - 1, -1, i ) %>
+        <% else %>
+          <% fecha = Date.commercial( anio + 1, 1, i ) %>
+        <% end %>
+      <% end %>
+      
+      <% ds = fecha.strftime("%d") %>
+  
+      <% if fecha == Date.strptime("#{dia} #{mes} #{anio}", "%d %m %Y") %>
+        <% theme = "e" %>
+      <% elsif fecha.month == mes %>
+        <% theme = "d" %>
+      <% else %>
+        <% theme = "c" %>
+      <% end %>
+<<<<<<< HEAD
+      
+      <% if current_user.perfil_id == 3 && current_user.alcance_colegio == 0 %>  <!-- Personal administrativo con seccion -->
+        <% persona = current_user.id %>
+        <% actividades_seccion = Actividad.por_secciones_usuario(anio_escolar.id, persona).por_fecha_inicio(anio_escolar.id, fecha) %>
+        <% actividades_colegio = Actividad.por_fecha_inicio(anio_escolar.id, fecha).where("alcance_colegio = 1") %>
+      <% else %>
+        <% if current_user.perfil_id == 2 %>   <!-- Padre -->
+          <% persona = current_user.persona_vinculada_id %>
+          <% actividades_seccion = Actividad.por_persona_y_fecha(persona, fecha) %>
+          <% actividades_colegio = Actividad.por_fecha_inicio(anio_escolar.id, fecha).where("alcance_colegio = 1") %>
+=======
+  
+      <% if actividad_count > 0 %>
+        <% if actividad_count == 1 %>
+          <% url = "/actividades/#{actividad.first.id}?fechacal=#{fecha.strftime('%Y/%m/%d')}" %>
+>>>>>>> be66409522a015b4dd4ed386765be0827ff6600c
+        <% else %>
+          <% if current_user.perfil_id == 4 %>   <!-- Alumno -->
+            <% persona = current_user.alumno_id %>
+            <% seccion_id = AnioAlumno.find_by_anio_escolar_id_and_alumno_id(anio_escolar.id, persona).seccion_id %>
+            <% actividades_seccion = Actividad.por_seccion(anio_escolar.id, seccion_id).por_fecha_inicio(anio_escolar.id, fecha) %>
+            <% actividades_colegio = Actividad.por_fecha_inicio(anio_escolar.id, fecha).where("alcance_colegio = 1") %>
+          <% else %>
+            <% persona = current_user.id %>
+            <% actividades_seccion = Actividad.por_fecha_inicio(anio_escolar.id, fecha) %>
+            <% actividades_colegio = actividades_seccion %>
+          <% end %>
+        <% end %>
+      <% end %>
+          
+      <% if !actividades_seccion.empty? || !actividades_colegio.empty? %>
+        <%actividad_count = 1%>
+        <% url = "/calendario_detalle?persona=#{persona}&fecha=#{fecha.strftime('%d/%m/%Y')}" %>
+      <% else %>
+        <%actividad_count = 0%>
+        <% url = "/calendario_actividades/#{fecha.strftime('%Y/%m/%d')}" %>
+      <% end %>
+<<<<<<< HEAD
+      
+      <!--% persona = PersonaVinculada.logueado(current_user.usuario).first % -->
+      <!--% if persona.nil? % -->
+        <!--% actividad_count = 0 % -->
+      <!--% else % -->
+        <!--% persona_id = persona.id % -->
+        <!--% actividad = Actividad.por_persona_y_fecha(persona_id, fecha) % --> 
+        <!--% actividad_count = actividad.count("actividades.id", :distinct => true) %-->        
+      <!--% end %-->
+      
+      <!--% if actividad_count > 0 %-->
+        <!--% if actividad_count == 1 %-->
+          <!--% url = "/actividades/#{actividad.first.id}" %-->
+        <!--% else %-->
+          <!--% url = "/actividades?persona=#{persona_id}&fecha=#{fecha.strftime('%d/%m/%Y')}" %-->
+        <!--% end %-->
+      <!--% else %-->
+        <!--% url = "/calendario_actividades/#{fecha.strftime('%Y/%m/%d')}" %-->
+      <!--% end %-->
+=======
+  
+      <% lista_actividades = "" %>
+      <% if actividad_count > 0 %>         
+        <% actividad.each do |a| %>
+          <% lista_actividades = "#{lista_actividades}#{a.nombre}\n" %>
+        <% end %>
+      <% end %>
+  
+>>>>>>> be66409522a015b4dd4ed386765be0827ff6600c
+      <div style="margin: 0; padding: 0; border: 0; float: left; min-height:1px; width: <%= width %>; cursor:pointer" onClick="location.href='<%= url %>'">
+        <div title="<%= lista_actividades %> " class="ui-bar ui-bar-<%= theme %> " style="padding: <%= padding %>; height: <%= height %>; font-weight:normal; font-size: <%= font_size %> ;">          
+          <%= ds %>
+          <% if actividad_count > 0 %>            
+            <br/>
+            <%= image_tag('blank_small.gif') %>
+            <%= image_tag('star_icon.gif') %>
+            <%= lista_actividades %>
+          <% end %>
+        </div>    
+      </div>  
+    <% end %>
+  <% end %>
+</div>

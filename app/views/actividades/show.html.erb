@@ -1,6 +1,10 @@
 <div id='Actividad' data-role="header">
   <h1>Actividad</h1>
-  <%= link_to 'Aceptar', actividades_path, "data-icon" => "check", "data-mini" => "true"  %>
+  <% unless params[:fechacal].blank? %>
+    <%= link_to 'Aceptar', "/calendario_actividades/#{params[:fechacal]}", "data-icon" => "check", "data-mini" => "true"  %>
+  <% else %>
+    <%= link_to 'Aceptar', actividades_path, "data-icon" => "check", "data-mini" => "true"  %>
+  <% end %>
   <% if @actividad.estado == 1 %>
     <% if (can? :update, @actividad) %>
       <%= link_to 'Editar', edit_actividad_path(@actividad), "class" => "ui-btn-right", "data-theme" => "a", "data-icon" => "gear", "data-mini" => "true" %>

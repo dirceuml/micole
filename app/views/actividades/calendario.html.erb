@@ -91,14 +91,27 @@
           <% else %>
             <% persona = current_user.id %>
             <% actividades_seccion = Actividad.por_fecha_inicio(anio_escolar.id, fecha) %>
-            <% actividades_colegio = actividades_seccion %>
+            <% actividades_colegio = "" %>
           <% end %>
         <% end %>
       <% end %>
-          
+
+      <% lista_actividades = "" %>
       <% if !actividades_seccion.empty? || !actividades_colegio.empty? %>
         <%actividad_count = 1%>
         <% url = "/calendario_detalle?persona=#{persona}&fecha=#{fecha.strftime('%d/%m/%Y')}" %>
+        
+	<% if !actividades_seccion.empty? %>         
+	  <% actividades_seccion.each do |a| %>
+             <% lista_actividades = "#{lista_actividades}#{a.nombre}\n" %>
+          <% end %>
+        <% end %>
+
+        <% if !actividades_colegio.empty? %>         
+	  <% actividades_colegio.each do |a| %>
+             <% lista_actividades = "#{lista_actividades}#{a.nombre}\n" %>
+          <% end %>
+        <% end %>
       <% else %>
         <%actividad_count = 0%>
         <% url = "/calendario_actividades/#{fecha.strftime('%Y/%m/%d')}" %>
@@ -123,12 +136,13 @@
         <!--% url = "/calendario_actividades/#{fecha.strftime('%Y/%m/%d')}" %-->
       <!--% end %-->
       <div style="margin: 0; padding: 0; border: 0; float: left; min-height:1px; width: <%= width %>; cursor:pointer" onClick="location.href='<%= url %>'">
-        <div class="ui-bar ui-bar-<%= theme %> " style="padding: <%= padding %>; height: <%= height %>; font-weight:normal; font-size: <%= font_size %> ;">          
+        <div title="<%= lista_actividades %> " class="ui-bar ui-bar-<%= theme %> " style="padding: <%= padding %>; height: <%= height %>; font-weight:normal; font-size: <%= font_size %> ;">          
           <%= ds %>
-          <% if actividad_count > 0 %>
+          <% if actividad_count > 0 %>            
             <br/>
             <%= image_tag('blank_small.gif') %>
             <%= image_tag('star_icon.gif') %>
+            <%= lista_actividades %>
           <% end %>
         </div>    
       </div>  
