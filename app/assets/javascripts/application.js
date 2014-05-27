@@ -165,39 +165,79 @@ function PreviewImage(input)
     }
 };
 
-function toggleElementPerfil(origen)
-{
-    if (origen.value == 2)   // Padre
-    {
-        document.getElementById('usuario_persona_vinculada_id').disabled = false;
-    }
-    else
-    {
-        document.getElementById('usuario_persona_vinculada_id').value = null;
-        document.getElementById('usuario_persona_vinculada_id').disabled = true;
-    }
-    if (origen.value == 4)  // Alumno
-    {
-        document.getElementById('usuario_alumno_id').disabled = false;
-    }
-    else
-    {
-        document.getElementById('usuario_alumno_id').value = null;
-        document.getElementById('usuario_alumno_id').disabled = true;
-    }
+function toggleElementPerfil()
+{ 
+    origen = document.getElementById('usuario_perfil_id');
     
-    if (origen.value == 3)  // Personal administrativo
-    {
-        document.getElementById('radio-opc1').disabled = false;
-        document.getElementById('radio-opc2').disabled = false;
-    }
-    else
-    {
-        document.getElementById('radio-opc1').value = null;
-        document.getElementById('radio-opc1').disabled = true;
-        document.getElementById('radio-opc2').value = null;        
-        document.getElementById('radio-opc2').disabled = true;
-    }
+    div_persona_vinculada = document.getElementById("persona_vinculada");
+    div_alumno = document.getElementById("alumno");
+    div_nivel_acceso = document.getElementById("nivel_acceso");
+    
+    persona_vinculada = document.getElementById('usuario_persona_vinculada_id');
+    alumno = document.getElementById('usuario_alumno_id');
+    nivel_acceso1 = document.getElementById('radio-opc1');
+    nivel_acceso2 = document.getElementById('radio-opc2');
+    
+    switch (origen.value) {
+      case "2":
+        div_persona_vinculada.style.display = "block";          
+        div_alumno.style.display = "none";   
+        div_nivel_acceso.style.display = "none";
+        
+        persona_vinculada.required = true;   
+        alumno.required = false;   
+        nivel_acceso1.required = false;   
+        nivel_acceso2.required = false;   
+        
+        alumno.value = null;
+        nivel_acceso1.value = null;
+        nivel_acceso2.value = null;
+        
+        break;
+      case "3":
+        div_persona_vinculada.style.display = "none";          
+        div_alumno.style.display = "none";   
+        div_nivel_acceso.style.display = "block";
+        
+        persona_vinculada.required = false;   
+        alumno.required = false;   
+        nivel_acceso1.required = true;
+        nivel_acceso2.required = true;   
+        
+        persona_vinculada.value = null;
+        alumno.value = null;
+        
+        break;
+      case "4":
+        div_persona_vinculada.style.display = "none";          
+        div_alumno.style.display = "block";   
+        div_nivel_acceso.style.display = "none";
+        
+        persona_vinculada.required = false;   
+        alumno.required = true;   
+        nivel_acceso1.required = false;   
+        nivel_acceso2.required = false;   
+        
+        persona_vinculada.value = null;
+        nivel_acceso1.value = null;
+        nivel_acceso2.value = null;
+        
+        break;
+      default:        
+        div_persona_vinculada.style.display = "none";          
+        div_alumno.style.display = "none";   
+        div_nivel_acceso.style.display = "none";
+        
+        persona_vinculada.required = false;   
+        alumno.required = false;   
+        nivel_acceso1.required = false;   
+        nivel_acceso2.required = false;   
+        
+        persona_vinculada.value = null;
+        alumno.value = null;
+        nivel_acceso1.value = null;
+        nivel_acceso2.value = null;
+   }
 }
 
 

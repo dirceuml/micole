@@ -1,3 +1,7 @@
+<% content_for :onload do %>
+  <%= "toggleElementPerfil()" %>
+<% end %>
+
 <%= form_for(@usuario) do |f| %>
   <% if @usuario.errors.any? %>
     <div id="error_explanation" data-role="header" data-theme="e">
@@ -43,21 +47,39 @@
     </div>
   <% end %>
   <div class="field">
-    Perfil (*)<br />
-    <% funcion = "toggleElementPerfil(this)" %>
-    <%= collection_select(:usuario, :perfil_id, Perfil.all, :id, :descripcion, { :prompt => ':: Seleccione ::'}, {"data-mini" => "true", :onchange => funcion, :required => "required"}) %>
+    <%= f.label :correo %><br />
+    <%= f.email_field :correo, :placeholder => "dirceu@example.com" %>
   </div>
   <div class="field">
+    Perfil (*)<br />
+    <% funcion = "toggleElementPerfil()" %>
+    <%= collection_select(:usuario, :perfil_id, Perfil.all, :id, :descripcion, { :prompt => ':: Seleccione ::'}, {"data-mini" => "true", :onchange => funcion, :required => "required"}) %>
+  </div>
+  <div id="persona_vinculada" class="field">
     <%= f.label :persona_vinculada_id %><br />
     <%= collection_select(:usuario, :persona_vinculada_id, @personasvinculadas, :id, :apellidos_nombres, { :prompt => ''}, {"data-mini" => "true"}) %>
   </div>
-  <div class="field">
+  <div id="alumno" class="field">
     <%= f.label :alumno_id %><br />
     <%= collection_select(:usuario, :alumno_id, @alumnoscolegio, :id, :apellidos_nombres, { :prompt => ''}, {"data-mini" => "true"}) %>
   </div>
-  <div class="field">
-    <%= f.label :correo %><br />
-    <%= f.email_field :correo, :placeholder => "dirceu@example.com" %>
+
+  <div id="nivel_acceso" class="field">
+    Nivel de acceso:<br />
+    <fieldset data-role = "controlgroup" data-type  = "horizontal"  data-mini = "true" >
+        <% if @usuario.alcance_colegio == 0 %>
+            <%= f.number_field :alcance_colegio, "type" => "radio", "id" => "radio-opc1", "value" => 0, "checked" =>"checked", :required => "required" %>
+        <% else%>
+            <%= f.number_field :alcance_colegio, "type" => "radio", "id" => "radio-opc1", "value" => 0, :required => "required" %>
+        <% end %>
+        <label for="radio-opc1">Grados y Secciones</label>
+        <% if @usuario.alcance_colegio == 1 %>
+            <%= f.number_field :alcance_colegio, "type" => "radio", "id" => "radio-opc2", "value" => 1, "checked" =>"checked", :required => "required" %>
+        <% else%>
+            <%= f.number_field :alcance_colegio, "type" => "radio", "id" => "radio-opc2", "value" => 1, :required => "required" %>
+        <% end %>
+        <label for="radio-opc2">Colegio</label>
+    </fieldset>
   </div>
   
   Notificado por correo:<br />
@@ -65,24 +87,6 @@
               <option value = 0 <% if @usuario.notificado == 0 %> selected <%end%> >No</option>
               <option value = 1 <% if @usuario.notificado == 1 %> selected <%end%> >Si</option>
   </select>
-
-  <div class="field">
-    Nivel de acceso:<br />
-    <fieldset data-role = "controlgroup" data-type  = "horizontal"  data-mini = "true" >
-        <% if @usuario.alcance_colegio == 0 %>
-            <%= f.number_field :alcance_colegio, "type" => "radio", "id" => "radio-opc1", "value" => 0, "checked" =>"checked" %>
-        <% else%>
-            <%= f.number_field :alcance_colegio, "type" => "radio", "id" => "radio-opc1", "value" => 0 %>
-        <% end %>
-        <label for="radio-opc1">Grados y Secciones</label>
-        <% if @usuario.alcance_colegio == 1 %>
-            <%= f.number_field :alcance_colegio, "type" => "radio", "id" => "radio-opc2", "value" => 1, "checked" =>"checked" %>
-        <% else%>
-            <%= f.number_field :alcance_colegio, "type" => "radio", "id" => "radio-opc2", "value" => 1 %>
-        <% end %>
-        <label for="radio-opc2">Colegio</label>
-    </fieldset>
-  </div>
   
   <% if !@usuario.id.nil? %>
     <div class="field">
