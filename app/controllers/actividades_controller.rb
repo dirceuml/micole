@@ -8,36 +8,12 @@ class ActividadesController < ApplicationController
       redirect_to(log_in_path) and return
     end
     
-    if params[:fecha].nil?
-      if current_user.perfil_id == 3 && current_user.alcance_colegio == 0
-        @actividades = Actividad.por_secciones_usuario(anio_escolar.id, current_user.id)
-      else
-        @actividades = Actividad.por_anio_escolar(anio_escolar.id)
-      end
+    if current_user.perfil_id == 3 && current_user.alcance_colegio == 0
+      @actividades = Actividad.por_secciones_usuario(anio_escolar.id, current_user.id)
     else
-      fechainicio = Date.strptime(params[:fecha], '%d/%m/%Y')
-      if params[:persona].nil?
-        @actividades = Actividad.por_fecha_inicio(anio_escolar.id, fechainicio)
-      else
-        @actividades = Actividad.por_persona_y_fecha(params[:persona], fechainicio)
-        
-#        if current_user.perfil_id == 3 && current_user.alcance_colegio == 0
-#          @actividades = Actividad.por_secciones_usuario(anio_escolar.id, current_user.id).por_fecha_inicio(anio_escolar.id, fechainicio).union(Actividad.por_fecha_inicio(anio_escolar.id, fechainicio).where("alcance_colegio = 1"))
-#        else
-#          if current_user.perfil_id == 2     # Padre
-#            @actividades = Actividad.por_persona_y_fecha(params[:persona], fechainicio).union(Actividad.por_fecha_inicio(anio_escolar.id, fechainicio).where("alcance_colegio = 1"))
-#          else
-#            if current_user.perfil_id == 4     # Alumno
-#              seccion_id = AnioAlumno.find_by_anio_escolar_id_and_alumno_id(anio_escolar.id, params[:persona]).seccion_id
-#              @actividades = Actividad.por_seccion(anio_escolar.id, seccion_id).por_fecha_inicio(anio_escolar.id, fechainicio)
-#            else
-#              @actividades = Actividad.por_fecha_inicio(anio_escolar.id, fechainicio)
-#            end
-#          end
-#        end
-      end
+      @actividades = Actividad.por_anio_escolar(anio_escolar.id)
     end
-
+    
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @actividades }
@@ -58,6 +34,41 @@ class ActividadesController < ApplicationController
       format.json { render json: @actividades }
     end
   end
+  
+  def calendario_detalle
+    if current_user.nil?
+      redirect_to(log_in_path) and return
+    end
+    
+    #@fecha_calendario = Date.strptime("#{dia} #{mes} #{anio}", "%d %m %Y")
+    @fecha_calendario = Date.strptime(params[:fecha], '%d/%m/%Y')
+    if params[:persona].nil?
+        @actividades = Actividad.por_fecha_inicio(anio_escolar.id, @fecha_calendario)
+    else
+      if current_user.perfil_id == 3 && current_user.alcance_colegio == 0  # Administrativo con seccion
+       actividades = Actividad.por_secciones_usuario(anio_escolar.id, current_user.id).por_fecha_inicio(anio_escolar.id, @fecha_calendario).union(Actividad.por_fecha_inicio(anio_escolar.id, @fecha_calendario).where("alcance_colegio = 1"))
+       @actividades = Actividad.find_by_sql(actividades.to_sql)
+      else
+        if current_user.perfil_id == 2     # Padre
+          actividades = Actividad.por_persona_y_fecha(params[:persona], @fecha_calendario).union(Actividad.por_fecha_inicio(anio_escolar.id, @fecha_calendario).where("alcance_colegio = 1"))
+          @actividades = Actividad.find_by_sql(actividades.to_sql)
+        else
+          if current_user.perfil_id == 4     # Alumno
+            seccion_id = AnioAlumno.find_by_anio_escolar_id_and_alumno_id(anio_escolar.id, params[:persona]).seccion_id
+            actividades = Actividad.por_seccion(anio_escolar.id, seccion_id).por_fecha_inicio(anio_escolar.id, @fecha_calendario).union(Actividad.por_fecha_inicio(anio_escolar.id, @fecha_calendario).where("alcance_colegio = 1"))
+            @actividades = Actividad.find_by_sql(actividades.to_sql)
+          else
+            @actividades = Actividad.por_fecha_inicio(anio_escolar.id, @fecha_calendario)
+          end
+        end
+      end
+    end
+    
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: @actividades }
+    end
+  end  
 
   # GET /actividades/1
   # GET /actividades/1.json

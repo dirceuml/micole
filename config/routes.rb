@@ -55,6 +55,7 @@ Micole::Application.routes.draw do
     resources :actividades_secciones
   end
   get "calendario_actividades/:anio/:mes/:dia" => "actividades#calendario", :as => "calendario_actividades"
+  get "calendario_detalle" => "actividades#calendario_detalle", :as => "calendario_detalle"
 
   resources :cursos
 

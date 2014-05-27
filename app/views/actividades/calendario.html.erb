@@ -71,27 +71,57 @@
         <% theme = "d" %>
       <% else %>
         <% theme = "c" %>
-      <% end %>        
-  
-      <% persona = PersonaVinculada.logueado(current_user.usuario).first %>
-  
-      <% if persona.nil? %>
-        <% actividad_count = 0 %>
-      <% else %>
-        <% persona_id = persona.id %>
-        <% actividad = Actividad.por_persona_y_fecha(persona_id, fecha) %> 
-        <% actividad_count = actividad.count("actividades.id", :distinct => true) %>        
       <% end %>
-  
-      <% if actividad_count > 0 %>
-        <% if actividad_count == 1 %>
-          <% url = "/actividades/#{actividad.first.id}" %>
-        <% else %>
-          <% url = "/actividades?persona=#{persona_id}&fecha=#{fecha.strftime('%d/%m/%Y')}" %>           
-        <% end %>
+      
+      <% if current_user.perfil_id == 3 && current_user.alcance_colegio == 0 %>  <!-- Personal administrativo con seccion -->
+        <% persona = current_user.id %>
+        <% actividades_seccion = Actividad.por_secciones_usuario(anio_escolar.id, persona).por_fecha_inicio(anio_escolar.id, fecha) %>
+        <% actividades_colegio = Actividad.por_fecha_inicio(anio_escolar.id, fecha).where("alcance_colegio = 1") %>
       <% else %>
+        <% if current_user.perfil_id == 2 %>   <!-- Padre -->
+          <% persona = current_user.persona_vinculada_id %>
+          <% actividades_seccion = Actividad.por_persona_y_fecha(persona, fecha) %>
+          <% actividades_colegio = Actividad.por_fecha_inicio(anio_escolar.id, fecha).where("alcance_colegio = 1") %>
+        <% else %>
+          <% if current_user.perfil_id == 4 %>   <!-- Alumno -->
+            <% persona = current_user.alumno_id %>
+            <% seccion_id = AnioAlumno.find_by_anio_escolar_id_and_alumno_id(anio_escolar.id, persona).seccion_id %>
+            <% actividades_seccion = Actividad.por_seccion(anio_escolar.id, seccion_id).por_fecha_inicio(anio_escolar.id, fecha) %>
+            <% actividades_colegio = Actividad.por_fecha_inicio(anio_escolar.id, fecha).where("alcance_colegio = 1") %>
+          <% else %>
+            <% persona = current_user.id %>
+            <% actividades_seccion = Actividad.por_fecha_inicio(anio_escolar.id, fecha) %>
+            <% actividades_colegio = actividades_seccion %>
+          <% end %>
+        <% end %>
+      <% end %>
+          
+      <% if !actividades_seccion.empty? || !actividades_colegio.empty? %>
+        <%actividad_count = 1%>
+        <% url = "/calendario_detalle?persona=#{persona}&fecha=#{fecha.strftime('%d/%m/%Y')}" %>
+      <% else %>
+        <%actividad_count = 0%>
         <% url = "/calendario_actividades/#{fecha.strftime('%Y/%m/%d')}" %>
       <% end %>
+      
+      <!--% persona = PersonaVinculada.logueado(current_user.usuario).first % -->
+      <!--% if persona.nil? % -->
+        <!--% actividad_count = 0 % -->
+      <!--% else % -->
+        <!--% persona_id = persona.id % -->
+        <!--% actividad = Actividad.por_persona_y_fecha(persona_id, fecha) % --> 
+        <!--% actividad_count = actividad.count("actividades.id", :distinct => true) %-->        
+      <!--% end %-->
+      
+      <!--% if actividad_count > 0 %-->
+        <!--% if actividad_count == 1 %-->
+          <!--% url = "/actividades/#{actividad.first.id}" %-->
+        <!--% else %-->
+          <!--% url = "/actividades?persona=#{persona_id}&fecha=#{fecha.strftime('%d/%m/%Y')}" %-->
+        <!--% end %-->
+      <!--% else %-->
+        <!--% url = "/calendario_actividades/#{fecha.strftime('%Y/%m/%d')}" %-->
+      <!--% end %-->
       <div style="margin: 0; padding: 0; border: 0; float: left; min-height:1px; width: <%= width %>; cursor:pointer" onClick="location.href='<%= url %>'">
         <div class="ui-bar ui-bar-<%= theme %> " style="padding: <%= padding %>; height: <%= height %>; font-weight:normal; font-size: <%= font_size %> ;">          
           <%= ds %>

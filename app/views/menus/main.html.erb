@@ -53,7 +53,7 @@
           <li><a href="<%= autorizaciones_path(:accion => :consultar) %>" >Consultar autorizaciones</a></li>
         <% end %>
 
-        <% if [1,2,4].include? current_user.perfil_id %>
+        <% if [1,2,3,4].include? current_user.perfil_id %>
           <li><a href="<%= calendario_actividades_path(Date.current.year, Date.current.month, Date.current.strftime('%d')) %>">Calendario</a></li>
         <% end %>
       <% end %>

@@ -1,0 +1,23 @@
+<div data-role="header" style="text-align: center">  
+  <h1><%= "Actividades del dia #{@fecha_calendario.strftime('%d/%m/%Y')}" %></h1>
+  <%= link_to 'Regresar', calendario_actividades_path(@fecha_calendario.year, @fecha_calendario.month, @fecha_calendario.strftime("%d")), "data-icon" => "arrow-l", "class" => "ui-btn-left", "data-mini" => "true" %>
+</div>
+
+<div data-role="content" class="ui-content" role="main">
+  <div data-role="fieldcontain">
+    <ul data-role="listview" data-filter="true">
+      <% @actividades.each do |actividad| %>    
+        <li data-filtertext="<%= "#{TipoEvento.find(actividad.tipo_evento_id).descripcion} #{actividad.nombre}" %>" >
+          <h3> <%= "#{TipoEvento.find(actividad.tipo_evento_id).descripcion} -  #{actividad.nombre}" %> </h3>
+          <p class="ui-li-desc"> <%= actividad.detalle%> </p>
+          <p class="ui-li-desc"> De <%= actividad.fecha_hora_inicio.strftime('%I:%M %p') %> a <%= actividad.fecha_hora_fin.strftime('%I:%M %p') %> 
+          <% if actividad.fecha_hora_fin.strftime('%Y%m%d') > actividad.fecha_hora_inicio.strftime('%Y%m%d') %>
+            <%= " del dia #{actividad.fecha_hora_fin.strftime('%d/%m/%Y')}" %>
+          <% end %>
+          </p>
+          <p class="ui-li-aside"><%= ListaValor.find_by_tabla_and_item(8, actividad.estado).descripcion %></p>
+        </li>
+      <% end  %>
+    </ul>
+  </div>
+</div>
