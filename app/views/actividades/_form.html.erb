@@ -1,5 +1,5 @@
 <% content_for :onload do %>
-  <%= "habilitaAutorizacion(); validarAutorizacion()" %>
+  <%= "habilitaAutorizacion(); validarAutorizacion(); habilitaNotificacion()" %>
 <% end %>
 
 <%= form_for(@actividad) do |f| %>
@@ -79,23 +79,26 @@
     </div>
     
     <div id="autorizacion">
-    <div class="field">
-        <%= f.label :limite_autorizacion, "Ultimo dia para autorización (*)", :id => "label_limite_autorizacion" %><br />
-        <%= f.text_field :limite_autorizacion, "data-mini" => "true", "data-role" => "datebox", "type" => "date", "style" => "width:130px" %>
+      <div class="field">
+          <%= f.label :limite_autorizacion, "Ultimo dia para autorización (*)", :id => "label_limite_autorizacion" %><br />
+          <%= f.text_field :limite_autorizacion, "data-mini" => "true", "data-role" => "datebox", "type" => "date", "style" => "width:130px" %>
+      </div>
     </div>
-    <!--/fieldset-->
+    
     <div class="field">
-        <%= f.label :inicio_notificacion, "Inicio de notificación (*)", :id => "label_inicio_notificacion" %><br />
-        <%= f.text_field :inicio_notificacion, "data-mini" => "true", "data-role" => "datebox", "type" => "date", "style" => "width:130px", :min => Date.current %>
+        <%= f.label :inicio_notificacion, "Inicio de notificación", :id => "label_inicio_notificacion" %><br />
+        <%= f.text_field :inicio_notificacion, "data-mini" => "true", "data-role" => "datebox", "type" => "date", "style" => "width:130px", :min => Date.current, :onchange => "habilitaNotificacion()" %>
     </div>
-    <div class="field">
-        <%= f.label :fin_notificacion, "Fin de notificación (*)", :id => "label_fin_notificacion" %><br />
-        <%= f.text_field :fin_notificacion, "data-mini" => "true", "data-role" => "datebox", "type" => "date", "style" => "width:130px", :min => Date.current %>
-    </div>
-    <div class="field">
-        <%= f.label :frecuencia_dias_notificacion, "Frecuencia de notificación (*)", :id => "label_frecuencia_dias_notificacion" %> <br />
-        Cada <%= f.number_field :frecuencia_dias_notificacion, "type" => "number", "min" => "1", "max" => "30", "data-mini" => "true", "style" => "width:50px"  %> dia(s)
-    </div>
+    
+    <div id="notificacion">
+      <div class="field">
+          <%= f.label :fin_notificacion, "Fin de notificación (*)", :id => "label_fin_notificacion" %><br />
+          <%= f.text_field :fin_notificacion, "data-mini" => "true", "data-role" => "datebox", "type" => "date", "style" => "width:130px", :min => Date.current %>
+      </div>
+      <div class="field">
+          <%= f.label :frecuencia_dias_notificacion, "Frecuencia de notificación (*)", :id => "label_frecuencia_dias_notificacion" %> <br />
+          Cada <%= f.number_field :frecuencia_dias_notificacion, "type" => "number", "min" => "1", "max" => "30", "data-mini" => "true", "style" => "width:50px"  %> dia(s)
+      </div>
     </div>
 
     <div class="field">

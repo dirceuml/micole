@@ -206,32 +206,17 @@ function habilitaAutorizacion()
     div_autorizacion = document.getElementById("autorizacion");
     requiere_autorizacion = document.getElementById("actividad_requiere_autorizacion");
     limite_autorizacion = document.getElementById("actividad_limite_autorizacion");
-    inicio_notificacion = document.getElementById("actividad_inicio_notificacion");
-    fin_notificacion = document.getElementById("actividad_fin_notificacion");
-    frecuencia_dias_notificacion = document.getElementById("actividad_frecuencia_dias_notificacion");
     
     if (requiere_autorizacion.checked)
     {
-        div_autorizacion.style.display = "block";
-        
+        div_autorizacion.style.display = "block";        
         limite_autorizacion.required = true;
-        inicio_notificacion.required = true;
-        fin_notificacion.required = true;
-        frecuencia_dias_notificacion.required = true;
     }
     else
     {
-        div_autorizacion.style.display = "none";
-        
-        limite_autorizacion.value = "";
-        inicio_notificacion.value = "";
-        fin_notificacion.value = "";
-        frecuencia_dias_notificacion.value = "";
-        
+        div_autorizacion.style.display = "none";        
+        limite_autorizacion.value = "";        
         limite_autorizacion.required = false;
-        inicio_notificacion.required = false;
-        fin_notificacion.required = false;
-        frecuencia_dias_notificacion.required = false;
     }
 }
 
@@ -261,6 +246,33 @@ function validarAutorizacion()
     inicio_notificacion.setAttribute("max", sFechaActividadMenos1);
     
     fin_notificacion.setAttribute("max", sFechaActividadMenos1);
+}
+
+function habilitaNotificacion()
+{
+    div_notificacion = document.getElementById("notificacion");
+    inicio_notificacion = document.getElementById("actividad_inicio_notificacion");
+    fin_notificacion = document.getElementById("actividad_fin_notificacion");
+    frecuencia_dias_notificacion = document.getElementById("actividad_frecuencia_dias_notificacion");
+
+    if (inicio_notificacion.value == "")
+    {
+        div_notificacion.style.display = "none";
+     
+        fin_notificacion.value = "";
+        frecuencia_dias_notificacion.value = "";
+        
+        fin_notificacion.required = false;
+        frecuencia_dias_notificacion.required = false;
+    }
+    else
+    {
+        div_notificacion.style.display = "block";
+      
+        fin_notificacion.required = true;
+        frecuencia_dias_notificacion.required = true;
+        
+    }
 }
 
 function sumarDias(fecha, dias){
