@@ -85,20 +85,29 @@
   
       <% if actividad_count > 0 %>
         <% if actividad_count == 1 %>
-          <% url = "/actividades/#{actividad.first.id}" %>
+          <% url = "/actividades/#{actividad.first.id}?fechacal=#{fecha.strftime('%Y/%m/%d')}" %>
         <% else %>
           <% url = "/actividades?persona=#{persona_id}&fecha=#{fecha.strftime('%d/%m/%Y')}" %>           
         <% end %>
       <% else %>
         <% url = "/calendario_actividades/#{fecha.strftime('%Y/%m/%d')}" %>
       <% end %>
+  
+      <% lista_actividades = "" %>
+      <% if actividad_count > 0 %>         
+        <% actividad.each do |a| %>
+          <% lista_actividades = "#{lista_actividades}#{a.nombre}\n" %>
+        <% end %>
+      <% end %>
+  
       <div style="margin: 0; padding: 0; border: 0; float: left; min-height:1px; width: <%= width %>; cursor:pointer" onClick="location.href='<%= url %>'">
-        <div class="ui-bar ui-bar-<%= theme %> " style="padding: <%= padding %>; height: <%= height %>; font-weight:normal; font-size: <%= font_size %> ;">          
+        <div title="<%= lista_actividades %> " class="ui-bar ui-bar-<%= theme %> " style="padding: <%= padding %>; height: <%= height %>; font-weight:normal; font-size: <%= font_size %> ;">          
           <%= ds %>
-          <% if actividad_count > 0 %>
+          <% if actividad_count > 0 %>            
             <br/>
             <%= image_tag('blank_small.gif') %>
             <%= image_tag('star_icon.gif') %>
+            <%= lista_actividades %>
           <% end %>
         </div>    
       </div>  

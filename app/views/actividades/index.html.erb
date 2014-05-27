@@ -1,6 +1,11 @@
 <div data-role="header">
   <h1>Actividades</h1>
   
+  <% unless params[:fecha].blank? %>
+    <% fecha = params[:fecha] %>
+    <%= link_to 'Regresar', "/calendario_actividades/#{fecha[6,4]}/#{fecha[3,3]}#{fecha[0,2]}", "data-icon" => "check", "data-mini" => "true"  %>
+  <% end %>
+  
   <% if can? :create, Actividad %>
     <%= link_to 'Registrar', new_actividad_path, "data-icon" => "plus", "class" => "ui-btn-right" %>
   <% end %>
