@@ -56,7 +56,7 @@ class AlumnosController < ApplicationController
   # GET /alumnos/1
   # GET /alumnos/1.json
   def show
-    @alumno = Alumno.find(params[:id])
+    @alumno = Alumno.find(params[:id])    
     
     respond_to do |format|
       format.html # show.html.erb
@@ -69,8 +69,9 @@ class AlumnosController < ApplicationController
   # GET /alumnos/new.json
   def new
     @alumno = Alumno.new   
-    1.times { @alumno.alumnos_personas_vinculadas.build }
-
+    @alumno.alumnos_personas_vinculadas.build
+    @persona_vinculada = PersonaVinculada.no_vinculadas_a(@alumno.id).sort_by{|e| e[:apellido_paterno] + " " + e[:apellido_materno] + " " + e[:nombres]}
+    
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @alumno }
@@ -81,6 +82,7 @@ class AlumnosController < ApplicationController
   def edit
     @alumno = Alumno.find(params[:id])
     @seccion_id = Alumno.find(@alumno.id).seccion_id(anio_escolar.id)
+    @persona_vinculada = PersonaVinculada.order("apellido_paterno, apellido_materno, nombres")
   end
 
   # POST /alumnos
