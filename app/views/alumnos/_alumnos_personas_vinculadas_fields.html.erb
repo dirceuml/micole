@@ -1,9 +1,7 @@
     <div data-role="fieldcontain" class="ui-body ui-body-c">
-      <div class="field">
+      <div id="select_persona" class="field">
         Persona vinculada: (*)<br/>
-        <%= f.collection_select(:persona_vinculada_id, PersonaVinculada.order("apellido_paterno, apellido_materno, nombres"), :id, :apellidos_nombres, {:prompt => ':: Seleccione ::' }, {"data-mini" => "true"}) %>
-        <%# order("apellido_paterno, apellido_materno, nombres") %>
-        <%# no_vinculadas_a(@alumno.id).sort_by{|e| e[:apellido_paterno] + " " + e[:apellido_materno] + " " + e[:nombres]} %>
+        <%= f.collection_select(:persona_vinculada_id, @persona_vinculada, :id, :apellidos_nombres, {:prompt => ':: Seleccione ::' }, {"data-mini" => "true"}) %>        
       </div>
       
       <div data-role="content" data-theme = "b" >
@@ -12,7 +10,7 @@
         <% end %>
       </div>
       
-      <div>
+      <div id="div_agregar_persona">
         <%= f.link_to_add "Agregar persona", :persona_vinculada, "data-role" => "button", "data-inline" => "true", "data-theme" => "b", "data-icon" => "plus", "data-mini" => "true" %>
       </div>
       
