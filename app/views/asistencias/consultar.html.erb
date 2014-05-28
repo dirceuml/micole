@@ -1,5 +1,5 @@
 <div data-role="header">
-  <h1>Consultar asistencia</h1>
+  <h1>Consultar salidas de alumnos con personas vinculadas</h1>
 </div>
 
 <% if params[:seccion_id].nil? %>
@@ -25,9 +25,7 @@
       Al: <%= text_field_tag(:fechaF, fechaF, "data-mini" => "true", "data-role" => "datebox", "type" => "date", "style" => "width:135px", :required => "required") %>
       <li data-role="fieldcontain">
         Sección: <%= collection_select(:seccion, :id, @secciones, :id, :grado_seccion, {:selected => seccion}, {"data-mini" => "true", :name => "seccion_id"}) %>
-      </li>
-    <li data-role="fieldcontain">
-      <%= submit_tag "Buscar", "data-inline" => "true", "data-theme" => "a", "data-icon" => "search", "data-mini" => "true", :name => nil %>
+        <%= submit_tag "Buscar", "data-inline" => "true", "data-theme" => "a", "data-icon" => "search", "data-mini" => "true", :name => nil %>
       </li>
     </div>
   <% end %>
@@ -44,8 +42,8 @@
           <% if !alumfproc.empty? %>
             <li data-filtertext="<%= alumnover %>" >
                 <h3> <%= alumnover %> </h3>
-                <p class="ui-li-desc"> Ingreso: <%= horaingver%> </p>
-                <p class="ui-li-desc"> Salida: <%= horasalver%>
+              <!--p class="ui-li-desc"--> <!--%= "Ingreso:" %--> <!--%= horaingver%--> <!--/p-->
+                <p class="ui-li-desc"> Hora: <%= horasalver%>
                     <% if !personaver.empty? %> con <%= personaver%> <% end %>
                 </p>
                 <% horaingver = "--:--" %>
@@ -74,8 +72,8 @@
     <% if !alumfproc.empty? %>
         <li data-filtertext="<%= alumnover %>" >
           <h3> <%= alumnover %> </h3>
-          <p class="ui-li-desc"> Ingreso: <%= horaingver%> </p>
-          <p class="ui-li-desc"> Salida: <%= horasalver%>
+          <!--p class="ui-li-desc"--> <!--%= "Ingreso:" %--> <!--%= horaingver%--> <!--/p-->
+          <p class="ui-li-desc"> Hora: <%= horasalver%>
             <% if !personaver.empty? %> con <%= personaver%> <% end %>
           </p>
         </li>

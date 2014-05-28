@@ -18,13 +18,11 @@
   <%= form_tag(consulta_asistencia_alumno_path, {"onSubmit" => "return validarBusquedaXRangoFechas();", "data-ajax" => "false", "name" => "buscar", :method => :get}) do %>
     <div data-role="fieldcontain">
       <li data-role="fieldcontain">
-        Alumno: <%= collection_select(:alumno, :id, Alumno.hijos_de(persona.id).order("apellido_paterno", "apellido_materno", "nombres"), :id, :apellidos_nombres, {:selected => alumno}, {"data-mini" => "true", :name => "alumno_id"}) %><br/>
-      </li>
-      <li data-role="fieldcontain">
         Del: <%= text_field_tag(:fechaI, fechaI, "data-mini" => "true", "data-role" => "datebox", "type" => "date", "style" => "width:135px", :required => "required") %>
         Al: <%= text_field_tag(:fechaF, fechaF, "data-mini" => "true", "data-role" => "datebox", "type" => "date", "style" => "width:135px", :required => "required") %><br/>
       </li>
       <li data-role="fieldcontain">
+        Alumno: <%= collection_select(:alumno, :id, Alumno.hijos_de(persona.id).order("apellido_paterno", "apellido_materno", "nombres"), :id, :apellidos_nombres, {:selected => alumno}, {"data-mini" => "true", :name => "alumno_id"}) %><br/>
         <%= submit_tag "Buscar", "data-inline" => "true", "data-theme" => "a", "data-icon" => "search", "data-mini" => "true", :name => nil %>
       </li>
     </div>
