@@ -10,15 +10,15 @@
         Cuaderno de control
       </li>
 
-      <% if [1,2,3,4].include? current_user.perfil_id %>
-        <% if [1,3,5].include? current_user.perfil_id %>
+      <% if [1,2,3,4,5].include? current_user.perfil_id %>
+        <% if [1,5].include? current_user.perfil_id %>
           <li><a href="<%= tipos_eventos_path %>">Configurar</a></li>
         <% end %>
         
         <% if [1,3].include? current_user.perfil_id %>
           <li><a href="<%= cuadernos_controles_path %>">Registrar</a></li>
         <% end %>
-
+        
         <% if [1,2,4].include? current_user.perfil_id %>
           <li>
             <a href="<%= cuaderno_controles_revisiones_path(:accion => :revisar, :usuario => current_user.usuario) %>">
@@ -26,7 +26,7 @@
             </a>
           </li>
         <% end %>
-
+        
         <% if [1,3].include? current_user.perfil_id %>
           <li><a href="<%= cuaderno_controles_revisiones_path(:accion => :verificar) %>">Verificar</a></li>
         <% end %>
@@ -40,11 +40,11 @@
         <li data-role="list-divider" data-icon="false" data-mini="true">
           Actividades del colegio
         </li>
-
+        
         <% if [1,3].include? current_user.perfil_id %>
           <li><a href="<%= actividades_path %>">Registrar</a></li>
         <% end %>
-
+        
         <% if [1,2].include? current_user.perfil_id %>
           <li><a href="<%= autorizaciones_path(:accion => :autorizar, :usuario => current_user.usuario) %>" >Autorizar</a></li>          
         <% end %>
@@ -59,15 +59,15 @@
       <% end %>
 
           
-      <% if [1,2,3].include? current_user.perfil_id %>
+      <% if [1,3].include? current_user.perfil_id %>
         <li data-role="list-divider" data-icon="false" data-mini="true">
           Seguridad de alumnos
         </li>
-
+        
         <% if [1,3].include? current_user.perfil_id %>
           <li><a href="<%= personas_vinculadas_path %>">Personas vinculadas</a></li>
         <% end %>
-
+        
         <% if [1,3].include? current_user.perfil_id %>
           <li><a href="<%= vincularpersonas_path(:seccion_id => 0) %>">Vincular personas</a></li>
         <% end %>
@@ -76,17 +76,23 @@
           <li><a href="<%= salida_path %>">Salida de alumnos</a></li>
         <% end %>
 
-        <% if [1,3].include? current_user.perfil_id %>
+        <% if [0].include? current_user.perfil_id %>   <!--% Opcion deshabilitada %-->
           <li><a href="<%= new_asistencia_path %>">Registrar asistencia de alumnos</a></li>
         <% end %>
         
         <% if [1,3].include? current_user.perfil_id %>
-          <li><a href="<%= consulta_asistencia_path %>">Consultar asistencias por sección</a></li>
+          <li><a href="<%= consulta_asistencia_path %>">Consultar salida</a></li>
         <% end %>
         
-        <% if [1,2].include? current_user.perfil_id %>
+        <% if [0].include? current_user.perfil_id %>  <!--% Opcion deshabilitada %-->
           <li><a href="<%= consulta_asistencia_alumno_path %>">Consultar asistencias del alumno</a></li>
         <% end %>
+      <% end %>
+      
+      <% if [1,3].include? current_user.perfil_id %>
+        <li data-role="list-divider" data-icon="false" data-mini="true">
+          Control de inasistencias y tardanzas
+        </li>
         
         <% if [1,3].include? current_user.perfil_id %>
           <li><a href="<%= tardanzas_path %>">Registrar tardanzas</a></li>
@@ -99,8 +105,8 @@
         <% if [1,3].include? current_user.perfil_id %>
           <li><a href="<%= consultar_inasistencias_tardanzas_path %>">Consultar inasistencias y tardanzas</a></li>
         <% end %>
-      <% end %>
-          
+      <%end%>
+      
       
       <% if [1,2,3,4,5].include? current_user.perfil_id %>
         <li data-role="list-divider" data-icon="false" data-mini="true">
@@ -109,11 +115,13 @@
         <% if [1,3,5].include? current_user.perfil_id %>
           <li><a href="<%= cargar_notas_path %>">Cargar</a></li>
         <% end %>
-          
-        <li><a href="<%= notas_path %>">Consultar</a></li>
-      <% end %> 
         
-      <% if [1,2,3,4].include? current_user.perfil_id %> 
+        <% if [1,2,4].include? current_user.perfil_id %>
+          <li><a href="<%= notas_path %>">Consultar</a></li>
+        <% end %>
+      <% end %>
+       
+      <% if [1,2,3,4,5].include? current_user.perfil_id %> 
         <li data-role="list-divider" data-icon="false" data-mini="true">
           Mi cuenta
         </li>

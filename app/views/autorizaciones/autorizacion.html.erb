@@ -52,6 +52,9 @@
               <h3 class= "ui-li-heading"> <%= "#{autorizacion.actividad.fecha_hora_inicio.strftime('%d/%m/%Y')} - #{autorizacion.actividad.nombre}" %>  </h3>
               <p class="ui-li-desc"> <%= "Para: #{autorizacion.alumno.apellidos_nombres}" %></p>
               <p class="ui-li-desc"> Autorizado: <% if autorizacion.respuesta.nil? %> Sin respuesta <%else%> <%if autorizacion.respuesta ==0%> No <%else%> Si <%end%> <%end%></p>
+              <% if autorizacion.actividad.estado != 2 %>
+                <p class="ui-li-aside"><%= ListaValor.find_by_tabla_and_item(8, autorizacion.actividad.estado).descripcion %></p>
+              <% end %>
             <% end %>
           </li>
         <% end  %>
@@ -72,6 +75,9 @@
               <h3 class= "ui-li-heading"> <%= "#{autorizacion.actividad.fecha_hora_inicio.strftime('%d/%m/%Y')} - #{autorizacion.actividad.nombre}" %>  </h3>
               <p class="ui-li-desc"> <%= "Para: #{autorizacion.alumno.apellidos_nombres}" %></p>
               <p class="ui-li-desc"> Autorizado: <% if autorizacion.respuesta.nil? %> Sin respuesta <%else%> <%if autorizacion.respuesta ==0%> No <%else%> Si <%end%> <%end%></p>
+              <% if autorizacion.actividad.estado != 2 %>
+                <p class="ui-li-aside"><%= ListaValor.find_by_tabla_and_item(8, autorizacion.actividad.estado).descripcion %></p>
+              <% end %>
             <% end %>
           </li>
         <% end  %>

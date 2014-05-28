@@ -76,21 +76,21 @@
       <% if current_user.perfil_id == 3 && current_user.alcance_colegio == 0 %>  <!-- Personal administrativo con seccion -->
         <% persona = current_user.id %>
         <% actividades_seccion = Actividad.por_secciones_usuario(anio_escolar.id, persona).por_fecha_inicio(anio_escolar.id, fecha) %>
-        <% actividades_colegio = Actividad.por_fecha_inicio(anio_escolar.id, fecha).where("alcance_colegio = 1") %>
+        <% actividades_colegio = Actividad.por_fecha_inicio(anio_escolar.id, fecha).where("alcance_colegio = 1 and estado = 2") %>
       <% else %>
         <% if current_user.perfil_id == 2 %>   <!-- Padre -->
           <% persona = current_user.persona_vinculada_id %>
           <% actividades_seccion = Actividad.por_persona_y_fecha(persona, fecha) %>
-          <% actividades_colegio = Actividad.por_fecha_inicio(anio_escolar.id, fecha).where("alcance_colegio = 1") %>
+          <% actividades_colegio = Actividad.por_fecha_inicio(anio_escolar.id, fecha).where("alcance_colegio = 1 and estado = 2") %>
         <% else %>
           <% if current_user.perfil_id == 4 %>   <!-- Alumno -->
             <% persona = current_user.alumno_id %>
             <% seccion_id = AnioAlumno.find_by_anio_escolar_id_and_alumno_id(anio_escolar.id, persona).seccion_id %>
             <% actividades_seccion = Actividad.por_seccion(anio_escolar.id, seccion_id).por_fecha_inicio(anio_escolar.id, fecha) %>
-            <% actividades_colegio = Actividad.por_fecha_inicio(anio_escolar.id, fecha).where("alcance_colegio = 1") %>
+            <% actividades_colegio = Actividad.por_fecha_inicio(anio_escolar.id, fecha).where("alcance_colegio = 1 and estado = 2") %>
           <% else %>
             <% persona = current_user.id %>
-            <% actividades_seccion = Actividad.por_fecha_inicio(anio_escolar.id, fecha) %>
+            <% actividades_seccion = Actividad.por_fecha_inicio(anio_escolar.id, fecha).where("estado = 2") %>
             <% actividades_colegio = "" %>
           <% end %>
         <% end %>

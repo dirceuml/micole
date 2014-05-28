@@ -86,11 +86,11 @@ class Actividad < ActiveRecord::Base
   scope :pendiente_colegios, lambda { |fecha| joins(:anio_escolar).where("anios_escolares.activo = 1 and to_char(fecha_hora_inicio::timestamp at time zone 'UTC-5', 'yyyymmdd') >= ?", fecha.strftime('%Y%m%d'))}
   
   scope :por_fecha_inicio, lambda { |anioescolar, fecha| where("anio_escolar_id = ? and to_char(fecha_hora_inicio::timestamp at time zone 'UTC-5', 'yyyymmdd') = ?", anioescolar, fecha.strftime('%Y%m%d'))}
-  scope :por_seccion, lambda { |anioescolar, seccion| joins(:actividades_secciones).where("anio_escolar_id = ? and actividades_secciones.seccion_id = ?", anioescolar, seccion)}
+  scope :por_seccion, lambda { |anioescolar, seccion| joins(:actividades_secciones).where("anio_escolar_id = ? and actividades_secciones.seccion_id = ? and actividades.estado = 2", anioescolar, seccion)}
   scope :por_persona, lambda { |persona| joins(:secciones => {:anios_alumnos => :personas_vinculadas}).uniq.where("personas_vinculadas.id = ?", persona)}
-  scope :por_persona_y_fecha, lambda { |persona,fecha| por_persona(persona).where("to_char(fecha_hora_inicio::timestamp at time zone 'UTC-5', 'yyyymmdd') = ?", fecha.strftime('%Y%m%d'))}
+  scope :por_persona_y_fecha, lambda { |persona,fecha| por_persona(persona).where("actividades.estado = 2 and to_char(fecha_hora_inicio::timestamp at time zone 'UTC-5', 'yyyymmdd') = ?", fecha.strftime('%Y%m%d'))}
   scope :apoderados, lambda { |actividad| joins(:personas_vinculadas).where("actividades.id = ? and alumnos_personas_vinculadas.apoderado = 1", actividad)}
-  scope :por_secciones_usuario, lambda { |anioescolar, usuarioadm| joins(:actividades_secciones => {:seccion => :usuarios_secciones}).uniq.where("anio_escolar_id = ? and usuarios_secciones.usuario_id = ?", anioescolar, usuarioadm)}  
+  scope :por_secciones_usuario, lambda { |anioescolar, usuarioadm| joins(:actividades_secciones => {:seccion => :usuarios_secciones}).uniq.where("anio_escolar_id = ? and usuarios_secciones.usuario_id = ? and actividades.estado = 2", anioescolar, usuarioadm)}  
   #attr_accessor :fecha_inicio, :hora_inicio, :min_inicio, :fecha_fin, :hora_fin, :min_fin
   
   #after_initialize :get_datetime_inicio, :get_datetime_fin
@@ -126,8 +126,8 @@ class Actividad < ActiveRecord::Base
   end
   
   def enviar_recordatorio
-    if estado == 2 and !inicio_notificacion.nil?
-      if inicio_notificacion <= Date.current and fin_notificacion >= Date.current
+    if estado == 2 && !inicio_notificacion.nil?
+      if inicio_notificacion <= Date.current && fin_notificacion >= Date.current
         alumnos.find_each do |a|
           a.personas_vinculadas.where("apoderado = 1").find_each do |p|
             ActividadMailer.notificacion_actividad(Actividad.find(id), a, p).deliver
@@ -138,7 +138,7 @@ class Actividad < ActiveRecord::Base
   end
   
   def enviar_solicitud_autorizacion
-    if estado == 2 and requiere_autorizacion == 1
+    if estado == 2 && requiere_autorizacion == 1
       alumnos.find_each do |a|
         a.personas_vinculadas.where("apoderado = 1").find_each do |p|
 #          AutorizacionMailer.notificacion_autorizacion(Actividad.find(id), a, p).deliver

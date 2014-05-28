@@ -48,14 +48,18 @@ class AsistenciasController < ApplicationController
       fechaF = params[:fechaF].to_date
     end
     
-
-    @asistencias = Asistencia.por_seccion_rango_fechas(anio_escolar.id, seccion, fechaI, fechaF)
-
+    if fechaI > fechaF
+      flash[:notice] = 'Ingrese correctamente los rangos de fecha'
+      redirect_to(:consulta_asistencia) and return
+    else
+      @asistencias = Asistencia.por_seccion_rango_fechas(anio_escolar.id, seccion, fechaI, fechaF).salida
+    end
+   
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @asistencias }
     end
-  end  
+  end
   
   def consultar_alumno
     alumno = params[:alumno_id]

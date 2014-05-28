@@ -64,7 +64,7 @@
 <% if can? :update, @actividad %>
   <%= form_for(@actividad, :html => { :class => "ui-body ui-body-c" }) do |f| %>
     <div data-role="fieldcontain">
-      <% if @actividad.estado == 1 %>
+      <% if @actividad.estado == 1 %>   <!--% Registrada %-->
         <%= f.hidden_field :estado, :value => 2 %>
         <%= f.hidden_field :usuario, :value => current_user.usuario %>
         <% hidden_field_tag(:accion, 2, "data-mini" => "true") %>
@@ -77,12 +77,21 @@
           <%= f.submit "Confirmar", "data-inline" => "true", "data-theme" => "a", "data-icon" => "check", "data-mini" => "true" %>
         </div>
       <% else %>
+        <%= f.hidden_field :usuario, :value => current_user.usuario %>
+        <% @estados_actividad = ListaValor.where("tabla = 8 and item != 1").order("item") %> 
+        <div style="width: 400px; clear: left; float: left; font-size: 12px;">
+          <%="Estado: "%>
+          <%= collection_select(:actividad, :estado, @estados_actividad, :item, :descripcion, {:selected => @actividad.estado}, {"data-mini" => "true", :required => "required"}) %>
+        </div> 
+        <div class="actions" style="float: left">
+          <%= f.submit "Actualizar", "data-inline" => "true", "data-theme" => "a", "data-icon" => "check", "data-mini" => "true" %>
+        </div>        
         <%#*<div class="field">%>
           <%#*Observaciones<br />%>
           <%#= f.text_area :observacion, :readonly => true %>
         <%#*</div>%>
         <%#*<br />%>
-        <div data-role="footer"><%= ListaValor.find_by_tabla_and_item(8, @actividad.estado).descripcion %></div>
+        <!--div data-role="footer" --><!--%= ListaValor.find_by_tabla_and_item(8, @actividad.estado).descripcion %--><!--/div-->
       <% end %>
     </div>
   <% end %>
