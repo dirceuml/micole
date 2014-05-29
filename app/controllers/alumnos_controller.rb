@@ -210,8 +210,19 @@ class AlumnosController < ApplicationController
       fechaF = params[:fechaF].to_date
     end
     
-    @alumnos = Alumno.pertenecen_a_seccion(anio_escolar.id, seccion).order("apellido_paterno, apellido_materno, nombres")
-    @controles_asistencias = ControlAsistencia.por_anio_escolar_seccion_rango_fechas(anio_escolar.id, seccion, fechaI, fechaF)
+    if anio_escolar.inicio_clases.nil?
+      @fecha_inicial = Date.current.beginning_of_year # o Date.civil(anio_escolar.anio, -1, -1)
+    else
+      @fecha_inicial = anio_escolar.inicio_clases
+    end
+    
+    if fechaI > fechaF
+      flash[:notice] = 'Ingrese correctamente los rangos de fecha'
+      redirect_to(:consultar_inasistencias_tardanzas) and return      
+    else
+      @alumnos = Alumno.pertenecen_a_seccion(anio_escolar.id, seccion).order("apellido_paterno, apellido_materno, nombres")
+      @controles_asistencias = ControlAsistencia.por_anio_escolar_seccion_rango_fechas(anio_escolar.id, seccion, fechaI, fechaF)      
+    end
     
     respond_to do |format|
       format.html # index.html.erb
