@@ -16,10 +16,6 @@ class Actividad < ActiveRecord::Base
     if !a.fecha_hora_inicio.nil? && !a.fecha_hora_fin.nil?
       if a.fecha_hora_inicio >= a.fecha_hora_fin
         errors[:base] << "Error en rango de fechas de la actividad"
-      else
-        if a.fecha_hora_inicio < Time.now
-          errors[:base] << "No puede colocar una fecha pasada para la actividad"
-        end
       end
     end
   end
@@ -30,10 +26,6 @@ class Actividad < ActiveRecord::Base
     else
       if !a.fecha_hora_inicio.nil? && (a.limite_autorizacion > a.fecha_hora_inicio.to_date)  # || a.limite_autorizacion < a.fecha_hora_inicio.to_date 
         errors[:base] << "Error en la fecha limite para autorizacion"
-      else
-        if  a.limite_autorizacion < Time.now.to_date
-          errors[:base] << "No puede colocar fecha pasada para el ultimo dia de autorizacion"
-        end
       end
     end
   end
@@ -46,8 +38,8 @@ class Actividad < ActiveRecord::Base
          if a.fin_notificacion.nil?
            errors[:base] << "Falta ingresar la fecha fin de notificacion"
          else
-           if a.inicio_notificacion < Time.now.to_date
-             errors[:base] << "No puede colocar fecha pasada para la fecha de inicio de notificacion"
+           if a.inicio_notificacion > a.fecha_hora_inicio.to_date
+             errors[:base] << "No puede colocar fecha posterior para la fecha de inicio de notificacion"
            else
              if a.inicio_notificacion > a.fin_notificacion
                errors[:base] << "Error en rango de fechas de notificacion"

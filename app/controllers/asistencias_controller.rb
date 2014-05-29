@@ -48,6 +48,12 @@ class AsistenciasController < ApplicationController
       fechaF = params[:fechaF].to_date
     end
     
+    if anio_escolar.inicio_clases.nil?
+      @fecha_inicial = Date.current.beginning_of_year # o Date.civil(anio_escolar.anio, -1, -1)
+    else
+      @fecha_inicial = anio_escolar.inicio_clases
+    end    
+    
     if fechaI > fechaF
       flash[:notice] = 'Ingrese correctamente los rangos de fecha'
       redirect_to(:consulta_asistencia) and return
