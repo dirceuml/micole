@@ -74,12 +74,16 @@
     </div>
   </div>
 
-
+<h3>
+  Vínculos con personas
+</h3>
+  
   <%= f.fields_for :alumnos_personas_vinculadas do |apv| %>
     <%= render "alumnos_personas_vinculadas_fields", :f => apv %>        
   <% end %>
+<hr style="border-width: 3px">
   <div>
-    <%= f.link_to_add "Agregar vínculo con persona", :alumnos_personas_vinculadas, "data-role" => "button", "data-inline" => "true", "data-theme" => "b", "data-icon" => "plus", "data-mini" => "true" %>
+    <%= f.link_to_add "Vincular con otra persona", :alumnos_personas_vinculadas, "data-role" => "button", "data-inline" => "true", "data-theme" => "b", "data-icon" => "plus", "data-mini" => "true" %>
   </div>
 
   <div class="actions">

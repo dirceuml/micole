@@ -27,11 +27,14 @@
   <ul id='alumnos_personas_vinculadas' data-role="listview">
   <% @alumno.alumnos_personas_vinculadas.each do |apv| %>
     <% if !apv.persona_vinculada_id.nil? %> 
-      <% if can? :read, apv %>
-        <li>
-          <%= link_to simple_format(apv.apellidos_nombres), [@alumno, apv] %>          
-        </li>
-      <% end %>
+      <li>
+        <% if can? :read, apv %>        
+          <%= link_to simple_format(apv.apellidos_nombres), [@alumno, apv] %>                 
+        <% end %>
+        <% if can? :destroy, apv %>
+          <%= link_to 'Eliminar', apv, confirm: '¿Está seguro que desea eliminar el vínculo?', method: :delete, "data-icon" => "delete" %>
+        <% end %>
+      </li>      
     <% end %>
   <% end %>
   </ul>

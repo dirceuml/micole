@@ -1,0 +1,66 @@
+<%= form_for([@persona_vinculada, @persona_vinculada.alumnos_personas_vinculadas.build], :url => alumnos_personas_vinculadas_create2_path, :html => { :class => "ui-body ui-body-c", "data-ajax" => "false" }) do |f| %>
+  <% if !@alumno_persona_vinculada.nil? %>
+    <% if @alumno_persona_vinculada.errors.any? %>
+      <div id="error_explanation" data-role="header" data-theme="e">
+        <h2><%= pluralize(@alumno_persona_vinculada.errors.count, "error") %> impidieron la grabacion:</h2>
+
+        <ul>
+        <% @alumno_persona_vinculada.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+  <% end %>
+
+<div data-role="fieldcontain">
+  <div class="field">
+    Alumno: (*)<br/>
+    <%= collection_select(:alumno_persona_vinculada, :alumno_id, Alumno.order("apellido_paterno","apellido_materno", "nombres"), :id, :apellidos_nombres, {:prompt => ':: Seleccione ::' }, {"data-mini" => "true", :required => "required"}) %>
+  </div>
+  <div class="field">
+    <%= f.hidden_field :persona_vinculada_id %>
+  </div>
+  <div class="field">
+    Tipo vínculo: (*)<br/>
+    <%= collection_select(:alumno_persona_vinculada, :tipo_vinculo, ListaValor.where("tabla = 3"), :item, :descripcion, {:prompt => ':: Seleccione ::' }, {"data-mini" => "true", :required => "required"}) %>
+  </div>
+  <div class="field">
+    Vigencia: (*)<br/>
+    <%= collection_select(:alumno_persona_vinculada, :vigencia_vinculo, ListaValor.where("tabla = 4"), :item, :descripcion, {:prompt => ':: Seleccione ::' }, {"data-mini" => "true", :required => "required"}) %>
+  </div>
+  <div class="field">
+    Inicio: (*)<br/>
+    <%= f.text_field :inicio_vigencia, "data-mini" => "true", "data-role" => "datebox", "type" => "date", "style" => "width:130px", :required => "required" %>    
+  </div>
+  <div class="field">
+    Fin:<br/>
+    <%= f.text_field :fin_vigencia, "data-mini" => "true", "data-role" => "datebox", "type" => "date", "style" => "width:130px" %>
+  </div>
+<br/>
+  <fieldset data-role="controlgroup">
+    <div class="field">
+      <%= f.check_box :apoderado, "class" => "custom", "data-mini" => "true" %>
+      <%= f.label :apoderado %> 
+    </div>
+    <div class="field">
+      <%= f.check_box :autoriza_actividad, "class" => "custom", "data-mini" => "true" %>
+      <%= f.label :autoriza_actividad, "Autoriza actividades" %> 
+    </div>
+    <div class="field">
+      <%= f.check_box :revisa_control, "class" => "custom", "data-mini" => "true" %>
+      <%= f.label :revisa_control, "Revisa cuaderno de control" %> 
+    </div>
+    <div class="field">
+      <%= f.check_box :notificar_salida, "class" => "custom", "data-mini" => "true" %>
+      <%= f.label :notificar_salida, "Notificar salida de alumno" %> 
+    </div>
+  </fieldset>
+  <div class="field">
+    <%= f.hidden_field :usuario, :value => current_user.usuario %>
+  </div>
+  <div class="actions">
+    <%= f.submit "Grabar", "data-inline" => "true", "data-theme" => "a", "data-icon" => "check", "data-mini" => "true" %>
+  </div>
+</div>
+<% end %>

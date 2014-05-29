@@ -116,6 +116,27 @@ class AlumnosPersonasVinculadasController < ApplicationController
         end
       end
     end
+  end
+    
+  def create2
+    if current_user.nil?
+      redirect_to(log_in_path) and return
+    end
+
+    @persona_vinculada = PersonaVinculada.find(params[:alumno_persona_vinculada][:persona_vinculada_id])
+    @alumno_persona_vinculada = @persona_vinculada.alumnos_personas_vinculadas.create(params[:alumno_persona_vinculada])
+    
+    respond_to do |format|
+      if @alumno_persona_vinculada.save
+        format.html { redirect_to @persona_vinculada }
+        format.json { render json: @persona_vinculada, status: :created, location: @persona_vinculada }
+      else
+        @alumno_persona_vinculada.persona_vinculada_id = ""
+        format.html { render 'personas_vinculadas/show' }
+        format.json { render json: @persona_vinculada.errors, status: :unprocessable_entity }
+      end
+    end
+  end
     
     
 #    @alumno_persona_vinculada = AlumnoPersonaVinculada.new(params[:alumno_persona_vinculada])
@@ -129,7 +150,7 @@ class AlumnosPersonasVinculadasController < ApplicationController
 #        format.json { render json: @alumno_persona_vinculada.errors, status: :unprocessable_entity }
 #      end
 #    end
-  end
+# end
 
   # PUT /alumnos_personas_vinculadas/1
   # PUT /alumnos_personas_vinculadas/1.json
@@ -157,16 +178,28 @@ class AlumnosPersonasVinculadasController < ApplicationController
     if current_user.nil?
       redirect_to(log_in_path) and return
     end
-
-    @alumno = Alumno.find(params[:alumno_id])
-    @alumno_persona_vinculada = @alumno.alumnos_personas_vinculadas.find(params[:id])
+    
+    @alumno_persona_vinculada = AlumnoPersonaVinculada.find(params[:id])
+    @persona_vinculada = PersonaVinculada.find(@alumno_persona_vinculada.persona_vinculada_id)
+    @alumno = Alumno.find(@alumno_persona_vinculada.alumno_id)
     @alumno_persona_vinculada.destroy
     
-    if Usandovincularpersona == 1
-      redirect_to :controller => 'alumnos', :action => 'alumnopersona' , :id => @alumno.id
+    if params[:origen] == "1"
+      redirect_to persona_vinculada_path(@alumno)     
     else
-      redirect_to alumno_path(@alumno)      
+      redirect_to persona_vinculada_path(@persona_vinculada)     
     end
+    
+
+#    @alumno = Alumno.find(params[:alumno_id])
+#    @alumno_persona_vinculada = @alumno.alumnos_personas_vinculadas.find(params[:id])
+#    @alumno_persona_vinculada.destroy
+#    
+#    if Usandovincularpersona == 1
+#      redirect_to :controller => 'alumnos', :action => 'alumnopersona' , :id => @alumno.id
+#    else
+#      redirect_to alumno_path(@alumno)      
+#    end
   end
   
   rescue_from CanCan::AccessDenied do |exception|

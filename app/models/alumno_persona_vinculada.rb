@@ -5,7 +5,7 @@ class AlumnoPersonaVinculada < ActiveRecord::Base
   
   accepts_nested_attributes_for :persona_vinculada, :allow_destroy => true  
   attr_accessible :persona_vinculada_attributes
-  attr_accessible :persona_vinculada_id, :alumno_id, :tipo_vinculo, :vigencia_vinculo, :inicio_vigencia, :fin_vigencia, :apoderado, :autoriza_actividad, :revisa_control, :usuario
+  attr_accessible :persona_vinculada_id, :alumno_id, :tipo_vinculo, :vigencia_vinculo, :inicio_vigencia, :fin_vigencia, :apoderado, :autoriza_actividad, :revisa_control, :notificar_salida, :usuario
   
   #:persona_vinculada_id, 
   validates :tipo_vinculo, :vigencia_vinculo, :apoderado, 

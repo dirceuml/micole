@@ -107,6 +107,10 @@ Micole::Application.routes.draw do
     resources :alumnos_personas_vinculadas
   end
   
+  resources :personas_vinculadas do
+    resources :alumnos_personas_vinculadas
+  end
+  
 
   get "vincularpersonas" => "alumnos#alumnoseccion", :as => "vincularpersonas"
   get "vincularpersona/:id" => "alumnos#alumnopersona", :as => "vincularpersona"
@@ -117,6 +121,8 @@ Micole::Application.routes.draw do
   resources :cuadernos_controles do
     resources :cuaderno_controles_eventos
   end
+  
+  post "alumnos_personas_vinculadas_create2" => "alumnos_personas_vinculadas#create2", :as => "alumnos_personas_vinculadas_create2"
   
   get "cierre_cuadernos_controles/:id" => "cuadernos_controles#cerrar", :as => "cerrar_cuaderno_control"
 
