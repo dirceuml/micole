@@ -43,6 +43,7 @@
       <div class="field">
         <%= f.hidden_field :revisado, :value => 1 %>
         <%= f.hidden_field :persona_vinculada_id, :value => PersonaVinculada.logueado(current_user.usuario).first.id %>
+        <%= f.hidden_field :fecha_hora_revision, :value => Time.now.strftime('%Y-%m-%dT%H:%M:%S') %>
         <%= f.hidden_field :usuario, :value => current_user.usuario %>
       </div>
       
@@ -51,7 +52,7 @@
         <%= f.text_area :observaciones %>
       </div>
       <div class="actions">
-        <%= f.submit "Revisar", "data-inline" => "true", "data-theme" => "a", "data-icon" => "check", "data-mini" => "true" %>
+        <%= f.submit "Revisar", "data-inline" => "true", "data-theme" => "a", "data-icon" => "check", "data-mini" => "true", data: { confirm: "¿Está seguro que desea marcar el cuaderno de control como revisado?" } %>
       </div>
     <% else %>
       <div data-role="footer">No revisado</div>
@@ -61,6 +62,8 @@
       <%= f.text_area :observaciones, :readonly => true %>
     </div>
     <br />
-    <div data-role="footer">Revisado</div>
+    <div data-role="footer">
+      <%= "Revisado por #{@cuaderno_control_revision.persona_vinculada.apellidos_nombres} el #{@cuaderno_control_revision.fecha_hora_revision.strftime('%d/%m/%Y %H:%M:%S')}" %>
+    </div>
   <% end %>
 <% end %>

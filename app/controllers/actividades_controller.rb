@@ -133,8 +133,15 @@ class ActividadesController < ApplicationController
     if current_user.nil?
       redirect_to(log_in_path) and return
     end
-
     @actividad = Actividad.find(params[:id])
+    
+    if params[:actividad][:estado] == "5" then     
+      if @actividad.fecha_hora_inicio > Time.now then
+        flash[:notice] = 'No puede actualizar el estado de la actividad a Ejecutado porque aún no llega la fecha y hora de inicio.'
+        redirect_to(:actividad) and return
+      end
+    end
+    
     estado_anterior = @actividad.estado
     
     validaok = 1

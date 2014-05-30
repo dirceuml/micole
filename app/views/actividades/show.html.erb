@@ -74,7 +74,7 @@
           <%#= f.text_area :observacion %>
         <%#*</div>%>
         <div class="actions">
-          <%= f.submit "Confirmar", "data-inline" => "true", "data-theme" => "a", "data-icon" => "check", "data-mini" => "true" %>
+          <%= f.submit "Confirmar", "data-inline" => "true", "data-theme" => "a", "data-icon" => "check", "data-mini" => "true", data: { confirm: "¿Está seguro que desea confirmar la actividad?" } %>
         </div>
       <% else %>
         <%= f.hidden_field :usuario, :value => current_user.usuario %>

@@ -28,16 +28,16 @@
   </div>
 
   <div class="field">
-    <%= f.hidden_field :fecha_hora_autorizacion, :value => Time.now %>
-  </div>
-  <div class="field">
-    <%= f.hidden_field :fecha_hora_autorizacion, :value => Time.now %>
-  </div>
-  <div class="field">
-     <%= f.hidden_field :usuario, :value => current_user.usuario %>
+    <%= f.hidden_field :persona_vinculada_id, :value => PersonaVinculada.logueado(current_user.usuario).first.id %>
+    <%= f.hidden_field :fecha_hora_autorizacion, :value => Time.now.strftime('%d/%m/%YT%H:%M:%S') %>
+    <%= f.hidden_field :usuario, :value => current_user.usuario %>
   </div>
   <div class="actions">
-     <%= f.submit "Grabar", "data-inline" => "true", "data-theme" => "a", "data-icon" => "check", "data-mini" => "true" %>
+    <% if @autorizacion.respuesta.nil? %>
+      <%= f.submit "Responder", "data-inline" => "true", "data-theme" => "a", "data-icon" => "check", "data-mini" => "true", data: { confirm: "¿Está seguro que desea responder a la solicitud de autorización?" } %>
+    <% else %>
+      <%= f.submit "Actualizar respuesta", "data-inline" => "true", "data-theme" => "a", "data-icon" => "check", "data-mini" => "true", data: { confirm: "¿Está seguro que desea modificar su respuesta?" } %>
+    <% end if %>
   </div>
 </div>
 <% end %>

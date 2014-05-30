@@ -12,6 +12,16 @@ class Actividad < ActiveRecord::Base
   validates :alcance_colegio, :presence => { :message => ": Seleccione el alcance de la actividad" }
   #validates_format_of :hora_min_inicio, :with => /\d{1,2}:\d{2}/, :message => "invalido"
   
+  validate :cambio_estado_ejecutado
+  
+  def cambio_estado_ejecutado
+    if estado == 5 then
+      if fecha_hora_inicio > Time.now then
+        errors.add(:estado, "No puede actualizar el estado de la actividad a Ejecutado porque aún no llega la fecha de inicio.")
+      end
+    end
+  end
+  
   validate :if => "!fecha_hora_inicio.nil? && !fecha_hora_fin.nil?" do |a|
     if !a.fecha_hora_inicio.nil? && !a.fecha_hora_fin.nil?
       if a.fecha_hora_inicio >= a.fecha_hora_fin
