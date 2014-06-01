@@ -44,9 +44,10 @@
       <%= f.email_field :correo, :placeholder => "dirceu@example.com" %>
     </div>
     <div class="field">
-      Foto (*)<br />
-      <%= f.file_field :foto, :onchange => "PreviewImage(this);", :required => "required" %><br />
+      Foto<br />
+      <%= f.file_field :foto, :onchange => "PreviewImage(this);" %><br />
       <%= image_tag("blank.gif", :id => "preview") %>
+      <%= image_tag @persona_vinculada.foto_url.to_s %>
     </div>
     <div class="field">
       <%= f.hidden_field :user, :value => current_user.usuario %>

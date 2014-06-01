@@ -1,3 +1,7 @@
+<% content_for :onload do %>
+  <%= "validarFotos(#{@alumno.id})" %>
+<% end %>
+
 <%= nested_form_for(@alumno, :html => { :class => "ui-body ui-body-c", :multipart => true, "data-ajax" => "false", "onSubmit" => "return validarFoto(document.personas, alumno[foto]);", "name" => "personas" }) do |f| %>
   <% if @alumno.errors.any? %>
     <div id="error_explanation" data-role="header" data-theme="e">
@@ -67,7 +71,7 @@
         Foto (*)<br />
         <%= f.file_field :foto, :onchange => "PreviewImage(this);", :required => "required" %><br />
         <%= image_tag("blank.gif", :id => "preview") %>
-
+        <%= image_tag @alumno.foto_url.to_s if !@alumno.foto_url.nil? %>
     </div>
     <div class="field">
         <%= f.hidden_field :usuario_nom, :value => current_user.usuario %>

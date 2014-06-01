@@ -39,7 +39,7 @@
     </select>
   </div>
   <div data-role="fieldcontain">
-    Ingreso obligatorio de fecha programada:<br />
+    Ingreso requerido de fecha programada:<br />
     <select <%= f.number_field :obligatorio_fecha, "data-role" => "slider", "data-mini" => "true" %> >
                 <option value = 0 <% if @tipo_evento.obligatorio_fecha == 0 %> selected <%end%> >No</option>
                 <option value = 1 <% if @tipo_evento.obligatorio_fecha == 1 %> selected <%end%> >Si</option>

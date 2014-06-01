@@ -36,7 +36,7 @@
 
 
 
-<%= form_for(@cuaderno_control_revision, :html => { :class => "ui-body ui-body-c" }) do |f| %>
+<%= form_for(@cuaderno_control_revision, :html => { :class => "ui-body ui-body-c", :onsubmit => "validarClave(document.getElementById('clave'))" }) do |f| %>
   <% if @cuaderno_control_revision.revisado == 0 %>
     
     <% if can? :update, @cuaderno_control_revision && current_user.perfil_id != 4 %>
@@ -45,6 +45,7 @@
         <%= f.hidden_field :persona_vinculada_id, :value => PersonaVinculada.logueado(current_user.usuario).first.id %>
         <%= f.hidden_field :fecha_hora_revision, :value => Time.now.strftime('%Y-%m-%dT%H:%M:%S') %>
         <%= f.hidden_field :usuario, :value => current_user.usuario %>
+        <%= hidden_field_tag :clave, "0" %>
       </div>
       
       <div class="field">
@@ -52,7 +53,7 @@
         <%= f.text_area :observaciones %>
       </div>
       <div class="actions">
-        <%= f.submit "Revisar", "data-inline" => "true", "data-theme" => "a", "data-icon" => "check", "data-mini" => "true", data: { confirm: "¿Está seguro que desea marcar el cuaderno de control como revisado?" } %>
+        <%= f.submit "Revisar", :id => "submit", "data-inline" => "true", "data-theme" => "a", "data-icon" => "check", "data-mini" => "true", data: { confirm: "¿Está seguro que desea marcar el cuaderno de control como revisado?" } %>
       </div>
     <% else %>
       <div data-role="footer">No revisado</div>

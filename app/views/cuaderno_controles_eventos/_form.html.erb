@@ -41,7 +41,7 @@
   <div class="field">
     Descripción (*)<br/><%= f.text_area :descripcion, :required => "required" %>
   </div>
-  <div class="field">
+  <div id="fecha" class="field">
     Para la fecha<br/><%= f.text_field :fecha_evento, "data-mini" => "true", "data-role" => "datebox", "type" => "date", "style" => "width:130px", :min => @cuaderno_control.fecha + 1, :max => @cuaderno_control.fecha + 30 %>
   </div>
   <div class="field">

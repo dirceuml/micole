@@ -21,6 +21,7 @@ function toggleElement(valorDeshabilita, valorFechaObligatoria)
     destino = document.getElementById("cuaderno_control_evento_alumno_id");     
     alumno = document.getElementById("alumno");     
     destinoFecha = document.getElementById("cuaderno_control_evento_fecha_evento");         
+    divFecha = document.getElementById("fecha");         
     
     if (valorDeshabilita.indexOf(origen.value.toString()) != -1)
     {
@@ -37,9 +38,12 @@ function toggleElement(valorDeshabilita, valorFechaObligatoria)
     if (valorFechaObligatoria.indexOf(origen.value.toString()) != -1)
     {
         destinoFecha.required = true;
+        divFecha.style.display = "block";
     }
     else
     {
+        divFecha.style.display = "none";
+        destinoFecha.value = null;
         destinoFecha.required = false;
     }
 }
@@ -313,6 +317,27 @@ function habilitaNotificacion()
         frecuencia_dias_notificacion.required = true;
         
     }
+}
+
+function validarFotos(id)
+{
+    foto = document.getElementById("alumno_foto");
+
+    if (id == null)
+    {
+        foto.required = true;
+    }
+    else
+    {
+        foto.required = false;
+        
+    }
+}
+
+function validarClave(outClave)
+{
+    outClave = prompt('Ingrese su clave para continuar');
+    documento.getElementById("submit").onclik();
 }
 
 function sumarDias(fecha, dias){

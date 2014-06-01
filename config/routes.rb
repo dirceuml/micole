@@ -124,7 +124,7 @@ Micole::Application.routes.draw do
   
   post "alumnos_personas_vinculadas_create2" => "alumnos_personas_vinculadas#create2", :as => "alumnos_personas_vinculadas_create2"
   
-  get "cierre_cuadernos_controles/:id" => "cuadernos_controles#cerrar", :as => "cerrar_cuaderno_control"
+  post "cierre_cuadernos_controles/:id" => "cuadernos_controles#cerrar", :as => "cerrar_cuaderno_control"
 
   resources :anios_alumnos
 

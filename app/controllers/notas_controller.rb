@@ -122,14 +122,15 @@ class NotasController < ApplicationController
             File.open("#{Ruta_directorio_archivos}#{nombre}", "r").each_line do |line|                            
               begin
                 count += 1
-                raise StandardError, "Estructura incorrecta." if line.count("|") != 4
+                raise StandardError, "Estructura incorrecta." if line.count("|") != 5
                 
-                dni, curso_abr, tipo_nota_abr, calificacion = line.split("|")
+                dni, curso_abr, tipo_nota_abr, calificacion, fecha = line.split("|")
                 
                 raise StandardError, "Debe especificar un DNI." if dni.nil? || dni.strip == ""
                 raise StandardError, "Debe especificar un curso." if curso_abr.nil? || curso_abr.strip == ""
                 raise StandardError, "Debe especificar un tipo de nota." if tipo_nota_abr.nil? || tipo_nota_abr.strip == ""
                 raise StandardError, "Debe especificar una calificacion." if calificacion.nil? || calificacion.strip == ""
+                raise StandardError, "Debe especificar una fecha." if fecha.nil? || fecha.strip == ""
               
                 
                 #raise ActiveRecord::RecordNotFound para generar error, por defecto, si no se encuentra un objeto, la variable tiene valor nil
@@ -156,6 +157,7 @@ class NotasController < ApplicationController
                 if !nota.nil?
                   nota.update_attributes!(
                     :nota => calificacion,
+                    :fecha_nota => fecha,
                     :usuario => current_user.usuario
                   )
                 else
@@ -164,6 +166,7 @@ class NotasController < ApplicationController
                     :curso_id => curso_id,
                     :tipo_nota_id => tipo_nota_id,
                     :nota => calificacion,
+                    :fecha_nota => fecha,
                     :usuario => current_user.usuario
                   )
                 end

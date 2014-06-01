@@ -6,6 +6,7 @@ class Nota < ActiveRecord::Base
   has_one :alumno, :through => :anio_alumno
   
   validates :nota, :presence => true, :numericality => true
+  validates :fecha_nota, :presence => { :message => ": Debe especificar la fecha de la nota." }
   
   scope :por_dni, lambda { |dni| joins(:alumno).where("dni = ?", dni)}  
   scope :por_alumno_id, lambda { |id| joins(:alumno).where("alumno_id = ?", id)}  

@@ -62,6 +62,11 @@ class CuadernosControlesController < ApplicationController
     end
 
     @cuaderno_control = CuadernoControl.find(params[:id])
+    
+    if @cuaderno_control.cuaderno_controles_eventos.count == 0 then
+      flash[:notice] = "Debe registrar al menos un evento."
+      redirect_to @cuaderno_control and return
+    end
 
     respond_to do |format|
       if @cuaderno_control.update_attributes(:estado => 2)

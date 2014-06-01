@@ -60,7 +60,7 @@
               <% notas_por_curso = @notas.where("curso_id=?", curso) %>
               <% notas_por_curso.each do |nota| %>
                 <li style="font-family: monospace">
-                  <%= simple_format("#{TipoNota.find(nota.tipo_nota_id).descripcion.ljust(30, ".")} #{nota.nota}") %>
+                  <%= simple_format("#{TipoNota.find(nota.tipo_nota_id).descripcion.ljust(24, ".")} #{nota.nota} #{nota.fecha_nota.strftime('%d/%m/%Y').rjust(12, ".")}") %>
                   <% existennotas = 1 %>
                 </li>
               <% end %> 

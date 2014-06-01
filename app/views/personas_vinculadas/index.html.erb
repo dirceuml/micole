@@ -18,7 +18,7 @@
       <% end %>
         
       <% if (can? :update, persona_vinculada) %>
-        <%#= link_to 'Editar', edit_persona_vinculada_path(persona_vinculada), "data-inline" => "true", "data-role" => "button", "data-mini" => "true" %>
+        <%= link_to 'Editar', edit_persona_vinculada_path(persona_vinculada), "data-inline" => "true", "data-role" => "button", "data-mini" => "true" %>
       <% end %>     
         
       <% if (can? :destroy, persona_vinculada) %>
