@@ -100,6 +100,11 @@ class CuadernoControlesRevisionesController < ApplicationController
     if current_user.nil?
       redirect_to(log_in_path) and return
     end
+    
+    if current_user.clave_hash != BCrypt::Engine.hash_secret(params[:clave], current_user.clave_salt) then
+      flash[:alert] = "Clave incorrecta."
+      redirect_to [@cuaderno_control_revision] and return
+    end
 
     if @cuaderno_control_revision.update_attributes(params[:cuaderno_control_revision])
       flash[:notice] = "Revision actualizada."

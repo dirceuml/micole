@@ -39,6 +39,11 @@ class CuadernosControlesController < ApplicationController
     end
 
     @cuaderno_control = CuadernoControl.new
+    if current_user.perfil_id == 3 && current_user.alcance_colegio == 0
+      @secciones = Seccion.por_anioescolar_usuario(anio_escolar.id, current_user.id).order('grados.nivel','grados.grado','seccion')
+    else
+      @secciones = Seccion.por_anioescolar(anio_escolar.id).sin_cuaderno_control(Date.current)
+    end
 
     respond_to do |format|
       format.html # new.html.erb

@@ -23,6 +23,8 @@ class Alumno < ActiveRecord::Base
   validates :nombres, :apellido_paterno, :apellido_materno, :usuario_nom, :presence => { :message => ": El campo no puede estar vacio" }
   validate :rango_fecha_nacimiento
   validates :dni, :presence => { :message => ": El campo no puede estar vacio" }, :uniqueness => { :message => ": Este DNI esta registrado. Verifique" }, :format => { :with => /\A[+-]?\d+\Z/, :message => ": Solo se permiten numeros"}
+  validates :correo, :uniqueness => { :message => "El correo ya esta registrado" }
+  validates :dni, :uniqueness => { :message => "El DNI ya esta registrado" }
   
   def apellidos_nombres
     apellido_paterno + " " + apellido_materno + " " + nombres

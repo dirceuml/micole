@@ -9,15 +9,15 @@
     </div>
     <div class="field">
       Nombres (*)<br />
-      <%= f.text_field :nombres, :required => "required", :pattern => "^[a-zA-ZñÑ ]*$", :title => "Solo estan permitidos letras" %>
+      <%= f.text_field :nombres, :required => "required", :pattern => "^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s\W]*$", :title => "Solo estan permitidos letras" %>
     </div>
     <div class="field">
       Apellido paterno (*)<br />
-      <%= f.text_field :apellido_paterno, :required => "required", :pattern => "^[a-zA-ZñÑ ]*$", :title => "Solo estan permitidos letras" %>
+      <%= f.text_field :apellido_paterno, :required => "required", :pattern => "^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s\W]*$", :title => "Solo estan permitidos letras" %>
     </div>
     <div class="field">
-      Apellido materno (*)<br />
-      <%= f.text_field :apellido_materno, :required => "required", :pattern => "^[a-zA-ZñÑ ]*$", :title => "Solo estan permitidos letras" %>
+      Apellido materno<br />
+      <%= f.text_field :apellido_materno, :pattern => "^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s\W]*$", :title => "Solo estan permitidos letras" %>
     </div>
     <div class="field">
       Telefono fijo<br />
@@ -28,12 +28,12 @@
       <%= f.telephone_field :telefono_movil, :placeholder => "999999999", :pattern => "9\\d{8}" %>
     </div>
     <div class="field">
-      <%= f.label :correo %><br />
-      <%= f.email_field :correo, :placeholder => "dirceu@example.com" %>
+      Correo (*)<br />
+      <%= f.email_field :correo, :placeholder => "dirceu@example.com", :required => "required" %>
     </div>
     <div class="field">
-      Foto (*)<br />
-      <%= f.file_field :foto, :onchange => "PreviewImage(this);" %><br />
+      Foto (*) <br />
+      <%= f.file_field :foto, :onchange => "PreviewImage(this);", if action_name == "new" then :required else :not_required end => "required" %><br />
       <%= image_tag("blank.gif", :id => "preview") %>
       <%= image_tag f.object.foto_url.to_s %>
     </div>

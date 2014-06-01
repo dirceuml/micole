@@ -8,6 +8,10 @@ class AutorizacionesController < ApplicationController
       redirect_to(log_in_path) and return
     end
     
+    if current_user.nil?
+      redirect_to(log_in_path) and return
+    end
+    
     if params[:accion].nil? || params[:accion] == "consultar"
       actividad = params[:actividad_id]
       if params[:seccion_id].nil?
@@ -37,6 +41,10 @@ class AutorizacionesController < ApplicationController
   # GET /autorizaciones/1
   # GET /autorizaciones/1.json
   def show
+    if current_user.nil?
+      redirect_to(log_in_path) and return
+    end
+    
     @autorizacion = Autorizacion.find(params[:id])
 
     respond_to do |format|
@@ -48,6 +56,10 @@ class AutorizacionesController < ApplicationController
   # GET /autorizaciones/new
   # GET /autorizaciones/new.json
   def new
+    if current_user.nil?
+      redirect_to(log_in_path) and return
+    end
+    
     @autorizacion = Autorizacion.new
 
     respond_to do |format|
@@ -58,14 +70,27 @@ class AutorizacionesController < ApplicationController
 
   # GET /autorizaciones/1/edit
   def edit
+    if current_user.nil?
+      redirect_to(log_in_path) and return
+    end
+    
     @autorizacion = Autorizacion.find(params[:id])
   end
 
   # POST /autorizaciones
   # POST /autorizaciones.json
   def create
-    @autorizacion = Autorizacion.new(params[:autorizacion])
+    if current_user.nil?
+      redirect_to(log_in_path) and return
+    end
+    
+    if current_user.clave_hash != BCrypt::Engine.hash_secret(params[:clave], current_user.clave_salt) then
+      flash[:alert] = "Clave incorrecta."
+      render "new" and return
+    end
 
+    @autorizacion = Autorizacion.new(params[:autorizacion])
+    
     respond_to do |format|
       if @autorizacion.save
         format.html { redirect_to @autorizacion, notice: 'Autorizacion was successfully created.' }
@@ -80,11 +105,20 @@ class AutorizacionesController < ApplicationController
   # PUT /autorizaciones/1
   # PUT /autorizaciones/1.json
   def update
+    if current_user.nil?
+      redirect_to(log_in_path) and return
+    end
+    
+    if current_user.clave_hash != BCrypt::Engine.hash_secret(params[:clave], current_user.clave_salt) then
+      flash[:alert] = "Clave incorrecta."
+      render "edit" and return
+    end
+    
     @autorizacion = Autorizacion.find(params[:id])
 
     respond_to do |format|
       if @autorizacion.update_attributes(params[:autorizacion])
-        format.html { redirect_to @autorizacion, notice: 'Autorizacion fue actualizado satisfactoriamente.' }
+        format.html { redirect_to @autorizacion, notice: 'Respuesta fue actualizada satisfactoriamente.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

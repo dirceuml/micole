@@ -336,7 +336,7 @@ function validarFotos(id)
 
 function validarClave(outClave)
 {
-    outClave = prompt('Ingrese su clave para continuar');
+    outClave.value = prompt('Ingrese su clave para continuar');
     documento.getElementById("submit").onclik();
 }
 

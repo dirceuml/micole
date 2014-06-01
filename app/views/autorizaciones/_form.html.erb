@@ -33,6 +33,7 @@
     <%= f.hidden_field :usuario, :value => current_user.usuario %>
   </div>
   <div class="actions">
+    Clave:<%= password_field_tag "clave", nil, :required => "required", :placeholder => "Ingrese su clave", :style => "width:130px", :title => "Debe ingresar su clave para continuar" %>
     <% if @autorizacion.respuesta.nil? %>
       <%= f.submit "Responder", "data-inline" => "true", "data-theme" => "a", "data-icon" => "check", "data-mini" => "true", data: { confirm: "¿Está seguro que desea responder a la solicitud de autorización?" } %>
     <% else %>

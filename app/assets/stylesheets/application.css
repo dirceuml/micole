@@ -8,6 +8,17 @@
  * You're free to add application-wide styles to this file and they'll appear at the top of the
  * compiled file, but it's generally better to create a new file per style scope.
  *
- *= require_self
- *= require_tree .
+ *= requir e_self
+ *= requir e_tree .
 */
+
+#popup {
+    width:160px;
+    height:80px;
+    padding:20px;
+    background-color:gray;    
+    position:absolute;
+    top:100px;
+    left:100px;
+    display:none;
+}
