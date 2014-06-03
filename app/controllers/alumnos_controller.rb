@@ -228,8 +228,9 @@ class AlumnosController < ApplicationController
       format.html # index.html.erb
       format.json { render json: @alumnos }
     end    
-  end  
+  end
   
+   
   rescue_from CanCan::AccessDenied do |exception|
     if current_user.nil?
       redirect_to log_in_url, :alert => exception.message

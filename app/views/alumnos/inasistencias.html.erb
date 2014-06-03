@@ -32,6 +32,7 @@
           <%= submit_tag "Grabar", "data-inline" => "true", "data-theme" => "a", "data-icon" => "check", "data-mini" => "true", "class" => "ui-btn-right" %>
         </div>
       <% end %>
+      <%= hidden_field_tag 'seccion_id', seccion %>
       <div data-role="fieldcontain">
         <ul data-role="listview" data-filter="true">
           <% @alumnos.each do |alumno_colegio| %>

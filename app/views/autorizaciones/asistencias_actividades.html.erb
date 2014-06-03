@@ -1,0 +1,81 @@
+<div data-role="header">
+  <h1>Registrar asistencias a actividades</h1>
+</div>
+
+<% if params[:actividad_id].nil? %>
+  <% actividad = "" %>
+  <% seccion = "" %>
+<% else %>
+  <% actividad = params[:actividad_id] %>
+  <% seccion = params[:seccion_id] %>
+<% end %>
+
+<% if current_user.perfil_id == 3 && current_user.alcance_colegio == 0%>
+  <% @actividades = Actividad.por_secciones_usuario(anio_escolar.id, current_user.id).where("requiere_autorizacion = 1 and estado = 2 and to_char(fecha_hora_inicio::timestamp at time zone 'UTC-5', 'yyyymmdd') = ?", Date.current.strftime('%Y%m%d')).order("fecha_hora_inicio DESC") %>
+  <% @secciones   = Seccion.por_anioescolar_usuario(anio_escolar.id, current_user.id).order('grados.nivel','grados.grado','seccion') %>
+<% else %>
+  <% @actividades = Actividad.por_anio_escolar(anio_escolar.id).where("requiere_autorizacion = 1 and estado = 2 and to_char(fecha_hora_inicio::timestamp at time zone 'UTC-5', 'yyyymmdd') = ?", Date.current.strftime('%Y%m%d')).order("fecha_hora_inicio DESC") %>
+  <% @secciones   = Seccion.por_anioescolar(anio_escolar.id).order('grados.nivel','grados.grado','seccion') %>
+<% end %>
+
+<div data-role="content" class="ui-content" role="main">
+  <%= form_tag(asistencias_actividades_path, {:method => :get, "data-ajax" => "false", "name" => "buscar"}) do %>
+    <div data-role="fieldcontain">
+      Actividad: <%= collection_select(:actividad, :id, @actividades, :id, :nombre_fecha, {:prompt => ':: Seleccione ::', :selected => actividad}, {"data-mini" => "true", :name => "actividad_id", :required => "required"}) %><br />
+      Sección: <%= collection_select(:seccion, :id, @secciones, :id, :grado_seccion, {:prompt => ':: Seleccione ::', :selected => seccion}, {"data-mini" => "true", :name => "seccion_id", :required => "required"}) %>
+      <%= submit_tag "Buscar", "data-inline" => "true", "data-theme" => "a", "data-icon" => "search", "data-mini" => "true", :name => nil %>
+    </div>
+  <% end %>
+  
+  <hr>
+  <% if !seccion.empty? %>
+    
+    <%= form_tag(asistencias_actividades_path, {:method => :post, "data-ajax" => "false", "name" => "falta"}) do %>
+      
+      <%if !@autorizaciones.where("asistencia = 1").empty? %>
+        <div>
+        Asistencia registrada:
+        </div>
+      <% else %>
+        <%if !@autorizaciones.empty? %> 
+          <% if can? :grabar_asistencias, Autorizacion %>
+            <div>
+              <%= submit_tag "Grabar", "data-inline" => "true", "data-theme" => "a", "data-icon" => "check", "data-mini" => "true", "class" => "ui-btn-right" %>
+            </div>
+          <% end %>
+        <% end %>
+      <% end %>
+      
+      <%= hidden_field_tag 'actividad_id', actividad %>
+      <%= hidden_field_tag 'seccion_id', seccion %>
+      <div data-role="fieldcontain">
+        <ul data-role="listview" data-filter="true">
+          <%@autorizaciones.each do |alumno_actividad| %>
+            <%= hidden_field_tag 'alumnos_seccion[]', alumno_actividad.alumno_id %>
+            <% idcheck = "alumno_id_#{alumno_actividad.alumno_id}" %>
+            <% if alumno_actividad.asistencia.nil? %>
+              <li data-filtertext="<%= alumno_actividad.alumno.apellidos_nombres %>" >
+                <%= check_box_tag 'alumno_id[]',alumno_actividad.alumno_id, false, {:id => idcheck, "class" => "custom", "data-mini" => "true"}  %> 
+                <label for= <%="#{idcheck}"%> ><%= alumno_actividad.alumno.apellidos_nombres %></label>
+              </li>
+            <%else%>
+              <% if alumno_actividad.asistencia == 1%>
+                <li data-filtertext="<%= "#{alumno_actividad.alumno.apellidos_nombres} (ASISTENTE)"%>" >
+                  <%= check_box_tag 'alumno_id[]',alumno_actividad.alumno_id, true, {:id => idcheck, "class" => "custom", "data-mini" => "true", disabled: true}  %>
+                  <label for= <%="#{idcheck}"%> ><%= "#{alumno_actividad.alumno.apellidos_nombres} (ASISTENTE)"%></label>
+                </li>
+              <%else%>
+                <li data-filtertext="<%= "#{alumno_actividad.alumno.apellidos_nombres} (AUSENTE)"%>" >
+                  <%= check_box_tag 'alumno_id[]',alumno_actividad.alumno_id, false, {:id => idcheck, "class" => "custom", "data-mini" => "true", disabled: true}  %>
+                  <label for= <%="#{idcheck}"%> ><%= "#{alumno_actividad.alumno.apellidos_nombres} (AUSENTE)"%></label>
+                </li>
+              <%end%>
+            <%end%>
+          <% end  %>
+        </ul>
+      </div>
+    <% end %>
+    
+  <% end %>
+</div> 
+

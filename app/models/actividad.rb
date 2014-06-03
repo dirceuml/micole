@@ -17,7 +17,7 @@ class Actividad < ActiveRecord::Base
   def cambio_estado_ejecutado
     if estado == 5 then
       if fecha_hora_inicio > Time.now then
-        errors.add(:estado, "No puede actualizar el estado de la actividad a Ejecutado porque aún no llega la fecha de inicio.")
+        errors.add(:estado, "No puede actualizar el estado de la actividad a Ejecutado porque aun no llega la fecha de inicio.")
       end
     end
   end

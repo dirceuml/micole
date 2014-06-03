@@ -22,11 +22,12 @@ class ControlesAsistenciasController < ApplicationController
     
     if params[:alumno_id].nil?
       flash[:notice] = 'Seleccione a los alumnos ausentes'
-      render :inasistencias
+      redirect_to :controller => 'alumnos', :action => 'inasistencias', :seccion_id => params[:seccion_id]
       return
     end
     
     registrados = 0
+    notificado = 0
     ActiveRecord::Base.transaction do
       params[:alumno_id].each do |alumno|
         anioalumno_id    = AnioAlumno.find_by_anio_escolar_id_and_alumno_id(anio_escolar.id, alumno).id
@@ -53,6 +54,7 @@ class ControlesAsistenciasController < ApplicationController
             if colegio.notificar_inasistencia != 0
               @notificar = PersonaVinculada.padres_de(alumno)  # apoderado = 1
               if !@notificar.empty?
+                notificado = 1
                 @notificar.each do |padre|
                   @alumno  = Alumno.find(alumno)
                   InasistenciaMailer.delay.notificacion_inasistencia(@alumno, padre, Time.now.strftime('%I:%M %P')) # Asincrono
@@ -65,11 +67,15 @@ class ControlesAsistenciasController < ApplicationController
     end
     
     if registrados = 1
-      flash[:notice] = 'Las inasistencias fueron registrados satisfactoriamente'
+      if notificado = 1
+        flash[:notice] = 'Las inasistencias fueron registrados y notificados satisfactoriamente'
+      else
+        flash[:notice] = 'Las inasistencias fueron registrados satisfactoriamente'
+      end
     else
       flash[:notice] = 'No se registraron nuevas inasistencias'
     end
-    redirect_to :controller => 'alumnos', :action => 'inasistencias', :seccion => params[:seccion_id]
+    redirect_to :controller => 'alumnos', :action => 'inasistencias', :seccion_id => params[:seccion_id]
   end
   
   
@@ -84,6 +90,7 @@ class ControlesAsistenciasController < ApplicationController
       return
     end
     
+    notificado = 0
     ActiveRecord::Base.transaction do
       params[:alumno_id].each do |alumno|
         @controles_alumnos = ControlAsistencia.new(
@@ -106,6 +113,7 @@ class ControlesAsistenciasController < ApplicationController
           if colegio.notificar_tardanza != 0
             @notificar = PersonaVinculada.padres_de(alumno)  # apoderado = 1
             if !@notificar.empty?
+              notificado = 1
               @notificar.each do |padre|
                 @alumno  = Alumno.find(alumno)
                 TardanzaMailer.delay.notificacion_tardanza(@alumno, padre, Time.now.strftime('%I:%M %P')) # Asincrono
@@ -115,8 +123,14 @@ class ControlesAsistenciasController < ApplicationController
         end
       end
     end
-    flash[:notice] = 'Las tardanzas fueron registrados satisfactoriamente'
+    
+    if notificado = 1
+      flash[:notice] = 'Las tardanzas fueron registrados y notificados satisfactoriamente'
+    else
+      flash[:notice] = 'Las tardanzas fueron registrados satisfactoriamente'
+    end
     redirect_to :controller => 'alumnos', :action => 'tardanzas'
+    
   end  
   
   

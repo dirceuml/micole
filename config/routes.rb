@@ -6,7 +6,7 @@ Micole::Application.routes.draw do
   get "inasistencias" => "alumnos#inasistencias", :as => "inasistencias"
   post "inasistencias" => "controles_asistencias#grabar_inasistencias", :as => "inasistencias"
   get "consultar_inasistencias_tardanzas" => "alumnos#consultar_inasistencias_tardanzas", :as => "consultar_inasistencias_tardanzas"
-
+  
   resources :usuarios_secciones
   
   resources :usuarios do
@@ -60,6 +60,8 @@ Micole::Application.routes.draw do
   resources :cursos
 
   resources :autorizaciones
+  get "asistencias_actividades" => "autorizaciones#asistencias_actividades", :as => "asistencias_actividades"
+  post "asistencias_actividades" => "autorizaciones#grabar_asistencias", :as => "asistencias_actividades"
   
   resources :notas
   get "cargar_notas" => "notas#cargar", :as => "cargar_notas"
