@@ -3,7 +3,7 @@
   <% unless params[:fechacal].blank? %>
     <%= link_to 'Aceptar', "/calendario_actividades/#{params[:fechacal]}", "data-icon" => "check", "data-mini" => "true"  %>
   <% else %>
-    <%= link_to 'Aceptar', actividades_path, "data-icon" => "check", "data-mini" => "true"  %>
+    <%= link_to 'Aceptar', actividades_path, "data-icon" => "check", "data-mini" => "true", "data-ajax" => "false"  %>
   <% end %>
   <% if @actividad.estado == 1 %>
     <% if (can? :update, @actividad) %>
