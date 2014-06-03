@@ -3,6 +3,12 @@
 <head>
   <title>::. Micole.pe .::</title>
   
+  <script>
+    $(document).bind("mobileinit", function () {
+        $.mobile.ajaxEnabled = false;
+    });
+  </script>
+  
   <%= javascript_include_tag "application" %>
   
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -39,7 +45,7 @@
       <% if current_user %>
         <%= link_to "Menu", "/menu" %>
         <%= current_user.usuario %>
-        <%= link_to "Salir", log_out_path %>
+        <%= link_to "Salir", log_out_path, "data-ajax" => "false" %>
       <% end %>   
       
       <% if colegio %>
