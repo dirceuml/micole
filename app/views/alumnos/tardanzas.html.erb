@@ -2,6 +2,8 @@
   <h1><%= "Registro de tardanzas - #{Date.current.strftime('%d/%m/%Y')}" %> </h1>
 </div>
 
+<% if @registrartardanza == 1 %>
+
 <div data-role="content" class="ui-content" role="main">
 <!--div data-role="content" class="content-primary"-->
     <%= form_tag(tardanzas_path, {"data-ajax" => "false", "name" => "falta"}) do %>
@@ -26,8 +28,13 @@
                 <% if controlalumno.tipo_asistencia == 2%>
                   <%= check_box_tag 'alumno_id[]',alumno_colegio.id, true, {:id => idcheck, "class" => "custom", "data-mini" => "true", disabled: true}  %>
                   <label for= <%="#{idcheck}"%> ><%= alumno_colegio.apellidos_nombres %></label>
+                  <strong>
                   <p class="ui-li-desc"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                   <%= "Grado y sección: #{Seccion.find(anioalumno.seccion_id).grado_seccion}" %></p>
+                  <% if colegio.registrar_hora_tardanza == 1%>
+                    <p class="ui-li-aside"> <%= controlalumno.created_at.strftime('%I:%M %P') %> </p>
+                  <% end %>
+                  </strong>
                 <%else%>
                   <%= check_box_tag 'alumno_id[]',alumno_colegio.id, false, {:id => idcheck, "class" => "custom", "data-mini" => "true", disabled: true}  %>
                   <label for= <%="#{idcheck}"%> ><%= "#{alumno_colegio.apellidos_nombres} (INASISTENCIA)"%></label>
@@ -41,3 +48,5 @@
       </div>
     <% end %>
 </div>
+
+<% end %>   <!--% if @registrartardanza == 1 %-->
