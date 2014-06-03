@@ -1,5 +1,9 @@
 <p>Estimado(a) señor(a) <%= @persona.apellidos_nombres %>:</p>
-<p>Se le informa que hoy, a las <%= @horanotificacion %>, su hijo(a) <%= @alumno.apellidos_nombres %> no asistió a la actividad programada para hoy:</p>
+<% if  @actividad.fecha_hora_inicio.strftime('%Y%m%d') == Date.current.strftime('%Y%m%d') %>
+  <p>Se le informa a las <%= @horanotificacion %>, que su hijo(a) <%= @alumno.apellidos_nombres %> no asistió a la actividad programada para hoy:</p>
+<% else %>
+  <p>Se le informa que su hijo(a) <%= @alumno.apellidos_nombres %> no asistió a la actividad programada para el <%= @actividad.fecha_hora_inicio.strftime('%d/%m/%Y') %>: </p> 
+<% end %>
 <p> <%= @actividad.nombre %> </p>
 <p> Hora de inicio : <%= @actividad.fecha_hora_inicio.strftime('%I:%M %P') %> </p>
 <p>

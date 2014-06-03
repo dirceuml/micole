@@ -1,6 +1,9 @@
 Estimado(a) señor(a) <%= @persona.apellidos_nombres %>:
-
-Se le informa que hoy, a las <%= @horanotificacion %>, su hijo(a) <%= @alumno.apellidos_nombres %> no asistió a la actividad programada para hoy:
+<% if  @actividad.fecha_hora_inicio.strftime('%Y%m%d') == Date.current.strftime('%Y%m%d') %>
+  Se le informa a las <%= @horanotificacion %>, que su hijo(a) <%= @alumno.apellidos_nombres %> no asistió a la actividad programada para hoy:
+<% else %>
+  Se le informa que su hijo(a) <%= @alumno.apellidos_nombres %> no asistió a la actividad programada para el <%= @actividad.fecha_hora_inicio.strftime('%d/%m/%Y') %>:
+<% end %>
 <%= @actividad.nombre %>
 Hora de inicio : <%= @actividad.fecha_hora_inicio.strftime('%I:%M %P') %>
 
