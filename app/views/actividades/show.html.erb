@@ -127,13 +127,19 @@
             <% end %>
           <% end %>
         <% end %>
-        
+      
+      <% ver = 1 %>
+       <% if @actividad.estado == 5 && participante.respuesta != 1 %>
+        <% ver = 0 %>
+       <% end %>
+      <% if ver == 1 %>
         <li data-filtertext="<%= "#{participante.alumno.apellidos_nombres} #{seccion} #{estadoalumno}" %>" >
           <strong><%= simple_format(participante.alumno.apellidos_nombres + " - "+ seccion ) %></strong>
           <p class="ui-li-aside">
               <%= estadoalumno %>
           </p>
         </li>
+        <% end %>
       <% end %>
     </ul>
   </div>
