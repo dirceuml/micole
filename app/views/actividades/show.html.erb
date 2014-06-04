@@ -3,7 +3,7 @@
   <% unless params[:fechacal].blank? %>
     <%= link_to 'Aceptar', "/calendario_actividades/#{params[:fechacal]}", "data-icon" => "check", "data-mini" => "true"  %>
   <% else %>
-    <%= link_to 'Aceptar', actividades_path, "data-icon" => "check", "data-mini" => "true"  %>
+    <%= link_to 'Aceptar', actividades_path, "data-icon" => "check", "data-mini" => "true", "data-ajax" => "false"  %>
   <% end %>
   <% if @actividad.estado == 1 %>
     <% if (can? :update, @actividad) %>
@@ -38,10 +38,11 @@
     <p>
 </div>
 
-<% if can? :create, ActividadSeccion %>
-  <% if @actividad.estado == 1 %>
+<% if @actividad.estado == 1 && @actividad.fecha_hora_inicio > Time.now %>
+  <% if can? :create, ActividadSeccion %>
     <%= render "actividades_secciones/form" %>
   <% end %>
+
 <% end %>
 
 <div data-role="content">
@@ -50,8 +51,8 @@
     <% if !actividad_seccion.seccion_id.nil? %> 
       <% if can? :read, actividad_seccion %>
         <li>
-          <%= link_to simple_format(actividad_seccion.grado_seccion), [@actividad, actividad_seccion] %>
-          <% if @actividad.estado == 1 %>
+          <%= link_to simple_format(actividad_seccion.grado_seccion), '' %>
+          <% if @actividad.estado == 1 && @actividad.fecha_hora_inicio > Time.now %>
              <%= link_to 'Eliminar vínculo', [actividad_seccion.actividad, actividad_seccion], confirm: '¿Seguro que desea eliminar el registro?', method: :delete, "data-icon" => "delete" %>
           <% end %>
         </li>
@@ -64,35 +65,82 @@
 <% if can? :update, @actividad %>
   <%= form_for(@actividad, :html => { :class => "ui-body ui-body-c" }) do |f| %>
     <div data-role="fieldcontain">
-      <% if @actividad.estado == 1 %>   <!--% Registrada %-->
+      <% if @actividad.estado == 1 && @actividad.fecha_hora_inicio > Time.now %>   <!--% Registrada %-->
         <%= f.hidden_field :estado, :value => 2 %>
         <%= f.hidden_field :usuario, :value => current_user.usuario %>
         <% hidden_field_tag(:accion, 2, "data-mini" => "true") %>
 
-        <%#*<div class="field">%>
-          <%#*Observaciones<br />%>
-          <%#= f.text_area :observacion %>
-        <%#*</div>%>
         <div class="actions">
           <%= f.submit "Confirmar", "data-inline" => "true", "data-theme" => "a", "data-icon" => "check", "data-mini" => "true", data: { confirm: "¿Está seguro que desea confirmar la actividad?" } %>
         </div>
       <% else %>
-        <%= f.hidden_field :usuario, :value => current_user.usuario %>
-        <% @estados_actividad = ListaValor.where("tabla = 8 and item != 1").order("item") %> 
-        <div style="width: 400px; clear: left; float: left; font-size: 12px;">
-          <%="Estado: "%>
-          <%= collection_select(:actividad, :estado, @estados_actividad, :item, :descripcion, {:selected => @actividad.estado}, {"data-mini" => "true", :required => "required"}) %>
-        </div> 
-        <div class="actions" style="float: left">
-          <%= f.submit "Actualizar", "data-inline" => "true", "data-theme" => "a", "data-icon" => "check", "data-mini" => "true" %>
-        </div>        
-        <%#*<div class="field">%>
-          <%#*Observaciones<br />%>
-          <%#= f.text_area :observacion, :readonly => true %>
-        <%#*</div>%>
-        <%#*<br />%>
+        <% if @actividad.estado == 4 || @actividad.estado == 5 || @actividad.fecha_hora_inicio < Time.now %>   <!--% Ejecutado o Cancelado %-->
+          <div style="width: 400px; clear: left; float: left; font-size: 12px;">
+            <b><%="Estado: "%></b>
+            <%= ListaValor.find_by_tabla_and_item(8, @actividad.estado).descripcion %>
+          </div>
+        <% else %>
+          <%= f.hidden_field :usuario, :value => current_user.usuario %>
+          <% @estados_actividad = ListaValor.where("tabla = 8 and item != 1").order("item") %> 
+          <div style="width: 400px; clear: left; float: left; font-size: 12px;">
+            <b><%="Estado: "%></b>
+            <%= collection_select(:actividad, :estado, @estados_actividad, :item, :descripcion, {:selected => @actividad.estado}, {"data-mini" => "true", :required => "required"}) %>
+          </div> 
+          <div class="actions" style="float: left">
+            <%= f.submit "Actualizar", "data-inline" => "true", "data-theme" => "a", "data-icon" => "check", "data-mini" => "true" %>
+          </div>
+        <% end %>
         <!--div data-role="footer" --><!--%= ListaValor.find_by_tabla_and_item(8, @actividad.estado).descripcion %--><!--/div-->
       <% end %>
     </div>
   <% end %>
+<% end %>
+
+<% if @actividad.requiere_autorizacion == 1 && (@actividad.estado == 2 ||@actividad.estado ==5) %>   <!--% Requiere autorizacion, Confirmado o Ejecutado %-->
+  <div data-role="content">   
+    <div style="width: 400px; clear: left; float: left; font-size: 12px;">
+        <b><%="Lista de alumnos : "%></b>
+    </div>
+    <% @autorizaciones = Autorizacion.por_actividad(@actividad.id).order("alumnos.apellido_paterno, alumnos.apellido_materno, alumnos.nombres") %>
+    <ul data-role="listview" data-filter="true">            
+      <%@autorizaciones.each do |participante| %>
+        <% seccion = participante.alumno.grado_seccion(anio_escolar.id) %>
+        
+        <% if participante.asistencia == 1 %>
+          <% estadoalumno = "Asistente" %>
+        <% else %>
+          <% if participante.asistencia == 0 %>
+            <% estadoalumno = "Ausente" %>
+          <% else %>
+            <% if participante.respuesta.nil? %>
+              <% estadoalumno = "Autorización sin respuesta" %>
+            <% else %>
+              <% if participante.respuesta == 1 %>
+                <% if @actividad.estado == 2 %>
+                  <% estadoalumno = "Autorizado para participar" %>
+                <% else %>
+                  <% estadoalumno = "Asistencia no registrado" %>
+                <% end %>
+              <% else %>
+                <% estadoalumno = "No autorizado para participar" %>
+              <% end %>
+            <% end %>
+          <% end %>
+        <% end %>
+      
+      <% ver = 1 %>
+       <% if @actividad.estado == 5 && participante.respuesta != 1 %>
+        <% ver = 0 %>
+       <% end %>
+      <% if ver == 1 %>
+        <li data-filtertext="<%= "#{participante.alumno.apellidos_nombres} #{seccion} #{estadoalumno}" %>" >
+          <strong><%= simple_format(participante.alumno.apellidos_nombres + " - "+ seccion ) %></strong>
+          <p class="ui-li-aside">
+              <%= estadoalumno %>
+          </p>
+        </li>
+        <% end %>
+      <% end %>
+    </ul>
+  </div>
 <% end %>

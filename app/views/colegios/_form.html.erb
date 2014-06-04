@@ -10,6 +10,12 @@
       </ul>
     </div>
   <% end %>
+  
+  <% if @colegio.hora_inicio_tardanza.nil? %>
+    <% valor_hit = "" %>
+  <% else %>
+    <% valor_hit = @colegio.hora_inicio_tardanza.strftime("%H:%M") %>
+  <% end %>
 
 <div data-role="fieldcontain">
   
@@ -55,6 +61,17 @@
                 <option value = 0 <% if @colegio.notificar_tardanza == 0 %> selected <%end%> >No</option>
                 <option value = 1 <% if @colegio.notificar_tardanza == 1 %> selected <%end%> >Si</option>
     </select>
+  </div>
+  <div class="field">
+    Registrar hora de tardanza<br />
+    <select <%= f.number_field :registrar_hora_tardanza, "data-role" => "slider", "data-mini" => "true" %> >
+                <option value = 0 <% if @colegio.registrar_hora_tardanza == 0 %> selected <%end%> >No</option>
+                <option value = 1 <% if @colegio.registrar_hora_tardanza == 1 %> selected <%end%> >Si</option>
+    </select>
+  </div>
+  <div class="field">
+    Hora de inicio de tardanza<br />
+    <%= f.text_field :hora_inicio_tardanza, "data-mini" => "true", "data-role" => "datebox", "type" => "time",  :value => "#{valor_hit}", :min => "07:00:00", :max => "09:00:00", "style" => "width:100px" %>
   </div>
   <div class="field">
     Crear usuarios para alumnos a partir del grado (*)<br />

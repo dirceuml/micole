@@ -8,10 +8,6 @@ class AutorizacionesController < ApplicationController
       redirect_to(log_in_path) and return
     end
     
-    if current_user.nil?
-      redirect_to(log_in_path) and return
-    end
-    
     if params[:accion].nil? || params[:accion] == "consultar"
       actividad = params[:actividad_id]
       if params[:seccion_id].nil?
@@ -20,7 +16,7 @@ class AutorizacionesController < ApplicationController
         seccion = params[:seccion_id]
       end
 
-      @autorizaciones = Autorizacion.por_actividad(actividad).por_seccion(anio_escolar.id, seccion)
+      @autorizaciones = Autorizacion.por_actividad(actividad).order("alumnos.apellido_paterno, alumnos.apellido_materno, alumnos.nombres").por_seccion(anio_escolar.id, seccion)
       
       respond_to do |format|
         format.html # index.html.erb
@@ -37,6 +33,81 @@ class AutorizacionesController < ApplicationController
       end
     end   
   end
+  
+  
+  def asistencias_actividades
+    if current_user.nil?
+      redirect_to(log_in_path) and return
+    end
+    
+    actividad = params[:actividad_id]
+    if params[:seccion_id].nil?
+      seccion = ""
+    else
+      seccion = params[:seccion_id]
+    end
+    
+    @autorizaciones = Autorizacion.por_actividad(actividad).por_seccion(anio_escolar.id, seccion).order("alumnos.apellido_paterno, alumnos.apellido_materno, alumnos.nombres")
+    
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: @autorizaciones }
+    end
+  end
+  
+  
+  def grabar_asistencias
+    if current_user.nil?
+      redirect_to(log_in_path) and return
+    end
+    
+    if params[:alumno_id].nil?
+      flash[:notice] = 'Seleccione a los alumnos asistentes a la actividad'
+      redirect_to :controller => 'autorizaciones', :action => 'asistencias_actividades', :actividad_id => params[:actividad_id], :seccion_id => params[:seccion_id]
+      return
+    end
+    
+    @actividad = Actividad.find(params[:actividad_id])
+    
+    notificado = 0
+    ActiveRecord::Base.transaction do
+      params[:alumnos_seccion].each do |alumno|
+        asistencia = 0
+        if params[:alumno_id].include? alumno
+          asistencia  = 1
+        end
+        @autorizacion = Autorizacion.find_by_actividad_id_and_alumno_id(params[:actividad_id],alumno)
+        @autorizacion.update_attributes!(
+              :asistencia => asistencia
+              )
+        if asistencia == 0    # inasistencia
+          if colegio.notificar_inasistencia != 0
+            @notificar = PersonaVinculada.padres_de(alumno)  # apoderado = 1
+            if !@notificar.empty?
+              notificado = 1
+              @notificar.each do |padre|
+                @alumno  = Alumno.find(alumno)
+                InasistenciaActividadMailer.delay.notificacion_inasistencia_actividad(@alumno, padre, @actividad, Time.now.strftime('%I:%M %P')) # Asincrono
+              end
+            end
+          end
+        end
+      end
+      
+      @actividad.update_attributes!(
+        :estado => 5    ## Actividad ejecutada
+      )
+    end
+    
+    if notificado = 1
+      flash[:notice] = 'Las asistencias fueron registrados satisfactoriamente y se enviaron notificaciones por inasistencia'
+    else
+      flash[:notice] = 'Las asistencias fueron registrados satisfactoriamente'  
+    end
+    redirect_to :controller => 'autorizaciones', :action => 'asistencias_actividades', :actividad_id => params[:actividad_id], :seccion_id => params[:seccion_id]
+    
+  end
+  
   
   # GET /autorizaciones/1
   # GET /autorizaciones/1.json

@@ -137,7 +137,7 @@ class ActividadesController < ApplicationController
     
     if params[:actividad][:estado] == "5" then     
       if @actividad.fecha_hora_inicio > Time.now then
-        flash[:notice] = 'No puede actualizar el estado de la actividad a Ejecutado porque aún no llega la fecha y hora de inicio.'
+        flash[:notice] = 'No puede actualizar el estado de la actividad a Ejecutado porque aun no llega la fecha y hora de inicio.'
         redirect_to(:actividad) and return
       end
     end

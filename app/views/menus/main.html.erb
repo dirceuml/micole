@@ -56,6 +56,9 @@
         <% if [1,2,3,4].include? current_user.perfil_id %>
           <li><a href="<%= calendario_actividades_path(Date.current.year, Date.current.month, Date.current.strftime('%d')) %>" data-ajax = "false">Calendario</a></li>
         <% end %>
+        <% if [1,3].include? current_user.perfil_id %>
+          <li><a href="<%= asistencias_actividades_path %>" data-ajax = "false">Registrar asistencias a actividades</a></li>
+        <% end %>          
       <% end %>
 
           

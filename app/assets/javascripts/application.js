@@ -340,6 +340,22 @@ function validarClave(outClave)
     documento.getElementById("submit").onclik();
 }
 
+function validarDiaSemana (inputDate)
+{
+    fecha = new Date(inputDate.value.substring(0, 4), inputDate.value.substring(5, 7) - 1, inputDate.value.substring(8, 10), 0, 0, 0, 0);
+    
+    if (fecha.getUTCDay() === 6 || fecha.getUTCDay() === 0) 
+    {
+        alert("Ingrese un día de la semana entre lunes y viernes");
+        inputDate.focus();
+        inputDate.value = "";
+        
+        return false;
+    }
+    
+    return true;
+}
+
 function sumarDias(fecha, dias){
     fecha.setDate(fecha.getDate() + dias); 
     return fecha;

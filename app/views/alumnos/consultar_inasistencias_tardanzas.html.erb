@@ -37,15 +37,41 @@
         <ul data-role="listview" data-filter="true">
           <% @alumnos.each do |alumno_colegio| %>
             <% anioalumno_id = AnioAlumno.find_by_anio_escolar_id_and_alumno_id(anio_escolar.id, alumno_colegio.id).id%>
-            <li data-filtertext="<%= alumno_colegio.apellidos_nombres %>" >
-              <%= alumno_colegio.apellidos_nombres %>
-              <span class="ui-li-count ui-btn-up-b ui-btn-corner-all">
-                Inasistencias: <%=@controles_asistencias.where("anio_alumno_id = ? and tipo_asistencia = 1", anioalumno_id).count%>
-                Tardanzas: <%=@controles_asistencias.where("anio_alumno_id = ? and tipo_asistencia = 2", anioalumno_id).count%>
-              </span>
+            <% dias_inasis = @controles_asistencias.where("anio_alumno_id = ? and tipo_asistencia = 1", anioalumno_id).count %>
+            <% dias_tardan = @controles_asistencias.where("anio_alumno_id = ? and tipo_asistencia = 2", anioalumno_id).count %>
+            <%tipo_alumno = ""%>
+            <% if dias_inasis > 0 %>
+              <%tipo_alumno = "Inasistencia"%>
+            <% end %>
+            <% if dias_tardan > 0 %>
+              <%tipo_alumno = tipo_alumno+ "Tardanza"%>
+            <% end %> 
+            <li data-filtertext="<%= "#{alumno_colegio.apellidos_nombres} #{tipo_alumno}" %>" >
+                <%= alumno_colegio.apellidos_nombres %>
+                <span class="ui-li-count ui-btn-up-b ui-btn-corner-all">
+                  Inasistencias: <%=dias_inasis%>
+                  Tardanzas: <%=dias_tardan%>
+                </span>
+                <% if dias_inasis > 0 || dias_tardan > 0 %>
+                  <% @detalles_asistencias = @controles_asistencias.where("anio_alumno_id = ?", anioalumno_id).order("fecha") %>
+                  <% @detalles_asistencias.each do |detalle_asistencia| %>
+                    <% if detalle_asistencia.tipo_asistencia ==1 %>
+                      <%tipo_detalle = "Inasistencia"%>
+                    <% else %>
+                      <%tipo_detalle = "Tardanza"%>
+                    <% end %>
+                    <li data-filtertext="<%= "#{alumno_colegio.apellidos_nombres} #{tipo_detalle}" %>" >
+                        <p class="ui-li-desc">&nbsp;
+                        <%="#{detalle_asistencia.fecha.strftime('%d/%m/%Y')} - #{tipo_detalle}" %>
+                        </p>
+                    </li>
+                  <% end %>
+                <% end %>
             </li>
           <% end  %>
         </ul>
       </div>
     <% end %>
 </div>
+
+

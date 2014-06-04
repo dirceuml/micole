@@ -189,6 +189,14 @@ class AlumnosController < ApplicationController
     
     @alumnos = Alumno.por_anio_escolar(anio_escolar.id).order("apellido_paterno, apellido_materno, nombres")    
     
+    @registrartardanza = 1
+    if !colegio.hora_inicio_tardanza.nil?
+      if colegio.hora_inicio_tardanza.strftime('%H%M') > Time.now.strftime('%H%M')
+        flash[:notice] = "No es la hora para registrar tardanzas. Hora de inicio: #{colegio.hora_inicio_tardanza.strftime('%I:%M %P')} "
+        @registrartardanza = 0
+      end
+    end
+    
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @alumnos }
@@ -228,8 +236,9 @@ class AlumnosController < ApplicationController
       format.html # index.html.erb
       format.json { render json: @alumnos }
     end    
-  end  
+  end
   
+   
   rescue_from CanCan::AccessDenied do |exception|
     if current_user.nil?
       redirect_to log_in_url, :alert => exception.message
